@@ -49,4 +49,19 @@ public interface ProcessingResult {
    *     false otherwise.
    */
   boolean isEmpty();
+
+  /**
+   * A flag to indicate if records processed by this processor should be processed in a separate
+   * command batch.
+   *
+   * <p>This is useful for cases where the processing of the records is complex or requires
+   * additional resources, and you want to ensure that they are not mixed with other records in the
+   * same batch.
+   *
+   * @return <code>true</code> if the records should be processed in a separate batch, <code>false
+   *     </code>
+   */
+  default boolean shouldProcessInASeparateBatch() {
+    return false;
+  }
 }
