@@ -12,6 +12,7 @@ import static io.camunda.zeebe.protocol.record.intent.DeploymentIntent.CREATE;
 import io.camunda.search.clients.SearchClientsProxy;
 import io.camunda.zeebe.dmn.DecisionEngineFactory;
 import io.camunda.zeebe.engine.EngineConfiguration;
+import io.camunda.zeebe.engine.metrics.BatchOperationMetrics;
 import io.camunda.zeebe.engine.metrics.DistributionMetrics;
 import io.camunda.zeebe.engine.metrics.JobProcessingMetrics;
 import io.camunda.zeebe.engine.metrics.ProcessEngineMetrics;
@@ -119,6 +120,8 @@ public final class EngineProcessors {
         new ProcessEngineMetrics(typedRecordProcessorContext.getMeterRegistry());
     final var distributionMetrics =
         new DistributionMetrics(typedRecordProcessorContext.getMeterRegistry());
+    final var batchOperationMetrics = new BatchOperationMetrics(
+        typedRecordProcessorContext.getMeterRegistry());
 
     subscriptionCommandSender.setWriters(writers);
 
@@ -324,7 +327,8 @@ public final class EngineProcessors {
         processingState,
         config,
         partitionId,
-        routingInfo);
+        routingInfo,
+        batchOperationMetrics);
 
     return typedRecordProcessors;
   }

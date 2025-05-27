@@ -11,6 +11,7 @@ import io.camunda.search.entities.ProcessInstanceEntity.ProcessInstanceState;
 import io.camunda.search.filter.Operation;
 import io.camunda.search.filter.ProcessInstanceFilter;
 import io.camunda.zeebe.engine.EngineConfiguration;
+import io.camunda.zeebe.engine.metrics.BatchOperationMetrics;
 import io.camunda.zeebe.engine.processing.batchoperation.BatchOperationItemProvider.Item;
 import io.camunda.zeebe.engine.state.batchoperation.PersistedBatchOperation;
 import io.camunda.zeebe.engine.state.immutable.BatchOperationState;
@@ -44,6 +45,7 @@ public class BatchOperationExecutionScheduler implements StreamProcessorLifecycl
   private final BatchOperationState batchOperationState;
   private ReadonlyStreamProcessorContext processingContext;
   private final BatchOperationItemProvider entityKeyProvider;
+  private final BatchOperationMetrics metrics;
   private final int partitionId;
 
   /** Marks if this scheduler is currently executing or not. */
@@ -53,11 +55,13 @@ public class BatchOperationExecutionScheduler implements StreamProcessorLifecycl
       final Supplier<ScheduledTaskState> scheduledTaskStateFactory,
       final BatchOperationItemProvider entityKeyProvider,
       final EngineConfiguration engineConfiguration,
-      final int partitionId) {
+      final int partitionId,
+      final BatchOperationMetrics metrics) {
     batchOperationState = scheduledTaskStateFactory.get().getBatchOperationState();
     this.entityKeyProvider = entityKeyProvider;
     pollingInterval = engineConfiguration.getBatchOperationSchedulerInterval();
     chunkSize = engineConfiguration.getBatchOperationChunkSize();
+    this.metrics = metrics;
     this.partitionId = partitionId;
   }
 
@@ -113,6 +117,8 @@ public class BatchOperationExecutionScheduler implements StreamProcessorLifecycl
             keys.stream().skip(i).limit(chunkSize).collect(Collectors.toSet());
         appendChunk(batchOperation.getKey(), taskResultBuilder, chunkKeys);
       }
+
+      metrics.recordItemsPerPartition(keys.size(), partitionId, batchOperation.getKey(), batchOperation.getBatchOperationType());
 
       appendExecution(batchOperation.getKey(), taskResultBuilder);
     } catch (final Exception e) {

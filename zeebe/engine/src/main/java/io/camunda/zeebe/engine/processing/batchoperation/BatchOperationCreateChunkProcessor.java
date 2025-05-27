@@ -7,6 +7,7 @@
  */
 package io.camunda.zeebe.engine.processing.batchoperation;
 
+import io.camunda.zeebe.engine.metrics.BatchOperationMetrics;
 import io.camunda.zeebe.engine.processing.ExcludeAuthorizationCheck;
 import io.camunda.zeebe.engine.processing.streamprocessor.TypedRecordProcessor;
 import io.camunda.zeebe.engine.processing.streamprocessor.writers.StateWriter;
@@ -25,9 +26,12 @@ public final class BatchOperationCreateChunkProcessor
       LoggerFactory.getLogger(BatchOperationCreateChunkProcessor.class);
 
   private final StateWriter stateWriter;
+  private final BatchOperationMetrics metrics;
 
-  public BatchOperationCreateChunkProcessor(final Writers writers) {
+  public BatchOperationCreateChunkProcessor(final Writers writers,
+      final BatchOperationMetrics metrics) {
     stateWriter = writers.state();
+    this.metrics = metrics;
   }
 
   @Override
@@ -37,5 +41,7 @@ public final class BatchOperationCreateChunkProcessor
 
     stateWriter.appendFollowUpEvent(
         command.getKey(), BatchOperationChunkIntent.CREATED, recordValue);
+
+    metrics.batchOperationChunkCreated();
   }
 }

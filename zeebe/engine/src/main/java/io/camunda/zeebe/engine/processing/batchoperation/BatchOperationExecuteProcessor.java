@@ -7,6 +7,7 @@
  */
 package io.camunda.zeebe.engine.processing.batchoperation;
 
+import io.camunda.zeebe.engine.metrics.BatchOperationMetrics;
 import io.camunda.zeebe.engine.processing.ExcludeAuthorizationCheck;
 import io.camunda.zeebe.engine.processing.batchoperation.handlers.BatchOperationExecutor;
 import io.camunda.zeebe.engine.processing.distribution.CommandDistributionBehavior;
@@ -48,6 +49,7 @@ public final class BatchOperationExecuteProcessor
   private final int partitionId;
   private final BatchOperationState batchOperationState;
   private final KeyGenerator keyGenerator;
+  private final BatchOperationMetrics metrics;
 
   private final Map<BatchOperationType, BatchOperationExecutor> handlers;
 
@@ -57,7 +59,8 @@ public final class BatchOperationExecuteProcessor
       final CommandDistributionBehavior commandDistributionBehavior,
       final KeyGenerator keyGenerator,
       final int partitionId,
-      final Map<BatchOperationType, BatchOperationExecutor> handlers) {
+      final Map<BatchOperationType, BatchOperationExecutor> handlers,
+      final BatchOperationMetrics metrics) {
     commandWriter = writers.command();
     stateWriter = writers.state();
     batchOperationState = processingState.getBatchOperationState();
@@ -65,6 +68,7 @@ public final class BatchOperationExecuteProcessor
     this.keyGenerator = keyGenerator;
     this.partitionId = partitionId;
     this.handlers = handlers;
+    this.metrics = metrics;
   }
 
   @Override
@@ -106,16 +110,23 @@ public final class BatchOperationExecuteProcessor
 
     appendBatchOperationExecutionExecutedEvent(command.getValue(), Set.copyOf(entityKeys));
 
+    appendBatchOperationExecuteCommand(command, batchKey, batchOperation);
+  }
+
+  private PersistedBatchOperation getBatchOperation(final long batchOperationKey) {
+    return batchOperationState.get(batchOperationKey).orElse(null);
+  }
+
+  private void appendBatchOperationExecuteCommand(final TypedRecord<BatchOperationExecutionRecord> command,
+      final long batchKey, final PersistedBatchOperation batchOperation) {
     LOGGER.debug(
         "Scheduling next batch for BatchOperation {} on partition {}", batchKey, partitionId);
     final var followupCommand = new BatchOperationExecutionRecord();
     followupCommand.setBatchOperationKey(batchKey);
     commandWriter.appendFollowUpCommand(
         command.getKey(), BatchOperationExecutionIntent.EXECUTE, followupCommand, batchKey, null);
-  }
 
-  private PersistedBatchOperation getBatchOperation(final long batchOperationKey) {
-    return batchOperationState.get(batchOperationKey).orElse(null);
+    metrics.batchOperationExecute(batchOperation.getBatchOperationType());
   }
 
   private void appendBatchOperationExecutionExecutingEvent(
