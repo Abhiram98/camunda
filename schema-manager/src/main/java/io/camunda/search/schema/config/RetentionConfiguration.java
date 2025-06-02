@@ -14,6 +14,7 @@ public class RetentionConfiguration {
   private boolean enabled = false;
   private String minimumAge = DEFAULT_RETENTION_MINIMUM_AGE;
   private String policyName = DEFAULT_RETENTION_POLICY_NAME;
+  private String rolloverInterval = "1d";
 
   public boolean isEnabled() {
     return enabled;
@@ -39,6 +40,14 @@ public class RetentionConfiguration {
     this.policyName = policyName;
   }
 
+  public String getRolloverInterval() {
+    return rolloverInterval;
+  }
+
+  public void setRolloverInterval(final String rolloverInterval) {
+    this.rolloverInterval = rolloverInterval;
+  }
+
   @Override
   public String toString() {
     return "RetentionConfiguration{"
@@ -46,6 +55,9 @@ public class RetentionConfiguration {
         + enabled
         + ", minimumAge='"
         + minimumAge
+        + '\''
+        + ", rolloverInterval='"
+        + rolloverInterval
         + '\''
         + ", policyName='"
         + policyName
