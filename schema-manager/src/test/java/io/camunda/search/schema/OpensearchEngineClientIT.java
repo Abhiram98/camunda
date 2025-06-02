@@ -293,7 +293,7 @@ public class OpensearchEngineClientIT {
       disabledReason = "Excluding from AWS OS IT CI - policies not allowed for shared DBs")
   void shouldCreateIndexLifeCyclePolicy() throws IOException {
     // given, when
-    opensearchEngineClient.putIndexLifeCyclePolicy("policy_name", "20d");
+    opensearchEngineClient.putIndexLifeCyclePolicy("policy_name", "20d", "1d");
 
     // then
     final var req =
@@ -305,13 +305,39 @@ public class OpensearchEngineClientIT {
                   .readTree(response.getBody().get().body())
                   .get("policy")
                   .get("states")
+                  .get(0) // hot state.
+                  .get("actions")
                   .get(0)
+                  .get("rollover")
+                  .get("min_index_age")
+                  .asText())
+          .isEqualTo("1d");
+      assertThat(
+              TestObjectMapper.objectMapper()
+                  .readTree(response.getBody().get().body())
+                  .get("policy")
+                  .get("states")
+                  .get(0) // hot state.
                   .get("transitions")
-                  .get(0)
+                  .get(0) // transitions to archived
+                  .get("conditions")
+                  .get("min_index_age")
+                  .asText())
+          .isEqualTo("1d");
+      assertThat(
+              TestObjectMapper.objectMapper()
+                  .readTree(response.getBody().get().body())
+                  .get("policy")
+                  .get("states")
+                  .get(1) // archived state.
+                  .get("transitions")
+                  .get(0) // transitions to deleted
                   .get("conditions")
                   .get("min_index_age")
                   .asText())
           .isEqualTo("20d");
+
+      // check rollover interval
     }
   }
 
@@ -319,10 +345,13 @@ public class OpensearchEngineClientIT {
   void shouldFailIfIndexStateManagementPolicyInvalid() {
     // given, when, then
     assertThatThrownBy(
-            () -> opensearchEngineClient.putIndexLifeCyclePolicy("policy_name", "test123"))
+            () -> opensearchEngineClient.putIndexLifeCyclePolicy("policy_name", "test123", "1d"))
         .isInstanceOf(SearchEngineException.class)
         .hasMessageContaining(
-            "Creating index state management policy [policy_name] with min_deletion_age [test123] failed.");
+            "Creating index state management policy [policy_name] with "
+                + "min_deletion_age [test123], and rolloverInterval [1d] "
+                + "failed"
+                + ".");
   }
 
   @Nested

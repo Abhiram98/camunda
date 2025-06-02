@@ -62,8 +62,9 @@ import org.slf4j.LoggerFactory;
 public class OpensearchEngineClient implements SearchEngineClient {
   private static final SuppressLogger LOG =
       new SuppressLogger(LoggerFactory.getLogger(OpensearchEngineClient.class));
-  private static final String OPERATE_DELETE_ARCHIVED_POLICY =
+  private static final String OPERATE_LIFECYCLE_POLICY =
       "/schema/opensearch/create/policy/operate_delete_archived_indices.json";
+  private static final String MIN_INDEX_AGE = "min_index_age";
   private static final long AUTO_SLICES = 0; // see OS docs; 0 means auto
   private final ObjectReader objectReader;
   private final ObjectWriter objectWriter;
@@ -207,15 +208,22 @@ public class OpensearchEngineClient implements SearchEngineClient {
   }
 
   @Override
-  public void putIndexLifeCyclePolicy(final String policyName, final String deletionMinAge) {
-    final var request = createIndexStateManagementPolicy(policyName, deletionMinAge);
+  public void putIndexLifeCyclePolicy(
+      final String policyName, final String deletionMinAge, final String rolloverInterval) {
+    final var request =
+        createIndexStateManagementPolicy(policyName, deletionMinAge, rolloverInterval);
 
     try (final var response = client.generic().execute(request)) {
       if (response.getStatus() / 100 != 2) {
         throw new SearchEngineException(
             String.format(
-                "Creating index state management policy [%s] with min_deletion_age [%s] failed. Http response = [%s]",
-                policyName, deletionMinAge, response.getBody().get().bodyAsString()));
+                "Creating index state management policy [%s] with "
+                    + "min_deletion_age [%s], and rolloverInterval [%s] "
+                    + "failed. Http response = [%s]",
+                policyName,
+                deletionMinAge,
+                rolloverInterval,
+                response.getBody().get().bodyAsString()));
       }
 
     } catch (final IOException | OpenSearchException exception) {
@@ -350,10 +358,24 @@ public class OpensearchEngineClient implements SearchEngineClient {
   }
 
   public Request createIndexStateManagementPolicy(
-      final String policyName, final String deletionMinAge) {
-    try (final var policyJson = getClass().getResourceAsStream(OPERATE_DELETE_ARCHIVED_POLICY)) {
+      final String policyName, final String deletionMinAge, final String rolloverInterval) {
+    try (final var policyJson = getClass().getResourceAsStream(OPERATE_LIFECYCLE_POLICY)) {
       final var jsonMap = objectReader.readTree(policyJson);
-      final var conditions =
+
+      // Update rollover condition in actions block
+      final var actions =
+          (ObjectNode)
+              jsonMap
+                  .path("policy")
+                  .path("states")
+                  .path(0)
+                  .path("actions")
+                  .path(0)
+                  .path("rollover");
+      actions.put(MIN_INDEX_AGE, rolloverInterval);
+
+      // Update rollover condition to transition to next state
+      final var transitionToNextState =
           (ObjectNode)
               jsonMap
                   .path("policy")
@@ -362,7 +384,19 @@ public class OpensearchEngineClient implements SearchEngineClient {
                   .path("transitions")
                   .path(0)
                   .path("conditions");
-      conditions.put("min_index_age", deletionMinAge);
+      transitionToNextState.put(MIN_INDEX_AGE, rolloverInterval);
+
+      // Update deletion condition in actions block
+      final var conditions =
+          (ObjectNode)
+              jsonMap
+                  .path("policy")
+                  .path("states")
+                  .path(1)
+                  .path("transitions")
+                  .path(0)
+                  .path("conditions");
+      conditions.put(MIN_INDEX_AGE, deletionMinAge);
 
       final var policy = objectWriter.writeValueAsBytes(jsonMap);
 
@@ -374,7 +408,7 @@ public class OpensearchEngineClient implements SearchEngineClient {
 
     } catch (final IOException e) {
       throw new SearchEngineException(
-          "Failed to deserialize policy file " + OPERATE_DELETE_ARCHIVED_POLICY, e);
+          "Failed to deserialize policy file " + OPERATE_LIFECYCLE_POLICY, e);
     }
   }
 

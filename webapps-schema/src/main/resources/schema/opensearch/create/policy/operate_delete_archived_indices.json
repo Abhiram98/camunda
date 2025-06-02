@@ -4,6 +4,24 @@
     "default_state": "archived",
     "states": [
       {
+        "name": "hot",
+        "actions": [
+          {
+            "rollover": {
+              "min_index_age": "$ROLLOVER_MIN_INDEX_AGE"
+            }
+          }
+        ],
+        "transitions": [
+          {
+            "state_name": "archived",
+            "conditions": {
+              "min_index_age": "$ROLLOVER_MIN_INDEX_AGE"
+            }
+          }
+        ]
+      },
+      {
         "name": "archived",
         "actions": [],
         "transitions": [

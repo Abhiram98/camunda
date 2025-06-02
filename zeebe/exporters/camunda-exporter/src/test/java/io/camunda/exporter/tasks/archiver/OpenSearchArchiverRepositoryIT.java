@@ -368,7 +368,8 @@ final class OpenSearchArchiverRepositoryIT {
   private void createLifeCyclePolicy() {
     final var engineClient = new OpensearchEngineClient(testClient, MAPPER);
     try {
-      engineClient.putIndexLifeCyclePolicy(retention.getPolicyName(), retention.getMinimumAge());
+      engineClient.putIndexLifeCyclePolicy(
+          retention.getPolicyName(), retention.getMinimumAge(), retention.getRolloverInterval());
     } catch (final Exception e) {
       // policy was already created
     }
