@@ -120,13 +120,15 @@ public class ConfigValidatorTest {
     // Rollover interval must match pattern '%d{timeunit}', where timeunit is one of 'd', 'h',
     // 'm', 's'. A valid rollover interval should be for example "1d" or
     // "1h". Zero or negative time units are not allowed.
-    config.getHistory().setRolloverInterval("1day");
+    config.getHistory().getRetention().setRolloverInterval("1day");
 
     // when - then
     assertThatCode(() -> ConfigValidator.validate(config))
         .isInstanceOf(ExporterException.class)
         .hasMessageContaining(
-            "CamundaExporter archiver.rolloverInterval '1day' must match pattern '^(?:[1-9]\\d*)([smhdwMy])$', but didn't.");
+            "CamundaExporter retention.rolloverInterval '1day' must "
+                + "match "
+                + "pattern '^(?:[1-9]\\d*)([smhdwMy])$', but didn't.");
   }
 
   @ParameterizedTest(name = "{0}")
