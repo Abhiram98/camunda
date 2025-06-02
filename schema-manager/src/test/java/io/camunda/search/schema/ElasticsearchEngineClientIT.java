@@ -287,13 +287,25 @@ public class ElasticsearchEngineClientIT {
 
   @Test
   void shouldCreateIndexLifeCyclePolicy() throws IOException {
-    elsEngineClient.putIndexLifeCyclePolicy("policy_name", "20d");
+    elsEngineClient.putIndexLifeCyclePolicy("policy_name", "20d", "1d");
 
     final var policy = elsClient.ilm().getLifecycle(req -> req.name("policy_name"));
 
     assertThat(policy.result().size()).isEqualTo(1);
     assertThat(policy.result().get("policy_name").policy().phases().delete().minAge().time())
         .isEqualTo("20d");
+    assertThat(
+            policy
+                .result()
+                .get("policy_name")
+                .policy()
+                .phases()
+                .hot()
+                .actions()
+                .rollover()
+                .maxAge()
+                .time())
+        .isEqualTo("1d");
     assertThat(policy.result().get("policy_name").policy().phases().delete().actions()).isNotNull();
   }
 

@@ -122,7 +122,7 @@ public class SchemaManager {
           retention.getPolicyName(),
           retention.getMinimumAge());
       searchEngineClient.putIndexLifeCyclePolicy(
-          retention.getPolicyName(), retention.getMinimumAge());
+          retention.getPolicyName(), retention.getMinimumAge(), retention.getRolloverInterval());
     }
     LOG.info("Schema management completed.");
   }
