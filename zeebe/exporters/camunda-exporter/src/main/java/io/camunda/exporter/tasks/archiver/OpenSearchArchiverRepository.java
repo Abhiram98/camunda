@@ -31,9 +31,6 @@ import org.opensearch.client.opensearch._types.Conflicts;
 import org.opensearch.client.opensearch._types.FieldValue;
 import org.opensearch.client.opensearch._types.SortOrder;
 import org.opensearch.client.opensearch._types.Time;
-import org.opensearch.client.opensearch._types.aggregations.Aggregation;
-import org.opensearch.client.opensearch._types.aggregations.AggregationBuilders;
-import org.opensearch.client.opensearch._types.aggregations.CalendarInterval;
 import org.opensearch.client.opensearch._types.query_dsl.Query;
 import org.opensearch.client.opensearch._types.query_dsl.QueryBuilders;
 import org.opensearch.client.opensearch._types.query_dsl.TermsQuery;
@@ -54,7 +51,6 @@ public final class OpenSearchArchiverRepository extends OpensearchRepository
   private static final Time REINDEX_SCROLL_TIMEOUT = Time.of(t -> t.time("30s"));
   private static final long AUTO_SLICES = 0; // see OS docs; 0 means auto
   private static final String INDEX_WILDCARD = ".+-\\d+\\.\\d+\\.\\d+_.+$";
-  private static final String DATES_AGG = "datesAgg";
   private final int partitionId;
   private final HistoryConfiguration config;
   private final RetentionConfiguration retention;
@@ -63,7 +59,6 @@ public final class OpenSearchArchiverRepository extends OpensearchRepository
   private final String batchOperationIndex;
   private final CamundaExporterMetrics metrics;
   private final OpenSearchGenericClient genericClient;
-  private final CalendarInterval rolloverInterval;
 
   public OpenSearchArchiverRepository(
       final int partitionId,
@@ -84,7 +79,6 @@ public final class OpenSearchArchiverRepository extends OpensearchRepository
     this.processInstanceIndex = processInstanceIndex;
     this.batchOperationIndex = batchOperationIndex;
     this.metrics = metrics;
-    rolloverInterval = mapCalendarInterval(config.getRolloverInterval());
     genericClient = new OpenSearchGenericClient(client._transport(), client._transportOptions());
   }
 
@@ -260,14 +254,6 @@ public final class OpenSearchArchiverRepository extends OpensearchRepository
         .build();
   }
 
-  private CalendarInterval mapCalendarInterval(final String alias) {
-    return Arrays.stream(CalendarInterval.values())
-        .filter(c -> c.aliases() != null)
-        .filter(c -> Arrays.binarySearch(c.aliases(), alias) >= 0)
-        .findFirst()
-        .orElseThrow();
-  }
-
   private <T> CompletableFuture<T> sendRequestAsync(final RequestSender<T> sender) {
     try {
       return sender.sendRequest();
@@ -303,18 +289,6 @@ public final class OpenSearchArchiverRepository extends OpensearchRepository
         processInstanceIndex, combinedQuery.toQuery(), ListViewTemplate.END_DATE);
   }
 
-  private Aggregation createFinishedEntityAggregation(final String endDate) {
-    final var dateAggregation =
-        AggregationBuilders.dateHistogram()
-            .field(endDate)
-            .calendarInterval(rolloverInterval)
-            .format(config.getElsRolloverDateFormat())
-            .keyed(false) // get result as an array (not a map)
-            .build();
-
-    return new Aggregation.Builder().dateHistogram(dateAggregation).build();
-  }
-
   private SearchRequest createSearchRequest(
       final String indexName, final Query filterQuery, final String sortField) {
     logger.trace(
@@ -332,7 +306,6 @@ public final class OpenSearchArchiverRepository extends OpensearchRepository
         .fields(fields -> fields.field(sortField).format(config.getElsRolloverDateFormat()))
         .query(query -> query.bool(q -> q.filter(filterQuery)))
         .sort(sort -> sort.field(field -> field.field(sortField).order(SortOrder.Asc)))
-        .aggregations(DATES_AGG, createFinishedEntityAggregation(sortField))
         .size(config.getRolloverBatchSize())
         .build();
   }
