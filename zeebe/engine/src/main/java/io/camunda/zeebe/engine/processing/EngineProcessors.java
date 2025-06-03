@@ -126,6 +126,8 @@ public final class EngineProcessors {
         new DecisionBehavior(
             DecisionEngineFactory.createDecisionEngine(), processingState, processEngineMetrics);
     final var authCheckBehavior = new AuthorizationCheckBehavior(processingState, securityConfig);
+    final var asyncRequestBehavior =
+        new AsyncRequestBehavior(processingState.getKeyGenerator(), writers.state());
     final var transientProcessMessageSubscriptionState =
         typedRecordProcessorContext.getTransientProcessMessageSubscriptionState();
     final BpmnBehaviorsImpl bpmnBehaviors =
@@ -382,6 +384,7 @@ public final class EngineProcessors {
       final RoutingInfo routingInfo,
       final InstantSource clock,
       final EngineConfiguration config,
+      final AsyncRequestBehavior asyncRequestBehavior,
       final AuthorizationCheckBehavior authCheckBehavior,
       final TransientPendingSubscriptionState transientProcessMessageSubscriptionState,
       final ProcessEngineMetrics processEngineMetrics) {
@@ -398,6 +401,7 @@ public final class EngineProcessors {
         routingInfo,
         clock,
         config,
+        asyncRequestBehavior,
         authCheckBehavior,
         transientProcessMessageSubscriptionState,
         processEngineMetrics);
