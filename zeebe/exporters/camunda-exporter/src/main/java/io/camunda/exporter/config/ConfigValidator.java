@@ -75,11 +75,11 @@ public final class ConfigValidator {
               minimumAge, PATTERN_MIN_AGE_FORMAT));
     }
 
-    final String rolloverInterval = configuration.getHistory().getRetention().getRolloverInterval();
+    final String rolloverInterval = configuration.getHistory().getRolloverInterval();
     if (rolloverInterval != null && !CHECK_DATE_INTERVAL.test(rolloverInterval)) {
       throw new ExporterException(
           String.format(
-              "CamundaExporter retention.rolloverInterval '%s' must match pattern '%s', but didn't.",
+              "CamundaExporter rolloverInterval '%s' must match pattern '%s', but didn't.",
               rolloverInterval, PATTERN_DATE_INTERVAL_FORMAT));
     }
 

@@ -148,6 +148,7 @@ public class ExporterConfiguration {
   public static class HistoryConfiguration {
     private String elsRolloverDateFormat = "date";
     private int rolloverBatchSize = 100;
+    private String rolloverInterval = "1d";
     private String waitPeriodBeforeArchiving = "1h";
     private int delayBetweenRuns = 2000;
     private int maxDelayBetweenRuns = 60000;
@@ -159,6 +160,14 @@ public class ExporterConfiguration {
 
     public void setElsRolloverDateFormat(final String elsRolloverDateFormat) {
       this.elsRolloverDateFormat = elsRolloverDateFormat;
+    }
+
+    public String getRolloverInterval() {
+      return rolloverInterval;
+    }
+
+    public void setRolloverInterval(final String rolloverInterval) {
+      this.rolloverInterval = rolloverInterval;
     }
 
     public String getArchivingTimePoint() {

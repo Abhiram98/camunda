@@ -16,7 +16,8 @@ public record SearchEngineConfiguration(
     ConnectConfiguration connect,
     IndexConfiguration index,
     RetentionConfiguration retention,
-    SchemaManagerConfiguration schemaManager) {
+    SchemaManagerConfiguration schemaManager,
+    String rolloverInterval) {
 
   public static SearchEngineConfiguration of(final Function<Builder, Builder> fn) {
     return fn.apply(new Builder()).build();
@@ -27,6 +28,7 @@ public record SearchEngineConfiguration(
     private IndexConfiguration index;
     private RetentionConfiguration retention;
     private SchemaManagerConfiguration schemaManager;
+    private String rolloverInterval;
 
     public Builder connect(final ConnectConfiguration value) {
       connect = value;
@@ -48,12 +50,18 @@ public record SearchEngineConfiguration(
       return this;
     }
 
+    public Builder rolloverInterval(final String value) {
+      rolloverInterval = value;
+      return this;
+    }
+
     public SearchEngineConfiguration build() {
       return new SearchEngineConfiguration(
           ofNullable(connect).orElseGet(ConnectConfiguration::new),
           ofNullable(index).orElseGet(IndexConfiguration::new),
           ofNullable(retention).orElseGet(RetentionConfiguration::new),
-          ofNullable(schemaManager).orElseGet(SchemaManagerConfiguration::new));
+          ofNullable(schemaManager).orElseGet(SchemaManagerConfiguration::new),
+          ofNullable(rolloverInterval).orElse("1d"));
     }
   }
 }

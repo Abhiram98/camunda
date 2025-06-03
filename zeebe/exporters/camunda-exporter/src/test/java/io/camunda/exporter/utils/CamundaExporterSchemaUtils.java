@@ -31,7 +31,8 @@ public final class CamundaExporterSchemaUtils {
                   b ->
                       b.connect(config.getConnect())
                           .index(config.getIndex())
-                          .retention(config.getHistory().getRetention())),
+                          .retention(config.getHistory().getRetention())
+                          .rolloverInterval(config.getHistory().getRolloverInterval())),
               clientAdapter.objectMapper())
           .startup();
     }

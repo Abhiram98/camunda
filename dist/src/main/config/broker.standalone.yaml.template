@@ -906,7 +906,6 @@
         #   retention:
         #     enabled: false
         #     minimumAge: 30d
-        #     rolloverInterval: "1d"
         #     policyName: zeebe-record-retention-policy
 
       # Opensearch Exporter ----------
@@ -929,7 +928,6 @@
         #   retention:
         #     enabled: false
         #     minimumAge: 30d
-        #     rolloverInterval: "1d"
         #     policyName: zeebe-record-retention-policy
         #     policyDescription: Zeebe record retention policy
         #
@@ -1027,6 +1025,7 @@
         #
         #   history:
         #     elsRolloverDateFormat: "date"
+        #     rolloverInterval: "1d"
         #     rolloverBatchSize: 100
         #     waitPeriodBeforeArchiving: "1h"
         #     delayBetweenRuns: 2000
@@ -1034,7 +1033,6 @@
         #     retention:
         #       enabled: false
         #       minimumAge: 30d
-        #       rolloverInterval: "1d"
         #       policyName: camunda-retention-policy
         #
         #   createSchema: true

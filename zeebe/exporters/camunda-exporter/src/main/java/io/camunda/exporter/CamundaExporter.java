@@ -275,7 +275,8 @@ public class CamundaExporter implements Exporter {
             b ->
                 b.connect(configuration.getConnect())
                     .index(configuration.getIndex())
-                    .retention(configuration.getHistory().getRetention())),
+                    .retention(configuration.getHistory().getRetention())
+                    .rolloverInterval(configuration.getHistory().getRolloverInterval())),
         clientAdapter.objectMapper());
   }
 
