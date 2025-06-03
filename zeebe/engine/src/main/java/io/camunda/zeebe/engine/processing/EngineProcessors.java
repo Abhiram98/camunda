@@ -197,6 +197,7 @@ public final class EngineProcessors {
             routingInfo,
             clock,
             config,
+            asyncRequestBehavior,
             authCheckBehavior,
             transientProcessMessageSubscriptionState,
             processEngineMetrics);
@@ -216,7 +217,8 @@ public final class EngineProcessors {
         authCheckBehavior);
 
     final var userTaskProcessor =
-        createUserTaskProcessor(processingState, bpmnBehaviors, writers, authCheckBehavior);
+        createUserTaskProcessor(
+            processingState, bpmnBehaviors, writers, asyncRequestBehavior, authCheckBehavior);
     addUserTaskProcessors(typedRecordProcessors, userTaskProcessor);
 
     addIncidentProcessors(
@@ -335,6 +337,7 @@ public final class EngineProcessors {
       final MutableProcessingState processingState,
       final BpmnBehaviorsImpl bpmnBehaviors,
       final Writers writers,
+      final AsyncRequestBehavior asyncRequestBehavior,
       final AuthorizationCheckBehavior authCheckBehavior) {
     return new UserTaskProcessor(
         processingState,
@@ -342,6 +345,7 @@ public final class EngineProcessors {
         processingState.getKeyGenerator(),
         bpmnBehaviors,
         writers,
+        asyncRequestBehavior,
         authCheckBehavior);
   }
 
