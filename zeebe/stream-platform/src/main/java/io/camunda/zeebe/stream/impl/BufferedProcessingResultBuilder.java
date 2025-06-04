@@ -7,6 +7,7 @@
  */
 package io.camunda.zeebe.stream.impl;
 
+import static io.camunda.zeebe.protocol.record.RecordMetadataDecoder.batchOperationKeyNullValue;
 import static io.camunda.zeebe.protocol.record.RecordMetadataDecoder.operationReferenceNullValue;
 
 import io.camunda.zeebe.msgpack.UnpackedObject;
@@ -42,15 +43,19 @@ final class BufferedProcessingResultBuilder implements ProcessingResultBuilder {
   private final RecordBatch mutableRecordBatch;
   private ProcessingResponseImpl processingResponse;
   private final long operationReference;
+  private final long batchOperationKey;
 
   BufferedProcessingResultBuilder(final RecordBatchSizePredicate predicate) {
-    this(predicate, operationReferenceNullValue());
+    this(predicate, operationReferenceNullValue(), batchOperationKeyNullValue());
   }
 
   BufferedProcessingResultBuilder(
-      final RecordBatchSizePredicate predicate, final long operationReference) {
+      final RecordBatchSizePredicate predicate,
+      final long operationReference,
+      final long batchOperationKey) {
     mutableRecordBatch = new RecordBatch(predicate);
     this.operationReference = operationReference;
+    this.batchOperationKey = batchOperationKey;
   }
 
   @Override
@@ -59,6 +64,10 @@ final class BufferedProcessingResultBuilder implements ProcessingResultBuilder {
 
     if (operationReference != operationReferenceNullValue()) {
       metadata.operationReference(operationReference);
+    }
+
+    if (batchOperationKey != batchOperationKeyNullValue()) {
+      metadata.batchOperationKey(batchOperationKey);
     }
 
     final ValueType valueType = TypedEventRegistry.TYPE_REGISTRY.get(value.getClass());
@@ -105,7 +114,8 @@ final class BufferedProcessingResultBuilder implements ProcessingResultBuilder {
             .rejectionType(rejectionType)
             .rejectionReason(rejectionReason)
             .valueType(valueType)
-            .operationReference(operationReference);
+            .operationReference(operationReference)
+            .batchOperationKey(batchOperationKey);
     final var entry = RecordBatchEntry.createEntry(key, metadata, -1, value);
     processingResponse = new ProcessingResponseImpl(entry, requestId, requestStreamId);
     return this;
