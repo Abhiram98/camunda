@@ -7,7 +7,7 @@
  */
 package io.camunda.exporter.handlers.batchoperation;
 
-import static io.camunda.zeebe.protocol.record.RecordMetadataDecoder.operationReferenceNullValue;
+import static io.camunda.zeebe.protocol.record.RecordMetadataDecoder.batchOperationKeyNullValue;
 
 import io.camunda.exporter.exceptions.PersistenceException;
 import io.camunda.exporter.handlers.ExportHandler;
@@ -45,13 +45,13 @@ public abstract class AbstractOperationStatusHandler<R extends RecordValue>
 
   @Override
   public boolean handlesRecord(final Record<R> record) {
-    return record.getOperationReference() != operationReferenceNullValue()
+    return record.getBatchOperationKey() != batchOperationKeyNullValue()
         && (isCompleted(record) || isFailed(record));
   }
 
   @Override
   public List<String> generateIds(final Record<R> record) {
-    return List.of(generateId(record.getOperationReference(), getItemKey(record)));
+    return List.of(generateId(record.getBatchOperationKey(), getItemKey(record)));
   }
 
   @Override
