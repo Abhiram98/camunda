@@ -290,7 +290,12 @@ public final class EngineProcessors {
     final var redistributionBehavior =
         new RedistributionBehavior(writers, commandDistributionBehavior, processingState);
     ScalingProcessors.addScalingProcessors(
-        redistributionBehavior, typedRecordProcessors, writers, keyGenerator, processingState);
+        redistributionBehavior,
+        commandDistributionBehavior,
+        typedRecordProcessors,
+        writers,
+        keyGenerator,
+        processingState);
 
     TenantProcessors.addTenantProcessors(
         typedRecordProcessors,
