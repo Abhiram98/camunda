@@ -573,6 +573,7 @@ public final class EventAppliers implements EventApplier {
     register(ScaleIntent.SCALING_UP, new ScalingUpApplier(state.getRoutingState()));
     register(ScaleIntent.SCALED_UP, new ScaledUpApplier(state.getRoutingState()));
     register(ScaleIntent.STATUS_RESPONSE, new ScaleUpStatusResponseApplier());
+    register(ScaleIntent.PARTITIONS_BOOTSTRAPPED, new PartitionsBootstrappedApplier(state));
     register(RedistributionIntent.STARTED, new RedistributionStartedApplier(state));
     register(RedistributionIntent.COMPLETED, new RedistributionCompletedApplier(state));
   }
