@@ -78,6 +78,12 @@ public class SearchEngineClientUtils {
       return this;
     }
 
+    public SchemaSettingsAppender withLifeCycle(
+        final String lifeCycleName, final String rolloverAlias) {
+      indexBlock.put("lifecycle", lifeCycleName);
+      return this;
+    }
+
     public InputStream build() throws IOException {
       return new ByteArrayInputStream(objectMapper.writeValueAsBytes(map));
     }

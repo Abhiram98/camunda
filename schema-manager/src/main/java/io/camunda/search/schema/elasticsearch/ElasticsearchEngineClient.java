@@ -29,6 +29,7 @@ import co.elastic.clients.elasticsearch.indices.IndexTemplateSummary;
 import co.elastic.clients.elasticsearch.indices.PutIndexTemplateRequest;
 import co.elastic.clients.elasticsearch.indices.PutIndicesSettingsRequest;
 import co.elastic.clients.elasticsearch.indices.PutMappingRequest;
+import co.elastic.clients.elasticsearch.indices.UpdateAliasesRequest;
 import co.elastic.clients.elasticsearch.indices.get_index_template.IndexTemplateItem;
 import co.elastic.clients.elasticsearch.indices.put_index_template.IndexTemplateMapping;
 import co.elastic.clients.json.JsonpDeserializer;
@@ -63,7 +64,6 @@ public class ElasticsearchEngineClient implements SearchEngineClient {
       new SuppressLogger(LoggerFactory.getLogger(ElasticsearchEngineClient.class));
   private static final Slices AUTO_SLICES =
       Slices.of(slices -> slices.computed(SlicesCalculation.Auto));
-  private static final String DEFAULT_ROLLOVER_INTERVAL = "1d";
   private final ElasticsearchClient client;
   private final SearchEngineClientUtils utils;
   private final ObjectMapper mapper;
@@ -196,6 +196,29 @@ public class ElasticsearchEngineClient implements SearchEngineClient {
       final var errMsg =
           String.format(
               "settings PUT failed for the following indices [%s]",
+              utils.listIndicesByAlias(indexDescriptors));
+      LOG.error(errMsg, e);
+      throw new SearchEngineException(errMsg, e);
+    }
+  }
+
+  @Override
+  public void createAlias(final List<IndexDescriptor> indexDescriptors, final String aliasName) {
+    final List<String> indices =
+        indexDescriptors.stream().map(IndexDescriptor::getIndexName).toList();
+    final UpdateAliasesRequest request =
+        new UpdateAliasesRequest.Builder()
+            .actions(
+                action ->
+                    action.add(add -> add.indices(indices).alias(aliasName).isWriteIndex(true)))
+            .build();
+
+    try {
+      client.indices().updateAliases(request);
+    } catch (final IOException | ElasticsearchException e) {
+      final var errMsg =
+          String.format(
+              "Creating alias failed for the following indices [%s]",
               utils.listIndicesByAlias(indexDescriptors));
       LOG.error(errMsg, e);
       throw new SearchEngineException(errMsg, e);
@@ -343,11 +366,6 @@ public class ElasticsearchEngineClient implements SearchEngineClient {
         .index(utils.listIndicesByAlias(indexDescriptors))
         .settings(settings)
         .build();
-  }
-
-  public PutLifecycleRequest putLifecycleRequest(
-      final String policyName, final String deletionMinAge) {
-    return putLifecycleRequest(policyName, deletionMinAge, DEFAULT_ROLLOVER_INTERVAL);
   }
 
   public PutLifecycleRequest putLifecycleRequest(

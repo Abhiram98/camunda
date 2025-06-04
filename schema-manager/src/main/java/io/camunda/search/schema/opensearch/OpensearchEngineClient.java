@@ -208,6 +208,9 @@ public class OpensearchEngineClient implements SearchEngineClient {
   }
 
   @Override
+  public void createAlias(final List<IndexDescriptor> indexDescriptors, final String aliasName) {}
+
+  @Override
   public void putIndexLifeCyclePolicy(
       final String policyName, final String deletionMinAge, final String rolloverInterval) {
     final var request =

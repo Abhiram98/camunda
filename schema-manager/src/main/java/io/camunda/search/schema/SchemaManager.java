@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 public class SchemaManager {
 
   public static final int INDEX_CREATION_TIMEOUT_SECONDS = 60;
+  public static final String ROLLOVER_INTERVAL_ALIAS = "camunda-rollover-interval";
   private static final Logger LOG = LoggerFactory.getLogger(SchemaManager.class);
   private final SearchEngineClient searchEngineClient;
   private final Collection<IndexDescriptor> indexDescriptors;
@@ -121,6 +122,7 @@ public class SchemaManager {
           "Retention is enabled. Create ILM policy [name: '{}', retention: '{}']",
           retention.getPolicyName(),
           retention.getMinimumAge());
+      // rollover should be set even if retenttion is disabled.
       searchEngineClient.putIndexLifeCyclePolicy(
           retention.getPolicyName(), retention.getMinimumAge(), config.rolloverInterval());
     }
@@ -134,6 +136,10 @@ public class SchemaManager {
               desc, getIndexSettingsFromConfig(desc.getIndexName()));
         });
 
+    // check if these are the correct descriptors to update
+    getAllIndexDescriptors().forEach(this::updateLifeCycleRolloverAlias);
+    searchEngineClient.createAlias(
+        getAllIndexDescriptors().stream().toList(), ROLLOVER_INTERVAL_ALIAS);
     getAllIndexDescriptors().forEach(this::updateIndexReplicaCount);
   }
 
@@ -146,6 +152,12 @@ public class SchemaManager {
         String.valueOf(getNumberOfReplicasFromConfig(indexDescriptor.getIndexName()));
     searchEngineClient.putSettings(
         List.of(indexDescriptor), Map.of("index.number_of_replicas", indexReplicaCount));
+  }
+
+  private void updateLifeCycleRolloverAlias(final IndexDescriptor indexDescriptor) {
+    searchEngineClient.putSettings(
+        List.of(indexDescriptor),
+        Map.of("index.lifecycle.rollover_alias", ROLLOVER_INTERVAL_ALIAS));
   }
 
   public void initialiseResources() {
