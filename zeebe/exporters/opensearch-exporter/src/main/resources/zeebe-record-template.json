@@ -53,6 +53,9 @@
         },
         "operationReference": {
           "type": "long"
+        },
+        "batchOperationKey": {
+          "type": "long"
         }
       }
     }
