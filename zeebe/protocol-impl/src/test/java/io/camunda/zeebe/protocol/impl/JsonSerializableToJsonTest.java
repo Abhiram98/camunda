@@ -177,7 +177,8 @@ final class JsonSerializableToJsonTest {
                   .requestId(requestId)
                   .requestStreamId(requestStreamId)
                   .authorization(authInfo)
-                  .operationReference(1234);
+                  .operationReference(1234)
+                  .batchOperationKey(5678);
 
               final String resourceName = "resource";
               final DirectBuffer resource = wrapString("contents");
@@ -227,6 +228,7 @@ final class JsonSerializableToJsonTest {
           },
           "recordVersion": 10,
           "operationReference": 1234,
+          "batchOperationKey": 5678,
           "sourceRecordPosition": 231,
           "value": {
             "processesMetadata": [
@@ -291,6 +293,7 @@ final class JsonSerializableToJsonTest {
           "authorizations": {},
           "recordVersion": 1,
           "operationReference": -1,
+          "batchOperationKey": -1,
           "value": {
               "resources": [],
               "decisionRequirementsMetadata": [],
