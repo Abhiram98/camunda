@@ -109,6 +109,11 @@ public final class TypedRecordImpl implements TypedRecord {
   }
 
   @Override
+  public long getBatchOperationKey() {
+    return metadata.getBatchOperationKey();
+  }
+
+  @Override
   public Record copyOf() {
     return CopiedRecords.createCopiedRecord(getPartitionId(), rawEvent);
   }

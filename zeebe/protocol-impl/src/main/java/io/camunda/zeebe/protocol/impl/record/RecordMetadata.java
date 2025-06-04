@@ -56,6 +56,7 @@ public final class RecordMetadata implements BufferWriter, BufferReader {
   private VersionInfo brokerVersion = CURRENT_BROKER_VERSION;
   private int recordVersion = DEFAULT_RECORD_VERSION;
   private long operationReference;
+  private long batchOperationKey;
 
   public RecordMetadata() {
     reset();
@@ -80,6 +81,7 @@ public final class RecordMetadata implements BufferWriter, BufferReader {
     intent = Intent.fromProtocolValue(valueType, decoder.intent());
     rejectionType = decoder.rejectionType();
     operationReference = decoder.operationReference();
+    batchOperationKey = decoder.batchOperationKey();
 
     brokerVersion =
         Optional.ofNullable(decoder.brokerVersion())
@@ -149,7 +151,8 @@ public final class RecordMetadata implements BufferWriter, BufferReader {
         .intent(intentValue)
         .rejectionType(rejectionType)
         .recordVersion(recordVersion)
-        .operationReference(operationReference);
+        .operationReference(operationReference)
+        .batchOperationKey(batchOperationKey);
 
     encoder
         .brokerVersion()
@@ -282,6 +285,15 @@ public final class RecordMetadata implements BufferWriter, BufferReader {
     return operationReference;
   }
 
+  public RecordMetadata batchOperationKey(final long batchOperationKey) {
+    this.batchOperationKey = batchOperationKey;
+    return this;
+  }
+
+  public long getBatchOperationKey() {
+    return batchOperationKey;
+  }
+
   public RecordMetadata reset() {
     recordType = RecordType.NULL_VAL;
     requestId = RecordMetadataEncoder.requestIdNullValue();
@@ -296,6 +308,7 @@ public final class RecordMetadata implements BufferWriter, BufferReader {
     brokerVersion = CURRENT_BROKER_VERSION;
     recordVersion = DEFAULT_RECORD_VERSION;
     operationReference = RecordMetadataEncoder.operationReferenceNullValue();
+    batchOperationKey = RecordMetadataEncoder.batchOperationKeyNullValue();
     return this;
   }
 
@@ -313,7 +326,8 @@ public final class RecordMetadata implements BufferWriter, BufferReader {
         protocolVersion,
         brokerVersion,
         recordVersion,
-        operationReference);
+        operationReference,
+        batchOperationKey);
   }
 
   @Override
@@ -336,7 +350,8 @@ public final class RecordMetadata implements BufferWriter, BufferReader {
         && authorization.equals(that.authorization)
         && brokerVersion.equals(that.brokerVersion)
         && recordVersion == that.recordVersion
-        && operationReference == that.operationReference;
+        && operationReference == that.operationReference
+        && batchOperationKey == that.batchOperationKey;
   }
 
   @Override
@@ -366,6 +381,9 @@ public final class RecordMetadata implements BufferWriter, BufferReader {
     }
     if (operationReference != RecordMetadataEncoder.operationReferenceNullValue()) {
       builder.append(", operationReference=").append(operationReference);
+    }
+    if (batchOperationKey != RecordMetadataEncoder.batchOperationKeyNullValue()) {
+      builder.append(", batchOperationKey=").append(batchOperationKey);
     }
 
     builder.append('}');

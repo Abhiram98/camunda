@@ -99,6 +99,11 @@ public class UnwrittenRecord implements TypedRecord {
   }
 
   @Override
+  public long getBatchOperationKey() {
+    return metadata.getBatchOperationKey();
+  }
+
+  @Override
   public long getKey() {
     return key;
   }
