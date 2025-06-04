@@ -376,6 +376,7 @@ public final class PartitionManagerImpl
     concurrencyControl.run(
         () ->
             bootstrapPartition(partitionMetadata, partitionConfig, initializeFromSnapshot)
+                .andThen(ignored -> notifyPartitionBootstrapped(partitionId), concurrencyControl)
                 .onComplete(future));
     return future;
   }
@@ -543,5 +544,10 @@ public final class PartitionManagerImpl
       final Duration timeout) {
     return scalingExecutor.awaitRedistributionCompletion(
         desiredPartitionCount, redistributedPartitions, timeout);
+  }
+
+  @Override
+  public ActorFuture<Void> notifyPartitionBootstrapped(final int partitionId) {
+    return scalingExecutor.notifyPartitionBootstrapped(partitionId);
   }
 }
