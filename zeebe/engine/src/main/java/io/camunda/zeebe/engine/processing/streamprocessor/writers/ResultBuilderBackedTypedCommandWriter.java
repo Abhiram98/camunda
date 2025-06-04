@@ -9,6 +9,7 @@ package io.camunda.zeebe.engine.processing.streamprocessor.writers;
 
 import io.camunda.zeebe.protocol.impl.encoding.AuthInfo;
 import io.camunda.zeebe.protocol.impl.record.RecordMetadata;
+import io.camunda.zeebe.protocol.record.RecordMetadataDecoder;
 import io.camunda.zeebe.protocol.record.RecordType;
 import io.camunda.zeebe.protocol.record.RecordValue;
 import io.camunda.zeebe.protocol.record.RejectionType;
@@ -37,12 +38,14 @@ final class ResultBuilderBackedTypedCommandWriter extends AbstractResultBuilderB
 
   @Override
   public void appendFollowUpCommand(
-      final long key,
-      final Intent intent,
-      final RecordValue value,
-      final long operationReference,
-      final Map<String, Object> claims) {
-    appendRecord(key, intent, value, operationReference, claims);
+      final long key, final Intent intent, final RecordValue value, final Metadata metadata) {
+    appendRecord(
+        key,
+        intent,
+        value,
+        metadata.operationReference(),
+        metadata.batchOperationKey(),
+        metadata.claims());
   }
 
   @Override
@@ -51,7 +54,13 @@ final class ResultBuilderBackedTypedCommandWriter extends AbstractResultBuilderB
   }
 
   private void appendRecord(final long key, final Intent intent, final RecordValue value) {
-    appendRecord(key, intent, value, -1, null);
+    appendRecord(
+        key,
+        intent,
+        value,
+        RecordMetadataDecoder.operationReferenceNullValue(),
+        RecordMetadataDecoder.batchOperationKeyNullValue(),
+        null);
   }
 
   private void appendRecord(
@@ -59,6 +68,7 @@ final class ResultBuilderBackedTypedCommandWriter extends AbstractResultBuilderB
       final Intent intent,
       final RecordValue value,
       final long operationReference,
+      final long batchOperationKey,
       final Map<String, Object> claims) {
     final var metadata =
         new RecordMetadata()
