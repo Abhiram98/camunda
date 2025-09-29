@@ -18,7 +18,7 @@ import io.camunda.zeebe.protocol.record.value.AsyncRequestMetadataRecordValue;
 public final class AsyncRequestMetadataRecord extends UnifiedRecordValue
     implements AsyncRequestMetadataRecordValue {
 
-  private final LongProperty requestKeyProperty = new LongProperty("requestKey", -1);
+  private final LongProperty scopeKeyProperty = new LongProperty("requestKey", -1);
   private final EnumProperty<ValueType> valueTypeProperty =
       new EnumProperty<>("valueType", ValueType.class, ValueType.NULL_VAL);
   private final IntegerProperty intentProperty = new IntegerProperty("intent", Intent.NULL_VAL);
@@ -30,7 +30,7 @@ public final class AsyncRequestMetadataRecord extends UnifiedRecordValue
 
   public AsyncRequestMetadataRecord() {
     super(6);
-    declareProperty(requestKeyProperty)
+    declareProperty(scopeKeyProperty)
         .declareProperty(valueTypeProperty)
         .declareProperty(intentProperty)
         .declareProperty(requestIdProperty)
@@ -39,7 +39,7 @@ public final class AsyncRequestMetadataRecord extends UnifiedRecordValue
   }
 
   public void wrap(final AsyncRequestMetadataRecord record) {
-    requestKeyProperty.setValue(record.getRequestKey());
+    scopeKeyProperty.setValue(record.getRequestKey());
     valueTypeProperty.setValue(record.getValueType());
     intentProperty.setValue(record.getIntent().value());
     requestIdProperty.setValue(record.getRequestId());
@@ -49,11 +49,11 @@ public final class AsyncRequestMetadataRecord extends UnifiedRecordValue
 
   @Override
   public long getRequestKey() {
-    return requestKeyProperty.getValue();
+    return scopeKeyProperty.getValue();
   }
 
   public AsyncRequestMetadataRecord setRequestKey(final long requestKey) {
-    requestKeyProperty.setValue(requestKey);
+    scopeKeyProperty.setValue(requestKey);
     return this;
   }
 
