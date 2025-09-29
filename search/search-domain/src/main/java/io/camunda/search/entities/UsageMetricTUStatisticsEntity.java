@@ -13,20 +13,20 @@ import java.util.Map;
 public record UsageMetricTUStatisticsEntity(
     long totalAtu, Map<String, UsageMetricTUStatisticsEntityTenant> tenants) {
 
-  public record UsageMetricTUStatisticsEntityTenant(long atu) {
+  public record UsageMetricTUStatisticsEntityTenant ( long atu){
 
     public static class Builder implements ObjectBuilder<UsageMetricTUStatisticsEntityTenant> {
 
-      private long atu = 0;
+      private long tu = 0;
 
       public UsageMetricTUStatisticsEntityTenant.Builder atu(final long atu) {
-        this.atu = atu;
+        this.tu = atu;
         return this;
       }
 
       @Override
       public UsageMetricTUStatisticsEntityTenant build() {
-        return new UsageMetricTUStatisticsEntityTenant(atu);
+        return new UsageMetricTUStatisticsEntityTenant(tu);
       }
     }
   }
