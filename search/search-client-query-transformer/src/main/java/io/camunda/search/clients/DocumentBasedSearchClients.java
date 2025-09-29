@@ -283,12 +283,12 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   public List<ProcessFlowNodeStatisticsEntity> executeProcessDefinitionFlowNodeStatistics(
       final ProcessDefinitionStatisticsFilter filter) {
     return executeWithResourceAccessChecks(
-            access ->
-                getSearchExecutor()
-                    .aggregate(
-                        new ProcessDefinitionFlowNodeStatisticsQuery(filter),
-                        ProcessDefinitionFlowNodeStatisticsAggregationResult.class,
-                        access))
+        access ->
+            getSearchExecutor()
+                .aggregate(
+                    new ProcessDefinitionFlowNodeStatisticsQuery(filter),
+                    ProcessDefinitionFlowNodeStatisticsAggregationResult.class,
+                    access))
         .items();
   }
 
@@ -328,13 +328,13 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   public List<ProcessFlowNodeStatisticsEntity> processInstanceFlowNodeStatistics(
       final long processInstanceKey) {
     return executeWithResourceAccessChecks(
-            access ->
-                getSearchExecutor()
-                    .aggregate(
-                        new ProcessInstanceFlowNodeStatisticsQuery(
-                            new ProcessInstanceStatisticsFilter(processInstanceKey)),
-                        ProcessInstanceFlowNodeStatisticsAggregationResult.class,
-                        access))
+        access ->
+            getSearchExecutor()
+                .aggregate(
+                    new ProcessInstanceFlowNodeStatisticsQuery(
+                        new ProcessInstanceStatisticsFilter(processInstanceKey)),
+                    ProcessInstanceFlowNodeStatisticsAggregationResult.class,
+                    access))
         .items();
   }
 
@@ -437,13 +437,13 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   }
 
   @Override
-  public SearchQueryResult<GroupEntity> searchGroups(final GroupQuery groupQuery) {
-    var query = groupQuery;
-    if (groupQuery.filter().tenantId() != null) {
-      query = expandTenantFilter(groupQuery);
+  public SearchQueryResult<GroupEntity> searchGroups(final GroupQuery query) {
+    var query = query;
+    if (query.filter().tenantId() != null) {
+      query = expandTenantFilter(query);
     }
-    if (groupQuery.filter().roleId() != null) {
-      query = expandRoleFilter(groupQuery);
+    if (query.filter().roleId() != null) {
+      query = expandRoleFilter(query);
     }
     final var finalQuery = query;
     return executeWithResourceAccessChecks(
