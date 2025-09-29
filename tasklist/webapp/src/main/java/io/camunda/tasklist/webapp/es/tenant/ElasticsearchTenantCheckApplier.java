@@ -29,13 +29,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ElasticsearchTenantCheckApplier implements TenantCheckApplier<SearchRequest> {
 
-  @Autowired private TenantService tenantService;
+  @Autowired
+  private TenantService tenantService;
 
   @Override
   public void apply(final SearchRequest searchRequest) {
-    final var tenants = tenantService.getAuthenticatedTenants();
-    final var tenantCheckQueryType = tenants.getTenantAccessType();
-    final var searchByTenantIds = tenants.getTenantIds();
+    final var tenantAccess = tenantService.getAuthenticatedTenants();
+    final var tenantCheckQueryType = tenantAccess.getTenantAccessType();
+    final var searchByTenantIds = tenantAccess.getTenantIds();
 
     applyTenantCheckOnQuery(searchRequest, tenantCheckQueryType, searchByTenantIds);
   }
