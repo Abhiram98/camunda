@@ -51,7 +51,7 @@ public record RdbmsWriterConfig(
     private int queueSize = DEFAULT_QUEUE_SIZE;
     private Duration defaultHistoryTTL = DEFAULT_HISTORY_TTL;
     private Duration cancelProcessInstanceHistoryTTL = DEFAULT_BATCH_OPERATION_HISTORY_TTL;
-    private Duration migrateProcessInstanceHistoryTTL = DEFAULT_BATCH_OPERATION_HISTORY_TTL;
+    private Duration batchOperationMigrateProcessInstanceHistoryTTL = DEFAULT_BATCH_OPERATION_HISTORY_TTL;
     private Duration modifyProcessInstanceHistoryTTL = DEFAULT_BATCH_OPERATION_HISTORY_TTL;
     private Duration resolveIncidentHistoryTTL = DEFAULT_BATCH_OPERATION_HISTORY_TTL;
     private Duration minHistoryCleanupInterval = DEFAULT_MIN_HISTORY_CLEANUP_INTERVAL;
@@ -83,7 +83,7 @@ public record RdbmsWriterConfig(
 
     public Builder migrateProcessInstanceHistoryTTL(
         final Duration migrateProcessInstanceHistoryTTL) {
-      this.migrateProcessInstanceHistoryTTL = migrateProcessInstanceHistoryTTL;
+      batchOperationMigrateProcessInstanceHistoryTTL = migrateProcessInstanceHistoryTTL;
       return this;
     }
 
@@ -130,7 +130,7 @@ public record RdbmsWriterConfig(
           queueSize,
           defaultHistoryTTL,
           cancelProcessInstanceHistoryTTL,
-          migrateProcessInstanceHistoryTTL,
+          batchOperationMigrateProcessInstanceHistoryTTL,
           modifyProcessInstanceHistoryTTL,
           resolveIncidentHistoryTTL,
           minHistoryCleanupInterval,
