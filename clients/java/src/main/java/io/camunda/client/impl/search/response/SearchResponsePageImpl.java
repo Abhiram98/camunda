@@ -20,14 +20,15 @@ import io.camunda.client.api.search.response.SearchResponsePage;
 public class SearchResponsePageImpl implements SearchResponsePage {
 
   private final long totalItems;
-  private final boolean hasMore;
+  private final boolean hasMoreTotalItems;
   private final String startCursor;
   private final String endCursor;
 
   public SearchResponsePageImpl(
-      final long totalItems, final boolean hasMore, final String startCursor, final String endCursor) {
+      final long totalItems, final boolean hasMore, final String startCursor,
+      final String endCursor) {
     this.totalItems = totalItems;
-    this.hasMore = hasMore;
+    hasMoreTotalItems = hasMore;
     this.startCursor = startCursor;
     this.endCursor = endCursor;
   }
@@ -39,7 +40,7 @@ public class SearchResponsePageImpl implements SearchResponsePage {
 
   @Override
   public boolean hasMore() {
-    return hasMore;
+    return hasMoreTotalItems;
   }
 
   @Override
