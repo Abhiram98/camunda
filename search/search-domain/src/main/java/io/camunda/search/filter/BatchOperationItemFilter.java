@@ -26,7 +26,7 @@ public record BatchOperationItemFilter(
 
     private List<String> batchOperationIds;
     private List<Long> itemKeys;
-    private List<Long> processInstanceKeys;
+    private List<Long> processInstanceKeyOperations;
     private List<String> state;
 
     public Builder batchOperationIds(final String value, final String... values) {
@@ -52,7 +52,7 @@ public record BatchOperationItemFilter(
     }
 
     public Builder processInstanceKeys(final List<Long> values) {
-      processInstanceKeys = addValuesToList(processInstanceKeys, values);
+      processInstanceKeyOperations = addValuesToList(processInstanceKeyOperations, values);
       return this;
     }
 
@@ -70,7 +70,7 @@ public record BatchOperationItemFilter(
       return new BatchOperationItemFilter(
           Objects.requireNonNullElse(batchOperationIds, Collections.emptyList()),
           Objects.requireNonNullElse(itemKeys, Collections.emptyList()),
-          Objects.requireNonNullElse(processInstanceKeys, Collections.emptyList()),
+          Objects.requireNonNullElse(processInstanceKeyOperations, Collections.emptyList()),
           Objects.requireNonNullElse(state, Collections.emptyList()));
     }
   }
