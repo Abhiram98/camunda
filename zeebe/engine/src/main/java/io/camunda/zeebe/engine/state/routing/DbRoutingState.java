@@ -41,7 +41,7 @@ public final class DbRoutingState implements MutableRoutingState {
             ZbColumnFamilies.ROUTING, transactionContext, key, new PersistedRoutingInfo());
     bootstrappedAtColumnFamily =
         zeebeDb.createColumnFamily(
-            ZbColumnFamilies.BOOTSTRAPPED_AT, transactionContext, partitionIdKey, new DbLong());
+            ZbColumnFamilies.SCALING_STARTED_AT, transactionContext, partitionIdKey, new DbLong());
   }
 
   @Override
