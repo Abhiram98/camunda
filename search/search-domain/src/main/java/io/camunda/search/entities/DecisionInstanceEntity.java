@@ -20,7 +20,7 @@ public record DecisionInstanceEntity(
     String evaluationFailureMessage,
     Long processDefinitionKey,
     Long processInstanceKey,
-    Long elementInstanceKey,
+    Long flowNodeInstanceKey,
     String tenantId,
     String decisionDefinitionId,
     Long decisionDefinitionKey,
@@ -31,7 +31,7 @@ public record DecisionInstanceEntity(
     List<DecisionInstanceInputEntity> evaluatedInputs,
     List<DecisionInstanceOutputEntity> evaluatedOutputs) {
 
-  public Builder toBuilder() {
+  public Builder toBuilder () {
     return new Builder()
         .decisionInstanceId(decisionInstanceId)
         .decisionInstanceKey(decisionInstanceKey)
@@ -41,7 +41,7 @@ public record DecisionInstanceEntity(
         .evaluationFailureMessage(evaluationFailureMessage)
         .processDefinitionKey(processDefinitionKey)
         .processInstanceKey(processInstanceKey)
-        .elementInstanceKey(elementInstanceKey)
+        .elementInstanceKey(flowNodeInstanceKey)
         .decisionDefinitionKey(decisionDefinitionKey)
         .decisionDefinitionId(decisionDefinitionId)
         .decisionDefinitionName(decisionDefinitionName)
@@ -188,10 +188,12 @@ public record DecisionInstanceEntity(
     }
   }
 
-  public record DecisionInstanceInputEntity(String inputId, String inputName, String inputValue) {}
+  public record DecisionInstanceInputEntity (String inputId, String inputName, String inputValue){
+  }
 
-  public record DecisionInstanceOutputEntity(
-      String outputId, String outputName, String outputValue, String ruleId, int ruleIndex) {}
+  public record DecisionInstanceOutputEntity (
+      String outputId, String outputName, String outputValue, String ruleId,int ruleIndex){
+  }
 
   public enum DecisionDefinitionType {
     DECISION_TABLE,
