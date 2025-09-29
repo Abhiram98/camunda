@@ -45,6 +45,7 @@ import org.slf4j.Logger;
 
 public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRepository
     implements IncidentUpdateRepository {
+
   private static final int RETRY_COUNT = 3;
   private static final List<FieldValue> DELETED_OPERATION_STATES =
       List.of(
@@ -153,8 +154,8 @@ public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRe
   }
 
   @Override
-  public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey) {
-    final var query = createProcessInstanceDeletedQuery(processInstanceKey);
+  public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKeys) {
+    final var query = createProcessInstanceDeletedQuery(processInstanceKeys);
     final var request =
         new CountRequest.Builder()
             .index(operationAlias)
@@ -330,5 +331,7 @@ public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRe
     return new PendingIncidentUpdateBatch(highestPosition, incidents);
   }
 
-  private record PendingIncidentUpdate(long key, long position, String intent) {}
+  private record PendingIncidentUpdate(long key, long position, String intent) {
+
+  }
 }
