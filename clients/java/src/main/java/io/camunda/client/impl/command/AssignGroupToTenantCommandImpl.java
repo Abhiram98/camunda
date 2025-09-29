@@ -29,7 +29,7 @@ public final class AssignGroupToTenantCommandImpl implements AssignGroupToTenant
   private final HttpClient httpClient;
   private final String tenantId;
   private final RequestConfig.Builder httpRequestConfig;
-  private long groupKey;
+  private long groupId;
 
   public AssignGroupToTenantCommandImpl(final HttpClient httpClient, final String tenantId) {
     this.httpClient = httpClient;
@@ -40,7 +40,7 @@ public final class AssignGroupToTenantCommandImpl implements AssignGroupToTenant
   @Override
   public AssignGroupToTenantCommandStep1 groupKey(final long groupKey) {
     ArgumentUtil.ensureNotNull("groupKey", groupKey);
-    this.groupKey = groupKey;
+    groupId = groupKey;
     return this;
   }
 
@@ -52,10 +52,10 @@ public final class AssignGroupToTenantCommandImpl implements AssignGroupToTenant
 
   @Override
   public CamundaFuture<AssignGroupToTenantResponse> send() {
-    ArgumentUtil.ensureNotNull("groupKey", groupKey);
+    ArgumentUtil.ensureNotNull("groupKey", groupId);
     final HttpCamundaFuture<AssignGroupToTenantResponse> result = new HttpCamundaFuture<>();
     httpClient.put(
-        "/tenants/" + tenantId + "/groups/" + groupKey,
+        "/tenants/" + tenantId + "/groups/" + groupId,
         null, // No request body needed
         httpRequestConfig.build(),
         result);
