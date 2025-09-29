@@ -59,7 +59,7 @@ public class CamundaContainerRuntime implements AutoCloseable {
   private final boolean connectorsEnabled;
 
   CamundaContainerRuntime(
-      final CamundaContainerRuntimeBuilder builder, final ContainerFactory containerFactory) {
+      final CamundaProcessTestRuntimeBuilder builder, final ContainerFactory containerFactory) {
     this.containerFactory = containerFactory;
     connectorsEnabled = builder.isConnectorsEnabled();
     network = Network.newNetwork();
@@ -75,7 +75,7 @@ public class CamundaContainerRuntime implements AutoCloseable {
    * {@see https://github.com/camunda/camunda/issues/29854}
    */
   private ElasticsearchContainer createElasticsearchContainer(
-      final Network network, final CamundaContainerRuntimeBuilder builder) {
+      final Network network, final CamundaProcessTestRuntimeBuilder builder) {
     final ElasticsearchContainer container =
         containerFactory
             .createElasticsearchContainer(
@@ -93,7 +93,7 @@ public class CamundaContainerRuntime implements AutoCloseable {
   }
 
   private CamundaContainer createCamundaContainer(
-      final Network network, final CamundaContainerRuntimeBuilder builder) {
+      final Network network, final CamundaProcessTestRuntimeBuilder builder) {
     final CamundaContainer container =
         containerFactory
             .createCamundaContainer(
@@ -110,7 +110,7 @@ public class CamundaContainerRuntime implements AutoCloseable {
   }
 
   private ConnectorsContainer createConnectorsContainer(
-      final Network network, final CamundaContainerRuntimeBuilder builder) {
+      final Network network, final CamundaProcessTestRuntimeBuilder builder) {
     final ConnectorsContainer container =
         containerFactory
             .createConnectorsContainer(
@@ -187,8 +187,8 @@ public class CamundaContainerRuntime implements AutoCloseable {
     return new Slf4jJsonLogConsumer(logger, logEntryType);
   }
 
-  public static CamundaContainerRuntimeBuilder newBuilder() {
-    return new CamundaContainerRuntimeBuilder();
+  public static CamundaProcessTestRuntimeBuilder newBuilder() {
+    return new CamundaProcessTestRuntimeBuilder();
   }
 
   public static CamundaContainerRuntime newDefaultRuntime() {
