@@ -121,12 +121,12 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
 
   @Override
   public SearchQueryResult<AuthorizationEntity> searchAuthorizations(
-      final AuthorizationQuery filter) {
+      final AuthorizationQuery query) {
     return executeWithResourceAccessChecks(
         access ->
             getSearchExecutor()
                 .search(
-                    filter,
+                    query,
                     io.camunda.webapps.schema.entities.usermanagement.AuthorizationEntity.class,
                     access));
   }
@@ -283,12 +283,12 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   public List<ProcessFlowNodeStatisticsEntity> executeProcessDefinitionFlowNodeStatistics(
       final ProcessDefinitionStatisticsFilter filter) {
     return executeWithResourceAccessChecks(
-            access ->
-                getSearchExecutor()
-                    .aggregate(
-                        new ProcessDefinitionFlowNodeStatisticsQuery(filter),
-                        ProcessDefinitionFlowNodeStatisticsAggregationResult.class,
-                        access))
+        access ->
+            getSearchExecutor()
+                .aggregate(
+                    new ProcessDefinitionFlowNodeStatisticsQuery(filter),
+                    ProcessDefinitionFlowNodeStatisticsAggregationResult.class,
+                    access))
         .items();
   }
 
@@ -328,13 +328,13 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   public List<ProcessFlowNodeStatisticsEntity> processInstanceFlowNodeStatistics(
       final long processInstanceKey) {
     return executeWithResourceAccessChecks(
-            access ->
-                getSearchExecutor()
-                    .aggregate(
-                        new ProcessInstanceFlowNodeStatisticsQuery(
-                            new ProcessInstanceStatisticsFilter(processInstanceKey)),
-                        ProcessInstanceFlowNodeStatisticsAggregationResult.class,
-                        access))
+        access ->
+            getSearchExecutor()
+                .aggregate(
+                    new ProcessInstanceFlowNodeStatisticsQuery(
+                        new ProcessInstanceStatisticsFilter(processInstanceKey)),
+                    ProcessInstanceFlowNodeStatisticsAggregationResult.class,
+                    access))
         .items();
   }
 
