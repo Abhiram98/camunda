@@ -48,7 +48,7 @@ public final class SearchClientBasedQueryExecutor {
   public <F extends FilterBase, S extends SortOption, T, R> SearchQueryResult<R> search(
       final TypedSearchQuery<F, S> query,
       final Class<T> documentClass,
-      final SecurityContext securityContext) {
+      final SecurityContext resourceAccessChecks) {
     final SearchQueryResultTransformer<T, R> responseTransformer =
         (SearchQueryResultTransformer<T, R>) getSearchResultTransformer(documentClass);
     final var type = query.page().resultType();
@@ -58,15 +58,15 @@ public final class SearchClientBasedQueryExecutor {
     switch (type) {
       case UNLIMITED -> {
         reverse = false;
-        response = executeUnlimitedSearch(query, documentClass, securityContext);
+        response = executeUnlimitedSearch(query, documentClass, resourceAccessChecks);
       }
       case SINGLE_RESULT -> {
         reverse = false;
-        response = executeSingleResultSearch(query, documentClass, securityContext);
+        response = executeSingleResultSearch(query, documentClass, resourceAccessChecks);
       }
       default -> {
         reverse = !query.page().isNextPage();
-        response = executePaginatedSearch(query, documentClass, securityContext);
+        response = executePaginatedSearch(query, documentClass, resourceAccessChecks);
       }
     }
 
@@ -135,8 +135,8 @@ public final class SearchClientBasedQueryExecutor {
   }
 
   private <T extends FilterBase, S extends SortOption>
-      TypedSearchQueryTransformer<T, S> getSearchQueryRequestTransformer(
-          final TypedSearchQuery<T, S> query) {
+  TypedSearchQueryTransformer<T, S> getSearchQueryRequestTransformer(
+      final TypedSearchQuery<T, S> query) {
     return transformers.getTypedSearchQueryTransformer(query.getClass());
   }
 
