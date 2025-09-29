@@ -41,7 +41,7 @@ public class AdHocSubProcessActivityActivateProcessor
       "Expected to activate activities for ad-hoc sub-process but no ad-hoc sub-process instance found with key '%s'.";
   private static final String ERROR_MSG_DUPLICATE_ACTIVITIES =
       "Expected to activate activities for ad-hoc sub-process with key '%s', but duplicate activities were given.";
-  private static final String ERROR_MSG_ADHOC_SUBPROCESS_IS_NO_ACTIVE =
+  private static final String ERROR_MSG_AD_HOC_SUB_PROCESS_IS_NO_ACTIVE =
       "Expected to activate activities for ad-hoc sub-process with key '%s', but it is not active.";
   private static final String ERROR_MSG_ADHOC_SUBPROCESS_IS_NOT_ACTIVE =
       "Expected to activate activities for ad-hoc sub-process with key '%s', but it is not active.";
@@ -93,7 +93,7 @@ public class AdHocSubProcessActivityActivateProcessor
           command,
           RejectionType.INVALID_STATE,
           String.format(
-              ERROR_MSG_ADHOC_SUBPROCESS_IS_NO_ACTIVE,
+              ERROR_MSG_AD_HOC_SUB_PROCESS_IS_NO_ACTIVE,
               command.getValue().getAdHocSubProcessInstanceKey()));
 
       return;
@@ -105,7 +105,7 @@ public class AdHocSubProcessActivityActivateProcessor
       final String errorMessage =
           RejectionType.NOT_FOUND.equals(rejection.type())
               ? ERROR_MSG_ADHOC_SUBPROCESS_NOT_FOUND.formatted(
-                  command.getValue().getAdHocSubProcessInstanceKey())
+              command.getValue().getAdHocSubProcessInstanceKey())
               : rejection.reason();
       writeRejectionError(command, rejection.type(), errorMessage);
 
@@ -204,9 +204,9 @@ public class AdHocSubProcessActivityActivateProcessor
   private boolean hasDuplicateElements(
       final TypedRecord<AdHocSubProcessActivityActivationRecord> command) {
     return command.getValue().getElements().stream()
-            .map(AdHocSubProcessActivityActivationElementValue::getElementId)
-            .distinct()
-            .count()
+        .map(AdHocSubProcessActivityActivationElementValue::getElementId)
+        .distinct()
+        .count()
         != command.getValue().getElements().size();
   }
 
@@ -215,10 +215,10 @@ public class AdHocSubProcessActivityActivateProcessor
       final ElementInstance adHocSubprocessElementInstance) {
     final var authRequest =
         new AuthorizationRequest(
-                command,
-                AuthorizationResourceType.PROCESS_DEFINITION,
-                PermissionType.UPDATE_PROCESS_INSTANCE,
-                adHocSubprocessElementInstance.getValue().getTenantId())
+            command,
+            AuthorizationResourceType.PROCESS_DEFINITION,
+            PermissionType.UPDATE_PROCESS_INSTANCE,
+            adHocSubprocessElementInstance.getValue().getTenantId())
             .addResourceId(adHocSubprocessElementInstance.getValue().getBpmnProcessId());
 
     return authCheckBehavior.isAuthorized(authRequest);
