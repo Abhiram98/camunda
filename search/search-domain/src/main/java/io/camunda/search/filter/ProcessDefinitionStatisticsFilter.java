@@ -7,7 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.*;
+import static io.camunda.util.CollectionUtil.addValuesToList;
+import static io.camunda.util.CollectionUtil.collectValues;
 
 import io.camunda.util.FilterUtil;
 import io.camunda.util.ObjectBuilder;
@@ -17,28 +18,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public record ProcessDefinitionStatisticsFilter(
-    long processDefinitionKey,
-    List<Operation<Long>> processInstanceKeyOperations,
-    List<Operation<Long>> parentProcessInstanceKeyOperations,
-    List<Operation<Long>> parentFlowNodeInstanceKeyOperations,
-    List<Operation<OffsetDateTime>> startDateOperations,
-    List<Operation<OffsetDateTime>> endDateOperations,
-    List<Operation<String>> stateOperations,
-    Boolean hasIncident,
-    List<Operation<String>> tenantIdOperations,
-    List<VariableValueFilter> variableFilters,
-    List<Operation<String>> errorMessageOperations,
-    List<Operation<String>> batchOperationIdOperations,
-    Boolean hasRetriesLeft,
-    List<Operation<String>> flowNodeIdOperations,
-    Boolean hasFlowNodeInstanceIncident,
-    List<Operation<String>> flowNodeInstanceStateOperations,
-    List<Integer> incidentErrorHashCodes,
-    List<ProcessDefinitionStatisticsFilter> orFilters)
-    implements FilterBase {
+FilterBase {
 
-  public Builder toBuilder() {
+  public Builder toBuilder () {
     return new Builder(processDefinitionKey)
         .processInstanceKeyOperations(processInstanceKeyOperations)
         .parentProcessInstanceKeyOperations(parentProcessInstanceKeyOperations)
@@ -70,7 +52,7 @@ public record ProcessDefinitionStatisticsFilter(
     private List<Operation<String>> flowNodeIdOperations;
     private Boolean hasFlowNodeInstanceIncident;
     private List<Operation<String>> flowNodeInstanceStateOperations;
-    private List<Integer> incidentErrorHashCodes;
+    private List<Integer> incidentErrorHashCodeOperations;
     private List<ProcessDefinitionStatisticsFilter> orFilters;
 
     public Builder(final long processDefinitionKey) {
@@ -267,7 +249,7 @@ public record ProcessDefinitionStatisticsFilter(
     }
 
     public Builder incidentErrorHashCodes(final List<Integer> values) {
-      incidentErrorHashCodes = addValuesToList(incidentErrorHashCodes, values);
+      incidentErrorHashCodeOperations = addValuesToList(incidentErrorHashCodeOperations, values);
       return this;
     }
 
@@ -298,8 +280,29 @@ public record ProcessDefinitionStatisticsFilter(
           Objects.requireNonNullElse(flowNodeIdOperations, Collections.emptyList()),
           hasFlowNodeInstanceIncident,
           Objects.requireNonNullElse(flowNodeInstanceStateOperations, Collections.emptyList()),
-          Objects.requireNonNullElse(incidentErrorHashCodes, Collections.emptyList()),
+          Objects.requireNonNullElse(incidentErrorHashCodeOperations, Collections.emptyList()),
           orFilters);
     }
   }
 }
+    implements
+
+public record ProcessDefinitionStatisticsFilter(
+    long processDefinitionKey,
+    List<Operation<Long>> processInstanceKeyOperations,
+    List<Operation<Long>> parentProcessInstanceKeyOperations,
+    List<Operation<Long>> parentFlowNodeInstanceKeyOperations,
+    List<Operation<OffsetDateTime>> startDateOperations,
+    List<Operation<OffsetDateTime>> endDateOperations,
+    List<Operation<String>> stateOperations,
+    Boolean hasIncident,
+    List<Operation<String>> tenantIdOperations,
+    List<VariableValueFilter> variableFilters,
+    List<Operation<String>> errorMessageOperations,
+    List<Operation<String>> batchOperationIdOperations,
+    Boolean hasRetriesLeft,
+    List<Operation<String>> flowNodeIdOperations,
+    Boolean hasFlowNodeInstanceIncident,
+    List<Operation<String>> flowNodeInstanceStateOperations,
+    List<Integer> incidentErrorHashCodes,
+    List<ProcessDefinitionStatisticsFilter> orFilters)
