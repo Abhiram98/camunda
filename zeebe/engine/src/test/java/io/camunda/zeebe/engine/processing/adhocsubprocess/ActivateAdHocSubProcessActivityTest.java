@@ -14,7 +14,6 @@ import io.camunda.zeebe.engine.util.EngineRule;
 import io.camunda.zeebe.model.bpmn.Bpmn;
 import io.camunda.zeebe.model.bpmn.builder.AdHocSubProcessBuilder;
 import io.camunda.zeebe.protocol.impl.record.value.signal.SignalRecord;
-import io.camunda.zeebe.protocol.record.Record;
 import io.camunda.zeebe.protocol.record.RecordAssert;
 import io.camunda.zeebe.protocol.record.RejectionType;
 import io.camunda.zeebe.protocol.record.intent.AdHocSubProcessActivityActivationIntent;
@@ -33,13 +32,16 @@ import org.junit.Rule;
 import org.junit.Test;
 
 public class ActivateAdHocSubProcessActivityTest {
-  @ClassRule public static final EngineRule ENGINE = EngineRule.singlePartition();
+
+  @ClassRule
+  public static final EngineRule ENGINE = EngineRule.singlePartition();
 
   private static final String PROCESS_ID = "process";
   private static final String AD_HOC_SUB_PROCESS_ELEMENT_ID = "ad-hoc";
   private static final String COMPLETION_CONDITION_VAR = "completionCondition";
 
-  @Rule public final RecordingExporterTestWatcher watcher = new RecordingExporterTestWatcher();
+  @Rule
+  public final RecordingExporterTestWatcher watcher = new RecordingExporterTestWatcher();
 
   private long processInstanceKey;
   private long adHocSubProcessInstanceKey;
@@ -61,7 +63,7 @@ public class ActivateAdHocSubProcessActivityTest {
 
   @Test
   public void
-      givenRunningAdhocSubProcessInstanceWhenActivatingExistingElementThenTheElementIsActivated() {
+  givenRunningAdhocSubProcessInstanceWhenActivatingExistingElementThenTheElementIsActivated() {
     ENGINE
         .adHocSubProcessActivity()
         .withAdHocSubProcessInstanceKey(String.valueOf(adHocSubProcessInstanceKey))
@@ -69,9 +71,9 @@ public class ActivateAdHocSubProcessActivityTest {
         .activate();
 
     assertThat(
-            RecordingExporter.processInstanceRecords()
-                .withProcessInstanceKey(processInstanceKey)
-                .limitToProcessInstanceCompleted())
+        RecordingExporter.processInstanceRecords()
+            .withProcessInstanceKey(processInstanceKey)
+            .limitToProcessInstanceCompleted())
         .extracting(r -> r.getValue().getElementId(), Record::getIntent)
         .contains(
             tuple("A", ProcessInstanceIntent.ACTIVATE_ELEMENT),
@@ -84,7 +86,7 @@ public class ActivateAdHocSubProcessActivityTest {
 
   @Test
   public void
-      givenRunningAdhocSubProcessInstanceWhenActivatingExistingElementThenTheElementHasCorrectTreePath() {
+  givenRunningAdhocSubProcessInstanceWhenActivatingExistingElementThenTheElementHasCorrectTreePath() {
     ENGINE
         .adHocSubProcessActivity()
         .withAdHocSubProcessInstanceKey(String.valueOf(adHocSubProcessInstanceKey))
@@ -105,16 +107,16 @@ public class ActivateAdHocSubProcessActivityTest {
         List.of(
             List.of(processInstanceKey, adHocSubProcessInstanceKey, generatedActivityInstanceKey));
     assertThat(
-            RecordingExporter.processInstanceRecords()
-                .withProcessInstanceKey(processInstanceKey)
-                .limitToProcessInstanceCompleted())
+        RecordingExporter.processInstanceRecords()
+            .withProcessInstanceKey(processInstanceKey)
+            .limitToProcessInstanceCompleted())
         .extracting(r -> r.getValue().getElementId(), r -> r.getValue().getElementInstancePath())
         .contains(tuple("A", expectedElementPath));
   }
 
   @Test
   public void
-      givenRunningAdhocSubprocessInstanceWhenActivatingElementsThenAdhocSubprocessIsOnlyCompletedWhenCompletionConditionIsMet() {
+  givenRunningAdhocSubprocessInstanceWhenActivatingElementsThenAdhocSubprocessIsOnlyCompletedWhenCompletionConditionIsMet() {
     // prepare the test case by setting the completion condition variable to false which ensures
     // that the ad-hoc sub-process doesn't complete before we want it to.
     ENGINE
@@ -152,9 +154,9 @@ public class ActivateAdHocSubProcessActivityTest {
         .activate();
 
     assertThat(
-            RecordingExporter.processInstanceRecords()
-                .withProcessInstanceKey(processInstanceKey)
-                .limitToProcessInstanceCompleted())
+        RecordingExporter.processInstanceRecords()
+            .withProcessInstanceKey(processInstanceKey)
+            .limitToProcessInstanceCompleted())
         .extracting(r -> r.getValue().getElementId(), Record::getIntent)
         .contains(
             tuple("B", ProcessInstanceIntent.ELEMENT_COMPLETED),
@@ -163,7 +165,7 @@ public class ActivateAdHocSubProcessActivityTest {
 
   @Test
   public void
-      givenRunningAdhocSubProcessInstanceWhenElementIsSuccessfullyActivatedThenActivatedEventIsWrittenToLog() {
+  givenRunningAdhocSubProcessInstanceWhenElementIsSuccessfullyActivatedThenActivatedEventIsWrittenToLog() {
     ENGINE
         .adHocSubProcessActivity()
         .withAdHocSubProcessInstanceKey(String.valueOf(adHocSubProcessInstanceKey))
@@ -171,16 +173,16 @@ public class ActivateAdHocSubProcessActivityTest {
         .activate();
 
     assertThat(
-            RecordingExporter.adHocSubProcessActivityActivationRecords()
-                .withAdHocSubProcessInstanceKey(String.valueOf(adHocSubProcessInstanceKey))
-                .limitToAdHocSubProcessInstanceCompleted())
+        RecordingExporter.adHocSubProcessActivityActivationRecords()
+            .withAdHocSubProcessInstanceKey(String.valueOf(adHocSubProcessInstanceKey))
+            .limitToAdHocSubProcessInstanceCompleted())
         .extracting(r -> r.getValue().getElements().getFirst().getElementId(), Record::getIntent)
         .contains(tuple("A", AdHocSubProcessActivityActivationIntent.ACTIVATED));
   }
 
   @Test
   public void
-      givenRunningAdhocSubProcessInstanceWhenActivatingMoreThanOneElementThenAllGivenElementsAreActivated() {
+  givenRunningAdhocSubProcessInstanceWhenActivatingMoreThanOneElementThenAllGivenElementsAreActivated() {
     ENGINE
         .adHocSubProcessActivity()
         .withAdHocSubProcessInstanceKey(String.valueOf(adHocSubProcessInstanceKey))
@@ -189,9 +191,9 @@ public class ActivateAdHocSubProcessActivityTest {
         .activate();
 
     assertThat(
-            RecordingExporter.processInstanceRecords()
-                .withProcessInstanceKey(processInstanceKey)
-                .limitToProcessInstanceCompleted())
+        RecordingExporter.processInstanceRecords()
+            .withProcessInstanceKey(processInstanceKey)
+            .limitToProcessInstanceCompleted())
         .extracting(r -> r.getValue().getElementId(), Record::getIntent)
         .contains(
             tuple("A", ProcessInstanceIntent.ACTIVATE_ELEMENT),
@@ -203,7 +205,7 @@ public class ActivateAdHocSubProcessActivityTest {
 
   @Test
   public void
-      givenRunningAdhocSubProcessInstanceWhenActivatingElementThatDoesNotExistThenTheActivationIsRejected() {
+  givenRunningAdhocSubProcessInstanceWhenActivatingElementThatDoesNotExistThenTheActivationIsRejected() {
     final var nonExistingActivities = List.of("does_not_exist");
     final var rejection =
         ENGINE
@@ -221,16 +223,16 @@ public class ActivateAdHocSubProcessActivityTest {
                 .formatted(adHocSubProcessInstanceKey, nonExistingActivities));
 
     assertThat(
-            RecordingExporter.adHocSubProcessActivityActivationRecords()
-                .withAdHocSubProcessInstanceKey(String.valueOf(adHocSubProcessInstanceKey))
-                .withIntent(AdHocSubProcessActivityActivationIntent.ACTIVATED)
-                .exists())
+        RecordingExporter.adHocSubProcessActivityActivationRecords()
+            .withAdHocSubProcessInstanceKey(String.valueOf(adHocSubProcessInstanceKey))
+            .withIntent(AdHocSubProcessActivityActivationIntent.ACTIVATED)
+            .exists())
         .isFalse();
   }
 
   @Test
   public void
-      givenAdhocSubProcessThatDoesNotExistWhenActivatingElementsThenTheActivationIsRejected() {
+  givenAdhocSubProcessThatDoesNotExistWhenActivatingElementsThenTheActivationIsRejected() {
     final var nonExistingAdhocSubProcessInstanceKey = "1";
 
     final var rejection =
@@ -249,10 +251,10 @@ public class ActivateAdHocSubProcessActivityTest {
                 .formatted(nonExistingAdhocSubProcessInstanceKey));
 
     assertThat(
-            RecordingExporter.adHocSubProcessActivityActivationRecords()
-                .withAdHocSubProcessInstanceKey(nonExistingAdhocSubProcessInstanceKey)
-                .onlyCommandRejections()
-                .limit(1))
+        RecordingExporter.adHocSubProcessActivityActivationRecords()
+            .withAdHocSubProcessInstanceKey(nonExistingAdhocSubProcessInstanceKey)
+            .onlyCommandRejections()
+            .limit(1))
         .describedAs(
             "Expected activation to be rejected because the ad-hoc sub-process instance does not exist.")
         .isNotEmpty();
@@ -300,7 +302,7 @@ public class ActivateAdHocSubProcessActivityTest {
 
   @Test
   public void
-      givenRunningAdhocSubProcessWhenAttemptingToActivateDuplicateElementsThenTheActivationIsRejected() {
+  givenRunningAdHocSubProcessWhenAttemptingToActivateDuplicateElementsThenTheActivationIsRejected() {
     final var rejection =
         ENGINE
             .adHocSubProcessActivity()
@@ -319,10 +321,10 @@ public class ActivateAdHocSubProcessActivityTest {
                 .formatted(adHocSubProcessInstanceKey));
 
     assertThat(
-            RecordingExporter.adHocSubProcessActivityActivationRecords()
-                .withAdHocSubProcessInstanceKey(String.valueOf(adHocSubProcessInstanceKey))
-                .withIntent(AdHocSubProcessActivityActivationIntent.ACTIVATED)
-                .exists())
+        RecordingExporter.adHocSubProcessActivityActivationRecords()
+            .withAdHocSubProcessInstanceKey(String.valueOf(adHocSubProcessInstanceKey))
+            .withIntent(AdHocSubProcessActivityActivationIntent.ACTIVATED)
+            .exists())
         .isFalse();
   }
 
