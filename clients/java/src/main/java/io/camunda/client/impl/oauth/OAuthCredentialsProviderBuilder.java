@@ -69,7 +69,7 @@ public final class OAuthCredentialsProviderBuilder {
   private Duration readTimeout;
   private boolean applyEnvironmentOverrides = true;
   private Path entraCertificatePath;
-  private String entraCertificatePassword;
+  private String sslClientCertPassword;
 
   /** Client id to be used when requesting access token from OAuth authorization server. */
   public OAuthCredentialsProviderBuilder clientId(final String clientId) {
@@ -291,17 +291,17 @@ public final class OAuthCredentialsProviderBuilder {
 
   public OAuthCredentialsProviderBuilder entraCertificatePassword(
       final String entraCertificatePassword) {
-    this.entraCertificatePassword = entraCertificatePassword;
+    this.sslClientCertPassword = entraCertificatePassword;
     return this;
   }
 
   public String getEntraCertificatePassword() {
-    return entraCertificatePassword;
+    return sslClientCertPassword;
   }
 
   public boolean entraConfigurationProvided() {
-    return entraCertificatePassword != null
-        && !entraCertificatePassword.isEmpty()
+    return sslClientCertPassword != null
+        && !sslClientCertPassword.isEmpty()
         && entraCertificatePath != null
         && entraCertificatePath.toFile().exists();
   }
@@ -411,7 +411,7 @@ public final class OAuthCredentialsProviderBuilder {
         final KeyStore keyStore = KeyStore.getInstance("PKCS12");
         keyStore.load(
             Files.newInputStream(Paths.get(entraCertificatePath.toAbsolutePath().toString())),
-            entraCertificatePassword.toCharArray());
+            sslClientCertPassword.toCharArray());
       } else {
         Objects.requireNonNull(clientSecret, String.format(INVALID_ARGUMENT_MSG, "client secret"));
       }
