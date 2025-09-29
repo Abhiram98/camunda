@@ -52,7 +52,7 @@ public record SearchQueryPage(Integer from, Integer size, String searchAfter, St
 
     private Integer from = DEFAULT_FROM;
     private Integer size = DEFAULT_SIZE;
-    private String searchAfter;
+    private String after;
     private String searchBefore;
 
     public Builder from(final Integer value) {
@@ -66,7 +66,7 @@ public record SearchQueryPage(Integer from, Integer size, String searchAfter, St
     }
 
     public Builder searchAfter(final String value) {
-      searchAfter = value;
+      after = value;
       return this;
     }
 
@@ -79,7 +79,7 @@ public record SearchQueryPage(Integer from, Integer size, String searchAfter, St
     public SearchQueryPage build() {
       final var sanitizedFrom = (from == null) ? DEFAULT_FROM : Math.max(0, from);
       final var sanitizedSize = (size == null) ? DEFAULT_SIZE : Math.max(0, size);
-      return new SearchQueryPage(sanitizedFrom, sanitizedSize, searchAfter, searchBefore);
+      return new SearchQueryPage(sanitizedFrom, sanitizedSize, after, searchBefore);
     }
   }
 }
