@@ -46,13 +46,13 @@ public class UsageMetricsExportProcessor implements TypedRecordProcessor<UsageMe
     this.keyGenerator = keyGenerator;
   }
 
-  private List<UsageMetricRecord> divideRecord(final UsageMetricRecord record) {
-    final var size = record.getValues().size();
+  private List<UsageMetricRecord> divideRecord(final UsageMetricRecord usageMetricRecord) {
+    final var size = usageMetricRecord.getValues().size();
     final int halfCapacity = (int) Math.ceil(size / 2.0f);
     final var values1 = new HashMap<String, Long>(halfCapacity);
     final var values2 = new HashMap<String, Long>(halfCapacity);
 
-    record
+    usageMetricRecord
         .getValues()
         .forEach(
             (tenantId, value) -> {
@@ -64,10 +64,10 @@ public class UsageMetricsExportProcessor implements TypedRecordProcessor<UsageMe
             });
 
     final var record1 =
-        UsageMetricRecord.copyWithoutValues(record)
+        UsageMetricRecord.copyWithoutValues(usageMetricRecord)
             .setValues(new UnsafeBuffer(MsgPackConverter.convertToMsgPack(values1)));
     final var record2 =
-        UsageMetricRecord.copyWithoutValues(record)
+        UsageMetricRecord.copyWithoutValues(usageMetricRecord)
             .setValues(new UnsafeBuffer(MsgPackConverter.convertToMsgPack(values2)));
 
     final var result = new ArrayList<>(checkRecordLength(record1));
@@ -110,7 +110,9 @@ public class UsageMetricsExportProcessor implements TypedRecordProcessor<UsageMe
     }
   }
 
-  /** Processes a specific metric type and appends the resulting records. */
+  /**
+   * Processes a specific metric type and appends the resulting records.
+   */
   private void processMetricType(
       final PersistedUsageMetrics bucket,
       final UsageMetricRecord baseRecord,
@@ -124,7 +126,9 @@ public class UsageMetricsExportProcessor implements TypedRecordProcessor<UsageMe
     }
   }
 
-  /** Creates a UsageMetricRecord with original properties. */
+  /**
+   * Creates a UsageMetricRecord with original properties.
+   */
   private UsageMetricRecord initializeEventRecord(final UsageMetricRecord original) {
     return new UsageMetricRecord()
         .setIntervalType(original.getIntervalType())
@@ -132,7 +136,9 @@ public class UsageMetricsExportProcessor implements TypedRecordProcessor<UsageMe
         .setResetTime(original.getResetTime());
   }
 
-  /** Composes the event record with additional information. */
+  /**
+   * Composes the event record with additional information.
+   */
   private void enhanceEventRecord(
       final UsageMetricRecord usageMetricRecord,
       final PersistedUsageMetrics bucket,
