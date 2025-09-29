@@ -61,7 +61,7 @@ import java.util.stream.Collectors;
 
 public final class ProcessInstanceServices
     extends SearchQueryService<
-        ProcessInstanceServices, ProcessInstanceQuery, ProcessInstanceEntity> {
+    ProcessInstanceServices, ProcessInstanceQuery, ProcessInstanceEntity> {
 
   private final ProcessInstanceSearchClient processInstanceSearchClient;
   private final SequenceFlowSearchClient sequenceFlowSearchClient;
@@ -147,7 +147,7 @@ public final class ProcessInstanceServices
         .withSecurityContext(
             securityContextProvider.provideSecurityContext(
                 authentication, Authorization.of(a -> a.processDefinition().readProcessInstance())))
-        .findAllSequenceFlows(
+        .searchSequenceFlows(
             SequenceFlowQuery.of(b -> b.filter(f -> f.processInstanceKey(processInstanceKey))));
   }
 
@@ -217,7 +217,7 @@ public final class ProcessInstanceServices
   }
 
   public CompletableFuture<BatchOperationCreationRecord>
-      cancelProcessInstanceBatchOperationWithResult(final ProcessInstanceFilter filter) {
+  cancelProcessInstanceBatchOperationWithResult(final ProcessInstanceFilter filter) {
     final var brokerRequest =
         new BrokerCreateBatchOperationRequest()
             .setFilter(filter)
@@ -330,28 +330,40 @@ public final class ProcessInstanceServices
       Long operationReference,
       List<ProcessInstanceCreationStartInstruction> startInstructions,
       List<ProcessInstanceCreationRuntimeInstruction> runtimeInstructions,
-      List<String> fetchVariables) {}
+      List<String> fetchVariables) {
 
-  public record ProcessInstanceCancelRequest(Long processInstanceKey, Long operationReference) {}
+  }
+
+  public record ProcessInstanceCancelRequest(Long processInstanceKey, Long operationReference) {
+
+  }
 
   public record ProcessInstanceMigrateRequest(
       Long processInstanceKey,
       Long targetProcessDefinitionKey,
       List<ProcessInstanceMigrationMappingInstruction> mappingInstructions,
-      Long operationReference) {}
+      Long operationReference) {
+
+  }
 
   public record ProcessInstanceModifyRequest(
       Long processInstanceKey,
       List<ProcessInstanceModificationActivateInstruction> activateInstructions,
       List<ProcessInstanceModificationTerminateInstruction> terminateInstructions,
-      Long operationReference) {}
+      Long operationReference) {
+
+  }
 
   public record ProcessInstanceMigrateBatchOperationRequest(
       ProcessInstanceFilter filter,
       Long targetProcessDefinitionKey,
-      List<ProcessInstanceMigrationMappingInstruction> mappingInstructions) {}
+      List<ProcessInstanceMigrationMappingInstruction> mappingInstructions) {
+
+  }
 
   public record ProcessInstanceModifyBatchOperationRequest(
       ProcessInstanceFilter filter,
-      List<BatchOperationProcessInstanceModificationMoveInstruction> moveInstructions) {}
+      List<BatchOperationProcessInstanceModificationMoveInstruction> moveInstructions) {
+
+  }
 }

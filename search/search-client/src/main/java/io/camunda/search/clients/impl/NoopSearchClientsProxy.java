@@ -214,7 +214,7 @@ public class NoopSearchClientsProxy implements SearchClientsProxy {
   }
 
   @Override
-  public List<SequenceFlowEntity> findAllSequenceFlows(final SequenceFlowQuery filter) {
+  public List<SequenceFlowEntity> searchSequenceFlows(final SequenceFlowQuery filter) {
     return List.of();
   }
 

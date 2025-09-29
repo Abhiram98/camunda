@@ -111,7 +111,7 @@ public class RdbmsSearchClient implements SearchClientsProxy {
   }
 
   @Override
-  public List<SequenceFlowEntity> findAllSequenceFlows(final SequenceFlowQuery query) {
+  public List<SequenceFlowEntity> searchSequenceFlows(final SequenceFlowQuery query) {
     LOG.debug("[RDBMS Search Client] Search for sequence flow: {}", query);
     return rdbmsService.getSequenceFlowReader().search(query);
   }
