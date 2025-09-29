@@ -56,7 +56,7 @@ public class DbUsageMetricState implements MutableUsageMetricState {
   }
 
   private void setRollingBucketKeys() {
-    metricsBucketKey.setValue(IntervalType.ROLLING);
+    metricsBucketKey.setValue(IntervalType.ACTIVE);
   }
 
   @Override
@@ -84,6 +84,6 @@ public class DbUsageMetricState implements MutableUsageMetricState {
   }
 
   enum IntervalType {
-    ROLLING
+    ACTIVE
   }
 }
