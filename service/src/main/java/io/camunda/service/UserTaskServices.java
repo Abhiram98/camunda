@@ -50,7 +50,7 @@ public final class UserTaskServices
 
   private final UserTaskSearchClient userTaskSearchClient;
   private final FormServices formServices;
-  private final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient;
+  private final FlowNodeInstanceSearchClient elementInstanceServices;
   private final VariableSearchClient variableSearchClient;
   private final ProcessCache processCache;
 
@@ -66,7 +66,7 @@ public final class UserTaskServices
     super(brokerClient, securityContextProvider, authentication);
     this.userTaskSearchClient = userTaskSearchClient;
     this.formServices = formServices;
-    this.flowNodeInstanceSearchClient = flowNodeInstanceSearchClient;
+    elementInstanceServices = flowNodeInstanceSearchClient;
     this.variableSearchClient = variableSearchClient;
     this.processCache = processCache;
   }
@@ -78,7 +78,7 @@ public final class UserTaskServices
         securityContextProvider,
         userTaskSearchClient,
         formServices,
-        flowNodeInstanceSearchClient,
+        elementInstanceServices,
         variableSearchClient,
         processCache,
         authentication);
@@ -224,15 +224,15 @@ public final class UserTaskServices
 
   private String fetchFlowNodeTreePath(final long flowNodeInstanceKey) {
     return executeSearchRequest(
-            () ->
-                flowNodeInstanceSearchClient
-                    .withSecurityContext(
-                        securityContextProvider.provideSecurityContext(authentication))
-                    .searchFlowNodeInstances(
-                        flownodeInstanceSearchQuery(
-                            q ->
-                                q.filter(f -> f.flowNodeInstanceKeys(flowNodeInstanceKey))
-                                    .singleResult())))
+        () ->
+            elementInstanceServices
+                .withSecurityContext(
+                    securityContextProvider.provideSecurityContext(authentication))
+                .searchFlowNodeInstances(
+                    flownodeInstanceSearchQuery(
+                        q ->
+                            q.filter(f -> f.flowNodeInstanceKeys(flowNodeInstanceKey))
+                                .singleResult())))
         .items()
         .getFirst()
         .treePath();
