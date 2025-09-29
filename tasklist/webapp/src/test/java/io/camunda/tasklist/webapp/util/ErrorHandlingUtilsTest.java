@@ -7,8 +7,9 @@
  */
 package io.camunda.tasklist.webapp.util;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import io.camunda.client.api.ProblemDetail;
 import io.camunda.client.api.command.ClientException;
@@ -42,10 +43,10 @@ class ErrorHandlingUtilsTest {
     // Then
     final String expectedMessage =
         """
-          { "title": "INVALID_STATE",
-            "detail": "Task is already in progress."
-          }
-          """;
+            { "title": "INVALID_STATE",
+              "detail": "Task is already in progress."
+            }
+            """;
     assertEquals(expectedMessage, result);
   }
 
@@ -61,15 +62,15 @@ class ErrorHandlingUtilsTest {
                     UserTaskIntent.ASSIGN, 123L, RejectionType.INVALID_STATE, reason)));
 
     // When
-    final String result = ErrorHandlingUtils.getErrorMessageFromBrokerException(brokerException);
+    final String result = ErrorHandlingUtils.getErrorMessageFromServiceException(brokerException);
 
     // Then
     final String expectedMessage =
         """
-          { "title": "INVALID_STATE",
-            "detail": "%s"
-          }
-          """
+            { "title": "INVALID_STATE",
+              "detail": "%s"
+            }
+            """
             .formatted(reason);
     assertEquals(expectedMessage, result);
   }
@@ -87,10 +88,10 @@ class ErrorHandlingUtilsTest {
     // Then
     final String expectedMessage =
         """
-          { "title": "TASK_PROCESSING_TIMEOUT",
-            "detail": "The request timed out while processing the task."
-          }
-          """;
+            { "title": "TASK_PROCESSING_TIMEOUT",
+              "detail": "The request timed out while processing the task."
+            }
+            """;
     assertEquals(expectedMessage, result);
   }
 
@@ -101,15 +102,15 @@ class ErrorHandlingUtilsTest {
     final CamundaBrokerException brokerException = new CamundaBrokerException(timeoutException);
 
     // When
-    final String result = ErrorHandlingUtils.getErrorMessageFromBrokerException(brokerException);
+    final String result = ErrorHandlingUtils.getErrorMessageFromServiceException(brokerException);
 
     // Then
     final String expectedMessage =
         """
-          { "title": "TASK_PROCESSING_TIMEOUT",
-            "detail": "The request timed out while processing the task."
-          }
-          """;
+            { "title": "TASK_PROCESSING_TIMEOUT",
+              "detail": "The request timed out while processing the task."
+            }
+            """;
     assertEquals(expectedMessage, result);
   }
 
@@ -132,7 +133,7 @@ class ErrorHandlingUtilsTest {
         new CamundaBrokerException("Generic error occurred");
 
     // When
-    final String result = ErrorHandlingUtils.getErrorMessageFromBrokerException(genericException);
+    final String result = ErrorHandlingUtils.getErrorMessageFromServiceException(genericException);
 
     // Then
     assertEquals("Generic error occurred", result);
@@ -150,10 +151,10 @@ class ErrorHandlingUtilsTest {
     // Then
     final String expectedMessage =
         """
-          { "title": "Internal Server Error",
-            "detail": "An unexpected error occurred."
-          }
-          """;
+            { "title": "Internal Server Error",
+              "detail": "An unexpected error occurred."
+            }
+            """;
     assertEquals(expectedMessage, result);
   }
 }
