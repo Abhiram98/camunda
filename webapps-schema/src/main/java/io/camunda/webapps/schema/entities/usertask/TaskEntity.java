@@ -30,7 +30,7 @@ public class TaskEntity
   private String flowNodeBpmnId;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  private String flowNodeName;
+  private String name;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private String flowNodeInstanceId;
@@ -160,11 +160,11 @@ public class TaskEntity
   }
 
   public String getFlowNodeName() {
-    return flowNodeName;
+    return name;
   }
 
   public TaskEntity setFlowNodeName(final String flowNodeName) {
-    this.flowNodeName = flowNodeName;
+    this.name = flowNodeName;
     return this;
   }
 
