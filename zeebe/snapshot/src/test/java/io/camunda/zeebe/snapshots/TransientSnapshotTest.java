@@ -34,13 +34,16 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 public class TransientSnapshotTest {
+
   private static final Map<String, String> SNAPSHOT_FILE_CONTENTS =
       Map.of(
           "file1", "file1 contents",
           "file2", "file2 contents");
 
-  @Rule public TemporaryFolder temporaryFolder = new TemporaryFolder();
-  @Rule public ActorSchedulerRule scheduler = new ActorSchedulerRule();
+  @Rule
+  public TemporaryFolder temporaryFolder = new TemporaryFolder();
+  @Rule
+  public ActorSchedulerRule scheduler = new ActorSchedulerRule();
 
   private FileBasedSnapshotStore snapshotStore;
 
@@ -311,7 +314,7 @@ public class TransientSnapshotTest {
     transientSnapshot.take(this::writeSnapshot).join();
 
     // when
-    snapshotStore.purgePendingSnapshots().join();
+    snapshotStore.abortPendingSnapshots().join();
     final var persisted = transientSnapshot.persist();
 
     // then
