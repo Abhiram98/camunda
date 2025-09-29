@@ -21,7 +21,7 @@ public record BatchOperationFilter(
 
   public static final class Builder implements ObjectBuilder<BatchOperationFilter> {
 
-    private List<String> batchOperationIds;
+    private List<String> batchOperationIdOperations;
     private List<String> operationTypes;
     private List<String> state;
 
@@ -30,7 +30,7 @@ public record BatchOperationFilter(
     }
 
     public Builder batchOperationIds(final List<String> values) {
-      batchOperationIds = addValuesToList(batchOperationIds, values);
+      batchOperationIdOperations = addValuesToList(batchOperationIdOperations, values);
       return this;
     }
 
@@ -55,7 +55,7 @@ public record BatchOperationFilter(
     @Override
     public BatchOperationFilter build() {
       return new BatchOperationFilter(
-          Objects.requireNonNullElse(batchOperationIds, Collections.emptyList()),
+          Objects.requireNonNullElse(batchOperationIdOperations, Collections.emptyList()),
           Objects.requireNonNullElse(operationTypes, Collections.emptyList()),
           Objects.requireNonNullElse(state, Collections.emptyList()));
     }
