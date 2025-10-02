@@ -138,8 +138,8 @@ public class DeleteAuthorizationMultipartitionTest {
     engine.getProcessingState().getRoutingState().currentPartitions().stream()
         .skip(1)
         .forEach(
-            partition ->
-                engine.interceptInterPartitionIntent(partition, AuthorizationIntent.CREATE));
+                partitionId ->
+                engine.interceptInterPartitionIntent(partitionId, AuthorizationIntent.CREATE));
     final var key =
         engine
             .authorization()
