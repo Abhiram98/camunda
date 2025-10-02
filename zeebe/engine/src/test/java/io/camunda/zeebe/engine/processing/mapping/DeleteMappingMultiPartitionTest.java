@@ -119,7 +119,7 @@ public class DeleteMappingMultiPartitionTest {
     engine.getProcessingState().getRoutingState().currentPartitions().stream()
         .skip(1)
         .forEach(
-            partition -> engine.interceptInterPartitionIntent(partition, MappingIntent.CREATE));
+                partitionId -> engine.interceptInterPartitionIntent(partitionId, MappingIntent.CREATE));
     final var claimName = UUID.randomUUID().toString();
     final var claimValue = UUID.randomUUID().toString();
     final var mappingId = UUID.randomUUID().toString();
