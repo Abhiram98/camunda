@@ -26,8 +26,8 @@ import io.camunda.client.CamundaClientConfiguration;
 import io.camunda.process.test.impl.client.CamundaManagementClient;
 import io.camunda.process.test.impl.containers.CamundaContainer;
 import io.camunda.process.test.impl.containers.ConnectorsContainer;
-import io.camunda.process.test.impl.runtime.CamundaContainerRuntime;
-import io.camunda.process.test.impl.runtime.CamundaContainerRuntimeBuilder;
+import io.camunda.process.test.impl.runtime.CamundaProcessTestRuntime;
+import io.camunda.process.test.impl.runtime.CamundaProcessTestRuntimeBuilder;
 import io.camunda.process.test.impl.testresult.CamundaProcessTestResultCollector;
 import io.camunda.process.test.impl.testresult.ProcessTestResult;
 import io.camunda.zeebe.client.ZeebeClient;
@@ -59,9 +59,9 @@ public class JunitExtensionTest {
   private static final Consumer<String> NOOP = s -> {};
 
   @Mock(answer = Answers.RETURNS_SELF)
-  private CamundaContainerRuntimeBuilder camundaContainerRuntimeBuilder;
+  private CamundaProcessTestRuntimeBuilder camundaContainerRuntimeBuilder;
 
-  @Mock private CamundaContainerRuntime camundaContainerRuntime;
+  @Mock private CamundaProcessTestRuntime camundaContainerRuntime;
   @Mock private CamundaContainer camundaContainer;
   @Mock private ConnectorsContainer connectorsContainer;
   @Mock private CamundaManagementClient camundaManagementClient;

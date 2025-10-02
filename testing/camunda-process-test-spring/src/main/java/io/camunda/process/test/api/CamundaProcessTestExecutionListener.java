@@ -24,7 +24,7 @@ import io.camunda.process.test.impl.extension.CamundaProcessTestContextImpl;
 import io.camunda.process.test.impl.proxy.CamundaClientProxy;
 import io.camunda.process.test.impl.proxy.CamundaProcessTestContextProxy;
 import io.camunda.process.test.impl.proxy.ZeebeClientProxy;
-import io.camunda.process.test.impl.runtime.CamundaContainerRuntime;
+import io.camunda.process.test.impl.runtime.CamundaProcessTestRuntime;
 import io.camunda.process.test.impl.runtime.CamundaContainerRuntimeBuilder;
 import io.camunda.process.test.impl.testresult.CamundaProcessTestResultCollector;
 import io.camunda.process.test.impl.testresult.CamundaProcessTestResultPrinter;
@@ -77,7 +77,7 @@ public class CamundaProcessTestExecutionListener implements TestExecutionListene
   private final CamundaProcessTestResultPrinter processTestResultPrinter;
   private final List<AutoCloseable> createdClients = new ArrayList<>();
 
-  private CamundaContainerRuntime containerRuntime;
+  private CamundaProcessTestRuntime containerRuntime;
   private CamundaProcessTestResultCollector processTestResultCollector;
   private CamundaProcessTestContext camundaProcessTestContext;
   private CamundaManagementClient camundaManagementClient;
@@ -85,7 +85,7 @@ public class CamundaProcessTestExecutionListener implements TestExecutionListene
   private ZeebeClient zeebeClient;
 
   public CamundaProcessTestExecutionListener() {
-    this(CamundaContainerRuntime.newBuilder(), System.err::println);
+    this(CamundaProcessTestRuntime.newBuilder(), System.err::println);
   }
 
   CamundaProcessTestExecutionListener(
@@ -221,7 +221,7 @@ public class CamundaProcessTestExecutionListener implements TestExecutionListene
     }
   }
 
-  private CamundaContainerRuntime buildRuntime(final TestContext testContext) {
+  private CamundaProcessTestRuntime buildRuntime(final TestContext testContext) {
     final CamundaContainerRuntimeConfiguration runtimeConfiguration =
         testContext.getApplicationContext().getBean(CamundaContainerRuntimeConfiguration.class);
 
