@@ -248,7 +248,7 @@ public class BatchOperationModifyProcessInstanceTest {
         .apply(camundaClient.newCreateBatchOperationCommand().modifyProcessInstance())
         .send()
         .join()
-        .getBatchOperationKey();
+        .getBatchOperationId();
   }
 
   public void batchOperationHasItemsWithState(

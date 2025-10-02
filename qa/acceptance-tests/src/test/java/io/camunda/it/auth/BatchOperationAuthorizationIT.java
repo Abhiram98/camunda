@@ -151,7 +151,7 @@ class BatchOperationAuthorizationIT {
 
     // and we wait for it
     assertThat(batchOperationCreatedResponse).isNotNull();
-    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationKey();
+    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationId();
     waitForBatchOperation(camundaClient, batchOperationKey, 3);
 
     // then
@@ -172,7 +172,7 @@ class BatchOperationAuthorizationIT {
 
     // and we wait for it
     assertThat(batchOperationCreatedResponse).isNotNull();
-    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationKey();
+    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationId();
     waitForBatchOperation(camundaClient, batchOperationKey, 3);
 
     // when
@@ -201,7 +201,7 @@ class BatchOperationAuthorizationIT {
 
     // and we wait for it
     assertThat(batchOperationCreatedResponse).isNotNull();
-    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationKey();
+    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationId();
     waitForBatchOperation(camundaClient, batchOperationKey, 1);
 
     // then
@@ -236,7 +236,7 @@ class BatchOperationAuthorizationIT {
 
     // and we wait for it
     assertThat(batchOperationCreatedResponse).isNotNull();
-    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationKey();
+    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationId();
     waitForBatchOperation(camundaClient, batchOperationKey, 1);
 
     // then
@@ -274,7 +274,7 @@ class BatchOperationAuthorizationIT {
 
     // and we wait for it
     assertThat(batchOperationCreatedResponse).isNotNull();
-    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationKey();
+    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationId();
     waitForBatchOperation(camundaClient, batchOperationKey, 1);
 
     // when
@@ -298,7 +298,7 @@ class BatchOperationAuthorizationIT {
 
     // and we wait for it
     assertThat(batchOperationCreatedResponse).isNotNull();
-    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationKey();
+    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationId();
     waitForBatchOperation(camundaClient, batchOperationKey, 1);
 
     // when
@@ -347,7 +347,7 @@ class BatchOperationAuthorizationIT {
 
     // and we wait for it
     assertThat(batchOperationCreatedResponse).isNotNull();
-    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationKey();
+    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationId();
     waitForBatchOperation(camundaAdminClient, batchOperationKey, 3);
 
     // then we should find nothing with our restricted user
@@ -379,7 +379,7 @@ class BatchOperationAuthorizationIT {
 
     // and we wait for it
     assertThat(batchOperationCreatedResponse).isNotNull();
-    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationKey();
+    final var batchOperationKey = batchOperationCreatedResponse.getBatchOperationId();
     waitForBatchOperation(camundaAdminClient, batchOperationKey, 0);
 
     // then we should find nothing with our restricted user
