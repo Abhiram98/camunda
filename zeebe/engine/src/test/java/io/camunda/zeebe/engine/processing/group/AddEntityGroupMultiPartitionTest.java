@@ -133,7 +133,7 @@ public class AddEntityGroupMultiPartitionTest {
     // given the group creation distribution is intercepted
     engine.getProcessingState().getRoutingState().currentPartitions().stream()
         .skip(1)
-        .forEach(partition -> engine.interceptInterPartitionIntent(partition, GroupIntent.CREATE));
+        .forEach(partitionId -> engine.interceptInterPartitionIntent(partitionId, GroupIntent.CREATE));
     final var username =
         engine
             .user()
