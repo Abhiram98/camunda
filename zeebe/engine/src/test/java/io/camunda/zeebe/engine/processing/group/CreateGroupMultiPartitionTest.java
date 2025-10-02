@@ -104,7 +104,7 @@ public class CreateGroupMultiPartitionTest {
 
     engine.getProcessingState().getRoutingState().currentPartitions().stream()
         .skip(1)
-        .forEach(partition -> engine.interceptInterPartitionIntent(partition, RoleIntent.CREATE));
+        .forEach(partitionId -> engine.interceptInterPartitionIntent(partitionId, RoleIntent.CREATE));
 
     engine.role().newRole(UUID.randomUUID().toString()).create();
 
