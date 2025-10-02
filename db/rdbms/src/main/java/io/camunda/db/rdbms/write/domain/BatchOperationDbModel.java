@@ -35,7 +35,7 @@ public record BatchOperationDbModel(
 
     public Builder() {}
 
-    public Builder batchOperationKey(final String batchOperationKey) {
+    public Builder batchOperationId(final String batchOperationKey) {
       this.batchOperationKey = batchOperationKey;
       return this;
     }

@@ -23,7 +23,7 @@ public class CreateBatchOperationResponseImpl implements CreateBatchOperationRes
   private long batchOperationKey;
 
   @Override
-  public long getBatchOperationKey() {
+  public long getBatchOperationId() {
     return batchOperationKey;
   }
 

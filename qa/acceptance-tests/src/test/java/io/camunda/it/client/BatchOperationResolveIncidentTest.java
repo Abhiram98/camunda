@@ -108,7 +108,7 @@ public class BatchOperationResolveIncidentTest {
             .filter(f -> f.variables(getScopedVariables(testScopeId)))
             .send()
             .join();
-    final var batchOperationKey = result.getBatchOperationKey();
+    final var batchOperationKey = result.getBatchOperationId();
 
     // then
     assertThat(result).isNotNull();
