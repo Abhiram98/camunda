@@ -115,7 +115,7 @@ public class CreateMappingMultiPartitionTest {
     // given the role creation distribution is intercepted
     engine.getProcessingState().getRoutingState().currentPartitions().stream()
         .skip(1)
-        .forEach(partition -> engine.interceptInterPartitionIntent(partition, RoleIntent.CREATE));
+        .forEach(partitionId -> engine.interceptInterPartitionIntent(partitionId, RoleIntent.CREATE));
 
     final var roleName = UUID.randomUUID().toString();
     engine.role().newRole(roleName).create();

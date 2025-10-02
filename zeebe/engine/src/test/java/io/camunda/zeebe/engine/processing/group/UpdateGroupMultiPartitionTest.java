@@ -113,7 +113,7 @@ public class UpdateGroupMultiPartitionTest {
 
     engine.getProcessingState().getRoutingState().currentPartitions().stream()
         .skip(1)
-        .forEach(partition -> engine.interceptInterPartitionIntent(partition, GroupIntent.CREATE));
+        .forEach(partitionId -> engine.interceptInterPartitionIntent(partitionId, GroupIntent.CREATE));
     final var groupId = UUID.randomUUID().toString();
     engine.group().newGroup(groupId).withName(UUID.randomUUID().toString()).create().getKey();
 

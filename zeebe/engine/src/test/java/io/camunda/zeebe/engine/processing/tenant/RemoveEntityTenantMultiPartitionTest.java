@@ -127,7 +127,7 @@ public class RemoveEntityTenantMultiPartitionTest {
     // given the user creation distribution is intercepted
     engine.getProcessingState().getRoutingState().currentPartitions().stream()
         .skip(1)
-        .forEach(partition -> engine.interceptInterPartitionIntent(partition, UserIntent.CREATE));
+        .forEach(partitionId -> engine.interceptInterPartitionIntent(partitionId, UserIntent.CREATE));
     setupTenantWithUserAndRemoveEntity();
     // Increase time to trigger a redistribution
     engine.increaseTime(Duration.ofMinutes(1));
