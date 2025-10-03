@@ -15,4 +15,6 @@
  */
 package io.camunda.client.api.response;
 
-public interface AddMappingToGroupResponse {}
+public interface AssignMappingToGroupResponse {
+
+}
