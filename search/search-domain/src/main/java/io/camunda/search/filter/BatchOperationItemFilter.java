@@ -33,8 +33,8 @@ public record BatchOperationItemFilter(
       return batchOperationIds(collectValues(value, values));
     }
 
-    public Builder batchOperationIds(final List<String> values) {
-      batchOperationIds = addValuesToList(batchOperationIds, values);
+    public Builder batchOperationIds(final List<String> operations) {
+      batchOperationIds = addValuesToList(batchOperationIds, operations);
       return this;
     }
 
@@ -42,8 +42,8 @@ public record BatchOperationItemFilter(
       return itemKeys(collectValues(value, values));
     }
 
-    public Builder itemKeys(final List<Long> values) {
-      itemKeys = addValuesToList(itemKeys, values);
+    public Builder itemKeys(final List<Long> operations) {
+      itemKeys = addValuesToList(itemKeys, operations);
       return this;
     }
 
@@ -51,8 +51,8 @@ public record BatchOperationItemFilter(
       return processInstanceKeys(collectValues(value, values));
     }
 
-    public Builder processInstanceKeys(final List<Long> values) {
-      processInstanceKeys = addValuesToList(processInstanceKeys, values);
+    public Builder processInstanceKeys(final List<Long> operations) {
+      processInstanceKeys = addValuesToList(processInstanceKeys, operations);
       return this;
     }
 
