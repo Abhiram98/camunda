@@ -82,7 +82,7 @@ public class UserTaskExportHandler implements RdbmsExportHandler<UserTaskRecordV
               .processDefinitionKey(value.getProcessDefinitionKey())
               .processDefinitionId(value.getBpmnProcessId())
               .elementId(value.getElementId())
-              .elementName(
+              .name(
                   ProcessCacheUtil.getFlowNodeName(
                           processCache, value.getProcessDefinitionKey(), value.getElementId())
                       .orElse(null))
