@@ -117,7 +117,8 @@ public class MappingsByGroupSearchTest {
   }
 
   private static void addMappingToGroup(final String mappingId, final String groupId) {
-    camundaClient.newAddMappingToGroupCommand().mappingId(mappingId).groupId(groupId).send().join();
+    camundaClient.newAssignMappingToGroupCommand().mappingId(mappingId).groupId(groupId).send()
+        .join();
   }
 
   private static void waitForGroupsToBeUpdated() {
