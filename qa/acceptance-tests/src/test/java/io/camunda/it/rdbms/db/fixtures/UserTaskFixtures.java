@@ -18,7 +18,8 @@ import java.util.function.Function;
 
 public final class UserTaskFixtures extends CommonFixtures {
 
-  private UserTaskFixtures() {}
+  private UserTaskFixtures() {
+  }
 
   public static UserTaskDbModel createRandomized() {
     return createRandomized(b -> b);
@@ -29,7 +30,7 @@ public final class UserTaskFixtures extends CommonFixtures {
         new Builder()
             .userTaskKey(nextKey())
             .elementId(generateRandomString("elementBpmnId"))
-            .elementName(generateRandomString("elementBpmnName"))
+            .name(generateRandomString("elementBpmnName"))
             .processDefinitionId(generateRandomString("processDefinitionId"))
             .processInstanceKey(nextKey())
             .creationDate(NOW)
