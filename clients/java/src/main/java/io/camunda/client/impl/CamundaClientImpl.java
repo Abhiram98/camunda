@@ -1141,7 +1141,7 @@ public final class CamundaClientImpl implements CamundaClient {
   }
 
   @Override
-  public AssignMappingToGroupStep1 newAddMappingToGroupCommand() {
+  public AssignMappingToGroupStep1 newAssignMappingToGroupCommand() {
     return new AssignMappingToGroupCommandImpl(httpClient);
   }
 

@@ -583,8 +583,7 @@ public interface CamundaClient extends AutoCloseable, JobClient {
    * </pre>
    *
    * <p>If the user task is linked to a process instance then this command will complete the
-   * related
-   * activity and continue the flow.
+   * related activity and continue the flow.
    *
    * <p>This command is only sent via REST over HTTP, not via gRPC <br>
    * <br>
@@ -2206,7 +2205,7 @@ public interface CamundaClient extends AutoCloseable, JobClient {
    *
    * @return a builder for the command
    */
-  AssignMappingToGroupStep1 newAddMappingToGroupCommand();
+  AssignMappingToGroupStep1 newAssignMappingToGroupCommand();
 
   /**
    * Command to unassign a mapping rule from a group.
