@@ -67,7 +67,7 @@ import io.camunda.zeebe.protocol.record.intent.VariableIntent;
 import io.camunda.zeebe.protocol.record.intent.management.CheckpointIntent;
 import io.camunda.zeebe.protocol.record.intent.scaling.ScaleIntent;
 import io.camunda.zeebe.protocol.record.value.AdHocSubProcessActivityActivationRecordValue;
-import io.camunda.zeebe.protocol.record.value.AsyncRequestMetadataRecordValue;
+import io.camunda.zeebe.protocol.record.value.AsyncRequestRecordValue;
 import io.camunda.zeebe.protocol.record.value.AuthorizationRecordValue;
 import io.camunda.zeebe.protocol.record.value.BatchOperationChunkRecordValue;
 import io.camunda.zeebe.protocol.record.value.BatchOperationCreationRecordValue;
@@ -132,6 +132,7 @@ import java.util.Set;
  */
 @SuppressWarnings("java:S1452")
 public final class ValueTypeMapping {
+
   private final Map<ValueType, Mapping<?, ?>> types;
   private final Set<ValueType> acceptedValueTypes;
 
@@ -299,7 +300,7 @@ public final class ValueTypeMapping {
             BatchOperationPartitionLifecycleRecordValue.class, BatchOperationIntent.class));
     mapping.put(
         ValueType.ASYNC_REQUEST_METADATA,
-        new Mapping<>(AsyncRequestMetadataRecordValue.class, AsyncRequestMetadataIntent.class));
+        new Mapping<>(AsyncRequestRecordValue.class, AsyncRequestMetadataIntent.class));
     return mapping;
   }
 
@@ -311,6 +312,7 @@ public final class ValueTypeMapping {
    * @param <I> the intent type
    */
   public static final class Mapping<T extends RecordValue, I extends Enum<I> & Intent> {
+
     private final Class<T> valueClass;
     private final Class<I> intentClass;
 
@@ -329,6 +331,7 @@ public final class ValueTypeMapping {
   }
 
   private static final class Singleton {
+
     private static final ValueTypeMapping INSTANCE = new ValueTypeMapping();
   }
 }
