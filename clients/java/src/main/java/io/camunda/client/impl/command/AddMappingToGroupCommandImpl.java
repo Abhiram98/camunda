@@ -16,8 +16,8 @@
 package io.camunda.client.impl.command;
 
 import io.camunda.client.api.CamundaFuture;
-import io.camunda.client.api.command.AddMappingToGroupStep1;
-import io.camunda.client.api.command.AddMappingToGroupStep1.AddMappingToGroupStep2;
+import io.camunda.client.api.command.AssignMappingToGroupStep1;
+import io.camunda.client.api.command.AssignMappingToGroupStep1.AddMappingToGroupStep2;
 import io.camunda.client.api.command.FinalCommandStep;
 import io.camunda.client.api.response.AssignMappingToGroupResponse;
 import io.camunda.client.impl.http.HttpCamundaFuture;
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.hc.client5.http.config.RequestConfig;
 
 public class AddMappingToGroupCommandImpl
-    implements AddMappingToGroupStep1, AddMappingToGroupStep2 {
+    implements AssignMappingToGroupStep1, AddMappingToGroupStep2 {
 
   private final HttpClient httpClient;
   private final RequestConfig.Builder httpRequestConfig;
@@ -52,7 +52,8 @@ public class AddMappingToGroupCommandImpl
   }
 
   @Override
-  public FinalCommandStep<AssignMappingToGroupResponse> requestTimeout(final Duration requestTimeout) {
+  public FinalCommandStep<AssignMappingToGroupResponse> requestTimeout(
+      final Duration requestTimeout) {
     httpRequestConfig.setResponseTimeout(requestTimeout.toMillis(), TimeUnit.MILLISECONDS);
     return this;
   }
