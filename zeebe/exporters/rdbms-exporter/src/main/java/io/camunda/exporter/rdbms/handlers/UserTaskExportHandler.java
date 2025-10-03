@@ -28,7 +28,9 @@ import java.time.OffsetDateTime;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 
-/** Based on UserTaskRecordToTaskEntityMapper */
+/**
+ * Based on UserTaskRecordToTaskEntityMapper
+ */
 public class UserTaskExportHandler implements RdbmsExportHandler<UserTaskRecordValue> {
 
   private static final Set<UserTaskIntent> EXPORTABLE_INTENTS =
@@ -64,31 +66,28 @@ public class UserTaskExportHandler implements RdbmsExportHandler<UserTaskRecordV
     final UserTaskRecordValue value = record.getValue();
     switch (record.getIntent()) {
       case CREATED -> userTaskWriter.create(map(record, UserTaskState.CREATED, null));
-      case CANCELED ->
-          userTaskWriter.update(
-              map(
-                  record,
-                  UserTaskState.CANCELED,
-                  DateUtil.toOffsetDateTime(record.getTimestamp())));
-      case COMPLETED ->
-          userTaskWriter.update(
-              map(
-                  record,
-                  UserTaskState.COMPLETED,
-                  DateUtil.toOffsetDateTime(record.getTimestamp())));
-      case MIGRATED ->
-          userTaskWriter.migrateToProcess(
-              new UserTaskMigrationDbModel.Builder()
-                  .userTaskKey(value.getUserTaskKey())
-                  .processDefinitionKey(value.getProcessDefinitionKey())
-                  .processDefinitionId(value.getBpmnProcessId())
-                  .elementId(value.getElementId())
-                  .elementName(
-                      ProcessCacheUtil.getFlowNodeName(
-                              processCache, value.getProcessDefinitionKey(), value.getElementId())
-                          .orElse(null))
-                  .processDefinitionVersion(value.getProcessDefinitionVersion())
-                  .build());
+      case CANCELED -> userTaskWriter.update(
+          map(
+              record,
+              UserTaskState.CANCELED,
+              DateUtil.toOffsetDateTime(record.getTimestamp())));
+      case COMPLETED -> userTaskWriter.update(
+          map(
+              record,
+              UserTaskState.COMPLETED,
+              DateUtil.toOffsetDateTime(record.getTimestamp())));
+      case MIGRATED -> userTaskWriter.migrateToProcess(
+          new UserTaskMigrationDbModel.Builder()
+              .userTaskKey(value.getUserTaskKey())
+              .processDefinitionKey(value.getProcessDefinitionKey())
+              .processDefinitionId(value.getBpmnProcessId())
+              .elementId(value.getElementId())
+              .name(
+                  ProcessCacheUtil.getFlowNodeName(
+                          processCache, value.getProcessDefinitionKey(), value.getElementId())
+                      .orElse(null))
+              .processDefinitionVersion(value.getProcessDefinitionVersion())
+              .build());
       default -> userTaskWriter.update(map(record, null, null));
     }
   }
@@ -101,7 +100,7 @@ public class UserTaskExportHandler implements RdbmsExportHandler<UserTaskRecordV
     return new UserTaskDbModel.Builder()
         .userTaskKey(value.getUserTaskKey())
         .elementId(value.getElementId())
-        .elementName(
+        .name(
             ProcessCacheUtil.getFlowNodeName(
                     processCache, value.getProcessDefinitionKey(), value.getElementId())
                 .orElse(null))
