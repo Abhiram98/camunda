@@ -28,10 +28,14 @@ import org.junit.rules.TemporaryFolder;
 
 public class ReceivedSnapshotTest {
 
-  @Rule public TemporaryFolder temporaryFolder = new TemporaryFolder();
-  @Rule public ActorSchedulerRule scheduler = new ActorSchedulerRule();
-  @AutoClose ConstructableSnapshotStore senderSnapshotStore;
-  @AutoClose ReceivableSnapshotStore receiverSnapshotStore;
+  @Rule
+  public TemporaryFolder temporaryFolder = new TemporaryFolder();
+  @Rule
+  public ActorSchedulerRule scheduler = new ActorSchedulerRule();
+  @AutoClose
+  ConstructableSnapshotStore senderSnapshotStore;
+  @AutoClose
+  ReceivableSnapshotStore receiverSnapshotStore;
 
   @Before
   public void beforeEach() throws Exception {
@@ -128,7 +132,7 @@ public class ReceivedSnapshotTest {
     final var receivedSnapshot = receiveSnapshot(persistedSnapshot).persist().join();
 
     // when
-    receiverSnapshotStore.purgePendingSnapshots().join();
+    receiverSnapshotStore.abortPendingSnapshots().join();
 
     // then
     assertThat(receivedSnapshot.getPath()).as("the received snapshot still exists").exists();
@@ -247,9 +251,9 @@ public class ReceivedSnapshotTest {
         .as("the second received snapshot was not removed as it's not considered older")
         .exists();
     assertThat(
-            receivedPersistedSnapshot
-                .getChecksums()
-                .sameChecksums(persistedSnapshot.getChecksums()))
+        receivedPersistedSnapshot
+            .getChecksums()
+            .sameChecksums(persistedSnapshot.getChecksums()))
         .as("the received, persisted snapshot have the same checksum as the persisted one")
         .isTrue();
   }

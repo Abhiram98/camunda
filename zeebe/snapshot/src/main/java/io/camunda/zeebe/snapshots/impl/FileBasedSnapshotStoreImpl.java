@@ -275,7 +275,7 @@ public final class FileBasedSnapshotStoreImpl {
                 .orElse(0L));
   }
 
-  public ActorFuture<Void> purgePendingSnapshots() {
+  public ActorFuture<Void> abortPendingSnapshots() {
     final CompletableActorFuture<Void> abortFuture = new CompletableActorFuture<>();
     actor.run(
         () -> {
@@ -444,7 +444,7 @@ public final class FileBasedSnapshotStoreImpl {
     }
   }
 
-  private void purgePendingSnapshots(final SnapshotId cutoffSnapshot) {
+  private void abortPendingSnapshots(final SnapshotId cutoffSnapshot) {
     LOGGER.trace(
         "Search for orphaned snapshots below oldest valid snapshot with index {} in {}",
         cutoffSnapshot.getSnapshotIdAsString(),
@@ -504,7 +504,7 @@ public final class FileBasedSnapshotStoreImpl {
           currentPersistedSnapshotId,
           snapshotId);
 
-      purgePendingSnapshots(currentPersistedSnapshotId);
+      abortPendingSnapshots(currentPersistedSnapshotId);
       return currentPersistedSnapshot;
     }
 
@@ -593,7 +593,7 @@ public final class FileBasedSnapshotStoreImpl {
           LOGGER.debug("Deleting previous snapshot {}", previousSnapshot.getId());
           previousSnapshot.delete();
         });
-    purgePendingSnapshots(newPersistedSnapshot.getSnapshotId());
+    abortPendingSnapshots(newPersistedSnapshot.getSnapshotId());
   }
 
   private void rollbackPartialSnapshot(final Path destination) {
