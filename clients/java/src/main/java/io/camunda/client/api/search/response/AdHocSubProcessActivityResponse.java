@@ -18,7 +18,7 @@ package io.camunda.client.api.search.response;
 import io.camunda.client.api.search.enums.AdHocSubprocessActivityResultType;
 import java.util.List;
 
-public interface AdHocSubprocessActivityResponse {
+public interface AdHocSubProcessActivityResponse {
 
   List<AdHocSubprocessActivity> getItems();
 
