@@ -39,16 +39,16 @@ public class CommandDistributionAcknowledgeProcessor
   }
 
   @Override
-  public void processRecord(final TypedRecord<CommandDistributionRecord> record) {
-    final var distributionKey = record.getKey();
-    final var recordValue = record.getValue();
+  public void processRecord(final TypedRecord<CommandDistributionRecord> usageMetricRecord) {
+    final var distributionKey = usageMetricRecord.getKey();
+    final var recordValue = usageMetricRecord.getValue();
     final var partitionId = recordValue.getPartitionId();
 
     commandDistributionBehavior.getMetrics().receivedAcknowledgeDistribution(partitionId);
 
     if (!distributionState.hasPendingDistribution(distributionKey, partitionId)) {
       rejectionWriter.appendRejection(
-          record,
+          usageMetricRecord,
           RejectionType.NOT_FOUND,
           String.format(ERROR_PENDING_DISTRIBUTION_NOT_FOUND, distributionKey, partitionId));
       return;

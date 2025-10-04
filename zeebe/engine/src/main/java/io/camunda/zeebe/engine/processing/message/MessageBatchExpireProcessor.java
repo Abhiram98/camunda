@@ -47,11 +47,11 @@ public final class MessageBatchExpireProcessor implements TypedRecordProcessor<M
   }
 
   @Override
-  public void processRecord(final TypedRecord<MessageBatchRecord> record) {
+  public void processRecord(final TypedRecord<MessageBatchRecord> usageMetricRecord) {
     int expiredMessagesCount = 0;
-    final int totalMessagesCount = record.getValue().getMessageKeys().size();
+    final int totalMessagesCount = usageMetricRecord.getValue().getMessageKeys().size();
 
-    for (final long messageKey : record.getValue().getMessageKeys()) {
+    for (final long messageKey : usageMetricRecord.getValue().getMessageKeys()) {
       try {
         if (appendMessageBodyOnExpired) {
           expiredMessagesCount += expireWithMessageBody(messageKey);
@@ -71,7 +71,7 @@ public final class MessageBatchExpireProcessor implements TypedRecordProcessor<M
 
     if (appendMessageBodyOnExpired && expiredMessagesCount == 0) {
       rejectionWriter.appendRejection(
-          record,
+          usageMetricRecord,
           RejectionType.NOT_FOUND,
           String.format(
               "Expected to expire %d messages in a batch, but none of the messages were found in the state.",

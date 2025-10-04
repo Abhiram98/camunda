@@ -74,12 +74,12 @@ public final class JobBatchActivateProcessor implements TypedRecordProcessor<Job
   }
 
   @Override
-  public void processRecord(final TypedRecord<JobBatchRecord> record) {
-    final var validationResult = isValid(record);
+  public void processRecord(final TypedRecord<JobBatchRecord> usageMetricRecord) {
+    final var validationResult = isValid(usageMetricRecord);
     if (validationResult.isRight()) {
-      activateJobs(record);
+      activateJobs(usageMetricRecord);
     } else {
-      rejectCommand(record, validationResult.getLeft());
+      rejectCommand(usageMetricRecord, validationResult.getLeft());
     }
   }
 
