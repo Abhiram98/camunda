@@ -15,14 +15,14 @@
  */
 package io.camunda.client.impl.search.response;
 
-import io.camunda.client.api.search.response.AdHocSubprocessActivityResponse;
+import io.camunda.client.api.search.response.AdHocSubProcessActivityResponse;
 import io.camunda.client.impl.util.EnumUtil;
 import io.camunda.client.protocol.rest.AdHocSubprocessActivityResult;
 import io.camunda.client.protocol.rest.AdHocSubprocessActivitySearchQueryResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AdHocSubprocessActivityResponseImpl implements AdHocSubprocessActivityResponse {
+public class AdHocSubprocessActivityResponseImpl implements AdHocSubProcessActivityResponse {
 
   private final List<AdHocSubprocessActivity> items;
 

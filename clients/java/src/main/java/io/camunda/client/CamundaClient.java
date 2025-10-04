@@ -89,7 +89,7 @@ import io.camunda.client.api.fetch.UsersByGroupSearchRequest;
 import io.camunda.client.api.fetch.VariableGetRequest;
 import io.camunda.client.api.response.ActivatedJob;
 import io.camunda.client.api.response.DocumentReferenceResponse;
-import io.camunda.client.api.search.request.AdHocSubprocessActivitySearchRequest;
+import io.camunda.client.api.search.request.AdHocSubProcessActivitySearchRequest;
 import io.camunda.client.api.search.request.DecisionDefinitionSearchRequest;
 import io.camunda.client.api.search.request.DecisionInstanceSearchRequest;
 import io.camunda.client.api.search.request.DecisionRequirementsSearchRequest;
@@ -919,7 +919,7 @@ public interface CamundaClient extends AutoCloseable, JobClient {
    * @return a builder for the ad-hoc sub-process activity search request
    */
   @ExperimentalApi("https://github.com/camunda/camunda/issues/27930")
-  AdHocSubprocessActivitySearchRequest newAdHocSubprocessActivitySearchRequest();
+  AdHocSubProcessActivitySearchRequest newAdHocSubprocessActivitySearchRequest();
 
   /**
    * Executes a search request to query activities within ad-hoc sub-processes.
@@ -942,7 +942,7 @@ public interface CamundaClient extends AutoCloseable, JobClient {
    * @return a builder for the ad-hoc sub-process activity search request
    */
   @ExperimentalApi("https://github.com/camunda/camunda/issues/27930")
-  AdHocSubprocessActivitySearchRequest newAdHocSubprocessActivitySearchRequest(
+  AdHocSubProcessActivitySearchRequest newAdHocSubprocessActivitySearchRequest(
       long processDefinitionKey, String adHocSubprocessId);
 
   /**
