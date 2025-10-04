@@ -82,7 +82,7 @@ public final class ElementInstance extends UnpackedObject implements DbValue {
   private final ObjectProperty<TaskListenerIndicesRecord> taskListenerIndicesRecordProp =
       new ObjectProperty<>(TASK_LISTENER_INDICES_RECORD, new TaskListenerIndicesRecord());
   private final IntegerProperty processDepth = new IntegerProperty(PROCESS_DEPTH, 1);
-  private final BooleanProperty completionConditionFulFilledProp =
+  private final BooleanProperty completionConditionFulfilledProp =
       new BooleanProperty(COMPLETION_CONDITION_FUL_FILLED, false);
 
   /**
@@ -91,13 +91,13 @@ public final class ElementInstance extends UnpackedObject implements DbValue {
    * <p>A root process instance has depth 1. Each child instance has the depth of its parent
    * incremented by 1.
    *
-   * @since 8.3.22, 8.4.18, 8.5.17, 8.6.12, and 8.7
    * @apiNote This property is added in 8.7 and backported to 8.6.12, 8.5.17, 8.4.18, and 8.3.22.
-   *     Any child process instances created before 8.7 (or any of these patches) will have a depth
-   *     of 1 rather than a correct value. Child instances created before the property existed will
-   *     have a depth of 1 + the depth of the parent instance. Therefore, child instances created on
-   *     or after the property was added that are part of a root process instance created prior to
-   *     the property existed, will not have a correct depth.
+   * Any child process instances created before 8.7 (or any of these patches) will have a depth of 1
+   * rather than a correct value. Child instances created before the property existed will have a
+   * depth of 1 + the depth of the parent instance. Therefore, child instances created on or after
+   * the property was added that are part of a root process instance created prior to the property
+   * existed, will not have a correct depth.
+   * @since 8.3.22, 8.4.18, 8.5.17, 8.6.12, and 8.7
    */
   public ElementInstance() {
     super(18);
@@ -118,7 +118,7 @@ public final class ElementInstance extends UnpackedObject implements DbValue {
         .declareProperty(taskListenerIndicesRecordProp)
         .declareProperty(processDepth)
         .declareProperty(interruptedByRuntimeInstructionProp)
-        .declareProperty(completionConditionFulFilledProp);
+        .declareProperty(completionConditionFulfilledProp);
   }
 
   public ElementInstance(
@@ -368,11 +368,11 @@ public final class ElementInstance extends UnpackedObject implements DbValue {
     processDepth.setValue(depth);
   }
 
-  public boolean isCompletionConditionFulFilled() {
-    return completionConditionFulFilledProp.getValue();
+  public boolean isCompletionConditionFulfilled() {
+    return completionConditionFulfilledProp.getValue();
   }
 
-  public void setCompletionConditionFulFilled(final boolean fulfilled) {
-    completionConditionFulFilledProp.setValue(fulfilled);
+  public void setCompletionConditionFulfilled(final boolean fulfilled) {
+    completionConditionFulfilledProp.setValue(fulfilled);
   }
 }
