@@ -22,8 +22,8 @@ import static io.camunda.client.impl.CamundaClientEnvironmentVariables.OAUTH_ENV
 import static io.camunda.client.impl.CamundaClientEnvironmentVariables.OAUTH_ENV_CLIENT_SECRET;
 import static io.camunda.client.impl.CamundaClientEnvironmentVariables.OAUTH_ENV_CONNECT_TIMEOUT;
 import static io.camunda.client.impl.CamundaClientEnvironmentVariables.OAUTH_ENV_READ_TIMEOUT;
-import static io.camunda.client.impl.CamundaClientEnvironmentVariables.OAUTH_ENV_SSL_CLIENT_CERT_PASSWORD;
-import static io.camunda.client.impl.CamundaClientEnvironmentVariables.OAUTH_ENV_SSL_CLIENT_CERT_PATH;
+import static io.camunda.client.impl.CamundaClientEnvironmentVariables.OAUTH_ENV_CLIENT_ASSERTION_KEYSTORE_PASSWORD;
+import static io.camunda.client.impl.CamundaClientEnvironmentVariables.OAUTH_ENV_CLIENT_ASSERTION_KEYSTORE_PATH;
 import static io.camunda.client.impl.CamundaClientEnvironmentVariables.OAUTH_ENV_SSL_CLIENT_KEYSTORE_KEY_SECRET;
 import static io.camunda.client.impl.CamundaClientEnvironmentVariables.OAUTH_ENV_SSL_CLIENT_KEYSTORE_PATH;
 import static io.camunda.client.impl.CamundaClientEnvironmentVariables.OAUTH_ENV_SSL_CLIENT_KEYSTORE_SECRET;
@@ -348,8 +348,10 @@ public final class OAuthCredentialsProviderBuilder {
   }
 
   private void applySSLClientCertConfiguration() {
-    applyEnvironmentValueIfNotNull(this::sslClientCertPath, OAUTH_ENV_SSL_CLIENT_CERT_PATH);
-    applyEnvironmentValueIfNotNull(this::sslClientCertPassword, OAUTH_ENV_SSL_CLIENT_CERT_PASSWORD);
+    applyEnvironmentValueIfNotNull(this::sslClientCertPath,
+        OAUTH_ENV_CLIENT_ASSERTION_KEYSTORE_PATH);
+    applyEnvironmentValueIfNotNull(this::sslClientCertPassword,
+        OAUTH_ENV_CLIENT_ASSERTION_KEYSTORE_PASSWORD);
   }
 
   private void checkEnvironmentOverrides() {
