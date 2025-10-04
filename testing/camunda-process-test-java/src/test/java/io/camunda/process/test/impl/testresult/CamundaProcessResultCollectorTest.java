@@ -152,7 +152,7 @@ public class CamundaProcessResultCollectorTest {
   }
 
   @Test
-  void shouldReturnOpenIncidents() {
+  void shouldReturnActiveIncidents() {
     // given
     when(camundaDataSource.findProcessInstances())
         .thenReturn(Arrays.asList(PROCESS_INSTANCE_1, PROCESS_INSTANCE_2));
