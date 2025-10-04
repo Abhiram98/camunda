@@ -51,7 +51,7 @@ public final class UserTaskServices
   private final UserTaskSearchClient userTaskSearchClient;
   private final FormServices formServices;
   private final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient;
-  private final VariableSearchClient variableSearchClient;
+  private final VariableSearchClient variableServices;
   private final ProcessCache processCache;
 
   public UserTaskServices(
@@ -60,14 +60,14 @@ public final class UserTaskServices
       final UserTaskSearchClient userTaskSearchClient,
       final FormServices formServices,
       final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient,
-      final VariableSearchClient variableSearchClient,
+      final VariableSearchClient variableServices,
       final ProcessCache processCache,
       final CamundaAuthentication authentication) {
     super(brokerClient, securityContextProvider, authentication);
     this.userTaskSearchClient = userTaskSearchClient;
     this.formServices = formServices;
     this.flowNodeInstanceSearchClient = flowNodeInstanceSearchClient;
-    this.variableSearchClient = variableSearchClient;
+    this.variableServices = variableServices;
     this.processCache = processCache;
   }
 
@@ -79,7 +79,7 @@ public final class UserTaskServices
         userTaskSearchClient,
         formServices,
         flowNodeInstanceSearchClient,
-        variableSearchClient,
+        variableServices,
         processCache,
         authentication);
   }
@@ -217,22 +217,22 @@ public final class UserTaskServices
     // Execute the search
     return executeSearchRequest(
         () ->
-            variableSearchClient
+            variableServices
                 .withSecurityContext(securityContextProvider.provideSecurityContext(authentication))
                 .searchVariables(variableQueryWithTreePathFilter));
   }
 
   private String fetchFlowNodeTreePath(final long flowNodeInstanceKey) {
     return executeSearchRequest(
-            () ->
-                flowNodeInstanceSearchClient
-                    .withSecurityContext(
-                        securityContextProvider.provideSecurityContext(authentication))
-                    .searchFlowNodeInstances(
-                        flownodeInstanceSearchQuery(
-                            q ->
-                                q.filter(f -> f.flowNodeInstanceKeys(flowNodeInstanceKey))
-                                    .singleResult())))
+        () ->
+            flowNodeInstanceSearchClient
+                .withSecurityContext(
+                    securityContextProvider.provideSecurityContext(authentication))
+                .searchFlowNodeInstances(
+                    flownodeInstanceSearchQuery(
+                        q ->
+                            q.filter(f -> f.flowNodeInstanceKeys(flowNodeInstanceKey))
+                                .singleResult())))
         .items()
         .getFirst()
         .treePath();
