@@ -86,7 +86,7 @@ public record ProcessInstanceFilter(
     private List<Operation<String>> flowNodeIdOperations;
     private Boolean hasFlowNodeInstanceIncident;
     private List<Operation<String>> flowNodeInstanceStateOperations;
-    private List<Integer> incidentErrorHashCodes;
+    private List<Integer> incidentErrorHashCodeOperations;
     private Integer partitionId;
     private List<ProcessInstanceFilter> orFilters;
 
@@ -355,11 +355,11 @@ public record ProcessInstanceFilter(
     }
 
     public Builder incidentErrorHashCodes(final Integer value, final Integer... values) {
-      return incidentErrorHashCodes(collectValues(value, values));
+      return incidentErrorHashCodeOperations(collectValues(value, values));
     }
 
-    public Builder incidentErrorHashCodes(final List<Integer> values) {
-      incidentErrorHashCodes = addValuesToList(incidentErrorHashCodes, values);
+    public Builder incidentErrorHashCodeOperations(final List<Integer> values) {
+      incidentErrorHashCodeOperations = addValuesToList(incidentErrorHashCodeOperations, values);
       return this;
     }
 
@@ -400,7 +400,7 @@ public record ProcessInstanceFilter(
           Objects.requireNonNullElse(flowNodeIdOperations, Collections.emptyList()),
           hasFlowNodeInstanceIncident,
           Objects.requireNonNullElse(flowNodeInstanceStateOperations, Collections.emptyList()),
-          Objects.requireNonNullElse(incidentErrorHashCodes, Collections.emptyList()),
+          Objects.requireNonNullElse(incidentErrorHashCodeOperations, Collections.emptyList()),
           partitionId,
           orFilters);
     }
