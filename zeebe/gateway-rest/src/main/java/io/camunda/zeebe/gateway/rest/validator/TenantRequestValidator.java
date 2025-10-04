@@ -84,25 +84,25 @@ public final class TenantRequestValidator {
   }
 
   public static void validateMemberId(
-      final String entityId, final EntityType entityType, final List<String> violations) {
+      final String id, final EntityType entityType, final List<String> violations) {
     switch (entityType) {
       case USER:
-        validateId(entityId, "username", violations);
+        validateId(id, "username", violations);
         break;
       case GROUP:
-        validateId(entityId, "groupId", violations);
+        validateId(id, "groupId", violations);
         break;
       case MAPPING_RULE:
-        validateId(entityId, "mappingRuleId", violations);
+        validateId(id, "mappingRuleId", violations);
         break;
       case ROLE:
-        validateId(entityId, "roleId", violations);
+        validateId(id, "roleId", violations);
         break;
       case CLIENT:
-        validateId(entityId, "clientId", violations);
+        validateId(id, "clientId", violations);
         break;
       default:
-        validateId(entityId, "entityId", violations);
+        validateId(id, "entityId", violations);
     }
   }
 }
