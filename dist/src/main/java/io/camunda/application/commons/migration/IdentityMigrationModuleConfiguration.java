@@ -129,8 +129,8 @@ public class IdentityMigrationModuleConfiguration {
 
   @Bean
   public AuthorizationChecker authorizationChecker(
-      final AuthorizationSearchClient authorizationSearchClient) {
-    return new AuthorizationChecker(authorizationSearchClient);
+      final AuthorizationSearchClient authorizationReader) {
+    return new AuthorizationChecker(authorizationReader);
   }
 
   @Bean
