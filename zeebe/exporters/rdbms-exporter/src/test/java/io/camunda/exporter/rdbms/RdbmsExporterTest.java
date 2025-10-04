@@ -117,7 +117,7 @@ class RdbmsExporterTest {
   }
 
   @Test
-  void shouldUpdatePositionAfterEachRecordWhenMaxQueueSizeIsZero() {
+  void shouldUpdatePositionAfterEachRecordWhenQueueSizeIsZero() {
     // given
     createExporter(b -> b.queueSize(0).withHandler(ValueType.JOB, mockHandler(ValueType.JOB)));
 
@@ -172,7 +172,7 @@ class RdbmsExporterTest {
   }
 
   @Test
-  void shouldNotRegisterFlushIntervalTimerWhenMaxQueueSizeIsZero() {
+  void shouldNotRegisterFlushIntervalTimerWhenQueueSizeIsZero() {
     // given
     createExporter(b -> b.flushInterval(Duration.ZERO));
 
