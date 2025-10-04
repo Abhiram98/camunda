@@ -87,7 +87,7 @@ public interface IncidentUpdateRepository extends AutoCloseable {
    * @param processInstanceKey the key of the process instance
    * @return true if it was deleted, false otherwise
    */
-  CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey);
+  CompletionStage<Boolean> wereProcessInstancesDeleted(final long processInstanceKey);
 
   /**
    * Executes the given bulk update against the underlying document store, waiting until the
@@ -122,7 +122,7 @@ public interface IncidentUpdateRepository extends AutoCloseable {
    * <p>Keeping the index is useful as we typically query by alias, so we don't know beforehand
    * which index the document originated from.
    */
-  record IncidentDocument(String id, String index, IncidentEntity incident) {}
+  record IncidentDocument(final String id, final String index, final IncidentEntity incident) {}
 
   /**
    * Represents a process instance document from the list view: its ID, index, key, and tree path.
@@ -130,17 +130,17 @@ public interface IncidentUpdateRepository extends AutoCloseable {
    * <p>Keeping the index is useful as we typically query by alias, so we don't know beforehand
    * which index the document originated from.
    */
-  record ProcessInstanceDocument(String id, String index, long key, String treePath) {}
+  record ProcessInstanceDocument(final String id, final String index, final long key, final String treePath) {}
 
   /**
    * A simple ID and index pair, mostly to allow us to properly update the right document later on,
    * as we typically query by alias and cannot deterministically encode where the original document
    * came from otherwise.
    */
-  record Document(String id, String index) {}
+  record Document(final String id, final String index) {}
 
   /** Represents an active incident, and the tree path which it currently affects. */
-  record ActiveIncident(String id, String treePath) {}
+  record ActiveIncident(final String id, final String treePath) {}
 
   /**
    * A search store agnostic representation of a bulk update for this task. It allows us to collect
@@ -168,7 +168,15 @@ public interface IncidentUpdateRepository extends AutoCloseable {
    *
    * <p>All fields are expected to be non-null, except routing.
    */
-  record DocumentUpdate(String id, String index, Map<String, Object> doc, String routing) {}
+  record DocumentUpdate(final String id, final String index, final Map<String, Object> doc, final String routing) {}
+
+  /**
+   * A batch of pending incident updates fetched from the post importer queue. The {@code
+   * highestPosition} returns the greatest position of the updates fetched, and the states are keyed
+   * by incident key.
+   */
+  record PendingIncidentUpdateBatch(
+      final long highestPosition, final Map<Long, IncidentState> newIncidentStates) {}
 
   class NoopIncidentUpdateRepository implements IncidentUpdateRepository {
 
@@ -204,7 +212,7 @@ public interface IncidentUpdateRepository extends AutoCloseable {
     }
 
     @Override
-    public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey) {
+    public CompletionStage<Boolean> wereProcessInstancesDeleted(final long processInstanceKey) {
       return CompletableFuture.completedFuture(false);
     }
 
@@ -227,12 +235,4 @@ public interface IncidentUpdateRepository extends AutoCloseable {
     @Override
     public void close() throws Exception {}
   }
-
-  /**
-   * A batch of pending incident updates fetched from the post importer queue. The {@code
-   * highestPosition} returns the greatest position of the updates fetched, and the states are keyed
-   * by incident key.
-   */
-  record PendingIncidentUpdateBatch(
-      long highestPosition, Map<Long, IncidentState> newIncidentStates) {}
 }

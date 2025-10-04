@@ -153,7 +153,7 @@ public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRe
   }
 
   @Override
-  public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey) {
+  public CompletionStage<Boolean> wereProcessInstancesDeleted(final long processInstanceKey) {
     final var query = createProcessInstanceDeletedQuery(processInstanceKey);
     final var request =
         new CountRequest.Builder()
@@ -330,5 +330,5 @@ public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRe
     return new PendingIncidentUpdateBatch(highestPosition, incidents);
   }
 
-  private record PendingIncidentUpdate(long key, long position, String intent) {}
+  private record PendingIncidentUpdate(final long key, final long position, final String intent) {}
 }
