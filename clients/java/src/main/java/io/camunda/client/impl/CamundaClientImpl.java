@@ -715,14 +715,14 @@ public final class CamundaClientImpl implements CamundaClient {
   }
 
   @Override
-  public AdHocSubProcessActivitySearchRequest newAdHocSubprocessActivitySearchRequest() {
+  public AdHocSubProcessActivitySearchRequest newAdHocSubProcessActivitySearchRequest() {
     return new AdHocSubProcessActivitySearchRequestImpl(httpClient, jsonMapper);
   }
 
   @Override
-  public AdHocSubProcessActivitySearchRequest newAdHocSubprocessActivitySearchRequest(
+  public AdHocSubProcessActivitySearchRequest newAdHocSubProcessActivitySearchRequest(
       final long processDefinitionKey, final String adHocSubprocessId) {
-    return newAdHocSubprocessActivitySearchRequest()
+    return newAdHocSubProcessActivitySearchRequest()
         .filter(
             filter ->
                 filter
@@ -731,7 +731,7 @@ public final class CamundaClientImpl implements CamundaClient {
   }
 
   @Override
-  public ActivateAdHocSubprocessActivitiesCommandStep1 newActivateAdHocSubprocessActivitiesCommand(
+  public ActivateAdHocSubprocessActivitiesCommandStep1 newActivateAdHocSubProcessActivitiesCommand(
       final String adHocSubprocessInstanceKey) {
     return new ActivateAdHocSubprocessActivitiesCommandImpl(
         httpClient, jsonMapper, adHocSubprocessInstanceKey);

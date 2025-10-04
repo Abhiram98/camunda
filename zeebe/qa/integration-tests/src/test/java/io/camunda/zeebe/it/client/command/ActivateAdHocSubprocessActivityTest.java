@@ -89,7 +89,7 @@ public class ActivateAdHocSubprocessActivityTest {
 
     // when
     client
-        .newActivateAdHocSubprocessActivitiesCommand(
+        .newActivateAdHocSubProcessActivitiesCommand(
             String.valueOf(activatedAdHocSubprocess.getKey()))
         .activateElements("A", "C")
         .send()
@@ -131,7 +131,7 @@ public class ActivateAdHocSubprocessActivityTest {
 
     // when1
     client
-        .newActivateAdHocSubprocessActivitiesCommand(
+        .newActivateAdHocSubProcessActivitiesCommand(
             String.valueOf(activatedAdHocSubprocess.getKey()))
         .activateElements("A", "B")
         .send()
@@ -152,7 +152,7 @@ public class ActivateAdHocSubprocessActivityTest {
 
     // when2
     client
-        .newActivateAdHocSubprocessActivitiesCommand(
+        .newActivateAdHocSubProcessActivitiesCommand(
             String.valueOf(activatedAdHocSubprocess.getKey()))
         .activateElements("ServiceTask")
         .send()
@@ -215,7 +215,7 @@ public class ActivateAdHocSubprocessActivityTest {
 
     // when
     client
-        .newActivateAdHocSubprocessActivitiesCommand(
+        .newActivateAdHocSubProcessActivitiesCommand(
             String.valueOf(activatedAdHocSubprocess.getKey()))
         .activateElements("A", "ServiceTask")
         .send()
@@ -264,7 +264,7 @@ public class ActivateAdHocSubprocessActivityTest {
     assertThatThrownBy(
             () ->
                 client
-                    .newActivateAdHocSubprocessActivitiesCommand(
+                    .newActivateAdHocSubProcessActivitiesCommand(
                         String.valueOf(activatedAdHocSubprocess.getKey()))
                     .activateElements("A", "A")
                     .send()
