@@ -93,7 +93,7 @@ public class CamundaClientProperties {
     this.requestTimeout = requestTimeout;
   }
 
-  public Duration getActivateJobsResponseTimeoutOffset() {
+  public Duration getRequestTimeoutOffset() {
     return activateJobsResponseTimeoutOffset;
   }
 
