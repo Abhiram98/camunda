@@ -37,27 +37,27 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateWithNullOperationType() {
-    final CreateOperationRequestDto operationRequest = new CreateOperationRequestDto(null);
+    final CreateOperationRequestDto request = new CreateOperationRequestDto(null);
 
     final InvalidRequestException exception =
         assertThrows(
-            InvalidRequestException.class, () -> underTest.validate(operationRequest, "123"));
+            InvalidRequestException.class, () -> underTest.validate(request, "123"));
 
     assertThat(exception.getMessage()).isEqualTo("Operation type must be defined.");
   }
 
   @Test
   public void testValidateUpdateVariableWithNullScopeId() {
-    final CreateOperationRequestDto operationRequest =
+    final CreateOperationRequestDto request =
         new CreateOperationRequestDto(OperationType.UPDATE_VARIABLE);
 
-    operationRequest.setVariableScopeId(null);
-    operationRequest.setVariableName("var");
-    operationRequest.setVariableValue("val");
+    request.setVariableScopeId(null);
+    request.setVariableName("var");
+    request.setVariableValue("val");
 
     final InvalidRequestException exception =
         assertThrows(
-            InvalidRequestException.class, () -> underTest.validate(operationRequest, "123"));
+            InvalidRequestException.class, () -> underTest.validate(request, "123"));
 
     assertThat(exception.getMessage())
         .isEqualTo("ScopeId, name and value must be defined for UPDATE_VARIABLE operation.");
@@ -116,28 +116,28 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateUpdateVariable() {
-    final CreateOperationRequestDto operationRequest =
+    final CreateOperationRequestDto request =
         new CreateOperationRequestDto(OperationType.UPDATE_VARIABLE);
 
-    operationRequest.setVariableScopeId("abc");
-    operationRequest.setVariableName("var");
-    operationRequest.setVariableValue("val");
+    request.setVariableScopeId("abc");
+    request.setVariableName("var");
+    request.setVariableValue("val");
 
-    assertDoesNotThrow(() -> underTest.validate(operationRequest, "123"));
+    assertDoesNotThrow(() -> underTest.validate(request, "123"));
   }
 
   @Test
   public void testValidateAddVariableWithNullScopeId() {
-    final CreateOperationRequestDto operationRequest =
+    final CreateOperationRequestDto request =
         new CreateOperationRequestDto(OperationType.ADD_VARIABLE);
 
-    operationRequest.setVariableScopeId(null);
-    operationRequest.setVariableName("var");
-    operationRequest.setVariableValue("val");
+    request.setVariableScopeId(null);
+    request.setVariableName("var");
+    request.setVariableValue("val");
 
     final InvalidRequestException exception =
         assertThrows(
-            InvalidRequestException.class, () -> underTest.validate(operationRequest, "123"));
+            InvalidRequestException.class, () -> underTest.validate(request, "123"));
 
     assertThat(exception.getMessage())
         .isEqualTo("ScopeId, name and value must be defined for UPDATE_VARIABLE operation.");
@@ -145,16 +145,16 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateAddVariableWithNullVariableName() {
-    final CreateOperationRequestDto operationRequest =
+    final CreateOperationRequestDto request =
         new CreateOperationRequestDto(OperationType.ADD_VARIABLE);
 
-    operationRequest.setVariableScopeId("abc");
-    operationRequest.setVariableName(null);
-    operationRequest.setVariableValue("val");
+    request.setVariableScopeId("abc");
+    request.setVariableName(null);
+    request.setVariableValue("val");
 
     final InvalidRequestException exception =
         assertThrows(
-            InvalidRequestException.class, () -> underTest.validate(operationRequest, "123"));
+            InvalidRequestException.class, () -> underTest.validate(request, "123"));
 
     assertThat(exception.getMessage())
         .isEqualTo("ScopeId, name and value must be defined for UPDATE_VARIABLE operation.");
