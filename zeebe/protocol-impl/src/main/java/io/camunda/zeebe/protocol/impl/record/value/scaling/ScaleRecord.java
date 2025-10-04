@@ -134,11 +134,11 @@ public class ScaleRecord extends UnifiedRecordValue implements ScaleRecordValue 
       final int desiredPartitionCount,
       final Collection<Integer> redistributedPartitions,
       final int messageCorrelationPartitions,
-      final long bootstrappedAt) {
+      final long scalingStartedAt) {
     setDesiredPartitionCount(desiredPartitionCount);
     setRedistributedPartitions(redistributedPartitions);
     setMessageCorrelationPartitions(messageCorrelationPartitions);
-    setBootstrappedAt(bootstrappedAt);
+    setBootstrappedAt(scalingStartedAt);
     return this;
   }
 
