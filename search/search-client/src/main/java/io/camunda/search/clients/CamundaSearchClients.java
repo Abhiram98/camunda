@@ -241,7 +241,7 @@ public class CamundaSearchClients implements SearchClientsProxy {
   }
 
   @Override
-  public Long countAssignees(final UsageMetricsQuery query) {
+  public Long usageMetricStatistics(final UsageMetricsQuery query) {
     return distinctCountUsageMetricsFor("task_completed_by_assignee", query);
   }
 
