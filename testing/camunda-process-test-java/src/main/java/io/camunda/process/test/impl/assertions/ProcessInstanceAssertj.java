@@ -286,33 +286,33 @@ public class ProcessInstanceAssertj
   public <T> ProcessInstanceAssert hasLocalVariableSatisfies(
       final String elementId,
       final String variableName,
-      final Class<T> jsonMappedClass,
+      final Class<T> variableValueType,
       final ThrowingConsumer<T> requirement) {
 
     return hasLocalVariableSatisfies(
-        elementSelector.apply(elementId), variableName, jsonMappedClass, requirement);
+        elementSelector.apply(elementId), variableName, variableValueType, requirement);
   }
 
   @Override
   public <T> ProcessInstanceAssert hasLocalVariableSatisfies(
       final ElementSelector selector,
       final String variableName,
-      final Class<T> jsonMappedClass,
+      final Class<T> variableValueType,
       final ThrowingConsumer<T> requirement) {
 
     variableAssertj.hasLocalVariableSatisfies(
-        getProcessInstanceKey(), selector, variableName, jsonMappedClass, requirement);
+        getProcessInstanceKey(), selector, variableName, variableValueType, requirement);
     return this;
   }
 
   @Override
   public <T> ProcessInstanceAssert hasVariableSatisfies(
       final String variableName,
-      final Class<T> jsonMappedClass,
+      final Class<T> variableValueType,
       final ThrowingConsumer<T> requirement) {
 
     variableAssertj.hasVariableSatisfies(
-        getProcessInstanceKey(), variableName, jsonMappedClass, requirement);
+        getProcessInstanceKey(), variableName, variableValueType, requirement);
     return this;
   }
 
