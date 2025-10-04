@@ -36,8 +36,8 @@ public class AdHocSubProcessActivityFilterImpl
   }
 
   @Override
-  public AdHocSubProcessActivityFilter adHocSubProcessId(final String adHocSubprocessId) {
-    filter.setAdHocSubprocessId(adHocSubprocessId);
+  public AdHocSubProcessActivityFilter adHocSubProcessId(final String adHocSubProcessId) {
+    filter.setAdHocSubprocessId(adHocSubProcessId);
     return this;
   }
 
