@@ -139,7 +139,7 @@ public class EnumUtilTest {
   }
 
   @Test
-  public void shouldConvertAdHocSubprocessActivityResultType() {
+  public void shouldConvertAdHocSubProcessActivityResultType() {
 
     for (final AdHocSubProcessActivityResultType value :
         AdHocSubProcessActivityResultType.values()) {
