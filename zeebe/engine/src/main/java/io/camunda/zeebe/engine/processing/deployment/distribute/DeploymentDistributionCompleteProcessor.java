@@ -40,20 +40,20 @@ public class DeploymentDistributionCompleteProcessor
   }
 
   @Override
-  public void processRecord(final TypedRecord<DeploymentDistributionRecord> record) {
+  public void processRecord(final TypedRecord<DeploymentDistributionRecord> usageMetricRecord) {
 
-    final var deploymentKey = record.getKey();
-    final var partitionId = record.getValue().getPartitionId();
+    final var deploymentKey = usageMetricRecord.getKey();
+    final var partitionId = usageMetricRecord.getValue().getPartitionId();
     if (!deploymentState.hasPendingDeploymentDistribution(deploymentKey, partitionId)) {
       rejectionWriter.appendRejection(
-          record,
+          usageMetricRecord,
           RejectionType.NOT_FOUND,
           String.format(REJECT_MSG_DEPLOYMENT_DISTRIBUTION_COMPLETED, deploymentKey));
       return;
     }
 
     stateWriter.appendFollowUpEvent(
-        deploymentKey, DeploymentDistributionIntent.COMPLETED, record.getValue());
+        deploymentKey, DeploymentDistributionIntent.COMPLETED, usageMetricRecord.getValue());
 
     if (!deploymentState.hasPendingDeploymentDistribution(deploymentKey)) {
       // to be consistent we write here as well an empty deployment record
