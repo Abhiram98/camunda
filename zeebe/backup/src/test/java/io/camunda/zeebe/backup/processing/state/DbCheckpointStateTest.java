@@ -56,7 +56,7 @@ final class DbCheckpointStateTest {
   }
 
   @Test
-  void shouldSetAndGetCheckpointIdAndPosition() {
+  void shouldSetAndGetLatestCheckpointIdAndPosition() {
     // when
     state.setLatestCheckpointInfo(5L, 10L);
 
