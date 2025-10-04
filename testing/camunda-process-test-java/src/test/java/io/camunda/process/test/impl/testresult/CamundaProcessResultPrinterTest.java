@@ -147,12 +147,12 @@ public class CamundaProcessResultPrinterTest {
   }
 
   @Test
-  void shouldPrintOpenIncidents() {
+  void shouldPrintActiveIncidents() {
     // given
     final ProcessTestResult processTestResult = new ProcessTestResult();
 
     final ProcessInstanceResult processInstance1 = newProcessInstance(1L, "process-a");
-    processInstance1.setOpenIncidents(
+    processInstance1.setActiveIncidents(
         Arrays.asList(
             IncidentBuilder.newActiveIncident(IncidentErrorType.JOB_NO_RETRIES, "No retries left.")
                 .setElementId("task-a")
@@ -163,7 +163,7 @@ public class CamundaProcessResultPrinterTest {
                 .build()));
 
     final ProcessInstanceResult processInstance2 = newProcessInstance(2L, "process-b");
-    processInstance2.setOpenIncidents(
+    processInstance2.setActiveIncidents(
         Collections.singletonList(
             IncidentBuilder.newActiveIncident(
                     IncidentErrorType.UNHANDLED_ERROR_EVENT, "No error catch event found.")
@@ -266,7 +266,7 @@ public class CamundaProcessResultPrinterTest {
 
     final String bigIncidentMessage = StringUtils.repeat("x", 1000);
 
-    processInstance.setOpenIncidents(
+    processInstance.setActiveIncidents(
         Collections.singletonList(
             IncidentBuilder.newActiveIncident(IncidentErrorType.JOB_NO_RETRIES, bigIncidentMessage)
                 .setElementId("task-a")));
