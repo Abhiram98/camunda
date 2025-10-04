@@ -18,6 +18,7 @@ package io.camunda.client.adhocsubprocess;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
+import io.camunda.client.api.search.enums.AdHocSubProcessActivityResultType;
 import io.camunda.client.api.search.response.AdHocSubProcessActivityResponse;
 import io.camunda.client.api.search.response.AdHocSubProcessActivityResponse.AdHocSubprocessActivity;
 import io.camunda.client.protocol.rest.AdHocSubprocessActivityResult;
@@ -85,7 +86,7 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
         .extracting(
             AdHocSubprocessActivity::getProcessDefinitionKey,
             AdHocSubprocessActivity::getProcessDefinitionId,
-            AdHocSubprocessActivity::getAdHocSubprocessId,
+            AdHocSubprocessActivity::getAdHocSubProcessId,
             AdHocSubprocessActivity::getElementId,
             AdHocSubprocessActivity::getElementName,
             AdHocSubprocessActivity::getType,
@@ -98,7 +99,7 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
                 AD_HOC_SUBPROCESS_ID,
                 "task1",
                 "Task #1",
-                io.camunda.client.api.search.enums.AdHocSubprocessActivityResultType.SERVICE_TASK,
+                AdHocSubProcessActivityResultType.SERVICE_TASK,
                 "The first task in the ad-hoc sub-process",
                 "<default>"),
             tuple(
@@ -107,7 +108,7 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
                 AD_HOC_SUBPROCESS_ID,
                 "task2",
                 "Task #2",
-                io.camunda.client.api.search.enums.AdHocSubprocessActivityResultType.USER_TASK,
+                AdHocSubProcessActivityResultType.USER_TASK,
                 "The second task in the ad-hoc sub-process",
                 "<default>"));
   }
@@ -145,7 +146,7 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
         .extracting(
             AdHocSubprocessActivity::getProcessDefinitionKey,
             AdHocSubprocessActivity::getProcessDefinitionId,
-            AdHocSubprocessActivity::getAdHocSubprocessId,
+            AdHocSubprocessActivity::getAdHocSubProcessId,
             AdHocSubprocessActivity::getElementId,
             AdHocSubprocessActivity::getElementName,
             AdHocSubprocessActivity::getType,
@@ -158,7 +159,7 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
                 AD_HOC_SUBPROCESS_ID,
                 "unknownTask",
                 "Unknown Task",
-                io.camunda.client.api.search.enums.AdHocSubprocessActivityResultType
+                AdHocSubProcessActivityResultType
                     .UNKNOWN_ENUM_VALUE,
                 null,
                 "<default>"));

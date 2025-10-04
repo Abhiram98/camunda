@@ -15,7 +15,7 @@
  */
 package io.camunda.client.api.search.response;
 
-import io.camunda.client.api.search.enums.AdHocSubprocessActivityResultType;
+import io.camunda.client.api.search.enums.AdHocSubProcessActivityResultType;
 import java.util.List;
 
 public interface AdHocSubProcessActivityResponse {
@@ -28,13 +28,13 @@ public interface AdHocSubProcessActivityResponse {
 
     String getProcessDefinitionId();
 
-    String getAdHocSubprocessId();
+    String getAdHocSubProcessId();
 
     String getElementId();
 
     String getElementName();
 
-    AdHocSubprocessActivityResultType getType();
+    AdHocSubProcessActivityResultType getType();
 
     String getDocumentation();
 
