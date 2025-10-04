@@ -402,7 +402,7 @@ public class DecisionInstanceQueryControllerTest extends RestControllerTest {
     keyOperationTestCases(
         streamBuilder,
         "elementInstanceKey",
-        ops -> new DecisionInstanceFilter.Builder().elementInstanceKeyOperations(ops).build());
+        ops -> new DecisionInstanceFilter.Builder().flowNodeInstanceKeyOperations(ops).build());
     dateTimeOperationTestCases(
         streamBuilder,
         "evaluationDate",
