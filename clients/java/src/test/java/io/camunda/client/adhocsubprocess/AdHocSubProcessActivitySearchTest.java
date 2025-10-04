@@ -65,7 +65,7 @@ public class AdHocSubProcessActivitySearchTest extends ClientRestTest {
               r.setTenantId("<default>");
             }));
 
-    gatewayService.onAdHocSubprocessActivitySearch(searchQueryResult);
+    gatewayService.onAdHocSubProcessActivitySearch(searchQueryResult);
 
     // when
     final AdHocSubProcessActivityResponse response =
@@ -131,7 +131,7 @@ public class AdHocSubProcessActivitySearchTest extends ClientRestTest {
             + "  ]\n"
             + "}";
 
-    gatewayService.onAdHocSubprocessActivitySearch(responseJson);
+    gatewayService.onAdHocSubProcessActivitySearch(responseJson);
 
     // when
     final AdHocSubProcessActivityResponse response =

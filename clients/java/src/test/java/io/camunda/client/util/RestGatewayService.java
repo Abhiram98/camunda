@@ -88,12 +88,12 @@ public class RestGatewayService {
                 .willReturn(WireMock.okJson(JSON_MAPPER.toJson(response))));
   }
 
-  public void onAdHocSubprocessActivitySearch(
+  public void onAdHocSubProcessActivitySearch(
       final AdHocSubprocessActivitySearchQueryResult response) {
-    onAdHocSubprocessActivitySearch(JSON_MAPPER.toJson(response));
+    onAdHocSubProcessActivitySearch(JSON_MAPPER.toJson(response));
   }
 
-  public void onAdHocSubprocessActivitySearch(final String jsonResponse) {
+  public void onAdHocSubProcessActivitySearch(final String jsonResponse) {
     mockInfo
         .getWireMock()
         .register(
