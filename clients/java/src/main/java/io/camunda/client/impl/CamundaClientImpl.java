@@ -727,7 +727,7 @@ public final class CamundaClientImpl implements CamundaClient {
             filter ->
                 filter
                     .processDefinitionKey(processDefinitionKey)
-                    .adHocSubprocessId(adHocSubprocessId));
+                    .adHocSubProcessId(adHocSubprocessId));
   }
 
   @Override
