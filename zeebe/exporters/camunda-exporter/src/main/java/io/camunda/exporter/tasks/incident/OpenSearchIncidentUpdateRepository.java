@@ -165,8 +165,8 @@ public final class OpenSearchIncidentUpdateRepository extends OpensearchReposito
   }
 
   @Override
-  public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey) {
-    final var query = createProcessInstanceDeletedQuery(processInstanceKey);
+  public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKeys) {
+    final var query = createProcessInstanceDeletedQuery(processInstanceKeys);
     final var request =
         new CountRequest.Builder()
             .index(operationAlias)
@@ -255,11 +255,11 @@ public final class OpenSearchIncidentUpdateRepository extends OpensearchReposito
         request, IncidentEntity.class, h -> new ActiveIncident(h.id(), h.source().getTreePath()));
   }
 
-  private Query createProcessInstanceDeletedQuery(final long processInstanceKey) {
+  private Query createProcessInstanceDeletedQuery(final long processInstanceKeys) {
     final var piKeyQ =
         QueryBuilders.term()
             .field(OperationTemplate.PROCESS_INSTANCE_KEY)
-            .value(v -> v.longValue(processInstanceKey))
+            .value(v -> v.longValue(processInstanceKeys))
             .build()
             .toQuery();
     final var typeQ =
