@@ -107,14 +107,14 @@ public final class ProcessInstanceServiceTest {
         List.of(
             new SequenceFlowEntity("pi1_sequenceFlow1", "node1", 1L, 1L, "pd1", "<default>"),
             new SequenceFlowEntity("pi1_sequenceFlow2", "node1", 1L, 1L, "pd1", "<default>"));
-    when(sequenceFlowSearchClient.findAllSequenceFlows(any())).thenReturn(result);
+    when(sequenceFlowSearchClient.searchSequenceFlows(any())).thenReturn(result);
 
     // when
     final var actual = services.sequenceFlows(123L);
 
     // then
     verify(sequenceFlowSearchClient)
-        .findAllSequenceFlows(SequenceFlowQuery.of(q -> q.filter(f -> f.processInstanceKey(123L))));
+        .searchSequenceFlows(SequenceFlowQuery.of(q -> q.filter(f -> f.processInstanceKey(123L))));
     assertThat(actual).isEqualTo(result);
   }
 
@@ -210,8 +210,8 @@ public final class ProcessInstanceServiceTest {
     final var enrichedRecord = captor.getValue().getRequestWriter();
 
     assertThat(
-            MsgPackConverter.convertToObject(
-                enrichedRecord.getAuthenticationBuffer(), CamundaAuthentication.class))
+        MsgPackConverter.convertToObject(
+            enrichedRecord.getAuthenticationBuffer(), CamundaAuthentication.class))
         .isEqualTo(authentication);
   }
 
@@ -306,8 +306,8 @@ public final class ProcessInstanceServiceTest {
     final var enrichedRecord = captor.getValue().getRequestWriter();
 
     assertThat(
-            MsgPackConverter.convertToObject(
-                enrichedRecord.getAuthenticationBuffer(), CamundaAuthentication.class))
+        MsgPackConverter.convertToObject(
+            enrichedRecord.getAuthenticationBuffer(), CamundaAuthentication.class))
         .isEqualTo(authentication);
   }
 
@@ -347,8 +347,8 @@ public final class ProcessInstanceServiceTest {
     final var enrichedRecord = captor.getValue().getRequestWriter();
 
     assertThat(
-            MsgPackConverter.convertToObject(
-                enrichedRecord.getAuthenticationBuffer(), CamundaAuthentication.class))
+        MsgPackConverter.convertToObject(
+            enrichedRecord.getAuthenticationBuffer(), CamundaAuthentication.class))
         .isEqualTo(authentication);
 
     final var modificationPlan = enrichedRecord.getMigrationPlan();
@@ -394,8 +394,8 @@ public final class ProcessInstanceServiceTest {
     final var enrichedRecord = captor.getValue().getRequestWriter();
 
     assertThat(
-            MsgPackConverter.convertToObject(
-                enrichedRecord.getAuthenticationBuffer(), CamundaAuthentication.class))
+        MsgPackConverter.convertToObject(
+            enrichedRecord.getAuthenticationBuffer(), CamundaAuthentication.class))
         .isEqualTo(authentication);
 
     final var filterBuffer = enrichedRecord.getEntityFilterBuffer();
@@ -414,9 +414,9 @@ public final class ProcessInstanceServiceTest {
 
   private void authorizeProcessReadInstance(final boolean authorize, final String processId) {
     when(securityContextProvider.isAuthorized(
-            processId,
-            authentication,
-            Authorization.of(a -> a.processDefinition().readProcessInstance())))
+        processId,
+        authentication,
+        Authorization.of(a -> a.processDefinition().readProcessInstance())))
         .thenReturn(authorize);
   }
 
