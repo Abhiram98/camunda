@@ -54,6 +54,6 @@ public class AdHocSubProcessInstructionCompletedApplierTest {
 
     // Then
     final var instance = elementInstanceState.getInstance(adHocSubProcessInstanceKey);
-    assertThat(instance.isCompletionConditionFulFilled()).isTrue();
+    assertThat(instance.isCompletionConditionFulfilled()).isTrue();
   }
 }
