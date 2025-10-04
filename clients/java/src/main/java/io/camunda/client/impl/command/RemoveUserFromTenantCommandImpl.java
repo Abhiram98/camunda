@@ -19,7 +19,7 @@ import io.camunda.client.api.CamundaFuture;
 import io.camunda.client.api.command.FinalCommandStep;
 import io.camunda.client.api.command.RemoveUserFromTenantCommandStep1;
 import io.camunda.client.api.command.RemoveUserFromTenantCommandStep1.RemoveUserFromTenantCommandStep2;
-import io.camunda.client.api.response.RemoveUserFromTenantResponse;
+import io.camunda.client.api.response.UnassignUserFromTenantResponse;
 import io.camunda.client.impl.http.HttpCamundaFuture;
 import io.camunda.client.impl.http.HttpClient;
 import java.time.Duration;
@@ -52,15 +52,15 @@ public final class RemoveUserFromTenantCommandImpl
   }
 
   @Override
-  public FinalCommandStep<RemoveUserFromTenantResponse> requestTimeout(
+  public FinalCommandStep<UnassignUserFromTenantResponse> requestTimeout(
       final Duration requestTimeout) {
     httpRequestConfig.setResponseTimeout(requestTimeout.toMillis(), TimeUnit.MILLISECONDS);
     return this;
   }
 
   @Override
-  public CamundaFuture<RemoveUserFromTenantResponse> send() {
-    final HttpCamundaFuture<RemoveUserFromTenantResponse> result = new HttpCamundaFuture<>();
+  public CamundaFuture<UnassignUserFromTenantResponse> send() {
+    final HttpCamundaFuture<UnassignUserFromTenantResponse> result = new HttpCamundaFuture<>();
     final String endpoint = String.format("/tenants/%s/users/%s", tenantId, username);
     httpClient.delete(endpoint, null, httpRequestConfig.build(), result);
     return result;
