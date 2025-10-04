@@ -97,7 +97,7 @@ public class RestGatewayService {
     mockInfo
         .getWireMock()
         .register(
-            WireMock.post(RestGatewayPaths.getAdHocSubprocessActivitiesSearchUrl())
+            WireMock.post(RestGatewayPaths.getAdHocSubProcessActivitiesSearchUrl())
                 .willReturn(WireMock.okJson(jsonResponse)));
   }
 
