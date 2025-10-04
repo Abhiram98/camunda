@@ -92,7 +92,7 @@ public enum ZbColumnFamilies implements EnumValue, ScopedColumnFamily {
   DEPRECATED_PROCESS_SUBSCRIPTION_BY_KEY(32, PARTITION_LOCAL),
   // migration start
   @Deprecated // only used for migration logic
-  PROCESS_SUBSCRIPTION_BY_SENT_TIME(33, PARTITION_LOCAL),
+      PROCESS_SUBSCRIPTION_BY_SENT_TIME(33, PARTITION_LOCAL),
   // migration end
 
   // incident
@@ -241,7 +241,7 @@ public enum ZbColumnFamilies implements EnumValue, ScopedColumnFamily {
   USER_TASK_INITIAL_ASSIGNEE(121, PARTITION_LOCAL),
 
   USAGE_METRICS(122, PARTITION_LOCAL),
-  BOOTSTRAPPED_AT(123, GLOBAL),
+  SCALING_STARTED_AT(123, GLOBAL),
 
   RUNTIME_INSTRUCTIONS(124, PARTITION_LOCAL);
 
@@ -251,19 +251,19 @@ public enum ZbColumnFamilies implements EnumValue, ScopedColumnFamily {
   /**
    * @param value the value of the column family, which is used to identify it in the database
    * @param columnFamilyScope the scope of the column family, which determines whether it is global
-   *     or partition-local:
-   *     <ul>
-   *       <li>{@link ColumnFamilyScope#GLOBAL} - the column family is global and shared across all
-   *           partitions: when new partitions are created, they will be sent to the newly created
-   *           partitions.
-   *           <p>Examples: Process definitions, DMN decisions, forms, users, roles, tenants, etc.
-   *       <li>{@link ColumnFamilyScope#PARTITION_LOCAL} - the column family is partition-local and
-   *           only exists in the partition it was created in: when new partitions are created, they
-   *           will not be sent to the newly created partitions.
-   *           <p>Examples: Element instances, variables, jobs, messages, timers, incidents, etc.
-   *     </ul>
-   *     NOTE: The correct {@link ColumnFamilyScope} is crucial for the correctness of dynamic
-   *     scaling partitions.
+   * or partition-local:
+   * <ul>
+   *   <li>{@link ColumnFamilyScope#GLOBAL} - the column family is global and shared across all
+   *       partitions: when new partitions are created, they will be sent to the newly created
+   *       partitions.
+   *       <p>Examples: Process definitions, DMN decisions, forms, users, roles, tenants, etc.
+   *   <li>{@link ColumnFamilyScope#PARTITION_LOCAL} - the column family is partition-local and
+   *       only exists in the partition it was created in: when new partitions are created, they
+   *       will not be sent to the newly created partitions.
+   *       <p>Examples: Element instances, variables, jobs, messages, timers, incidents, etc.
+   * </ul>
+   * NOTE: The correct {@link ColumnFamilyScope} is crucial for the correctness of dynamic
+   * scaling partitions.
    */
   ZbColumnFamilies(final int value, final ColumnFamilyScope columnFamilyScope) {
     this.value = value;

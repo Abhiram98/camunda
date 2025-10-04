@@ -56,10 +56,11 @@ public final class ProcessExecutionCleanStateTest {
           ZbColumnFamilies.AUTHORIZATIONS,
           ZbColumnFamilies.AUTHORIZATION_KEYS_BY_OWNER,
           ZbColumnFamilies.ROUTING,
-          ZbColumnFamilies.BOOTSTRAPPED_AT,
+          ZbColumnFamilies.SCALING_STARTED_AT,
           ZbColumnFamilies.USAGE_METRICS);
 
-  @Rule public EngineRule engineRule = EngineRule.singlePartition();
+  @Rule
+  public EngineRule engineRule = EngineRule.singlePartition();
 
   private ProcessingState processingState;
 
