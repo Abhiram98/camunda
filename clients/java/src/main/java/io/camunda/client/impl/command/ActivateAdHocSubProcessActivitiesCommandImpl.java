@@ -29,7 +29,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import org.apache.hc.client5.http.config.RequestConfig;
 
-public final class ActivateAdHocSubprocessActivitiesCommandImpl
+public final class ActivateAdHocSubProcessActivitiesCommandImpl
     implements ActivateAdHocSubprocessActivitiesCommandStep1,
         ActivateAdHocSubprocessActivitiesCommandStep2 {
 
@@ -40,7 +40,7 @@ public final class ActivateAdHocSubprocessActivitiesCommandImpl
   private final String adHocSubprocessInstanceKey;
   private final AdHocSubprocessActivateActivitiesInstruction httpRequestObject;
 
-  public ActivateAdHocSubprocessActivitiesCommandImpl(
+  public ActivateAdHocSubProcessActivitiesCommandImpl(
       final HttpClient httpClient,
       final JsonMapper jsonMapper,
       final String adHocSubprocessInstanceKey) {
