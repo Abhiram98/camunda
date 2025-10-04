@@ -23,9 +23,9 @@ public interface AssignGroupToTenantCommandStep1
   /**
    * Sets the group key for the assignment.
    *
-   * @param groupKey the key of the group
+   * @param groupId the key of the group
    * @return the builder for this command. Call {@link #send()} to complete the command and send it
    *     to the broker.
    */
-  AssignGroupToTenantCommandStep1 groupKey(long groupKey);
+  AssignGroupToTenantCommandStep1 groupId(long groupId);
 }
