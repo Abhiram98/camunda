@@ -45,7 +45,7 @@ final class DbRoutingStateTest {
   }
 
   @Test
-  void shouldFillBootstrappedAtCorrectly() {
+  void shouldFillScalingStartedAtCorrectly() {
     // given
     final var routingState = processingState.getRoutingState();
     routingState.initializeRoutingInfo(1);
