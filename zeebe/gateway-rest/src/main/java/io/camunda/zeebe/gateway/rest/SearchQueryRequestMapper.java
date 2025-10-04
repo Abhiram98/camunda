@@ -627,7 +627,7 @@ public final class SearchQueryRequestMapper {
           .ifPresent(builder::processInstanceKeys);
       ofNullable(filter.getElementInstanceKey())
           .map(mapToOperations(Long.class))
-          .ifPresent(builder::elementInstanceKeyOperations);
+          .ifPresent(builder::flowNodeInstanceKeyOperations);
       ofNullable(filter.getDecisionDefinitionKey())
           .map(mapToOperations(Long.class))
           .ifPresent(builder::decisionDefinitionKeyOperations);

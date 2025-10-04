@@ -125,7 +125,7 @@ public record DecisionInstanceFilter(
       return processInstanceKeys(collectValuesAsList(values));
     }
 
-    public Builder elementInstanceKeyOperations(final List<Operation<Long>> operations) {
+    public Builder flowNodeInstanceKeyOperations(final List<Operation<Long>> operations) {
       elementInstanceKeyOperations = addValuesToList(elementInstanceKeyOperations, operations);
       return this;
     }
@@ -137,7 +137,7 @@ public record DecisionInstanceFilter(
     @SafeVarargs
     public final Builder elementInstanceKeyOperations(
         final Operation<Long> operation, final Operation<Long>... operations) {
-      return elementInstanceKeyOperations(collectValues(operation, operations));
+      return flowNodeInstanceKeyOperations(collectValues(operation, operations));
     }
 
     public Builder decisionDefinitionKeyOperations(final List<Operation<Long>> operations) {
