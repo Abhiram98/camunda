@@ -55,14 +55,14 @@ class ErrorHandlingUtilsTest {
     // Given
     final String reason =
         "Expected to assign user task with key '123L', but it is in state 'ASSIGNING'";
-    final CamundaBrokerException brokerException =
+    final CamundaBrokerException serviceException =
         new CamundaBrokerException(
             new BrokerRejectionException(
                 new BrokerRejection(
                     UserTaskIntent.ASSIGN, 123L, RejectionType.INVALID_STATE, reason)));
 
     // When
-    final String result = ErrorHandlingUtils.getErrorMessageFromServiceException(brokerException);
+    final String result = ErrorHandlingUtils.getErrorMessageFromServiceException(serviceException);
 
     // Then
     final String expectedMessage =
@@ -99,10 +99,10 @@ class ErrorHandlingUtilsTest {
   void testGetErrorMessageWithBrokerTimeoutException() {
     // Given
     final TimeoutException timeoutException = new TimeoutException("10 SECONDS");
-    final CamundaBrokerException brokerException = new CamundaBrokerException(timeoutException);
+    final CamundaBrokerException serviceException = new CamundaBrokerException(timeoutException);
 
     // When
-    final String result = ErrorHandlingUtils.getErrorMessageFromServiceException(brokerException);
+    final String result = ErrorHandlingUtils.getErrorMessageFromServiceException(serviceException);
 
     // Then
     final String expectedMessage =
