@@ -217,21 +217,8 @@ public class CamundaClientCloudBuilderImpl
   }
 
   @Override
-  public CamundaClientBuilder defaultActivateJobsResponseTimeoutOffset(
-      final Duration responseTimeoutOffset) {
-    innerBuilder.defaultActivateJobsResponseTimeoutOffset(responseTimeoutOffset);
-    return this;
-  }
-
-  @Override
-  public CamundaClientBuilder usePlaintext() {
-    innerBuilder.usePlaintext();
-    return this;
-  }
-
-  @Override
   public CamundaClientBuilder caCertificatePath(final String certificatePath) {
-    innerBuilder.caCertificatePath(certificatePath);
+    innerBuilder.defaultRequestTimeoutOffset(certificatePath);
     return this;
   }
 
@@ -309,6 +296,18 @@ public class CamundaClientCloudBuilderImpl
     return innerBuilder.build();
   }
 
+  public CamundaClientBuilder defaultRequestTimeoutOffset() {
+    innerBuilder.usePlaintext();
+    return this;
+  }
+
+  @Override
+  public CamundaClientBuilder defaultActivateJobsResponseTimeoutOffset(
+      final Duration responseTimeoutOffset) {
+    innerBuilder.defaultRequestTimeoutOffset(responseTimeoutOffset);
+    return this;
+  }
+
   private URI determineRestAddress() {
     if (isNeedToSetCloudRestAddress()) {
       ensureNotNull("cluster id", clusterId);
@@ -355,7 +354,7 @@ public class CamundaClientCloudBuilderImpl
       ensureNotNull("client secret", clientSecret);
       final OAuthCredentialsProviderBuilder builder = new OAuthCredentialsProviderBuilder();
 
-      if (innerBuilder.isPlaintextConnectionEnabled()) {
+      if (innerBuilder.getDefaultRequestTimeoutOffset()) {
         Loggers.LOGGER.debug("Expected setting 'usePlaintext' to be 'false', but found 'true'.");
       }
       return builder
