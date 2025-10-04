@@ -139,15 +139,15 @@ public class EnumUtilTest {
   }
 
   @Test
-  public void shouldConvertAdHocSubprocessActivityResultType() {
+  public void shouldConvertAdHocSubProcessActivityResultType() {
 
-    for (final AdHocSubprocessActivityResultType value :
-        AdHocSubprocessActivityResultType.values()) {
+    for (final AdHocSubProcessActivityResultType value :
+        AdHocSubProcessActivityResultType.values()) {
       final io.camunda.client.protocol.rest.AdHocSubprocessActivityResult.TypeEnum protocolValue =
           EnumUtil.convert(
               value, io.camunda.client.protocol.rest.AdHocSubprocessActivityResult.TypeEnum.class);
       assertThat(protocolValue).isNotNull();
-      if (value == AdHocSubprocessActivityResultType.UNKNOWN_ENUM_VALUE) {
+      if (value == AdHocSubProcessActivityResultType.UNKNOWN_ENUM_VALUE) {
         assertThat(protocolValue)
             .isEqualTo(
                 io.camunda.client.protocol.rest.AdHocSubprocessActivityResult.TypeEnum
@@ -160,13 +160,13 @@ public class EnumUtilTest {
     for (final io.camunda.client.protocol.rest.AdHocSubprocessActivityResult.TypeEnum
         protocolValue :
             io.camunda.client.protocol.rest.AdHocSubprocessActivityResult.TypeEnum.values()) {
-      final AdHocSubprocessActivityResultType value =
-          EnumUtil.convert(protocolValue, AdHocSubprocessActivityResultType.class);
+      final AdHocSubProcessActivityResultType value =
+          EnumUtil.convert(protocolValue, AdHocSubProcessActivityResultType.class);
       assertThat(value).isNotNull();
       if (protocolValue
           == io.camunda.client.protocol.rest.AdHocSubprocessActivityResult.TypeEnum
               .UNKNOWN_DEFAULT_OPEN_API) {
-        assertThat(value).isEqualTo(AdHocSubprocessActivityResultType.UNKNOWN_ENUM_VALUE);
+        assertThat(value).isEqualTo(AdHocSubProcessActivityResultType.UNKNOWN_ENUM_VALUE);
       } else {
         assertThat(value.name()).isEqualTo(protocolValue.name());
       }

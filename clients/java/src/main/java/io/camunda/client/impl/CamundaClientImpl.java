@@ -100,7 +100,7 @@ import io.camunda.client.api.fetch.UsersByGroupSearchRequest;
 import io.camunda.client.api.fetch.VariableGetRequest;
 import io.camunda.client.api.response.ActivatedJob;
 import io.camunda.client.api.response.DocumentReferenceResponse;
-import io.camunda.client.api.search.request.AdHocSubprocessActivitySearchRequest;
+import io.camunda.client.api.search.request.AdHocSubProcessActivitySearchRequest;
 import io.camunda.client.api.search.request.DecisionDefinitionSearchRequest;
 import io.camunda.client.api.search.request.DecisionInstanceSearchRequest;
 import io.camunda.client.api.search.request.DecisionRequirementsSearchRequest;
@@ -115,7 +115,7 @@ import io.camunda.client.api.statistics.request.ProcessDefinitionElementStatisti
 import io.camunda.client.api.statistics.request.ProcessInstanceElementStatisticsRequest;
 import io.camunda.client.api.worker.JobClient;
 import io.camunda.client.api.worker.JobWorkerBuilderStep1;
-import io.camunda.client.impl.command.ActivateAdHocSubprocessActivitiesCommandImpl;
+import io.camunda.client.impl.command.ActivateAdHocSubProcessActivitiesCommandImpl;
 import io.camunda.client.impl.command.AssignGroupToTenantCommandImpl;
 import io.camunda.client.impl.command.AssignMappingToGroupCommandImpl;
 import io.camunda.client.impl.command.AssignMappingToTenantCommandImpl;
@@ -187,7 +187,7 @@ import io.camunda.client.impl.fetch.UserTaskGetRequestImpl;
 import io.camunda.client.impl.fetch.VariableGetRequestImpl;
 import io.camunda.client.impl.http.HttpClient;
 import io.camunda.client.impl.http.HttpClientFactory;
-import io.camunda.client.impl.search.request.AdHocSubprocessActivitySearchRequestImpl;
+import io.camunda.client.impl.search.request.AdHocSubProcessActivitySearchRequestImpl;
 import io.camunda.client.impl.search.request.DecisionDefinitionSearchRequestImpl;
 import io.camunda.client.impl.search.request.DecisionInstanceSearchRequestImpl;
 import io.camunda.client.impl.search.request.DecisionRequirementsSearchRequestImpl;
@@ -228,6 +228,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public final class CamundaClientImpl implements CamundaClient {
+
   private final CamundaClientConfiguration config;
   private final JsonMapper jsonMapper;
   private final GatewayStub asyncStub;
@@ -368,7 +369,7 @@ public final class CamundaClientImpl implements CamundaClient {
     final GatewayStub gatewayStub = GatewayGrpc.newStub(channel).withCallCredentials(credentials);
     if (!config.getInterceptors().isEmpty()) {
       return gatewayStub.withInterceptors(
-          config.getInterceptors().toArray(new ClientInterceptor[] {}));
+          config.getInterceptors().toArray(new ClientInterceptor[]{}));
     }
     return gatewayStub;
   }
@@ -385,7 +386,8 @@ public final class CamundaClientImpl implements CamundaClient {
 
     try {
       return objectMapper.readValue(
-          defaultServiceConfig, new TypeReference<Map<String, Object>>() {});
+          defaultServiceConfig, new TypeReference<Map<String, Object>>() {
+          });
     } catch (final IOException e) {
       Loggers.LOGGER.warn(
           "Failed to read default service config from classpath; will not configure a default retry policy",
@@ -713,25 +715,25 @@ public final class CamundaClientImpl implements CamundaClient {
   }
 
   @Override
-  public AdHocSubprocessActivitySearchRequest newAdHocSubprocessActivitySearchRequest() {
-    return new AdHocSubprocessActivitySearchRequestImpl(httpClient, jsonMapper);
+  public AdHocSubProcessActivitySearchRequest newAdHocSubProcessActivitySearchRequest() {
+    return new AdHocSubProcessActivitySearchRequestImpl(httpClient, jsonMapper);
   }
 
   @Override
-  public AdHocSubprocessActivitySearchRequest newAdHocSubprocessActivitySearchRequest(
+  public AdHocSubProcessActivitySearchRequest newAdHocSubProcessActivitySearchRequest(
       final long processDefinitionKey, final String adHocSubprocessId) {
-    return newAdHocSubprocessActivitySearchRequest()
+    return newAdHocSubProcessActivitySearchRequest()
         .filter(
             filter ->
                 filter
                     .processDefinitionKey(processDefinitionKey)
-                    .adHocSubprocessId(adHocSubprocessId));
+                    .adHocSubProcessId(adHocSubprocessId));
   }
 
   @Override
-  public ActivateAdHocSubprocessActivitiesCommandStep1 newActivateAdHocSubprocessActivitiesCommand(
+  public ActivateAdHocSubprocessActivitiesCommandStep1 newActivateAdHocSubProcessActivitiesCommand(
       final String adHocSubprocessInstanceKey) {
-    return new ActivateAdHocSubprocessActivitiesCommandImpl(
+    return new ActivateAdHocSubProcessActivitiesCommandImpl(
         httpClient, jsonMapper, adHocSubprocessInstanceKey);
   }
 
@@ -975,7 +977,8 @@ public final class CamundaClientImpl implements CamundaClient {
 
   @Override
   public CreateBatchOperationCommandStep1 newCreateBatchOperationCommand() {
-    return new CreateBatchOperationCommandStep1Impl(httpClient, jsonMapper) {};
+    return new CreateBatchOperationCommandStep1Impl(httpClient, jsonMapper) {
+    };
   }
 
   @Override

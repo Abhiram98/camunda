@@ -13,26 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.camunda.client.api.search.enums;
+package io.camunda.client.api.search.response;
 
-public enum AdHocSubprocessActivityResultType {
-  UNSPECIFIED,
-  PROCESS,
-  SUB_PROCESS,
-  EVENT_SUB_PROCESS,
-  INTERMEDIATE_CATCH_EVENT,
-  INTERMEDIATE_THROW_EVENT,
-  BOUNDARY_EVENT,
-  SERVICE_TASK,
-  RECEIVE_TASK,
-  USER_TASK,
-  MANUAL_TASK,
-  TASK,
-  MULTI_INSTANCE_BODY,
-  CALL_ACTIVITY,
-  BUSINESS_RULE_TASK,
-  SCRIPT_TASK,
-  SEND_TASK,
-  UNKNOWN,
-  UNKNOWN_ENUM_VALUE;
+import io.camunda.client.api.search.enums.AdHocSubProcessActivityResultType;
+import java.util.List;
+
+public interface AdHocSubProcessActivityResponse {
+
+  List<AdHocSubprocessActivity> getItems();
+
+  interface AdHocSubprocessActivity {
+
+    Long getProcessDefinitionKey();
+
+    String getProcessDefinitionId();
+
+    String getAdHocSubProcessId();
+
+    String getElementId();
+
+    String getElementName();
+
+    AdHocSubProcessActivityResultType getType();
+
+    String getDocumentation();
+
+    String getTenantId();
+  }
 }

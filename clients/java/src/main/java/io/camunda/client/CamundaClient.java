@@ -89,7 +89,7 @@ import io.camunda.client.api.fetch.UsersByGroupSearchRequest;
 import io.camunda.client.api.fetch.VariableGetRequest;
 import io.camunda.client.api.response.ActivatedJob;
 import io.camunda.client.api.response.DocumentReferenceResponse;
-import io.camunda.client.api.search.request.AdHocSubprocessActivitySearchRequest;
+import io.camunda.client.api.search.request.AdHocSubProcessActivitySearchRequest;
 import io.camunda.client.api.search.request.DecisionDefinitionSearchRequest;
 import io.camunda.client.api.search.request.DecisionInstanceSearchRequest;
 import io.camunda.client.api.search.request.DecisionRequirementsSearchRequest;
@@ -919,7 +919,7 @@ public interface CamundaClient extends AutoCloseable, JobClient {
    * @return a builder for the ad-hoc sub-process activity search request
    */
   @ExperimentalApi("https://github.com/camunda/camunda/issues/27930")
-  AdHocSubprocessActivitySearchRequest newAdHocSubprocessActivitySearchRequest();
+  AdHocSubProcessActivitySearchRequest newAdHocSubProcessActivitySearchRequest();
 
   /**
    * Executes a search request to query activities within ad-hoc sub-processes.
@@ -942,8 +942,8 @@ public interface CamundaClient extends AutoCloseable, JobClient {
    * @return a builder for the ad-hoc sub-process activity search request
    */
   @ExperimentalApi("https://github.com/camunda/camunda/issues/27930")
-  AdHocSubprocessActivitySearchRequest newAdHocSubprocessActivitySearchRequest(
-      long processDefinitionKey, String adHocSubprocessId);
+  AdHocSubProcessActivitySearchRequest newAdHocSubProcessActivitySearchRequest(
+      long processDefinitionKey, String adHocSubProcessId);
 
   /**
    * Command to activate activities within an activated ad-hoc sub-process.
@@ -957,12 +957,12 @@ public interface CamundaClient extends AutoCloseable, JobClient {
    *    .send();
    * </pre>
    *
-   * @param adHocSubprocessInstanceKey the key which identifies the corresponding ad-hoc sub-process
+   * @param adHocSubProcessInstanceKey the key which identifies the corresponding ad-hoc sub-process
    *     instance
    * @return a builder for the command
    */
-  ActivateAdHocSubprocessActivitiesCommandStep1 newActivateAdHocSubprocessActivitiesCommand(
-      String adHocSubprocessInstanceKey);
+  ActivateAdHocSubprocessActivitiesCommandStep1 newActivateAdHocSubProcessActivitiesCommand(
+      String adHocSubProcessInstanceKey);
 
   /**
    * Executes a search request to query user tasks.

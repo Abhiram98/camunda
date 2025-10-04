@@ -14,22 +14,22 @@ import static org.assertj.core.api.Assertions.tuple;
 
 import io.camunda.client.CamundaClient;
 import io.camunda.client.api.response.Process;
-import io.camunda.client.api.search.enums.AdHocSubprocessActivityResultType;
+import io.camunda.client.api.search.enums.AdHocSubProcessActivityResultType;
 import io.camunda.client.api.search.response.AdHocSubprocessActivityResponse.AdHocSubprocessActivity;
 import io.camunda.qa.util.multidb.MultiDbTest;
 import org.junit.jupiter.api.Test;
 
 @MultiDbTest
-public class AdHocSubprocessActivitySearchTest {
+public class AdHocSubProcessActivitySearchTest {
 
   private static CamundaClient camundaClient;
 
   @Test
-  void findsAdHocSubprocessActivities() {
-    final var process = deployAdHocSubprocessProcess();
+  void findsAdHocSubProcessActivities() {
+    final var process = deployAdHocSubProcessProcess();
     final var response =
         camundaClient
-            .newAdHocSubprocessActivitySearchRequest(
+            .newAdHocSubProcessActivitySearchRequest(
                 process.getProcessDefinitionKey(), "TestAdHocSubprocess")
             .send()
             .join();
@@ -54,7 +54,7 @@ public class AdHocSubprocessActivitySearchTest {
                 "TestAdHocSubprocess",
                 "TestScriptTask",
                 "test script task",
-                AdHocSubprocessActivityResultType.SCRIPT_TASK,
+                AdHocSubProcessActivityResultType.SCRIPT_TASK,
                 "This is a test script task",
                 "<default>"),
             tuple(
@@ -63,12 +63,12 @@ public class AdHocSubprocessActivitySearchTest {
                 "TestAdHocSubprocess",
                 "TestUserTask",
                 "test user task",
-                AdHocSubprocessActivityResultType.USER_TASK,
+                AdHocSubProcessActivityResultType.USER_TASK,
                 null,
                 "<default>"));
   }
 
-  private Process deployAdHocSubprocessProcess() {
+  private Process deployAdHocSubProcessProcess() {
     final var deployedProcesses =
         deployResource(camundaClient, "process/ad_hoc_subprocess_activities.bpmn").getProcesses();
     assertThat(deployedProcesses).hasSize(1);

@@ -32,19 +32,19 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-public class AdHocSubprocessActivityActivationTest extends ClientRestTest {
+public class AdHocSubProcessActivityActivationTest extends ClientRestTest {
 
   private static final String AD_HOC_SUBPROCESS_INSTANCE_KEY = "123456789";
 
   @ParameterizedTest
   @MethodSource("requestModifiers")
-  void shouldActivateAdHocSubprocessActivities(
+  void shouldActivateAdHocSubProcessActivities(
       final Function<
               ActivateAdHocSubprocessActivitiesCommandStep1,
               ActivateAdHocSubprocessActivitiesCommandStep2>
           requestModifier) {
     final ActivateAdHocSubprocessActivitiesCommandStep1 command =
-        client.newActivateAdHocSubprocessActivitiesCommand(AD_HOC_SUBPROCESS_INSTANCE_KEY);
+        client.newActivateAdHocSubProcessActivitiesCommand(AD_HOC_SUBPROCESS_INSTANCE_KEY);
     requestModifier.apply(command).send().join();
 
     final AdHocSubprocessActivateActivitiesInstruction request =
@@ -55,9 +55,9 @@ public class AdHocSubprocessActivityActivationTest extends ClientRestTest {
   }
 
   @Test
-  void shouldActivateAdHocSubprocessActivitiesCombiningActivationMethods() {
+  void shouldActivateAdHocSubProcessActivitiesCombiningActivationMethods() {
     client
-        .newActivateAdHocSubprocessActivitiesCommand(AD_HOC_SUBPROCESS_INSTANCE_KEY)
+        .newActivateAdHocSubProcessActivitiesCommand(AD_HOC_SUBPROCESS_INSTANCE_KEY)
         .activateElement("A")
         .activateElements("B", "C")
         .activateElements(Arrays.asList("D", "E"))
@@ -75,7 +75,7 @@ public class AdHocSubprocessActivityActivationTest extends ClientRestTest {
   @NullAndEmptySource
   void throwsExceptionWhenElementsCollectionIsNullOrEmpty(final Collection<String> elementIds) {
     final ActivateAdHocSubprocessActivitiesCommandStep1 command =
-        client.newActivateAdHocSubprocessActivitiesCommand(AD_HOC_SUBPROCESS_INSTANCE_KEY);
+        client.newActivateAdHocSubProcessActivitiesCommand(AD_HOC_SUBPROCESS_INSTANCE_KEY);
 
     assertThatThrownBy(() -> command.activateElements(elementIds))
         .isInstanceOf(IllegalArgumentException.class)
@@ -85,7 +85,7 @@ public class AdHocSubprocessActivityActivationTest extends ClientRestTest {
   @Test
   void throwsExceptionWhenElementsArrayIsEmpty() {
     final ActivateAdHocSubprocessActivitiesCommandStep1 command =
-        client.newActivateAdHocSubprocessActivitiesCommand(AD_HOC_SUBPROCESS_INSTANCE_KEY);
+        client.newActivateAdHocSubProcessActivitiesCommand(AD_HOC_SUBPROCESS_INSTANCE_KEY);
 
     assertThatThrownBy(() -> command.activateElements(new String[] {}))
         .isInstanceOf(IllegalArgumentException.class)

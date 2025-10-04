@@ -140,7 +140,7 @@ public class RestGatewayPaths {
     return URL_DEPLOYMENTS_URL;
   }
 
-  public static String getAdHocSubprocessActivitiesSearchUrl() {
+  public static String getAdHocSubProcessActivitiesSearchUrl() {
     return URL_AD_HOC_SUBPROCESS_ACTIVITIES_SEARCH;
   }
 }
