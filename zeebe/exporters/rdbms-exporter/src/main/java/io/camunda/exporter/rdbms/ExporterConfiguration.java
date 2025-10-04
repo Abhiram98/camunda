@@ -28,7 +28,7 @@ public class ExporterConfiguration {
   // specific history TTLs for batch operations
   private Duration cancelProcessInstanceHistoryTTL =
       RdbmsWriterConfig.DEFAULT_BATCH_OPERATION_HISTORY_TTL;
-  private Duration migrateProcessInstanceHistoryTTL =
+  private Duration batchOperationMigrateProcessInstanceHistoryTTL =
       RdbmsWriterConfig.DEFAULT_BATCH_OPERATION_HISTORY_TTL;
   private Duration modifyProcessInstanceHistoryTTL =
       RdbmsWriterConfig.DEFAULT_BATCH_OPERATION_HISTORY_TTL;
@@ -91,11 +91,11 @@ public class ExporterConfiguration {
   }
 
   public Duration getMigrateProcessInstanceHistoryTTL() {
-    return migrateProcessInstanceHistoryTTL;
+    return batchOperationMigrateProcessInstanceHistoryTTL;
   }
 
-  public void setMigrateProcessInstanceHistoryTTL(final Duration migrateProcessInstanceHistoryTTL) {
-    this.migrateProcessInstanceHistoryTTL = migrateProcessInstanceHistoryTTL;
+  public void setMigrateProcessInstanceHistoryTTL(final Duration batchOperationMigrateProcessInstanceHistoryTTL) {
+    this.batchOperationMigrateProcessInstanceHistoryTTL = batchOperationMigrateProcessInstanceHistoryTTL;
   }
 
   public Duration getModifyProcessInstanceHistoryTTL() {
@@ -189,7 +189,7 @@ public class ExporterConfiguration {
     checkPositiveDuration(
         cancelProcessInstanceHistoryTTL, "cancelProcessInstanceHistoryTTL", errors);
     checkPositiveDuration(
-        migrateProcessInstanceHistoryTTL, "migrateProcessInstanceHistoryTTL", errors);
+        batchOperationMigrateProcessInstanceHistoryTTL, "migrateProcessInstanceHistoryTTL", errors);
     checkPositiveDuration(
         modifyProcessInstanceHistoryTTL, "modifyProcessInstanceHistoryTTL", errors);
     checkPositiveDuration(resolveIncidentHistoryTTL, "resolveIncidentHistoryTTL", errors);
@@ -242,7 +242,8 @@ public class ExporterConfiguration {
         .queueSize(queueSize)
         .defaultHistoryTTL(defaultHistoryTTL)
         .cancelProcessInstanceHistoryTTL(cancelProcessInstanceHistoryTTL)
-        .batchOperationMigrateProcessInstanceHistoryTTL(migrateProcessInstanceHistoryTTL)
+        .batchOperationMigrateProcessInstanceHistoryTTL(
+            batchOperationMigrateProcessInstanceHistoryTTL)
         .modifyProcessInstanceHistoryTTL(modifyProcessInstanceHistoryTTL)
         .resolveIncidentHistoryTTL(resolveIncidentHistoryTTL)
         .minHistoryCleanupInterval(minHistoryCleanupInterval)
