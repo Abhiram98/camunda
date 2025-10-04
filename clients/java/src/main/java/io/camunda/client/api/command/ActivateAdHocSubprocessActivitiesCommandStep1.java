@@ -15,7 +15,7 @@
  */
 package io.camunda.client.api.command;
 
-import io.camunda.client.api.response.ActivateAdHocSubprocessActivitiesResponse;
+import io.camunda.client.api.response.ActivateAdHocSubProcessActivitiesResponse;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -67,5 +67,5 @@ public interface ActivateAdHocSubprocessActivitiesCommandStep1 {
 
   interface ActivateAdHocSubprocessActivitiesCommandStep2
       extends ActivateAdHocSubprocessActivitiesCommandStep1,
-          FinalCommandStep<ActivateAdHocSubprocessActivitiesResponse> {}
+          FinalCommandStep<ActivateAdHocSubProcessActivitiesResponse> {}
 }
