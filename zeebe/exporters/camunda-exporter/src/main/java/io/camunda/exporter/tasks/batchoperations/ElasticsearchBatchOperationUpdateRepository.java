@@ -68,7 +68,7 @@ public class ElasticsearchBatchOperationUpdateRepository extends ElasticsearchRe
   }
 
   @Override
-  public CompletionStage<List<OperationsAggData>> getFinishedOperationsCount(
+  public CompletionStage<List<OperationsAggData>> getOperationsCount(
       final Collection<String> batchOperationIds) {
     if (batchOperationIds == null || batchOperationIds.isEmpty()) {
       return CompletableFuture.completedFuture(List.of());
