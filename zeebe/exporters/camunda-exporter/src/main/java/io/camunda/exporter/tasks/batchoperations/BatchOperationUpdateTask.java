@@ -54,7 +54,7 @@ public class BatchOperationUpdateTask implements BackgroundTask {
     }
 
     return batchOperationUpdateRepository
-        .getFinishedOperationsCount(batchOperationIds)
+        .getOperationsCount(batchOperationIds)
         .thenApplyAsync(this::collectDocumentUpdates, executor)
         .thenComposeAsync(batchOperationUpdateRepository::bulkUpdate, executor)
         .thenApplyAsync(
