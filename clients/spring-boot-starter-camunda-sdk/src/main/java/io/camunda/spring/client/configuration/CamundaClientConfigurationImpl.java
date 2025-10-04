@@ -146,14 +146,7 @@ public class CamundaClientConfigurationImpl implements CamundaClientConfiguratio
   }
 
   @Override
-  public Duration getDefaultActivateJobsResponseTimeoutOffset() {
-    return propertyOrDefault(
-        camundaClientProperties.getActivateJobsResponseTimeoutOffset(),
-        DEFAULT.getDefaultActivateJobsResponseTimeoutOffset());
-  }
-
-  @Override
-  public boolean isPlaintextConnectionEnabled() {
+  public boolean getDefaultRequestTimeoutOffset() {
     return plaintext;
   }
 
@@ -236,6 +229,13 @@ public class CamundaClientConfigurationImpl implements CamundaClientConfiguratio
   public boolean preferRestOverGrpc() {
     return propertyOrDefault(
         camundaClientProperties.getPreferRestOverGrpc(), DEFAULT.preferRestOverGrpc());
+  }
+
+  @Override
+  public Duration getDefaultActivateJobsResponseTimeoutOffset() {
+    return propertyOrDefault(
+        camundaClientProperties.getActivateJobsResponseTimeoutOffset(),
+        DEFAULT.getDefaultRequestTimeoutOffset());
   }
 
   private String composeGatewayAddress() {

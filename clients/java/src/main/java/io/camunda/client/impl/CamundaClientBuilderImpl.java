@@ -106,7 +106,7 @@ public final class CamundaClientBuilderImpl
   private Duration defaultJobPollInterval = Duration.ofMillis(100);
   private Duration defaultMessageTimeToLive = Duration.ofHours(1);
   private Duration defaultRequestTimeout = Duration.ofSeconds(10);
-  private Duration defaultActivateJobsResponseTimeoutOffset = Duration.ofSeconds(1);
+  private Duration defaultRequestTimeoutOffset = Duration.ofSeconds(1);
   private boolean usePlaintextConnection = false;
   private String certificatePath;
   private CredentialsProvider credentialsProvider;
@@ -182,12 +182,7 @@ public final class CamundaClientBuilderImpl
   }
 
   @Override
-  public Duration getDefaultActivateJobsResponseTimeoutOffset() {
-    return defaultActivateJobsResponseTimeoutOffset;
-  }
-
-  @Override
-  public boolean isPlaintextConnectionEnabled() {
+  public boolean getDefaultRequestTimeoutOffset() {
     return usePlaintextConnection;
   }
 
@@ -259,6 +254,11 @@ public final class CamundaClientBuilderImpl
   @Override
   public boolean preferRestOverGrpc() {
     return preferRestOverGrpc;
+  }
+
+  @Override
+  public Duration getDefaultActivateJobsResponseTimeoutOffset() {
+    return defaultRequestTimeoutOffset;
   }
 
   @Override
@@ -343,7 +343,7 @@ public final class CamundaClientBuilderImpl
 
     BuilderUtils.applyPropertyValueIfNotNull(
         properties,
-        value -> defaultActivateJobsResponseTimeoutOffset(Duration.ofMillis(Long.parseLong(value))),
+        value -> defaultRequestTimeoutOffset(Duration.ofMillis(Long.parseLong(value))),
         DEFAULT_REQUEST_TIMEOUT_OFFSET);
 
     BuilderUtils.applyPropertyValueIfNotNull(
@@ -366,7 +366,7 @@ public final class CamundaClientBuilderImpl
 
     BuilderUtils.applyPropertyValueIfNotNull(
         properties,
-        this::caCertificatePath,
+        this::defaultRequestTimeoutOffset,
         CA_CERTIFICATE_PATH,
         io.camunda.zeebe.client.ClientProperties.CA_CERTIFICATE_PATH);
 
@@ -498,24 +498,6 @@ public final class CamundaClientBuilderImpl
   }
 
   @Override
-  public CamundaClientBuilder defaultActivateJobsResponseTimeoutOffset(
-      final Duration responseTimeoutOffset) {
-    defaultActivateJobsResponseTimeoutOffset = responseTimeoutOffset;
-    return this;
-  }
-
-  @Override
-  public CamundaClientBuilder usePlaintext() {
-    return usePlaintext(true);
-  }
-
-  @Override
-  public CamundaClientBuilder caCertificatePath(final String certificatePath) {
-    this.certificatePath = certificatePath;
-    return this;
-  }
-
-  @Override
   public CamundaClientBuilder credentialsProvider(final CredentialsProvider credentialsProvider) {
     this.credentialsProvider = credentialsProvider;
     return this;
@@ -599,6 +581,22 @@ public final class CamundaClientBuilderImpl
     return new CamundaClientImpl(this);
   }
 
+  public CamundaClientBuilder defaultRequestTimeoutOffset(final String certificatePath) {
+    this.certificatePath = certificatePath;
+    return this;
+  }
+
+  public CamundaClientBuilder defaultRequestTimeoutOffset() {
+    return usePlaintext(true);
+  }
+
+  @Override
+  public CamundaClientBuilder defaultActivateJobsResponseTimeoutOffset(
+      final Duration responseTimeoutOffset) {
+    defaultRequestTimeoutOffset = responseTimeoutOffset;
+    return this;
+  }
+
   private CamundaClientBuilder usePlaintext(final boolean usePlaintext) {
     usePlaintextConnection = usePlaintext;
     return this;
@@ -614,7 +612,7 @@ public final class CamundaClientBuilderImpl
         PLAINTEXT_CONNECTION_VAR,
         ZeebeClientEnvironmentVariables.PLAINTEXT_CONNECTION_VAR);
     applyEnvironmentValueIfNotNull(
-        this::caCertificatePath,
+        this::defaultRequestTimeoutOffset,
         CA_CERTIFICATE_VAR,
         ZeebeClientEnvironmentVariables.CA_CERTIFICATE_VAR);
     applyEnvironmentValueIfNotNull(
@@ -672,7 +670,7 @@ public final class CamundaClientBuilderImpl
     BuilderUtils.appendProperty(sb, "defaultMessageTimeToLive", defaultMessageTimeToLive);
     BuilderUtils.appendProperty(sb, "defaultRequestTimeout", defaultRequestTimeout);
     BuilderUtils.appendProperty(
-        sb, "defaultActivateJobsResponseTimeoutOffset", defaultActivateJobsResponseTimeoutOffset);
+        sb, "defaultActivateJobsResponseTimeoutOffset", defaultRequestTimeoutOffset);
     BuilderUtils.appendProperty(sb, "overrideAuthority", overrideAuthority);
     BuilderUtils.appendProperty(sb, "maxMessageSize", maxMessageSize);
     BuilderUtils.appendProperty(sb, "maxMetadataSize", maxMetadataSize);
