@@ -26,7 +26,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import org.apache.hc.client5.http.config.RequestConfig;
 
-public final class RemoveUserFromTenantCommandImpl
+public final class UnassignUserFromTenantCommandImpl
     implements UnassignUserFromTenantCommandStep1, RemoveUserFromTenantCommandStep2 {
 
   private String tenantId;
@@ -34,7 +34,7 @@ public final class RemoveUserFromTenantCommandImpl
   private final HttpClient httpClient;
   private final RequestConfig.Builder httpRequestConfig;
 
-  public RemoveUserFromTenantCommandImpl(final HttpClient httpClient) {
+  public UnassignUserFromTenantCommandImpl(final HttpClient httpClient) {
     this.httpClient = httpClient;
     httpRequestConfig = httpClient.newRequestConfig();
   }

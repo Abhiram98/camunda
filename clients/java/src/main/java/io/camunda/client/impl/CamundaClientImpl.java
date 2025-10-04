@@ -205,7 +205,7 @@ import io.camunda.client.impl.command.JobUpdateTimeoutCommandImpl;
 import io.camunda.client.impl.command.MigrateProcessInstanceCommandImpl;
 import io.camunda.client.impl.command.ModifyProcessInstanceCommandImpl;
 import io.camunda.client.impl.command.PublishMessageCommandImpl;
-import io.camunda.client.impl.command.RemoveUserFromTenantCommandImpl;
+import io.camunda.client.impl.command.UnassignUserFromTenantCommandImpl;
 import io.camunda.client.impl.command.ResolveIncidentCommandImpl;
 import io.camunda.client.impl.command.ResumeBatchOperationCommandImpl;
 import io.camunda.client.impl.command.SetVariablesCommandImpl;
@@ -1156,7 +1156,7 @@ public final class CamundaClientImpl implements CamundaClient {
 
   @Override
   public UnassignUserFromTenantCommandStep1 newUnassignUserFromTenantCommand() {
-    return new RemoveUserFromTenantCommandImpl(httpClient);
+    return new UnassignUserFromTenantCommandImpl(httpClient);
   }
 
   @Override
