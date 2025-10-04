@@ -27,7 +27,7 @@ public abstract class ErrorHandlingUtils {
   public static final String TIMEOUT_ERROR_MESSAGE =
       "The request timed out while processing the task.";
 
-  public static String getErrorMessageFromBrokerException(final CamundaBrokerException exception) {
+  public static String getErrorMessageFromServiceException(final CamundaBrokerException exception) {
     if (exception.getCause() instanceof final BrokerRejectionException brokerRejectionException
         && brokerRejectionException.getRejection().type().equals(RejectionType.INVALID_STATE)) {
       return createErrorMessage(
@@ -54,10 +54,10 @@ public abstract class ErrorHandlingUtils {
   public static String createErrorMessage(final String title, final String detail) {
     return String.format(
         """
-      { "title": "%s",
-        "detail": "%s"
-      }
-      """,
+            { "title": "%s",
+              "detail": "%s"
+            }
+            """,
         title, detail);
   }
 }
