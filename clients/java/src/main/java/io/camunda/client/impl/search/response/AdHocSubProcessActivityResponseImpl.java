@@ -23,11 +23,11 @@ import io.camunda.client.protocol.rest.AdHocSubprocessActivitySearchQueryResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AdHocSubprocessActivityResponseImpl implements AdHocSubProcessActivityResponse {
+public class AdHocSubProcessActivityResponseImpl implements AdHocSubProcessActivityResponse {
 
   private final List<AdHocSubprocessActivity> items;
 
-  public AdHocSubprocessActivityResponseImpl(
+  public AdHocSubProcessActivityResponseImpl(
       final AdHocSubprocessActivitySearchQueryResult response) {
     items =
         response.getItems().stream()
@@ -43,7 +43,7 @@ public class AdHocSubprocessActivityResponseImpl implements AdHocSubProcessActiv
   public static class AdHocSubprocessActivityImpl implements AdHocSubprocessActivity {
     private final Long processDefinitionKey;
     private final String processDefinitionId;
-    private final String adHocSubprocessId;
+    private final String adHocSubProcessId;
     private final String elementId;
     private final String elementName;
     private final AdHocSubProcessActivityResultType type;
@@ -53,7 +53,7 @@ public class AdHocSubprocessActivityResponseImpl implements AdHocSubProcessActiv
     public AdHocSubprocessActivityImpl(final AdHocSubprocessActivityResult result) {
       processDefinitionKey = Long.valueOf(result.getProcessDefinitionKey());
       processDefinitionId = result.getProcessDefinitionId();
-      adHocSubprocessId = result.getAdHocSubprocessId();
+      adHocSubProcessId = result.getAdHocSubprocessId();
       elementId = result.getElementId();
       elementName = result.getElementName();
       type =
@@ -77,7 +77,7 @@ public class AdHocSubprocessActivityResponseImpl implements AdHocSubProcessActiv
 
     @Override
     public String getAdHocSubProcessId() {
-      return adHocSubprocessId;
+      return adHocSubProcessId;
     }
 
     @Override
