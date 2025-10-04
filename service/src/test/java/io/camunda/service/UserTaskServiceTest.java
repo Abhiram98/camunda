@@ -52,7 +52,7 @@ public class UserTaskServiceTest {
   private UserTaskServices services;
   private UserTaskSearchClient client;
   private FormServices formServices;
-  private FlowNodeInstanceSearchClient flowNodeInstanceSearchClient;
+  private FlowNodeInstanceSearchClient elementInstanceServices;
   private VariableSearchClient variableSearchClient;
   private ProcessCache processCache;
   private SecurityContextProvider securityContextProvider;
@@ -62,7 +62,7 @@ public class UserTaskServiceTest {
   public void before() {
     client = mock(UserTaskSearchClient.class);
     formServices = mock(FormServices.class);
-    flowNodeInstanceSearchClient = mock(FlowNodeInstanceSearchClient.class);
+    elementInstanceServices = mock(FlowNodeInstanceSearchClient.class);
     variableSearchClient = mock(VariableSearchClient.class);
     processCache = mock(ProcessCache.class);
     securityContextProvider = mock(SecurityContextProvider.class);
@@ -73,7 +73,7 @@ public class UserTaskServiceTest {
             securityContextProvider,
             client,
             formServices,
-            flowNodeInstanceSearchClient,
+            elementInstanceServices,
             variableSearchClient,
             processCache,
             authentication);
@@ -81,8 +81,8 @@ public class UserTaskServiceTest {
     when(client.withSecurityContext(any())).thenReturn(client);
     when(formServices.withAuthentication(any(CamundaAuthentication.class)))
         .thenReturn(formServices);
-    when(flowNodeInstanceSearchClient.withSecurityContext(any()))
-        .thenReturn(flowNodeInstanceSearchClient);
+    when(elementInstanceServices.withSecurityContext(any()))
+        .thenReturn(elementInstanceServices);
     when(variableSearchClient.withSecurityContext(any())).thenReturn(variableSearchClient);
     when(processCache.getCacheItems(any())).thenReturn(ProcessCacheResult.EMPTY);
   }
@@ -113,7 +113,7 @@ public class UserTaskServiceTest {
       assertThat(assertThrows(ServiceException.class, executable).getStatus())
           .isEqualTo(Status.FORBIDDEN);
       verify(client).getUserTask(any(Long.class));
-      verify(flowNodeInstanceSearchClient, never()).searchFlowNodeInstances(any());
+      verify(elementInstanceServices, never()).searchFlowNodeInstances(any());
       verify(variableSearchClient, never()).searchVariables(any());
     }
 
@@ -129,7 +129,7 @@ public class UserTaskServiceTest {
       final var variable = Instancio.create(VariableEntity.class);
 
       when(client.getUserTask(any(Long.class))).thenReturn(entity);
-      when(flowNodeInstanceSearchClient.searchFlowNodeInstances(
+      when(elementInstanceServices.searchFlowNodeInstances(
               flownodeInstanceSearchQuery(
                   q ->
                       q.filter(
