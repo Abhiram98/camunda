@@ -101,13 +101,13 @@ public final class BpmnStreamProcessor implements TypedRecordProcessor<ProcessIn
   }
 
   @Override
-  public void processRecord(final TypedRecord<ProcessInstanceRecord> record) {
+  public void processRecord(final TypedRecord<ProcessInstanceRecord> usageMetricRecord) {
 
     // initialize
-    final var intent = (ProcessInstanceIntent) record.getIntent();
-    final var recordValue = record.getValue();
+    final var intent = (ProcessInstanceIntent) usageMetricRecord.getIntent();
+    final var recordValue = usageMetricRecord.getValue();
 
-    context.init(record.getKey(), recordValue, intent);
+    context.init(usageMetricRecord.getKey(), recordValue, intent);
 
     final var bpmnElementType = recordValue.getBpmnElementType();
     final var processor = processors.getProcessor(bpmnElementType);
@@ -122,7 +122,7 @@ public final class BpmnStreamProcessor implements TypedRecordProcessor<ProcessIn
             },
             violation ->
                 rejectionWriter.appendRejection(
-                    record, RejectionType.INVALID_STATE, violation.getMessage()));
+                    usageMetricRecord, RejectionType.INVALID_STATE, violation.getMessage()));
   }
 
   @Override

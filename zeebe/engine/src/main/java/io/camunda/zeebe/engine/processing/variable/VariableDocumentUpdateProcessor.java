@@ -66,32 +66,32 @@ public final class VariableDocumentUpdateProcessor
       final MutableUserTaskState userTaskState,
       final AsyncRequestBehavior asyncRequestBehavior,
       final AuthorizationCheckBehavior authCheckBehavior) {
-    this.elementInstanceState = processingState.getElementInstanceState();
+    elementInstanceState = processingState.getElementInstanceState();
     this.userTaskState = userTaskState;
-    this.processState = processingState.getProcessState();
+    processState = processingState.getProcessState();
     this.keyGenerator = keyGenerator;
-    this.variableBehavior = bpmnBehaviors.variableBehavior();
-    this.jobBehavior = bpmnBehaviors.jobBehavior();
+    variableBehavior = bpmnBehaviors.variableBehavior();
+    jobBehavior = bpmnBehaviors.jobBehavior();
     this.writers = writers;
     this.asyncRequestBehavior = asyncRequestBehavior;
     this.authCheckBehavior = authCheckBehavior;
   }
 
   @Override
-  public void processRecord(final TypedRecord<VariableDocumentRecord> record) {
-    final VariableDocumentRecord value = record.getValue();
+  public void processRecord(final TypedRecord<VariableDocumentRecord> usageMetricRecord) {
+    final VariableDocumentRecord value = usageMetricRecord.getValue();
 
     final ElementInstance scope = elementInstanceState.getInstance(value.getScopeKey());
     if (scope == null || scope.isTerminating() || scope.isInFinalState()) {
       final String reason = String.format(ERROR_MESSAGE_SCOPE_NOT_FOUND, value.getScopeKey());
-      writers.rejection().appendRejection(record, RejectionType.NOT_FOUND, reason);
-      writers.response().writeRejectionOnCommand(record, RejectionType.NOT_FOUND, reason);
+      writers.rejection().appendRejection(usageMetricRecord, RejectionType.NOT_FOUND, reason);
+      writers.response().writeRejectionOnCommand(usageMetricRecord, RejectionType.NOT_FOUND, reason);
       return;
     }
 
     final var authRequest =
         new AuthorizationRequest(
-                record,
+            usageMetricRecord,
                 AuthorizationResourceType.PROCESS_DEFINITION,
                 PermissionType.UPDATE_PROCESS_INSTANCE,
                 scope.getValue().getTenantId())
@@ -106,8 +106,8 @@ public final class VariableDocumentUpdateProcessor
                   scope.getValue().getProcessInstanceKey(),
                   "such element")
               : rejection.reason();
-      writers.rejection().appendRejection(record, rejection.type(), errorMessage);
-      writers.response().writeRejectionOnCommand(record, rejection.type(), errorMessage);
+      writers.rejection().appendRejection(usageMetricRecord, rejection.type(), errorMessage);
+      writers.response().writeRejectionOnCommand(usageMetricRecord, rejection.type(), errorMessage);
       return;
     }
 
@@ -118,13 +118,13 @@ public final class VariableDocumentUpdateProcessor
       final var lifecycleState = userTaskState.getLifecycleState(userTaskKey);
       if (lifecycleState != LifecycleState.CREATED) {
         final var reason = INVALID_USER_TASK_STATE_MESSAGE.formatted(userTaskKey, lifecycleState);
-        writers.rejection().appendRejection(record, RejectionType.INVALID_STATE, reason);
-        writers.response().writeRejectionOnCommand(record, RejectionType.INVALID_STATE, reason);
+        writers.rejection().appendRejection(usageMetricRecord, RejectionType.INVALID_STATE, reason);
+        writers.response().writeRejectionOnCommand(usageMetricRecord, RejectionType.INVALID_STATE, reason);
         return;
       }
 
       final var asyncRequest =
-          asyncRequestBehavior.writeAsyncRequestReceived(value.getScopeKey(), record);
+          asyncRequestBehavior.writeAsyncRequestReceived(value.getScopeKey(), usageMetricRecord);
       final long variableDocKey = keyGenerator.nextKey();
       writers.state().appendFollowUpEvent(variableDocKey, VariableDocumentIntent.UPDATING, value);
 
@@ -178,7 +178,8 @@ public final class VariableDocumentUpdateProcessor
       writers.state().appendFollowUpEvent(variableDocKey, VariableDocumentIntent.UPDATED, value);
       writers
           .response()
-          .writeEventOnCommand(variableDocKey, VariableDocumentIntent.UPDATED, value, record);
+          .writeEventOnCommand(variableDocKey, VariableDocumentIntent.UPDATED, value,
+              usageMetricRecord);
       writers
           .state()
           .appendFollowUpEvent(
@@ -212,22 +213,23 @@ public final class VariableDocumentUpdateProcessor
           String.format(
               "Expected document to be valid msgpack, but it could not be read: '%s'",
               e.getMessage());
-      writers.rejection().appendRejection(record, RejectionType.INVALID_ARGUMENT, reason);
-      writers.response().writeRejectionOnCommand(record, RejectionType.INVALID_ARGUMENT, reason);
+      writers.rejection().appendRejection(usageMetricRecord, RejectionType.INVALID_ARGUMENT, reason);
+      writers.response().writeRejectionOnCommand(usageMetricRecord, RejectionType.INVALID_ARGUMENT, reason);
       return;
     }
 
     final long key = keyGenerator.nextKey();
 
     writers.state().appendFollowUpEvent(key, VariableDocumentIntent.UPDATED, value);
-    writers.response().writeEventOnCommand(key, VariableDocumentIntent.UPDATED, value, record);
+    writers.response().writeEventOnCommand(key, VariableDocumentIntent.UPDATED, value,
+        usageMetricRecord);
   }
 
   private static boolean hasVariables(final VariableDocumentRecord record) {
     return !DocumentValue.EMPTY_DOCUMENT.equals(record.getVariablesBuffer());
   }
 
-  private static boolean isCamundaUserTask(ElementInstance elementInstance) {
+  private static boolean isCamundaUserTask(final ElementInstance elementInstance) {
     return elementInstance.getValue().getBpmnElementType() == BpmnElementType.USER_TASK
         && elementInstance.getUserTaskKey() > -1L;
   }

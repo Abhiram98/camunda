@@ -23,7 +23,7 @@ public class CommandDistributionFinishProcessor
   }
 
   @Override
-  public void processRecord(final TypedRecord<CommandDistributionRecord> record) {
-    commandDistributionBehavior.onFinish(record.getKey(), record.getValue());
+  public void processRecord(final TypedRecord<CommandDistributionRecord> usageMetricRecord) {
+    commandDistributionBehavior.onFinish(usageMetricRecord.getKey(), usageMetricRecord.getValue());
   }
 }

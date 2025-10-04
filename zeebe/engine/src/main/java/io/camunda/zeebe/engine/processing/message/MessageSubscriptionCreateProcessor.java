@@ -64,15 +64,15 @@ public final class MessageSubscriptionCreateProcessor
   }
 
   @Override
-  public void processRecord(final TypedRecord<MessageSubscriptionRecord> record) {
-    subscriptionRecord = record.getValue();
+  public void processRecord(final TypedRecord<MessageSubscriptionRecord> usageMetricRecord) {
+    subscriptionRecord = usageMetricRecord.getValue();
 
     if (subscriptionState.existSubscriptionForElementInstance(
         subscriptionRecord.getElementInstanceKey(), subscriptionRecord.getMessageNameBuffer())) {
       sendAcknowledgeCommand();
 
       rejectionWriter.appendRejection(
-          record,
+          usageMetricRecord,
           RejectionType.INVALID_STATE,
           String.format(
               SUBSCRIPTION_ALREADY_OPENED_MESSAGE,

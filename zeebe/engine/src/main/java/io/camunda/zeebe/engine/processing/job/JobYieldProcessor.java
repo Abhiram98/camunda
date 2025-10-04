@@ -48,18 +48,18 @@ public final class JobYieldProcessor implements TypedRecordProcessor<JobRecord> 
   }
 
   @Override
-  public void processRecord(final TypedRecord<JobRecord> record) {
-    final long jobKey = record.getKey();
+  public void processRecord(final TypedRecord<JobRecord> usageMetricRecord) {
+    final long jobKey = usageMetricRecord.getKey();
     final JobState.State state = jobState.getState(jobKey);
 
     preconditionChecker
-        .check(state, record)
+        .check(state, usageMetricRecord)
         .ifRightOrLeft(
             yieldedJob -> {
               stateWriter.appendFollowUpEvent(jobKey, JobIntent.YIELDED, yieldedJob);
               jobActivationBehavior.notifyJobAvailableAsSideEffect(yieldedJob);
             },
             rejection ->
-                rejectionWriter.appendRejection(record, rejection.type(), rejection.reason()));
+                rejectionWriter.appendRejection(usageMetricRecord, rejection.type(), rejection.reason()));
   }
 }

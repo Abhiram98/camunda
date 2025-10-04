@@ -33,9 +33,9 @@ public class CommandDistributionContinueProcessor
   }
 
   @Override
-  public void processRecord(final TypedRecord<CommandDistributionRecord> record) {
-    final var key = record.getKey();
-    final var distributionRecord = record.getValue();
+  public void processRecord(final TypedRecord<CommandDistributionRecord> usageMetricRecord) {
+    final var key = usageMetricRecord.getKey();
+    final var distributionRecord = usageMetricRecord.getValue();
     final var queue = distributionRecord.getQueueId();
 
     final var continuationRecord = distributionState.getContinuationRecord(queue, key);
