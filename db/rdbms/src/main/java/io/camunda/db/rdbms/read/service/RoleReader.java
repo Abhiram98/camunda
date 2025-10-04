@@ -31,8 +31,8 @@ public class RoleReader extends AbstractEntityReader<RoleEntity> {
     this.roleMapper = roleMapper;
   }
 
-  public Optional<RoleEntity> findOne(final long roleKey) {
-    final var result = search(RoleQuery.of(b -> b.filter(f -> f.roleKey(roleKey))));
+  public Optional<RoleEntity> findOne(final long roleId) {
+    final var result = search(RoleQuery.of(b -> b.filter(f -> f.roleKey(roleId))));
     return Optional.ofNullable(result.items()).flatMap(items -> items.stream().findFirst());
   }
 
