@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface SequenceFlowSearchClient {
 
-  List<SequenceFlowEntity> findAllSequenceFlows(SequenceFlowQuery filter);
+  List<SequenceFlowEntity> searchSequenceFlows(SequenceFlowQuery filter);
 
   SequenceFlowSearchClient withSecurityContext(SecurityContext securityContext);
 }
