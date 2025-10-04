@@ -17,8 +17,8 @@ package io.camunda.client.impl.command;
 
 import io.camunda.client.api.CamundaFuture;
 import io.camunda.client.api.command.FinalCommandStep;
-import io.camunda.client.api.command.RemoveUserFromTenantCommandStep1;
-import io.camunda.client.api.command.RemoveUserFromTenantCommandStep1.RemoveUserFromTenantCommandStep2;
+import io.camunda.client.api.command.UnassignUserFromTenantCommandStep1;
+import io.camunda.client.api.command.UnassignUserFromTenantCommandStep1.RemoveUserFromTenantCommandStep2;
 import io.camunda.client.api.response.UnassignUserFromTenantResponse;
 import io.camunda.client.impl.http.HttpCamundaFuture;
 import io.camunda.client.impl.http.HttpClient;
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.hc.client5.http.config.RequestConfig;
 
 public final class RemoveUserFromTenantCommandImpl
-    implements RemoveUserFromTenantCommandStep1, RemoveUserFromTenantCommandStep2 {
+    implements UnassignUserFromTenantCommandStep1, RemoveUserFromTenantCommandStep2 {
 
   private String tenantId;
   private String username;
