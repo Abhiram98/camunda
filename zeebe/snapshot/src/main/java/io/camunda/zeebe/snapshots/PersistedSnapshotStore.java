@@ -38,10 +38,14 @@ public interface PersistedSnapshotStore extends CloseableSilently, BootstrapSnap
    */
   Optional<PersistedSnapshot> getLatestSnapshot();
 
-  /** Returns a set of all available snapshots. */
+  /**
+   * Returns a set of all available snapshots.
+   */
   ActorFuture<Set<PersistedSnapshot>> getAvailableSnapshots();
 
-  /** Returns the lowest compaction bound of all available snapshots. */
+  /**
+   * Returns the lowest compaction bound of all available snapshots.
+   */
   ActorFuture<Long> getCompactionBound();
 
   /**
@@ -49,11 +53,11 @@ public interface PersistedSnapshotStore extends CloseableSilently, BootstrapSnap
    *
    * @return future which will be completed when all pending snapshots are deleted
    */
-  ActorFuture<Void> purgePendingSnapshots();
+  ActorFuture<Void> abortPendingSnapshots();
 
   /**
-   * Adds an {@link PersistedSnapshotListener} to the store, which is notified when a new {@link
-   * PersistedSnapshot} is persisted at this store.
+   * Adds an {@link PersistedSnapshotListener} to the store, which is notified when a new
+   * {@link PersistedSnapshot} is persisted at this store.
    *
    * @param listener the listener which should be added and notified later
    */
