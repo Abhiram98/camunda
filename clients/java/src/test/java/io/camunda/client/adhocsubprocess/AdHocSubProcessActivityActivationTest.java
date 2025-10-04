@@ -32,13 +32,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-public class AdHocSubprocessActivityActivationTest extends ClientRestTest {
+public class AdHocSubProcessActivityActivationTest extends ClientRestTest {
 
   private static final String AD_HOC_SUBPROCESS_INSTANCE_KEY = "123456789";
 
   @ParameterizedTest
   @MethodSource("requestModifiers")
-  void shouldActivateAdHocSubprocessActivities(
+  void shouldActivateAdHocSubProcessActivities(
       final Function<
               ActivateAdHocSubprocessActivitiesCommandStep1,
               ActivateAdHocSubprocessActivitiesCommandStep2>
@@ -55,7 +55,7 @@ public class AdHocSubprocessActivityActivationTest extends ClientRestTest {
   }
 
   @Test
-  void shouldActivateAdHocSubprocessActivitiesCombiningActivationMethods() {
+  void shouldActivateAdHocSubProcessActivitiesCombiningActivationMethods() {
     client
         .newActivateAdHocSubProcessActivitiesCommand(AD_HOC_SUBPROCESS_INSTANCE_KEY)
         .activateElement("A")
