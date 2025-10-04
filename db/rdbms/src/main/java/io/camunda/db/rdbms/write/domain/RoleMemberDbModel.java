@@ -18,8 +18,8 @@ public record RoleMemberDbModel(final Long roleKey, final String entityId, final
     private String entityId;
     private String entityType;
 
-    public Builder roleId(final Long roleKey) {
-      roleId = roleKey;
+    public Builder roleId(final Long roleId) {
+      this.roleId = roleId;
       return this;
     }
 
