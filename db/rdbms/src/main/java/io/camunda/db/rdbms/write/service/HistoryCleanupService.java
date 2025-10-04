@@ -24,7 +24,7 @@ public class HistoryCleanupService {
 
   private final Duration defaultHistoryTTL;
   private final Duration cancelProcessInstanceHistoryTTL;
-  private final Duration migrateProcessInstanceHistoryTTL;
+  private final Duration batchOperationMigrateProcessInstanceHistoryTTL;
   private final Duration modifyProcessInstanceHistoryTTL;
   private final Duration resolveIncidentHistoryTTL;
   private final Duration minCleanupInterval;
@@ -62,7 +62,7 @@ public class HistoryCleanupService {
 
     defaultHistoryTTL = config.defaultHistoryTTL();
     cancelProcessInstanceHistoryTTL = config.cancelProcessInstanceHistoryTTL();
-    migrateProcessInstanceHistoryTTL = config.migrateProcessInstanceHistoryTTL();
+    batchOperationMigrateProcessInstanceHistoryTTL = config.migrateProcessInstanceHistoryTTL();
     modifyProcessInstanceHistoryTTL = config.modifyProcessInstanceHistoryTTL();
     resolveIncidentHistoryTTL = config.resolveIncidentHistoryTTL();
     minCleanupInterval = config.minHistoryCleanupInterval();
@@ -117,7 +117,7 @@ public class HistoryCleanupService {
   public Duration resolveBatchOperationTTL(final BatchOperationType type) {
     return switch (type) {
       case CANCEL_PROCESS_INSTANCE -> cancelProcessInstanceHistoryTTL;
-      case MIGRATE_PROCESS_INSTANCE -> migrateProcessInstanceHistoryTTL;
+      case MIGRATE_PROCESS_INSTANCE -> batchOperationMigrateProcessInstanceHistoryTTL;
       case MODIFY_PROCESS_INSTANCE -> modifyProcessInstanceHistoryTTL;
       case RESOLVE_INCIDENT -> resolveIncidentHistoryTTL;
       default -> defaultHistoryTTL;
