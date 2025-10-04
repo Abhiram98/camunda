@@ -57,7 +57,7 @@ public record RdbmsWriterConfig(
       return this;
     }
 
-    public Builder maxQueueSize(final int queueSize) {
+    public Builder queueSize(final int queueSize) {
       this.queueSize = queueSize;
       return this;
     }

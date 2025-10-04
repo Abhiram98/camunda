@@ -254,7 +254,7 @@ public class RdbmsExporter {
       return this;
     }
 
-    public Builder maxQueueSize(final int value) {
+    public Builder queueSize(final int value) {
       maxQueueSize = value;
       return this;
     }
