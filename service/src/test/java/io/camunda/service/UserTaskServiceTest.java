@@ -53,7 +53,7 @@ public class UserTaskServiceTest {
   private UserTaskSearchClient client;
   private FormServices formServices;
   private FlowNodeInstanceSearchClient flowNodeInstanceSearchClient;
-  private VariableSearchClient variableSearchClient;
+  private VariableSearchClient variableServices;
   private ProcessCache processCache;
   private SecurityContextProvider securityContextProvider;
   private CamundaAuthentication authentication;
@@ -63,7 +63,7 @@ public class UserTaskServiceTest {
     client = mock(UserTaskSearchClient.class);
     formServices = mock(FormServices.class);
     flowNodeInstanceSearchClient = mock(FlowNodeInstanceSearchClient.class);
-    variableSearchClient = mock(VariableSearchClient.class);
+    variableServices = mock(VariableSearchClient.class);
     processCache = mock(ProcessCache.class);
     securityContextProvider = mock(SecurityContextProvider.class);
     authentication = mock(CamundaAuthentication.class);
@@ -74,7 +74,7 @@ public class UserTaskServiceTest {
             client,
             formServices,
             flowNodeInstanceSearchClient,
-            variableSearchClient,
+            variableServices,
             processCache,
             authentication);
 
@@ -83,7 +83,7 @@ public class UserTaskServiceTest {
         .thenReturn(formServices);
     when(flowNodeInstanceSearchClient.withSecurityContext(any()))
         .thenReturn(flowNodeInstanceSearchClient);
-    when(variableSearchClient.withSecurityContext(any())).thenReturn(variableSearchClient);
+    when(variableServices.withSecurityContext(any())).thenReturn(variableServices);
     when(processCache.getCacheItems(any())).thenReturn(ProcessCacheResult.EMPTY);
   }
 
@@ -114,7 +114,7 @@ public class UserTaskServiceTest {
           .isEqualTo(Status.FORBIDDEN);
       verify(client).getUserTask(any(Long.class));
       verify(flowNodeInstanceSearchClient, never()).searchFlowNodeInstances(any());
-      verify(variableSearchClient, never()).searchVariables(any());
+      verify(variableServices, never()).searchVariables(any());
     }
 
     @Test
@@ -138,7 +138,7 @@ public class UserTaskServiceTest {
                                       flowNodeInstanceEntity.flowNodeInstanceKey()))
                           .singleResult())))
           .thenReturn(SearchQueryResult.of(flowNodeInstanceEntity));
-      when(variableSearchClient.searchVariables(
+      when(variableServices.searchVariables(
               variableSearchQuery(q -> q.filter(f -> f.scopeKeys(1L, 2L, 3L)))))
           .thenReturn(SearchQueryResult.of(variable));
       authorizeReadUserTasksForProcess(true, entity.processDefinitionId());
