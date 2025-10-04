@@ -1184,7 +1184,7 @@ public final class CamundaClientTest {
 
   @ParameterizedTest
   @ValueSource(strings = {DEFAULT_REQUEST_TIMEOUT_OFFSET})
-  public void shouldSetActivateJobsResponseTimeoutOffset(final String propertyName) {
+  public void shouldSetRequestTimeoutOffset(final String propertyName) {
     // given
     final Properties properties = new Properties();
     final CamundaClientBuilderImpl builder = new CamundaClientBuilderImpl();
