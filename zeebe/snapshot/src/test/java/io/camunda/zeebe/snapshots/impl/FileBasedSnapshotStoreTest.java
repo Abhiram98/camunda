@@ -289,7 +289,7 @@ public class FileBasedSnapshotStoreTest {
     takeTransientSnapshot();
 
     // when
-    snapshotStore.purgePendingSnapshots().join();
+    snapshotStore.abortPendingSnapshots().join();
 
     // then
     assertThat(pendingSnapshotsDir).isEmptyDirectory();

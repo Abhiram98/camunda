@@ -129,7 +129,7 @@ public class FileBasedTransientSnapshotTest {
     final var persistedSnapshot = transientSnapshot.persist().join();
 
     // when
-    snapshotStore.purgePendingSnapshots().join();
+    snapshotStore.abortPendingSnapshots().join();
 
     // then
     assertThat(persistedSnapshot.getPath())
