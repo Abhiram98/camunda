@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import org.apache.hc.client5.http.config.RequestConfig;
 
-public class AdHocSubprocessActivitySearchRequestImpl
+public class AdHocSubProcessActivitySearchRequestImpl
     implements AdHocSubprocessActivitySearchRequest {
 
   private final AdHocSubprocessActivitySearchQuery request;
@@ -42,7 +42,7 @@ public class AdHocSubprocessActivitySearchRequestImpl
   private final JsonMapper jsonMapper;
   private final RequestConfig.Builder httpRequestConfig;
 
-  public AdHocSubprocessActivitySearchRequestImpl(
+  public AdHocSubProcessActivitySearchRequestImpl(
       final HttpClient httpClient, final JsonMapper jsonMapper) {
     request = new AdHocSubprocessActivitySearchQuery();
     this.httpClient = httpClient;
