@@ -69,38 +69,38 @@ public final class MessageSubscriptionCorrelateProcessor
   }
 
   @Override
-  public void processRecord(final TypedRecord<MessageSubscriptionRecord> record) {
+  public void processRecord(final TypedRecord<MessageSubscriptionRecord> usageMetricRecord) {
 
-    final MessageSubscriptionRecord command = record.getValue();
+    final MessageSubscriptionRecord command = usageMetricRecord.getValue();
     final MessageSubscription subscription =
         subscriptionState.get(command.getElementInstanceKey(), command.getMessageNameBuffer());
 
     if (subscription == null) {
-      final var reason = formatNoSubscriptionFoundReason(record);
-      rejectionWriter.appendRejection(record, RejectionType.NOT_FOUND, reason);
+      final var reason = formatNoSubscriptionFoundReason(usageMetricRecord);
+      rejectionWriter.appendRejection(usageMetricRecord, RejectionType.NOT_FOUND, reason);
       return;
 
-    } else if (subscription.getRecord().getMessageKey() != record.getValue().getMessageKey()) {
+    } else if (subscription.getRecord().getMessageKey() != usageMetricRecord.getValue().getMessageKey()) {
       // This concerns the acknowledgement of a retried correlate process message subscription
       // command. The message subscription was already marked as correlated for this message, and
       // another message has started correlating. There's no need to update the state.
-      final var reason = formatSubscriptionAlreadyCorrelatingAgainReason(record, subscription);
-      rejectionWriter.appendRejection(record, RejectionType.INVALID_STATE, reason);
+      final var reason = formatSubscriptionAlreadyCorrelatingAgainReason(usageMetricRecord, subscription);
+      rejectionWriter.appendRejection(usageMetricRecord, RejectionType.INVALID_STATE, reason);
       return;
 
     } else if (!subscription.isCorrelating()) {
       // This concerns the acknowledgement of a retried correlate process message subscription
       // command. The message subscription was already marked as correlated. No need to update the
       // state.
-      final var reason = formatSubscriptionAlreadyCorrelatedReason(record, subscription);
-      rejectionWriter.appendRejection(record, RejectionType.INVALID_STATE, reason);
+      final var reason = formatSubscriptionAlreadyCorrelatedReason(usageMetricRecord, subscription);
+      rejectionWriter.appendRejection(usageMetricRecord, RejectionType.INVALID_STATE, reason);
       return;
     }
 
     final var messageSubscription = subscription.getRecord();
     stateWriter.appendFollowUpEvent(
         subscription.getKey(), MessageSubscriptionIntent.CORRELATED, messageSubscription);
-    writeCorrelationResponse(record, messageSubscription);
+    writeCorrelationResponse(usageMetricRecord, messageSubscription);
 
     if (!messageSubscription.isInterrupting()) {
       messageCorrelator.correlateNextMessage(subscription.getKey(), messageSubscription);

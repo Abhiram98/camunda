@@ -52,15 +52,15 @@ public final class ProcessInstanceBatchActivateProcessor
   }
 
   @Override
-  public void processRecord(final TypedRecord<ProcessInstanceBatchRecord> record) {
-    final var recordValue = record.getValue();
+  public void processRecord(final TypedRecord<ProcessInstanceBatchRecord> usageMetricRecord) {
+    final var recordValue = usageMetricRecord.getValue();
     final var remainingChildrenToActivate = recordValue.getIndex();
 
-    final var batchElementInstanceKey = record.getValue().getBatchElementInstanceKey();
+    final var batchElementInstanceKey = usageMetricRecord.getValue().getBatchElementInstanceKey();
     final var parentElementInstance = elementInstanceState.getInstance(batchElementInstanceKey);
     if (parentElementInstance == null) {
       rejectionWriter.appendRejection(
-          record,
+          usageMetricRecord,
           RejectionType.INVALID_STATE,
           PARENT_NOT_FOUND_ERROR_MESSAGE.formatted(batchElementInstanceKey));
       return;
@@ -70,7 +70,7 @@ public final class ProcessInstanceBatchActivateProcessor
       writeActivateChildCommand(parentElementInstance);
     }
 
-    writeNextBatchCommand(remainingChildrenToActivate - 1, record);
+    writeNextBatchCommand(remainingChildrenToActivate - 1, usageMetricRecord);
   }
 
   private void writeActivateChildCommand(final ElementInstance parentElementInstance) {
