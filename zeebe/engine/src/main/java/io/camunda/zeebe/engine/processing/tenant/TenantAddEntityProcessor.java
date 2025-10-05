@@ -125,7 +125,9 @@ public class TenantAddEntityProcessor implements DistributedTypedRecordProcessor
     commandDistributionBehavior.acknowledgeCommand(command);
   }
 
-  /** Loads the persisted tenant by the tenant id. */
+  /**
+   * Loads the persisted tenant by the tenant id.
+   */
   private Either<String, PersistedTenant> getPersistedTenant(final TenantRecord record) {
     final var tenantId = record.getTenantId();
     return tenantState
@@ -207,6 +209,6 @@ public class TenantAddEntityProcessor implements DistributedTypedRecordProcessor
 
   private boolean isInternalGroupsEnabled(final TypedRecord<TenantRecord> command) {
     return Boolean.getBoolean(
-        (String) command.getAuthorizations().get(Authorization.INTERNAL_GROUPS_ENABLED));
+        (String) command.getAuthorizations().get(Authorization.GROUPS_CLAIM_ENABLED));
   }
 }
