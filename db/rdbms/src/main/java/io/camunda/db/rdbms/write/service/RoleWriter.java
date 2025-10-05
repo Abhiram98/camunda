@@ -68,21 +68,21 @@ public class RoleWriter {
             member));
   }
 
-  public void delete(final long roleKey) {
+  public void delete(final long roleId) {
     executionQueue.executeInQueue(
         new QueueItem(
             ContextType.ROLE,
             WriteStatementType.DELETE,
-            roleKey,
+            roleId,
             "io.camunda.db.rdbms.sql.RoleMapper.delete",
-            roleKey));
+            roleId));
     executionQueue.executeInQueue(
         new QueueItem(
             ContextType.ROLE,
             WriteStatementType.DELETE,
-            roleKey,
+            roleId,
             "io.camunda.db.rdbms.sql.RoleMapper.deleteAllMembers",
-            roleKey));
+            roleId));
   }
 
   private boolean mergeToQueue(
