@@ -275,7 +275,7 @@ public final class FileBasedSnapshotStoreImpl {
                 .orElse(0L));
   }
 
-  public ActorFuture<Void> purgePendingSnapshots() {
+  public ActorFuture<Void> abortPendingSnapshots() {
     final CompletableActorFuture<Void> abortFuture = new CompletableActorFuture<>();
     actor.run(
         () -> {

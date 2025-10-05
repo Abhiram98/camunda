@@ -78,7 +78,7 @@ public class TestFileBasedSnapshotStore implements ReceivableSnapshotStore {
 
   @Override
   public ActorFuture<Void> abortPendingSnapshots() {
-    return snapshotStore.purgePendingSnapshots();
+    return snapshotStore.abortPendingSnapshots();
   }
 
   @Override
