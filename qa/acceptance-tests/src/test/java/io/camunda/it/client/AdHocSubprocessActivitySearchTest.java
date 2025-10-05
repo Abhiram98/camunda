@@ -29,7 +29,7 @@ public class AdHocSubprocessActivitySearchTest {
     final var process = deployAdHocSubprocessProcess();
     final var response =
         camundaClient
-            .newAdHocSubprocessActivitySearchRequest(
+            .newAdHocSubProcessActivitySearchRequest(
                 process.getProcessDefinitionKey(), "TestAdHocSubprocess")
             .send()
             .join();

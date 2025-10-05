@@ -100,7 +100,7 @@ import io.camunda.client.api.fetch.UsersByGroupSearchRequest;
 import io.camunda.client.api.fetch.VariableGetRequest;
 import io.camunda.client.api.response.ActivatedJob;
 import io.camunda.client.api.response.DocumentReferenceResponse;
-import io.camunda.client.api.search.request.AdHocSubprocessActivitySearchRequest;
+import io.camunda.client.api.search.request.AdHocSubProcessActivitySearchRequest;
 import io.camunda.client.api.search.request.DecisionDefinitionSearchRequest;
 import io.camunda.client.api.search.request.DecisionInstanceSearchRequest;
 import io.camunda.client.api.search.request.DecisionRequirementsSearchRequest;
@@ -715,14 +715,14 @@ public final class CamundaClientImpl implements CamundaClient {
   }
 
   @Override
-  public AdHocSubprocessActivitySearchRequest newAdHocSubprocessActivitySearchRequest() {
+  public AdHocSubProcessActivitySearchRequest newAdHocSubProcessActivitySearchRequest() {
     return new AdHocSubProcessActivitySearchRequestImpl(httpClient, jsonMapper);
   }
 
   @Override
-  public AdHocSubprocessActivitySearchRequest newAdHocSubprocessActivitySearchRequest(
+  public AdHocSubProcessActivitySearchRequest newAdHocSubProcessActivitySearchRequest(
       final long processDefinitionKey, final String adHocSubprocessId) {
-    return newAdHocSubprocessActivitySearchRequest()
+    return newAdHocSubProcessActivitySearchRequest()
         .filter(
             filter ->
                 filter
@@ -731,7 +731,7 @@ public final class CamundaClientImpl implements CamundaClient {
   }
 
   @Override
-  public ActivateAdHocSubprocessActivitiesCommandStep1 newActivateAdHocSubprocessActivitiesCommand(
+  public ActivateAdHocSubprocessActivitiesCommandStep1 newActivateAdHocSubProcessActivitiesCommand(
       final String adHocSubprocessInstanceKey) {
     return new ActivateAdHocSubprocessActivitiesCommandImpl(
         httpClient, jsonMapper, adHocSubprocessInstanceKey);
