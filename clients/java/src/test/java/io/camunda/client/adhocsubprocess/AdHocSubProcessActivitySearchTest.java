@@ -18,8 +18,8 @@ package io.camunda.client.adhocsubprocess;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
-import io.camunda.client.api.search.response.AdHocSubprocessActivityResponse;
-import io.camunda.client.api.search.response.AdHocSubprocessActivityResponse.AdHocSubprocessActivity;
+import io.camunda.client.api.search.response.AdHocSubProcessActivityResponse;
+import io.camunda.client.api.search.response.AdHocSubProcessActivityResponse.AdHocSubprocessActivity;
 import io.camunda.client.protocol.rest.AdHocSubprocessActivityResult;
 import io.camunda.client.protocol.rest.AdHocSubprocessActivityResult.TypeEnum;
 import io.camunda.client.protocol.rest.AdHocSubprocessActivitySearchQuery;
@@ -28,7 +28,7 @@ import io.camunda.client.util.ClientRestTest;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 
-public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
+public class AdHocSubProcessActivitySearchTest extends ClientRestTest {
 
   private static final Long PROCESS_DEFINITION_KEY = 2251799813685281L;
   private static final String PROCESS_DEFINITION_ID = "TestParentAdHocSubprocess";
@@ -40,7 +40,7 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
     final AdHocSubprocessActivitySearchQueryResult searchQueryResult =
         new AdHocSubprocessActivitySearchQueryResult();
     searchQueryResult.addItemsItem(
-        adHocSubprocessActivityResult(
+        adHocSubProcessActivityResult(
             r -> {
               r.processDefinitionKey(String.valueOf(PROCESS_DEFINITION_KEY));
               r.processDefinitionId(PROCESS_DEFINITION_ID);
@@ -52,7 +52,7 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
               r.setTenantId("<default>");
             }));
     searchQueryResult.addItemsItem(
-        adHocSubprocessActivityResult(
+        adHocSubProcessActivityResult(
             r -> {
               r.processDefinitionKey(String.valueOf(PROCESS_DEFINITION_KEY));
               r.processDefinitionId(PROCESS_DEFINITION_ID);
@@ -67,9 +67,9 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
     gatewayService.onAdHocSubprocessActivitySearch(searchQueryResult);
 
     // when
-    final AdHocSubprocessActivityResponse response =
+    final AdHocSubProcessActivityResponse response =
         client
-            .newAdHocSubprocessActivitySearchRequest(PROCESS_DEFINITION_KEY, AD_HOC_SUBPROCESS_ID)
+            .newAdHocSubProcessActivitySearchRequest(PROCESS_DEFINITION_KEY, AD_HOC_SUBPROCESS_ID)
             .send()
             .join();
 
@@ -133,9 +133,9 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
     gatewayService.onAdHocSubprocessActivitySearch(responseJson);
 
     // when
-    final AdHocSubprocessActivityResponse response =
+    final AdHocSubProcessActivityResponse response =
         client
-            .newAdHocSubprocessActivitySearchRequest(PROCESS_DEFINITION_KEY, AD_HOC_SUBPROCESS_ID)
+            .newAdHocSubProcessActivitySearchRequest(PROCESS_DEFINITION_KEY, AD_HOC_SUBPROCESS_ID)
             .send()
             .join();
 
@@ -164,7 +164,7 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
                 "<default>"));
   }
 
-  private static AdHocSubprocessActivityResult adHocSubprocessActivityResult(
+  private static AdHocSubprocessActivityResult adHocSubProcessActivityResult(
       final Consumer<AdHocSubprocessActivityResult> consumer) {
     final AdHocSubprocessActivityResult result = new AdHocSubprocessActivityResult();
     consumer.accept(result);
