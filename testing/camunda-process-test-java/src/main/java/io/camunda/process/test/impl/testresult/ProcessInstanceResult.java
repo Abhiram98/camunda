@@ -53,7 +53,7 @@ public class ProcessInstanceResult {
     return activeIncidents;
   }
 
-  public void setOpenIncidents(final List<Incident> activeIncidents) {
+  public void setActiveIncidents(final List<Incident> activeIncidents) {
     this.activeIncidents = activeIncidents;
   }
 
