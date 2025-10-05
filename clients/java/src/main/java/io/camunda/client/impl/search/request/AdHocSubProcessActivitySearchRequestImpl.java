@@ -26,7 +26,7 @@ import io.camunda.client.api.search.request.AdHocSubProcessActivitySearchRequest
 import io.camunda.client.api.search.response.AdHocSubProcessActivityResponse;
 import io.camunda.client.impl.http.HttpCamundaFuture;
 import io.camunda.client.impl.http.HttpClient;
-import io.camunda.client.impl.search.response.AdHocSubprocessActivityResponseImpl;
+import io.camunda.client.impl.search.response.AdHocSubProcessActivityResponseImpl;
 import io.camunda.client.protocol.rest.AdHocSubprocessActivitySearchQuery;
 import io.camunda.client.protocol.rest.AdHocSubprocessActivitySearchQueryResult;
 import java.time.Duration;
@@ -77,7 +77,7 @@ public class AdHocSubProcessActivitySearchRequestImpl
         jsonMapper.toJson(request),
         httpRequestConfig.build(),
         AdHocSubprocessActivitySearchQueryResult.class,
-        AdHocSubprocessActivityResponseImpl::new,
+        AdHocSubProcessActivityResponseImpl::new,
         result);
     return result;
   }
