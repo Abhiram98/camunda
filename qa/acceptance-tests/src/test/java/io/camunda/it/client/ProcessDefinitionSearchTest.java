@@ -84,8 +84,8 @@ public class ProcessDefinitionSearchTest {
             .join();
 
     // then
-    assertThat(resultAll.page().hasMore()).isNotNull();
-    assertThat(resultAll.page().hasMore()).isFalse();
+    assertThat(resultAll.page().hasMoreTotalItems()).isNotNull();
+    assertThat(resultAll.page().hasMoreTotalItems()).isFalse();
   }
 
   @Test
