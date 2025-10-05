@@ -207,7 +207,7 @@ public class NoopSearchClientsProxy implements SearchClientsProxy {
   }
 
   @Override
-  public Long countAssignees(final UsageMetricsQuery query) {
+  public Long usageMetricStatistics(final UsageMetricsQuery query) {
     return 0L;
   }
 
