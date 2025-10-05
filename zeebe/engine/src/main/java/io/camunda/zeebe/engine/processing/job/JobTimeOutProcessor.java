@@ -50,8 +50,8 @@ public final class JobTimeOutProcessor implements TypedRecordProcessor<JobRecord
   }
 
   @Override
-  public void processRecord(final TypedRecord<JobRecord> record) {
-    final var jobKey = record.getKey();
+  public void processRecord(final TypedRecord<JobRecord> usageMetricRecord) {
+    final var jobKey = usageMetricRecord.getKey();
     final var job = jobState.getJob(jobKey);
     final var state = jobState.getState(jobKey);
 
@@ -70,7 +70,7 @@ public final class JobTimeOutProcessor implements TypedRecordProcessor<JobRecord
           };
 
       final String errorMessage = String.format(NOT_ACTIVATED_JOB_MESSAGE, jobKey, reason);
-      rejectionWriter.appendRejection(record, RejectionType.NOT_FOUND, errorMessage);
+      rejectionWriter.appendRejection(usageMetricRecord, RejectionType.NOT_FOUND, errorMessage);
     }
   }
 

@@ -46,8 +46,8 @@ public class JobRecurProcessor implements TypedRecordProcessor<JobRecord> {
   }
 
   @Override
-  public void processRecord(final TypedRecord<JobRecord> record) {
-    final long jobKey = record.getKey();
+  public void processRecord(final TypedRecord<JobRecord> usageMetricRecord) {
+    final long jobKey = usageMetricRecord.getKey();
     final var job = jobState.getJob(jobKey);
     final var state = jobState.getState(jobKey);
 
@@ -76,7 +76,7 @@ public class JobRecurProcessor implements TypedRecordProcessor<JobRecord> {
       }
 
       final String errorMesage = String.format(NOT_FAILED_JOB_MESSAGE, jobKey, textState);
-      rejectionWriter.appendRejection(record, RejectionType.NOT_FOUND, errorMesage);
+      rejectionWriter.appendRejection(usageMetricRecord, RejectionType.NOT_FOUND, errorMesage);
     }
   }
 

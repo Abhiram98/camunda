@@ -37,16 +37,16 @@ public final class TimerCancelProcessor implements TypedRecordProcessor<TimerRec
   }
 
   @Override
-  public void processRecord(final TypedRecord<TimerRecord> record) {
-    final TimerRecord timer = record.getValue();
+  public void processRecord(final TypedRecord<TimerRecord> usageMetricRecord) {
+    final TimerRecord timer = usageMetricRecord.getValue();
     final TimerInstance timerInstance =
-        timerInstanceState.get(timer.getElementInstanceKey(), record.getKey());
+        timerInstanceState.get(timer.getElementInstanceKey(), usageMetricRecord.getKey());
 
     if (timerInstance == null) {
       rejectionWriter.appendRejection(
-          record, RejectionType.NOT_FOUND, String.format(NO_TIMER_FOUND_MESSAGE, record.getKey()));
+          usageMetricRecord, RejectionType.NOT_FOUND, String.format(NO_TIMER_FOUND_MESSAGE, usageMetricRecord.getKey()));
     } else {
-      stateWriter.appendFollowUpEvent(record.getKey(), TimerIntent.CANCELED, timer);
+      stateWriter.appendFollowUpEvent(usageMetricRecord.getKey(), TimerIntent.CANCELED, timer);
     }
   }
 }
