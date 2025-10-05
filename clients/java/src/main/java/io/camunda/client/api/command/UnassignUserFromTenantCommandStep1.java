@@ -20,7 +20,7 @@ import io.camunda.client.api.response.UnassignUserFromTenantResponse;
 /**
  * Command to remove a user from a tenant.
  */
-public interface RemoveUserFromTenantCommandStep1 {
+public interface UnassignUserFromTenantCommandStep1 {
 
   /**
    * Sets the username for the removal of assignment.

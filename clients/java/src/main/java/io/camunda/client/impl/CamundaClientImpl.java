@@ -69,7 +69,7 @@ import io.camunda.client.api.command.FailJobCommandStep1;
 import io.camunda.client.api.command.MigrateProcessInstanceCommandStep1;
 import io.camunda.client.api.command.ModifyProcessInstanceCommandStep1;
 import io.camunda.client.api.command.PublishMessageCommandStep1;
-import io.camunda.client.api.command.RemoveUserFromTenantCommandStep1;
+import io.camunda.client.api.command.UnassignUserFromTenantCommandStep1;
 import io.camunda.client.api.command.ResolveIncidentCommandStep1;
 import io.camunda.client.api.command.ResumeBatchOperationStep1;
 import io.camunda.client.api.command.SetVariablesCommandStep1;
@@ -205,7 +205,7 @@ import io.camunda.client.impl.command.JobUpdateTimeoutCommandImpl;
 import io.camunda.client.impl.command.MigrateProcessInstanceCommandImpl;
 import io.camunda.client.impl.command.ModifyProcessInstanceCommandImpl;
 import io.camunda.client.impl.command.PublishMessageCommandImpl;
-import io.camunda.client.impl.command.RemoveUserFromTenantCommandImpl;
+import io.camunda.client.impl.command.UnassignUserFromTenantCommandImpl;
 import io.camunda.client.impl.command.ResolveIncidentCommandImpl;
 import io.camunda.client.impl.command.ResumeBatchOperationCommandImpl;
 import io.camunda.client.impl.command.SetVariablesCommandImpl;
@@ -1155,8 +1155,8 @@ public final class CamundaClientImpl implements CamundaClient {
   }
 
   @Override
-  public RemoveUserFromTenantCommandStep1 newUnassignUserFromTenantCommand() {
-    return new RemoveUserFromTenantCommandImpl(httpClient);
+  public UnassignUserFromTenantCommandStep1 newUnassignUserFromTenantCommand() {
+    return new UnassignUserFromTenantCommandImpl(httpClient);
   }
 
   @Override
