@@ -217,7 +217,7 @@ public class CamundaServicesConfiguration {
       final SecurityContextProvider securityContextProvider,
       final UserTaskSearchClient userTaskSearchClient,
       final FormServices formServices,
-      final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient,
+      final FlowNodeInstanceSearchClient elementInstanceServices,
       final VariableSearchClient variableSearchClient,
       final ProcessCache processCache) {
     return new UserTaskServices(
@@ -225,7 +225,7 @@ public class CamundaServicesConfiguration {
         securityContextProvider,
         userTaskSearchClient,
         formServices,
-        flowNodeInstanceSearchClient,
+        elementInstanceServices,
         variableSearchClient,
         processCache,
         null);
