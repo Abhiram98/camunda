@@ -119,7 +119,7 @@ class RdbmsExporterTest {
   @Test
   void shouldUpdatePositionAfterEachRecordWhenMaxQueueSizeIsZero() {
     // given
-    createExporter(b -> b.maxQueueSize(0).withHandler(ValueType.JOB, mockHandler(ValueType.JOB)));
+    createExporter(b -> b.queueSize(0).withHandler(ValueType.JOB, mockHandler(ValueType.JOB)));
 
     // when
     exporter.export(mockRecord(ValueType.JOB, 1));
@@ -280,7 +280,7 @@ class RdbmsExporterTest {
             .rdbmsWriter(rdbmsWriter)
             .partitionId(0)
             .flushInterval(Duration.ofMillis(500))
-            .maxQueueSize(100);
+            .queueSize(100);
 
     exporter = builderFunction.apply(builder).build();
     exporter.open(controller);
