@@ -218,7 +218,7 @@ public class CamundaServicesConfiguration {
       final UserTaskSearchClient userTaskSearchClient,
       final FormServices formServices,
       final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient,
-      final VariableSearchClient variableSearchClient,
+      final VariableSearchClient variableServices,
       final ProcessCache processCache) {
     return new UserTaskServices(
         brokerClient,
@@ -226,7 +226,7 @@ public class CamundaServicesConfiguration {
         userTaskSearchClient,
         formServices,
         flowNodeInstanceSearchClient,
-        variableSearchClient,
+        variableServices,
         processCache,
         null);
   }
