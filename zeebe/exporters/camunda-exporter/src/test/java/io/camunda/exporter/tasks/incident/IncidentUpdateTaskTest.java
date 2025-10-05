@@ -97,7 +97,7 @@ final class IncidentUpdateTaskTest {
     private CompletableFuture<Integer> bulkUpdate;
     private CompletableFuture<Collection<Document>> flowNodesInListView;
     private CompletableFuture<Collection<Document>> flowNodeInstances;
-    private CompletableFuture<Boolean> wasProcessInstanceDeleted;
+    private CompletableFuture<Boolean> wereProcessInstancesDeleted;
 
     private IncidentBulkUpdate updated;
 
@@ -139,8 +139,8 @@ final class IncidentUpdateTaskTest {
 
     @Override
     public CompletionStage<Boolean> wereProcessInstancesDeleted(final long processInstanceKey) {
-      return wasProcessInstanceDeleted != null
-          ? wasProcessInstanceDeleted
+      return wereProcessInstancesDeleted != null
+          ? wereProcessInstancesDeleted
           : super.wereProcessInstancesDeleted(processInstanceKey);
     }
 
@@ -521,7 +521,7 @@ final class IncidentUpdateTaskTest {
           new IncidentUpdateTask(metadata, repository, false, 10, EXECUTOR, LOGGER, Duration.ZERO);
       repository.processInstances =
           CompletableFuture.completedFuture(List.of(parentProcessInstance));
-      repository.wasProcessInstanceDeleted = CompletableFuture.completedFuture(true);
+      repository.wereProcessInstancesDeleted = CompletableFuture.completedFuture(true);
 
       // when
       final var result = task.execute();
