@@ -29,12 +29,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-@WebMvcTest(value = MappingController.class)
+@WebMvcTest(value = MappingRuleController.class)
 public class MappingQueryControllerTest extends RestControllerTest {
+
   private static final String MAPPING_BASE_URL = "/v2/mapping-rules";
 
-  @MockitoBean private MappingServices mappingServices;
-  @MockitoBean private CamundaAuthenticationProvider authenticationProvider;
+  @MockitoBean
+  private MappingServices mappingServices;
+  @MockitoBean
+  private CamundaAuthenticationProvider authenticationProvider;
 
   @BeforeEach
   void setup() {
@@ -61,11 +64,11 @@ public class MappingQueryControllerTest extends RestControllerTest {
         .expectBody()
         .json(
             """
-                          {
-                            "claimName": "Claim Name",
-                            "claimValue": "Claim Value",
-                            "name": "Map Name"
-                          }""");
+                {
+                  "claimName": "Claim Name",
+                  "claimValue": "Claim Value",
+                  "name": "Map Name"
+                }""");
 
     // then
     verify(mappingServices, times(1)).getMapping(mapping.mappingId());
@@ -92,13 +95,13 @@ public class MappingQueryControllerTest extends RestControllerTest {
         .expectBody()
         .json(
             """
-            {
-              "type": "about:blank",
-              "title": "NOT_FOUND",
-              "status": 404,
-              "detail": "mapping not found",
-              "instance": "%s"
-            }"""
+                {
+                  "type": "about:blank",
+                  "title": "NOT_FOUND",
+                  "status": 404,
+                  "detail": "mapping not found",
+                  "instance": "%s"
+                }"""
                 .formatted(path));
 
     // then
@@ -136,30 +139,30 @@ public class MappingQueryControllerTest extends RestControllerTest {
         .expectBody()
         .json(
             """
-          {
-             "items": [
-               {
-                 "claimName": "Claim Name1",
-                 "claimValue": "Claim Value1",
-                 "name": "Map Name1"
-               },
-               {
-                 "claimName": "Claim Name2",
-                 "claimValue": "Claim Value2",
-                 "name": "Map Name2"
-               },
-               {
-                 "claimName": "Claim Name3",
-                 "claimValue": "Claim Value3",
-                 "name": "Map Name3"
-               }
-             ],
-             "page": {
-               "totalItems": 3,
-               "startCursor": "f",
-               "endCursor": "v"
-             }
-           }""");
+                {
+                   "items": [
+                     {
+                       "claimName": "Claim Name1",
+                       "claimValue": "Claim Value1",
+                       "name": "Map Name1"
+                     },
+                     {
+                       "claimName": "Claim Name2",
+                       "claimValue": "Claim Value2",
+                       "name": "Map Name2"
+                     },
+                     {
+                       "claimName": "Claim Name3",
+                       "claimValue": "Claim Value3",
+                       "name": "Map Name3"
+                     }
+                   ],
+                   "page": {
+                     "totalItems": 3,
+                     "startCursor": "f",
+                     "endCursor": "v"
+                   }
+                 }""");
 
     verify(mappingServices).search(new MappingQuery.Builder().build());
   }
@@ -186,11 +189,11 @@ public class MappingQueryControllerTest extends RestControllerTest {
         .contentType(MediaType.APPLICATION_JSON)
         .bodyValue(
             """
-            {
-              "sort":  [{"field": "claimName", "order":  "ASC"}],
-              "page":  {"from":  20, "limit":  10}
-            }
-             """)
+                {
+                  "sort":  [{"field": "claimName", "order":  "ASC"}],
+                  "page":  {"from":  20, "limit":  10}
+                }
+                 """)
         .exchange()
         .expectStatus()
         .isOk();
@@ -225,11 +228,11 @@ public class MappingQueryControllerTest extends RestControllerTest {
         .contentType(MediaType.APPLICATION_JSON)
         .bodyValue(
             """
-            {
-              "sort":  [{"field": "name", "order":  "asc"}],
-              "page":  {"from":  20, "limit":  10}
-            }
-             """)
+                {
+                  "sort":  [{"field": "name", "order":  "asc"}],
+                  "page":  {"from":  20, "limit":  10}
+                }
+                 """)
         .exchange()
         .expectStatus()
         .isOk();
