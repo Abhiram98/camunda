@@ -38,7 +38,7 @@ public class RdbmsExporter {
 
   // configuration
   private final Duration flushInterval;
-  private final int maxQueueSize;
+  private final int queueSize;
 
   // volatile runtime properties
   private ExporterPositionModel exporterRdbmsPosition;
@@ -49,7 +49,7 @@ public class RdbmsExporter {
   private RdbmsExporter(
       final int partitionId,
       final Duration flushInterval,
-      final int maxQueueSize,
+      final int queueSize,
       final RdbmsWriter rdbmsWriter,
       final Map<ValueType, List<RdbmsExportHandler>> handlers) {
     this.rdbmsWriter = rdbmsWriter;
@@ -57,12 +57,12 @@ public class RdbmsExporter {
 
     this.partitionId = partitionId;
     this.flushInterval = flushInterval;
-    this.maxQueueSize = maxQueueSize;
+    this.queueSize = queueSize;
 
     LOG.info(
         "[RDBMS Exporter] RdbmsExporter created with Configuration: flushInterval={}, maxQueueSize={}",
         flushInterval,
-        maxQueueSize);
+        queueSize);
   }
 
   public void open(final Controller controller) {
@@ -212,7 +212,7 @@ public class RdbmsExporter {
   }
 
   private boolean flushAfterEachRecord() {
-    return flushInterval.isZero() || maxQueueSize <= 0;
+    return flushInterval.isZero() || queueSize <= 0;
   }
 
   private void flushAndReschedule() {
