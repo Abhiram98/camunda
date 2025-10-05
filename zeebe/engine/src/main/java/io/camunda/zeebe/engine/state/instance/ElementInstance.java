@@ -368,11 +368,11 @@ public final class ElementInstance extends UnpackedObject implements DbValue {
     processDepth.setValue(depth);
   }
 
-  public boolean isCompletionConditionFulFilled() {
+  public boolean isCompletionConditionFulfilled() {
     return completionConditionFulfilledProp.getValue();
   }
 
-  public void setCompletionConditionFulFilled(final boolean fulfilled) {
+  public void setCompletionConditionFulfilled(final boolean fulfilled) {
     completionConditionFulfilledProp.setValue(fulfilled);
   }
 }
