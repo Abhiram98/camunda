@@ -17,13 +17,13 @@ package io.camunda.client.impl;
 
 import static io.camunda.client.ClientProperties.APPLY_ENVIRONMENT_VARIABLES_OVERRIDES;
 import static io.camunda.client.ClientProperties.CA_CERTIFICATE_PATH;
-import static io.camunda.client.ClientProperties.DEFAULT_ACTIVATE_JOBS_RESPONSE_TIMEOUT_OFFSET;
 import static io.camunda.client.ClientProperties.DEFAULT_JOB_POLL_INTERVAL;
 import static io.camunda.client.ClientProperties.DEFAULT_JOB_TIMEOUT;
 import static io.camunda.client.ClientProperties.DEFAULT_JOB_WORKER_NAME;
 import static io.camunda.client.ClientProperties.DEFAULT_JOB_WORKER_TENANT_IDS;
 import static io.camunda.client.ClientProperties.DEFAULT_MESSAGE_TIME_TO_LIVE;
 import static io.camunda.client.ClientProperties.DEFAULT_REQUEST_TIMEOUT;
+import static io.camunda.client.ClientProperties.DEFAULT_REQUEST_TIMEOUT_OFFSET;
 import static io.camunda.client.ClientProperties.DEFAULT_TENANT_ID;
 import static io.camunda.client.ClientProperties.GRPC_ADDRESS;
 import static io.camunda.client.ClientProperties.JOB_WORKER_EXECUTION_THREADS;
@@ -344,7 +344,7 @@ public final class CamundaClientBuilderImpl
     BuilderUtils.applyPropertyValueIfNotNull(
         properties,
         value -> defaultActivateJobsResponseTimeoutOffset(Duration.ofMillis(Long.parseLong(value))),
-        DEFAULT_ACTIVATE_JOBS_RESPONSE_TIMEOUT_OFFSET);
+        DEFAULT_REQUEST_TIMEOUT_OFFSET);
 
     BuilderUtils.applyPropertyValueIfNotNull(
         properties,
@@ -687,10 +687,10 @@ public final class CamundaClientBuilderImpl
   private boolean shouldUseDefaultCredentialsProvider() {
     return credentialsProvider == null
         && (Environment.system().isDefined(OAUTH_ENV_CLIENT_ID)
-            || Environment.system().isDefined(ZeebeClientEnvironmentVariables.OAUTH_ENV_CLIENT_ID))
+        || Environment.system().isDefined(ZeebeClientEnvironmentVariables.OAUTH_ENV_CLIENT_ID))
         && (Environment.system().isDefined(OAUTH_ENV_CLIENT_SECRET)
-            || Environment.system()
-                .isDefined(ZeebeClientEnvironmentVariables.OAUTH_ENV_CLIENT_SECRET));
+        || Environment.system()
+        .isDefined(ZeebeClientEnvironmentVariables.OAUTH_ENV_CLIENT_SECRET));
   }
 
   private CredentialsProvider createDefaultCredentialsProvider() {
