@@ -60,7 +60,7 @@ import io.camunda.client.api.command.EvaluateDecisionCommandStep1;
 import io.camunda.client.api.command.MigrateProcessInstanceCommandStep1;
 import io.camunda.client.api.command.ModifyProcessInstanceCommandStep1;
 import io.camunda.client.api.command.PublishMessageCommandStep1;
-import io.camunda.client.api.command.RemoveUserFromTenantCommandStep1;
+import io.camunda.client.api.command.UnassignUserFromTenantCommandStep1;
 import io.camunda.client.api.command.ResolveIncidentCommandStep1;
 import io.camunda.client.api.command.ResumeBatchOperationStep1;
 import io.camunda.client.api.command.SetVariablesCommandStep1;
@@ -2145,7 +2145,7 @@ public interface CamundaClient extends AutoCloseable, JobClient {
    *
    * @return a builder for the remove user from tenant command
    */
-  RemoveUserFromTenantCommandStep1 newUnassignUserFromTenantCommand();
+  UnassignUserFromTenantCommandStep1 newUnassignUserFromTenantCommand();
 
   /**
    * Command to assign a group to a tenant.
