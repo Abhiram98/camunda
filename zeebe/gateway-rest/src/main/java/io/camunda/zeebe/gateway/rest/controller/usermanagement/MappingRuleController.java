@@ -36,11 +36,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @CamundaRestController
 @RequestMapping("/v2/mapping-rules")
-public class MappingController {
+public class MappingRuleController {
+
   private final MappingServices mappingServices;
   private final CamundaAuthenticationProvider authenticationProvider;
 
-  public MappingController(
+  public MappingRuleController(
       final MappingServices mappingServices,
       final CamundaAuthenticationProvider authenticationProvider) {
     this.mappingServices = mappingServices;
