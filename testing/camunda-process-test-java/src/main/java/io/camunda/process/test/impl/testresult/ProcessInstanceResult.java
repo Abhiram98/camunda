@@ -29,7 +29,7 @@ public class ProcessInstanceResult {
 
   private Map<String, String> variables = new HashMap<>();
 
-  private List<Incident> openIncidents = new ArrayList<>();
+  private List<Incident> activeIncidents = new ArrayList<>();
 
   private List<ElementInstance> activeElementInstances = new ArrayList<>();
 
@@ -50,11 +50,11 @@ public class ProcessInstanceResult {
   }
 
   public List<Incident> getOpenIncidents() {
-    return openIncidents;
+    return activeIncidents;
   }
 
-  public void setOpenIncidents(final List<Incident> openIncidents) {
-    this.openIncidents = openIncidents;
+  public void setOpenIncidents(final List<Incident> activeIncidents) {
+    this.activeIncidents = activeIncidents;
   }
 
   public List<ElementInstance> getActiveElementInstances() {
