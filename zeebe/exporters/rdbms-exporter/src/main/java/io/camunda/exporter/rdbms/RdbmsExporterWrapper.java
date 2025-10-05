@@ -103,7 +103,7 @@ public class RdbmsExporterWrapper implements Exporter {
         new RdbmsExporter.Builder()
             .partitionId(partitionId)
             .flushInterval(readFlushInterval(context))
-            .maxQueueSize(queueSize)
+            .queueSize(queueSize)
             .rdbmsWriter(rdbmsWriter);
 
     processCache =
