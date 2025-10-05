@@ -126,7 +126,7 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   }
 
   @Override
-  public List<SequenceFlowEntity> findAllSequenceFlows(final SequenceFlowQuery filter) {
+  public List<SequenceFlowEntity> searchSequenceFlows(final SequenceFlowQuery filter) {
     return getSearchExecutor()
         .findAll(filter, io.camunda.webapps.schema.entities.SequenceFlowEntity.class);
   }
@@ -441,10 +441,10 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
             .build();
     final List<UsageMetricsEntity> metrics =
         new SearchClientBasedQueryExecutor(
-                searchClient,
-                transformers,
-                new DocumentAuthorizationQueryStrategy(this),
-                securityContext)
+            searchClient,
+            transformers,
+            new DocumentAuthorizationQueryStrategy(this),
+            securityContext)
             .findAll(filter, io.camunda.webapps.schema.entities.UsageMetricsEntity.class);
     return metrics.stream().map(UsageMetricsEntity::value).distinct().count();
   }
