@@ -15,13 +15,13 @@
  */
 package io.camunda.client.impl.search.filter;
 
-import io.camunda.client.api.search.filter.AdHocSubprocessActivityFilter;
+import io.camunda.client.api.search.filter.AdHocSubProcessActivityFilter;
 import io.camunda.client.impl.search.request.TypedSearchRequestPropertyProvider;
 
 public class AdHocSubprocessActivityFilterImpl
     extends TypedSearchRequestPropertyProvider<
         io.camunda.client.protocol.rest.AdHocSubprocessActivityFilter>
-    implements AdHocSubprocessActivityFilter {
+    implements AdHocSubProcessActivityFilter {
 
   private final io.camunda.client.protocol.rest.AdHocSubprocessActivityFilter filter;
 
@@ -30,13 +30,13 @@ public class AdHocSubprocessActivityFilterImpl
   }
 
   @Override
-  public AdHocSubprocessActivityFilter processDefinitionKey(final long processDefinitionKey) {
+  public AdHocSubProcessActivityFilter processDefinitionKey(final long processDefinitionKey) {
     filter.setProcessDefinitionKey(String.valueOf(processDefinitionKey));
     return this;
   }
 
   @Override
-  public AdHocSubprocessActivityFilter adHocSubprocessId(final String adHocSubprocessId) {
+  public AdHocSubProcessActivityFilter adHocSubprocessId(final String adHocSubprocessId) {
     filter.setAdHocSubprocessId(adHocSubprocessId);
     return this;
   }

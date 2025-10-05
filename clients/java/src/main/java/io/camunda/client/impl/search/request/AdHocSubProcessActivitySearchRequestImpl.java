@@ -21,9 +21,9 @@ import static io.camunda.client.impl.search.request.TypedSearchRequestPropertyPr
 import io.camunda.client.api.CamundaFuture;
 import io.camunda.client.api.JsonMapper;
 import io.camunda.client.api.command.FinalCommandStep;
-import io.camunda.client.api.search.filter.AdHocSubprocessActivityFilter;
+import io.camunda.client.api.search.filter.AdHocSubProcessActivityFilter;
 import io.camunda.client.api.search.request.AdHocSubProcessActivitySearchRequest;
-import io.camunda.client.api.search.response.AdHocSubprocessActivityResponse;
+import io.camunda.client.api.search.response.AdHocSubProcessActivityResponse;
 import io.camunda.client.impl.http.HttpCamundaFuture;
 import io.camunda.client.impl.http.HttpClient;
 import io.camunda.client.impl.search.response.AdHocSubprocessActivityResponseImpl;
@@ -51,27 +51,27 @@ public class AdHocSubProcessActivitySearchRequestImpl
   }
 
   @Override
-  public AdHocSubProcessActivitySearchRequest filter(final AdHocSubprocessActivityFilter filter) {
+  public AdHocSubProcessActivitySearchRequest filter(final AdHocSubProcessActivityFilter filter) {
     request.setFilter(provideSearchRequestProperty(filter));
     return this;
   }
 
   @Override
   public AdHocSubProcessActivitySearchRequest filter(
-      final Consumer<AdHocSubprocessActivityFilter> fn) {
+      final Consumer<AdHocSubProcessActivityFilter> fn) {
     return filter(adHocSubprocessActivityFilter(fn));
   }
 
   @Override
-  public FinalCommandStep<AdHocSubprocessActivityResponse> requestTimeout(
+  public FinalCommandStep<AdHocSubProcessActivityResponse> requestTimeout(
       final Duration requestTimeout) {
     httpRequestConfig.setResponseTimeout(requestTimeout.toMillis(), TimeUnit.MILLISECONDS);
     return this;
   }
 
   @Override
-  public CamundaFuture<AdHocSubprocessActivityResponse> send() {
-    final HttpCamundaFuture<AdHocSubprocessActivityResponse> result = new HttpCamundaFuture<>();
+  public CamundaFuture<AdHocSubProcessActivityResponse> send() {
+    final HttpCamundaFuture<AdHocSubProcessActivityResponse> result = new HttpCamundaFuture<>();
     httpClient.post(
         "/element-instances/ad-hoc-activities/search",
         jsonMapper.toJson(request),

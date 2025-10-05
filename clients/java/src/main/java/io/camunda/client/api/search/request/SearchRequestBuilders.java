@@ -15,7 +15,7 @@
  */
 package io.camunda.client.api.search.request;
 
-import io.camunda.client.api.search.filter.AdHocSubprocessActivityFilter;
+import io.camunda.client.api.search.filter.AdHocSubProcessActivityFilter;
 import io.camunda.client.api.search.filter.DecisionDefinitionFilter;
 import io.camunda.client.api.search.filter.DecisionInstanceFilter;
 import io.camunda.client.api.search.filter.DecisionRequirementsFilter;
@@ -185,9 +185,9 @@ public final class SearchRequestBuilders {
     return sort;
   }
 
-  public static AdHocSubprocessActivityFilter adHocSubprocessActivityFilter(
-      final Consumer<AdHocSubprocessActivityFilter> fn) {
-    final AdHocSubprocessActivityFilter filter = new AdHocSubprocessActivityFilterImpl();
+  public static AdHocSubProcessActivityFilter adHocSubprocessActivityFilter(
+      final Consumer<AdHocSubProcessActivityFilter> fn) {
+    final AdHocSubProcessActivityFilter filter = new AdHocSubprocessActivityFilterImpl();
     fn.accept(filter);
     return filter;
   }
