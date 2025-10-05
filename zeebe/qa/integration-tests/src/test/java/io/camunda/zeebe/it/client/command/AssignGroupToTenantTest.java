@@ -37,7 +37,7 @@ class AssignGroupToTenantTest {
   @AutoClose private CamundaClient client;
 
   private long tenantKey;
-  private long groupKey;
+  private long groupId;
 
   @BeforeEach
   void initClientAndInstances() {
@@ -51,20 +51,20 @@ class AssignGroupToTenantTest {
             .join()
             .getTenantKey();
 
-    groupKey =
+    groupId =
         client.newCreateGroupCommand().groupId("groupId").name("group").send().join().getGroupKey();
   }
 
   @Test
   void shouldAssignGroupToTenant() {
     // when
-    client.newAssignGroupToTenantCommand(TENANT_ID).groupKey(groupKey).send().join();
+    client.newAssignGroupToTenantCommand(TENANT_ID).groupId(groupId).send().join();
 
     // then
     // TODO remove the String parsing once Groups are migrated to work with ids instead of keys
     ZeebeAssertHelper.assertEntityAssignedToTenant(
         TENANT_ID,
-        String.valueOf(groupKey),
+        String.valueOf(groupId),
         tenant -> {
           assertThat(tenant.getTenantKey()).isEqualTo(tenantKey);
           assertThat(tenant.getEntityType()).isEqualTo(EntityType.GROUP);
@@ -81,7 +81,7 @@ class AssignGroupToTenantTest {
             () ->
                 client
                     .newAssignGroupToTenantCommand(nonExistentTenantId)
-                    .groupKey(groupKey)
+                    .groupId(groupId)
                     .send()
                     .join())
         .isInstanceOf(ProblemException.class)
@@ -101,7 +101,7 @@ class AssignGroupToTenantTest {
             () ->
                 client
                     .newAssignGroupToTenantCommand(TENANT_ID)
-                    .groupKey(nonExistentGroupKey)
+                    .groupId(nonExistentGroupKey)
                     .send()
                     .join())
         .isInstanceOf(ProblemException.class)
@@ -114,15 +114,15 @@ class AssignGroupToTenantTest {
   @Test
   void shouldRejectIfAlreadyAssigned() {
     // given
-    client.newAssignGroupToTenantCommand(TENANT_ID).groupKey(groupKey).send().join();
+    client.newAssignGroupToTenantCommand(TENANT_ID).groupId(groupId).send().join();
 
     // when / then
     assertThatThrownBy(
-            () -> client.newAssignGroupToTenantCommand(TENANT_ID).groupKey(groupKey).send().join())
+            () -> client.newAssignGroupToTenantCommand(TENANT_ID).groupId(groupId).send().join())
         .isInstanceOf(ProblemException.class)
         .hasMessageContaining("Failed with code 409: 'Conflict'")
         .hasMessageContaining(
             "Expected to add group with id '%d' to tenant with id '%s', but the group is already assigned to the tenant."
-                .formatted(groupKey, TENANT_ID));
+                .formatted(groupId, TENANT_ID));
   }
 }
