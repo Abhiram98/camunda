@@ -283,12 +283,12 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   public List<ProcessFlowNodeStatisticsEntity> executeProcessDefinitionFlowNodeStatistics(
       final ProcessDefinitionStatisticsFilter filter) {
     return executeWithResourceAccessChecks(
-            access ->
-                getSearchExecutor()
-                    .aggregate(
-                        new ProcessDefinitionFlowNodeStatisticsQuery(filter),
-                        ProcessDefinitionFlowNodeStatisticsAggregationResult.class,
-                        access))
+        access ->
+            getSearchExecutor()
+                .aggregate(
+                    new ProcessDefinitionFlowNodeStatisticsQuery(filter),
+                    ProcessDefinitionFlowNodeStatisticsAggregationResult.class,
+                    access))
         .items();
   }
 
@@ -328,13 +328,13 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   public List<ProcessFlowNodeStatisticsEntity> processInstanceFlowNodeStatistics(
       final long processInstanceKey) {
     return executeWithResourceAccessChecks(
-            access ->
-                getSearchExecutor()
-                    .aggregate(
-                        new ProcessInstanceFlowNodeStatisticsQuery(
-                            new ProcessInstanceStatisticsFilter(processInstanceKey)),
-                        ProcessInstanceFlowNodeStatisticsAggregationResult.class,
-                        access))
+        access ->
+            getSearchExecutor()
+                .aggregate(
+                    new ProcessInstanceFlowNodeStatisticsQuery(
+                        new ProcessInstanceStatisticsFilter(processInstanceKey)),
+                    ProcessInstanceFlowNodeStatisticsAggregationResult.class,
+                    access))
         .items();
   }
 
@@ -437,13 +437,13 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   }
 
   @Override
-  public SearchQueryResult<GroupEntity> searchGroups(final GroupQuery groupQuery) {
-    var query = groupQuery;
-    if (groupQuery.filter().tenantId() != null) {
-      query = expandTenantFilter(groupQuery);
+  public SearchQueryResult<GroupEntity> searchGroups(final GroupQuery query) {
+    var query = query;
+    if (query.filter().tenantId() != null) {
+      query = expandTenantFilter(query);
     }
-    if (groupQuery.filter().roleId() != null) {
-      query = expandRoleFilter(groupQuery);
+    if (query.filter().roleId() != null) {
+      query = expandRoleFilter(query);
     }
     final var finalQuery = query;
     return executeWithResourceAccessChecks(
@@ -595,18 +595,18 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
         .build();
   }
 
-  private GroupQuery expandTenantFilter(final GroupQuery groupQuery) {
-    final var groupIds = getTenantMembers(groupQuery.filter().tenantId(), GROUP);
+  private GroupQuery expandTenantFilter(final GroupQuery query) {
+    final var groupIds = getTenantMembers(query.filter().tenantId(), GROUP);
 
-    return groupQuery.toBuilder()
-        .filter(groupQuery.filter().toBuilder().groupIds(groupIds).build())
+    return query.toBuilder()
+        .filter(query.filter().toBuilder().groupIds(groupIds).build())
         .build();
   }
 
-  private RoleQuery expandTenantFilter(final RoleQuery groupQuery) {
-    final var roleIds = getTenantMembers(groupQuery.filter().tenantId(), ROLE);
-    return groupQuery.toBuilder()
-        .filter(groupQuery.filter().toBuilder().roleIds(roleIds).build())
+  private RoleQuery expandTenantFilter(final RoleQuery query) {
+    final var roleIds = getTenantMembers(query.filter().tenantId(), ROLE);
+    return query.toBuilder()
+        .filter(query.filter().toBuilder().roleIds(roleIds).build())
         .build();
   }
 
@@ -654,10 +654,10 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
         .build();
   }
 
-  private GroupQuery expandRoleFilter(final GroupQuery groupQuery) {
-    final var groupIds = getRoleMemberIds(groupQuery.filter().roleId(), GROUP);
-    return groupQuery.toBuilder()
-        .filter(groupQuery.filter().toBuilder().groupIds(groupIds).build())
+  private GroupQuery expandRoleFilter(final GroupQuery query) {
+    final var groupIds = getRoleMemberIds(query.filter().roleId(), GROUP);
+    return query.toBuilder()
+        .filter(query.filter().toBuilder().groupIds(groupIds).build())
         .build();
   }
 
