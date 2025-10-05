@@ -106,7 +106,7 @@ public final class CamundaClientTest {
       assertThat(configuration.getDefaultJobPollInterval()).isEqualTo(Duration.ofMillis(100));
       assertThat(configuration.getDefaultMessageTimeToLive()).isEqualTo(Duration.ofHours(1));
       assertThat(configuration.getDefaultRequestTimeout()).isEqualTo(Duration.ofSeconds(10));
-      assertThat(configuration.getDefaultActivateJobsResponseTimeoutOffset())
+      assertThat(configuration.getDefaultRequestTimeoutOffset())
           .isEqualTo(Duration.ofSeconds(1));
       assertThat(configuration.getMaxMessageSize()).isEqualTo(5 * 1024 * 1024);
       assertThat(configuration.getMaxMetadataSize()).isEqualTo(16 * 1024);
@@ -1195,7 +1195,7 @@ public final class CamundaClientTest {
     builder.build();
 
     // then
-    assertThat(builder.getDefaultActivateJobsResponseTimeoutOffset())
+    assertThat(builder.getDefaultRequestTimeoutOffset())
         .isEqualTo(Duration.ofMillis(100));
   }
 }

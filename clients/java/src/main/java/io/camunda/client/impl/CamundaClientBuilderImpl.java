@@ -106,7 +106,7 @@ public final class CamundaClientBuilderImpl
   private Duration defaultJobPollInterval = Duration.ofMillis(100);
   private Duration defaultMessageTimeToLive = Duration.ofHours(1);
   private Duration defaultRequestTimeout = Duration.ofSeconds(10);
-  private Duration defaultActivateJobsResponseTimeoutOffset = Duration.ofSeconds(1);
+  private Duration defaultRequestTimeoutOffset = Duration.ofSeconds(1);
   private boolean usePlaintextConnection = false;
   private String certificatePath;
   private CredentialsProvider credentialsProvider;
@@ -182,8 +182,8 @@ public final class CamundaClientBuilderImpl
   }
 
   @Override
-  public Duration getDefaultActivateJobsResponseTimeoutOffset() {
-    return defaultActivateJobsResponseTimeoutOffset;
+  public Duration getDefaultRequestTimeoutOffset() {
+    return defaultRequestTimeoutOffset;
   }
 
   @Override
@@ -343,7 +343,7 @@ public final class CamundaClientBuilderImpl
 
     BuilderUtils.applyPropertyValueIfNotNull(
         properties,
-        value -> defaultActivateJobsResponseTimeoutOffset(Duration.ofMillis(Long.parseLong(value))),
+        value -> defaultRequestTimeoutOffset(Duration.ofMillis(Long.parseLong(value))),
         DEFAULT_REQUEST_TIMEOUT_OFFSET);
 
     BuilderUtils.applyPropertyValueIfNotNull(
@@ -498,9 +498,9 @@ public final class CamundaClientBuilderImpl
   }
 
   @Override
-  public CamundaClientBuilder defaultActivateJobsResponseTimeoutOffset(
+  public CamundaClientBuilder defaultRequestTimeoutOffset(
       final Duration responseTimeoutOffset) {
-    defaultActivateJobsResponseTimeoutOffset = responseTimeoutOffset;
+    defaultRequestTimeoutOffset = responseTimeoutOffset;
     return this;
   }
 
@@ -672,7 +672,7 @@ public final class CamundaClientBuilderImpl
     BuilderUtils.appendProperty(sb, "defaultMessageTimeToLive", defaultMessageTimeToLive);
     BuilderUtils.appendProperty(sb, "defaultRequestTimeout", defaultRequestTimeout);
     BuilderUtils.appendProperty(
-        sb, "defaultActivateJobsResponseTimeoutOffset", defaultActivateJobsResponseTimeoutOffset);
+        sb, "defaultActivateJobsResponseTimeoutOffset", defaultRequestTimeoutOffset);
     BuilderUtils.appendProperty(sb, "overrideAuthority", overrideAuthority);
     BuilderUtils.appendProperty(sb, "maxMessageSize", maxMessageSize);
     BuilderUtils.appendProperty(sb, "maxMetadataSize", maxMetadataSize);
