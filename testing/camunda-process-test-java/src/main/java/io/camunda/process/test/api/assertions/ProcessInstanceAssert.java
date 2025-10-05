@@ -18,7 +18,9 @@ package io.camunda.process.test.api.assertions;
 import java.util.Map;
 import org.assertj.core.api.ThrowingConsumer;
 
-/** The assertion object to verify a process instance. */
+/**
+ * The assertion object to verify a process instance.
+ */
 public interface ProcessInstanceAssert {
 
   /**
@@ -111,7 +113,8 @@ public interface ProcessInstanceAssert {
    * Verifies that the given BPMN elements are completed in order. Elements that do not match any of
    * the given element IDs are ignored.
    *
-   * <p>The verification fails if at least one of the elements is not completed, or the order is not
+   * <p>The verification fails if at least one of the elements is not completed, or the order is
+   * not
    * correct.
    *
    * <p>The assertion waits until all elements are left.
@@ -125,7 +128,8 @@ public interface ProcessInstanceAssert {
    * Verifies that the given BPMN elements are completed in order. Elements that do not match any of
    * the given element selectors are ignored.
    *
-   * <p>The verification fails if at least one of the elements is not completed, or the order is not
+   * <p>The verification fails if at least one of the elements is not completed, or the order is
+   * not
    * correct.
    *
    * <p>The assertion waits until all elements are left.
@@ -381,34 +385,36 @@ public interface ProcessInstanceAssert {
       ElementSelector selector, String variableName, Object variableValue);
 
   /**
-   * Verifies that the variable object satisfied the given requirements expressed as a {@link
-   * ThrowingConsumer}.
+   * Verifies that the variable object satisfied the given requirements expressed as a
+   * {@link ThrowingConsumer}.
    *
-   * <p>This is useful to perform a group of assertions on a single object, each passed assertion is
+   * <p>This is useful to perform a group of assertions on a single object, each passed assertion
+   * is
    * evaluated and all failures are reported (to be precise each assertion can lead to one failure
    * max).
    *
    * @param variableName the variable name
-   * @param jsonMappedClass the variable's deserialization target, can be a JsonNode or Map for
-   *     variables without a dedicated class
+   * @param variableValueType the variable's deserialization target, can be a JsonNode or Map for
+   * variables without a dedicated class
    * @param requirement the requirement that the variable must satisfy
    * @return the assertion object
    */
   <T> ProcessInstanceAssert hasVariableSatisfies(
-      String variableName, final Class<T> jsonMappedClass, final ThrowingConsumer<T> requirement);
+      String variableName, final Class<T> variableValueType, final ThrowingConsumer<T> requirement);
 
   /**
-   * Verifies that the local variable object satisfied the given requirement expressed as a {@link
-   * ThrowingConsumer}.
+   * Verifies that the local variable object satisfied the given requirement expressed as a
+   * {@link ThrowingConsumer}.
    *
-   * <p>This is useful to perform a group of assertions on a single object, each passed assertion is
+   * <p>This is useful to perform a group of assertions on a single object, each passed assertion
+   * is
    * evaluated and all failures are reported (to be precise each assertion can lead to one failure
    * max).
    *
    * @param elementId id of the element the local variable is associated with
    * @param variableName the variable name
    * @param jsonMappedClass the variable's deserialization target, can be a JsonNode or Map for
-   *     variables without a dedicated class
+   * variables without a dedicated class
    * @param requirement the requirement that the variable must satisfy
    * @return the assertion object
    */
@@ -419,17 +425,19 @@ public interface ProcessInstanceAssert {
       ThrowingConsumer<T> requirement);
 
   /**
-   * Verifies that the local variable object satisfied the given requirement expressed as a {@link
-   * ThrowingConsumer}.
+   * Verifies that the local variable object satisfied the given requirement expressed as a
+   * {@link ThrowingConsumer}.
    *
-   * <p>This is useful to perform a group of assertions on a single object, each passed assertion is
+   * <p>This is useful to perform a group of assertions on a single object, each passed assertion
+   * is
    * evaluated and all failures are reported (to be precise each assertion can lead to one failure
    * max).
    *
-   * @param selector the {@see ElementSelector} for the BPMN element the variable is associated with
+   * @param selector the {@see ElementSelector} for the BPMN element the variable is associated
+   * with
    * @param variableName the variable name
    * @param jsonMappedClass the variable's deserialization target, can be a JsonNode or Map for
-   *     variables without a dedicated class
+   * variables without a dedicated class
    * @param requirement the requirement that the variable must satisfy
    * @return the assertion object
    */
