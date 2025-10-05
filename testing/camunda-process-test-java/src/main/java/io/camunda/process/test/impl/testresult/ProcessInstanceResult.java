@@ -49,7 +49,7 @@ public class ProcessInstanceResult {
     this.variables = variables;
   }
 
-  public List<Incident> getOpenIncidents() {
+  public List<Incident> getActiveIncidents() {
     return activeIncidents;
   }
 
