@@ -18,14 +18,14 @@ package io.camunda.client.impl.search.filter;
 import io.camunda.client.api.search.filter.AdHocSubProcessActivityFilter;
 import io.camunda.client.impl.search.request.TypedSearchRequestPropertyProvider;
 
-public class AdHocSubprocessActivityFilterImpl
+public class AdHocSubProcessActivityFilterImpl
     extends TypedSearchRequestPropertyProvider<
         io.camunda.client.protocol.rest.AdHocSubprocessActivityFilter>
     implements AdHocSubProcessActivityFilter {
 
   private final io.camunda.client.protocol.rest.AdHocSubprocessActivityFilter filter;
 
-  public AdHocSubprocessActivityFilterImpl() {
+  public AdHocSubProcessActivityFilterImpl() {
     filter = new io.camunda.client.protocol.rest.AdHocSubprocessActivityFilter();
   }
 
