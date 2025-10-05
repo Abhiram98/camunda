@@ -190,7 +190,7 @@ abstract class BatchOperationUpdateRepositoryIT {
 
   @Nested
   @Order(2)
-  final class GetFinishedOperationsCountTest {
+  final class GetOperationsCountTest {
     @Test
     void shouldReturnEmptyList() {
       // given
