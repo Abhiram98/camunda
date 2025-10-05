@@ -30,8 +30,8 @@ public interface AdHocSubProcessActivityFilter extends SearchRequestFilter {
   /**
    * Filters element instances by ad-hoc sub-process id.
    *
-   * @param adHocSubprocessId the id of the ad-hoc sub-process
+   * @param adHocSubProcessId the id of the ad-hoc sub-process
    * @return the updated filter
    */
-  AdHocSubProcessActivityFilter adHocSubprocessId(final String adHocSubprocessId);
+  AdHocSubProcessActivityFilter adHocSubprocessId(final String adHocSubProcessId);
 }
