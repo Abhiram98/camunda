@@ -73,7 +73,7 @@ public class BatchOperationResolveIncidentTest {
   }
 
   @AfterAll
-  static void afterAll() {
+  static void afterEach() {
     DEPLOYED_PROCESSES.clear();
     ACTIVE_INCIDENTS.clear();
   }

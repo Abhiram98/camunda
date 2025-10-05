@@ -97,7 +97,7 @@ public class BatchOperationModifyProcessInstanceTest {
   }
 
   @AfterAll
-  static void afterAll() {
+  static void afterEach() {
     DEPLOYED_PROCESSES.clear();
     PROCESS_INSTANCES_PATH1.clear();
     PROCESS_INSTANCES_PATH2.clear();
