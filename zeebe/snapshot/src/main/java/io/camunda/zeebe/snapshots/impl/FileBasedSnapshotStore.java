@@ -30,9 +30,9 @@ import java.util.function.BiConsumer;
 
 public final class FileBasedSnapshotStore extends Actor
     implements ConstructableSnapshotStore,
-        ReceivableSnapshotStore,
-        RestorableSnapshotStore,
-        BootstrapSnapshotStore {
+    ReceivableSnapshotStore,
+    RestorableSnapshotStore,
+    BootstrapSnapshotStore {
 
   private final String actorName;
   private final int partitionId;
@@ -94,7 +94,7 @@ public final class FileBasedSnapshotStore extends Actor
   }
 
   @Override
-  public ActorFuture<Void> purgePendingSnapshots() {
+  public ActorFuture<Void> abortPendingSnapshots() {
     final CompletableActorFuture<Void> abortFuture = new CompletableActorFuture<>();
     return snapshotStore.purgePendingSnapshots();
   }

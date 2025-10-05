@@ -39,6 +39,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.rules.TemporaryFolder;
 
 public class FileBasedSnapshotStoreTest {
+
   private static final String SNAPSHOT_DIRECTORY = "snapshots";
   private static final String PENDING_DIRECTORY = "pending";
 
@@ -46,8 +47,10 @@ public class FileBasedSnapshotStoreTest {
   private static final String SNAPSHOT_CONTENT = "this is the content";
   private static final Integer PARTITION_ID = 1;
 
-  @Rule public TemporaryFolder temporaryFolder = new TemporaryFolder();
-  @Rule public ActorSchedulerRule scheduler = new ActorSchedulerRule();
+  @Rule
+  public TemporaryFolder temporaryFolder = new TemporaryFolder();
+  @Rule
+  public ActorSchedulerRule scheduler = new ActorSchedulerRule();
 
   private Path snapshotsDir;
   private Path pendingSnapshotsDir;
@@ -289,7 +292,7 @@ public class FileBasedSnapshotStoreTest {
     takeTransientSnapshot();
 
     // when
-    snapshotStore.purgePendingSnapshots().join();
+    snapshotStore.abortPendingSnapshots().join();
 
     // then
     assertThat(pendingSnapshotsDir).isEmptyDirectory();
@@ -516,10 +519,10 @@ public class FileBasedSnapshotStoreTest {
 
     // then
     assertThatThrownBy(
-            (() ->
-                snapshotStore
-                    .copyForBootstrap(persistedSnapshot, SnapshotCopyUtil::copyAllFiles)
-                    .join()))
+        (() ->
+            snapshotStore
+                .copyForBootstrap(persistedSnapshot, SnapshotCopyUtil::copyAllFiles)
+                .join()))
         .hasMessageContaining("Destination folder already exists");
   }
 
