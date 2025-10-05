@@ -31,8 +31,8 @@ public final class ClientProperties {
       "camunda.client.applyEnvironmentVariableOverrides";
 
   /**
-   * @deprecated since 8.5 for removal with 8.8, where toggling between both will not be possible
    * @see CamundaClientBuilder#preferRestOverGrpc(boolean)
+   * @deprecated since 8.5 for removal with 8.8, where toggling between both will not be possible
    */
   @Deprecated
   public static final String PREFER_REST_OVER_GRPC = "camunda.client.gateway.preferRestOverGrpc";
@@ -93,9 +93,9 @@ public final class ClientProperties {
   public static final String DEFAULT_REQUEST_TIMEOUT = "camunda.client.requestTimeout";
 
   /**
-   * @see CamundaClientBuilder#defaultActivateJobsResponseTimeoutOffset(Duration)
+   * @see CamundaClientBuilder#defaultRequestTimeoutOffset(Duration)
    */
-  public static final String DEFAULT_ACTIVATE_JOBS_RESPONSE_TIMEOUT_OFFSET =
+  public static final String DEFAULT_REQUEST_TIMEOUT_OFFSET =
       "camunda.client.activateJobsResponseTimeoutOffset";
 
   /**
@@ -139,7 +139,7 @@ public final class ClientProperties {
   public static final String CLOUD_CLIENT_ID = "camunda.client.cloud.clientId";
 
   /**
-   * @see CamundaClientCloudBuilderStep3#withClientSecret( String)
+   * @see CamundaClientCloudBuilderStep3#withClientSecret(String)
    */
   public static final String CLOUD_CLIENT_SECRET = "camunda.client.cloud.secret";
 
@@ -158,5 +158,6 @@ public final class ClientProperties {
    */
   public static final String USE_DEFAULT_RETRY_POLICY = "camunda.client.useDefaultRetryPolicy";
 
-  private ClientProperties() {}
+  private ClientProperties() {
+  }
 }

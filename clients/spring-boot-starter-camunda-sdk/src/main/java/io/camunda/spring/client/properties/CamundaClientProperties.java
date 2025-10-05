@@ -75,7 +75,7 @@ public class CamundaClientProperties {
 
   private String tenantId;
   private Duration requestTimeout;
-  private Duration activateJobsResponseTimeoutOffset;
+  private Duration requestTimeoutOffset;
 
   public CamundaClientCloudProperties getCloud() {
     return cloud;
@@ -93,13 +93,13 @@ public class CamundaClientProperties {
     this.requestTimeout = requestTimeout;
   }
 
-  public Duration getActivateJobsResponseTimeoutOffset() {
-    return activateJobsResponseTimeoutOffset;
+  public Duration getRequestTimeout() {
+    return requestTimeoutOffset;
   }
 
   public void setActivateJobsResponseTimeoutOffset(
       final Duration activateJobsResponseTimeoutOffset) {
-    this.activateJobsResponseTimeoutOffset = activateJobsResponseTimeoutOffset;
+    this.requestTimeoutOffset = activateJobsResponseTimeoutOffset;
   }
 
   public String getTenantId() {

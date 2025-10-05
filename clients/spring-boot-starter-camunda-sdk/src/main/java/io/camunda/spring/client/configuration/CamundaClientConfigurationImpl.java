@@ -146,10 +146,10 @@ public class CamundaClientConfigurationImpl implements CamundaClientConfiguratio
   }
 
   @Override
-  public Duration getDefaultActivateJobsResponseTimeoutOffset() {
+  public Duration getDefaultRequestTimeoutOffset() {
     return propertyOrDefault(
-        camundaClientProperties.getActivateJobsResponseTimeoutOffset(),
-        DEFAULT.getDefaultActivateJobsResponseTimeoutOffset());
+        camundaClientProperties.getRequestTimeout(),
+        DEFAULT.getDefaultRequestTimeoutOffset());
   }
 
   @Override
