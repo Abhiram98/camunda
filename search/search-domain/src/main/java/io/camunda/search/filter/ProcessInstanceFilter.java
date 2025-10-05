@@ -355,10 +355,10 @@ public record ProcessInstanceFilter(
     }
 
     public Builder incidentErrorHashCodes(final Integer value, final Integer... values) {
-      return incidentErrorHashCodes(collectValues(value, values));
+      return incidentErrorHashCodeOperations(collectValues(value, values));
     }
 
-    public Builder incidentErrorHashCodes(final List<Integer> values) {
+    public Builder incidentErrorHashCodeOperations(final List<Integer> values) {
       incidentErrorHashCodes = addValuesToList(incidentErrorHashCodes, values);
       return this;
     }
