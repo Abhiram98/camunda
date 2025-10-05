@@ -242,7 +242,7 @@ public class ExporterConfiguration {
         .queueSize(queueSize)
         .defaultHistoryTTL(defaultHistoryTTL)
         .cancelProcessInstanceHistoryTTL(cancelProcessInstanceHistoryTTL)
-        .migrateProcessInstanceHistoryTTL(migrateProcessInstanceHistoryTTL)
+        .batchOperationMigrateProcessInstanceHistoryTTL(migrateProcessInstanceHistoryTTL)
         .modifyProcessInstanceHistoryTTL(modifyProcessInstanceHistoryTTL)
         .resolveIncidentHistoryTTL(resolveIncidentHistoryTTL)
         .minHistoryCleanupInterval(minHistoryCleanupInterval)
