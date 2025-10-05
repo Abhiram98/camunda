@@ -413,7 +413,7 @@ public interface ProcessInstanceAssert {
    *
    * @param elementId id of the element the local variable is associated with
    * @param variableName the variable name
-   * @param jsonMappedClass the variable's deserialization target, can be a JsonNode or Map for
+   * @param variableValueType the variable's deserialization target, can be a JsonNode or Map for
    * variables without a dedicated class
    * @param requirement the requirement that the variable must satisfy
    * @return the assertion object
@@ -421,7 +421,7 @@ public interface ProcessInstanceAssert {
   <T> ProcessInstanceAssert hasLocalVariableSatisfies(
       String elementId,
       String variableName,
-      Class<T> jsonMappedClass,
+      Class<T> variableValueType,
       ThrowingConsumer<T> requirement);
 
   /**
@@ -436,7 +436,7 @@ public interface ProcessInstanceAssert {
    * @param selector the {@see ElementSelector} for the BPMN element the variable is associated
    * with
    * @param variableName the variable name
-   * @param jsonMappedClass the variable's deserialization target, can be a JsonNode or Map for
+   * @param variableValueType the variable's deserialization target, can be a JsonNode or Map for
    * variables without a dedicated class
    * @param requirement the requirement that the variable must satisfy
    * @return the assertion object
@@ -444,7 +444,7 @@ public interface ProcessInstanceAssert {
   <T> ProcessInstanceAssert hasLocalVariableSatisfies(
       ElementSelector selector,
       String variableName,
-      Class<T> jsonMappedClass,
+      Class<T> variableValueType,
       ThrowingConsumer<T> requirement);
 
   /**
