@@ -87,7 +87,7 @@ public interface IncidentUpdateRepository extends AutoCloseable {
    * @param processInstanceKey the key of the process instance
    * @return true if it was deleted, false otherwise
    */
-  CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey);
+  CompletionStage<Boolean> wereProcessInstancesDeleted(final long processInstanceKey);
 
   /**
    * Executes the given bulk update against the underlying document store, waiting until the
@@ -204,7 +204,7 @@ public interface IncidentUpdateRepository extends AutoCloseable {
     }
 
     @Override
-    public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey) {
+    public CompletionStage<Boolean> wereProcessInstancesDeleted(final long processInstanceKey) {
       return CompletableFuture.completedFuture(false);
     }
 
