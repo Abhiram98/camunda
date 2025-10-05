@@ -138,10 +138,10 @@ final class IncidentUpdateTaskTest {
     }
 
     @Override
-    public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey) {
+    public CompletionStage<Boolean> wereProcessInstancesDeleted(final long processInstanceKey) {
       return wasProcessInstanceDeleted != null
           ? wasProcessInstanceDeleted
-          : super.wasProcessInstanceDeleted(processInstanceKey);
+          : super.wereProcessInstancesDeleted(processInstanceKey);
     }
 
     @Override

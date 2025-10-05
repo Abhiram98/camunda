@@ -189,7 +189,7 @@ public final class IncidentUpdateTask implements BackgroundTask {
       if (piTreePath == null || piTreePath.isEmpty()) {
         piTreePathToInsert =
             repository
-                .wasProcessInstanceDeleted(incident.getProcessInstanceKey())
+                .wereProcessInstancesDeleted(incident.getProcessInstanceKey())
                 .toCompletableFuture()
                 .thenComposeAsync(
                     wasDeleted -> {
