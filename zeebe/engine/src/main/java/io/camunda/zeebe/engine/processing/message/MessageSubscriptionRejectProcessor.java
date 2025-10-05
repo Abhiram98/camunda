@@ -54,15 +54,15 @@ public final class MessageSubscriptionRejectProcessor
   }
 
   @Override
-  public void processRecord(final TypedRecord<MessageSubscriptionRecord> record) {
+  public void processRecord(final TypedRecord<MessageSubscriptionRecord> usageMetricRecord) {
 
-    final MessageSubscriptionRecord subscriptionRecord = record.getValue();
+    final MessageSubscriptionRecord subscriptionRecord = usageMetricRecord.getValue();
     stateWriter.appendFollowUpEvent(
-        record.getKey(), MessageSubscriptionIntent.REJECTED, subscriptionRecord);
+        usageMetricRecord.getKey(), MessageSubscriptionIntent.REJECTED, subscriptionRecord);
 
     final var foundSubscription = findSubscriptionToCorrelate(subscriptionRecord);
     if (!foundSubscription) {
-      writeNotCorrelatedResponse(record);
+      writeNotCorrelatedResponse(usageMetricRecord);
     }
   }
 

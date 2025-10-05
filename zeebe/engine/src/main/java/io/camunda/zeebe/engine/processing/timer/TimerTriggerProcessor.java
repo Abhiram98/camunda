@@ -82,14 +82,15 @@ public final class TimerTriggerProcessor implements TypedRecordProcessor<TimerRe
   }
 
   @Override
-  public void processRecord(final TypedRecord<TimerRecord> record) {
-    final var timer = record.getValue();
+  public void processRecord(final TypedRecord<TimerRecord> usageMetricRecord) {
+    final var timer = usageMetricRecord.getValue();
     final var elementInstanceKey = timer.getElementInstanceKey();
     final var processDefinitionKey = timer.getProcessDefinitionKey();
-    final var timerInstance = timerInstanceState.get(elementInstanceKey, record.getKey());
+    final var timerInstance = timerInstanceState.get(elementInstanceKey, usageMetricRecord.getKey());
     if (timerInstance == null) {
       rejectionWriter.appendRejection(
-          record, RejectionType.NOT_FOUND, NO_TIMER_FOUND_MESSAGE.formatted(record.getKey()));
+          usageMetricRecord, RejectionType.NOT_FOUND, NO_TIMER_FOUND_MESSAGE.formatted(
+              usageMetricRecord.getKey()));
       return;
     }
 
@@ -100,7 +101,7 @@ public final class TimerTriggerProcessor implements TypedRecordProcessor<TimerRe
         processState.getProcessByKeyAndTenant(processDefinitionKey, tenantId);
     if (deployedProcess == null) {
       rejectionWriter.appendRejection(
-          record,
+          usageMetricRecord,
           RejectionType.NOT_FOUND,
           NO_PROCESS_DEFINITION_FOUND_MESSAGE.formatted(processDefinitionKey));
       return;
@@ -115,7 +116,7 @@ public final class TimerTriggerProcessor implements TypedRecordProcessor<TimerRe
     if (isStartEvent(elementInstanceKey)) {
       final long processInstanceKey = keyGenerator.nextKey();
       timer.setProcessInstanceKey(processInstanceKey);
-      stateWriter.appendFollowUpEvent(record.getKey(), TimerIntent.TRIGGERED, timer);
+      stateWriter.appendFollowUpEvent(usageMetricRecord.getKey(), TimerIntent.TRIGGERED, timer);
       eventHandle.activateProcessInstanceForStartEvent(
           processDefinitionKey,
           processInstanceKey,
@@ -125,11 +126,11 @@ public final class TimerTriggerProcessor implements TypedRecordProcessor<TimerRe
     } else {
       final var elementInstance = elementInstanceState.getInstance(elementInstanceKey);
       if (!eventHandle.canTriggerElement(elementInstance, timer.getTargetElementIdBuffer())) {
-        rejectNoActiveTimer(record);
+        rejectNoActiveTimer(usageMetricRecord);
         return;
       }
 
-      stateWriter.appendFollowUpEvent(record.getKey(), TimerIntent.TRIGGERED, timer);
+      stateWriter.appendFollowUpEvent(usageMetricRecord.getKey(), TimerIntent.TRIGGERED, timer);
       eventHandle.activateElement(catchEvent, elementInstanceKey, elementInstance.getValue());
     }
 

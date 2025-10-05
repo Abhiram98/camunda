@@ -49,8 +49,8 @@ public final class MessageSubscriptionDeleteProcessor
   }
 
   @Override
-  public void processRecord(final TypedRecord<MessageSubscriptionRecord> record) {
-    subscriptionRecord = record.getValue();
+  public void processRecord(final TypedRecord<MessageSubscriptionRecord> usageMetricRecord) {
+    subscriptionRecord = usageMetricRecord.getValue();
 
     final var messageSubscription =
         subscriptionState.get(
@@ -63,7 +63,7 @@ public final class MessageSubscriptionDeleteProcessor
           messageSubscription.getRecord());
 
     } else {
-      rejectCommand(record);
+      rejectCommand(usageMetricRecord);
     }
 
     sendAcknowledgeCommand();
