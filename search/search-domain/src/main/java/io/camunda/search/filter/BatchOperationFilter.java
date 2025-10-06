@@ -16,21 +16,21 @@ import java.util.List;
 import java.util.Objects;
 
 public record BatchOperationFilter(
-    List<String> batchOperationIds, List<String> operationTypes, List<String> state)
+    List<String> batchOperationIdOperations, List<String> operationTypes, List<String> state)
     implements FilterBase {
 
   public static final class Builder implements ObjectBuilder<BatchOperationFilter> {
 
-    private List<String> batchOperationIds;
+    private List<String> batchOperationIdOperations;
     private List<String> operationTypes;
     private List<String> state;
 
-    public Builder batchOperationIds(final String value, final String... values) {
-      return batchOperationIds(collectValues(value, values));
+    public Builder batchOperationIdOperations(final String value, final String... values) {
+      return batchOperationIdOperations(collectValues(value, values));
     }
 
-    public Builder batchOperationIds(final List<String> values) {
-      batchOperationIds = addValuesToList(batchOperationIds, values);
+    public Builder batchOperationIdOperations(final List<String> values) {
+      batchOperationIdOperations = addValuesToList(batchOperationIdOperations, values);
       return this;
     }
 
@@ -55,7 +55,7 @@ public record BatchOperationFilter(
     @Override
     public BatchOperationFilter build() {
       return new BatchOperationFilter(
-          Objects.requireNonNullElse(batchOperationIds, Collections.emptyList()),
+          Objects.requireNonNullElse(batchOperationIdOperations, Collections.emptyList()),
           Objects.requireNonNullElse(operationTypes, Collections.emptyList()),
           Objects.requireNonNullElse(state, Collections.emptyList()));
     }
