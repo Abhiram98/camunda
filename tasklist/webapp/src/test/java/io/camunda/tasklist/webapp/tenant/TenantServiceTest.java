@@ -13,6 +13,7 @@ import io.camunda.authentication.entity.AuthenticationContext;
 import io.camunda.authentication.entity.CamundaUser;
 import io.camunda.security.configuration.SecurityConfiguration;
 import io.camunda.service.TenantServices.TenantDTO;
+import io.camunda.tasklist.webapp.tenant.TenantService.TenantAccess;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -36,8 +37,8 @@ public class TenantServiceTest {
   @Test
   void getAuthenticatedTenantsWhenMultiTenancyIsOff() {
     RequestContextHolder.setRequestAttributes(null);
-    Assertions.assertThat(instance.getAuthenticatedTenants())
-        .isEqualTo(TenantService.AuthenticatedTenants.allTenants());
+    Assertions.assertThat(instance.getTenantAccess())
+        .isEqualTo(TenantAccess.allTenants());
   }
 
   @Test
@@ -50,7 +51,7 @@ public class TenantServiceTest {
     expectedListOfTenants.add("A");
     expectedListOfTenants.add("B");
 
-    final TenantService.AuthenticatedTenants result = instance.getAuthenticatedTenants();
+    final TenantAccess result = instance.getTenantAccess();
     Assertions.assertThat(result.getTenantIds()).isEqualTo(expectedListOfTenants);
     Assertions.assertThat(result.getTenantAccessType())
         .isEqualTo(TenantService.TenantAccessType.TENANT_ACCESS_ASSIGNED);

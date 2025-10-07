@@ -33,7 +33,7 @@ public class ElasticsearchTenantCheckApplier implements TenantCheckApplier<Searc
 
   @Override
   public void apply(final SearchRequest searchRequest) {
-    final var tenants = tenantService.getAuthenticatedTenants();
+    final var tenants = tenantService.getTenantAccess();
     final var tenantCheckQueryType = tenants.getTenantAccessType();
     final var searchByTenantIds = tenants.getTenantIds();
 
@@ -42,7 +42,7 @@ public class ElasticsearchTenantCheckApplier implements TenantCheckApplier<Searc
 
   @Override
   public void apply(final SearchRequest searchRequest, final Collection<String> tenantIds) {
-    final var tenants = tenantService.getAuthenticatedTenants();
+    final var tenants = tenantService.getTenantAccess();
     final var tenantCheckQueryType = tenants.getTenantAccessType();
     final var authorizedTenantIds = Set.copyOf(tenants.getTenantIds());
     final var searchByTenantIds =
