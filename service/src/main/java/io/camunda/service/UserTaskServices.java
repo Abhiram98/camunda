@@ -48,26 +48,26 @@ import java.util.stream.Collectors;
 public final class UserTaskServices
     extends SearchQueryService<UserTaskServices, UserTaskQuery, UserTaskEntity> {
 
-  private final UserTaskSearchClient userTaskSearchClient;
+  private final UserTaskSearchClient userTaskServices;
   private final FormServices formServices;
-  private final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient;
-  private final VariableSearchClient variableSearchClient;
+  private final FlowNodeInstanceSearchClient flowNodeInstanceServices;
+  private final VariableSearchClient variableServices;
   private final ProcessCache processCache;
 
   public UserTaskServices(
       final BrokerClient brokerClient,
       final SecurityContextProvider securityContextProvider,
-      final UserTaskSearchClient userTaskSearchClient,
+      final UserTaskSearchClient userTaskServices,
       final FormServices formServices,
-      final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient,
-      final VariableSearchClient variableSearchClient,
+      final FlowNodeInstanceSearchClient flowNodeInstanceServices,
+      final VariableSearchClient variableServices,
       final ProcessCache processCache,
       final CamundaAuthentication authentication) {
     super(brokerClient, securityContextProvider, authentication);
-    this.userTaskSearchClient = userTaskSearchClient;
+    this.userTaskServices = userTaskServices;
     this.formServices = formServices;
-    this.flowNodeInstanceSearchClient = flowNodeInstanceSearchClient;
-    this.variableSearchClient = variableSearchClient;
+    this.flowNodeInstanceServices = flowNodeInstanceServices;
+    this.variableServices = variableServices;
     this.processCache = processCache;
   }
 
@@ -76,10 +76,10 @@ public final class UserTaskServices
     return new UserTaskServices(
         brokerClient,
         securityContextProvider,
-        userTaskSearchClient,
+        userTaskServices,
         formServices,
-        flowNodeInstanceSearchClient,
-        variableSearchClient,
+        flowNodeInstanceServices,
+        variableServices,
         processCache,
         authentication);
   }
@@ -96,7 +96,7 @@ public final class UserTaskServices
       final UserTaskQuery query, final SecurityContext securityContext) {
     final var result =
         executeSearchRequest(
-            () -> userTaskSearchClient.withSecurityContext(securityContext).searchUserTasks(query));
+            () -> userTaskServices.withSecurityContext(securityContext).searchUserTasks(query));
 
     return toCacheEnrichedResult(result);
   }
@@ -169,7 +169,7 @@ public final class UserTaskServices
     final var result =
         executeSearchRequest(
             () ->
-                userTaskSearchClient
+                userTaskServices
                     .withSecurityContext(
                         securityContextProvider.provideSecurityContext(
                             authentication,
@@ -217,22 +217,22 @@ public final class UserTaskServices
     // Execute the search
     return executeSearchRequest(
         () ->
-            variableSearchClient
+            variableServices
                 .withSecurityContext(securityContextProvider.provideSecurityContext(authentication))
                 .searchVariables(variableQueryWithTreePathFilter));
   }
 
   private String fetchFlowNodeTreePath(final long flowNodeInstanceKey) {
     return executeSearchRequest(
-            () ->
-                flowNodeInstanceSearchClient
-                    .withSecurityContext(
-                        securityContextProvider.provideSecurityContext(authentication))
-                    .searchFlowNodeInstances(
-                        flownodeInstanceSearchQuery(
-                            q ->
-                                q.filter(f -> f.flowNodeInstanceKeys(flowNodeInstanceKey))
-                                    .singleResult())))
+        () ->
+            flowNodeInstanceServices
+                .withSecurityContext(
+                    securityContextProvider.provideSecurityContext(authentication))
+                .searchFlowNodeInstances(
+                    flownodeInstanceSearchQuery(
+                        q ->
+                            q.filter(f -> f.flowNodeInstanceKeys(flowNodeInstanceKey))
+                                .singleResult())))
         .items()
         .getFirst()
         .treePath();
