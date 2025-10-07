@@ -31,13 +31,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-@WebMvcTest(MappingController.class)
+@WebMvcTest(MappingRuleController.class)
 public class MappingControllerTest extends RestControllerTest {
 
   private static final String MAPPING_RULES_PATH = "/v2/mapping-rules";
 
-  @MockitoBean private MappingServices mappingServices;
-  @MockitoBean private CamundaAuthenticationProvider authenticationProvider;
+  @MockitoBean
+  private MappingServices mappingServices;
+  @MockitoBean
+  private CamundaAuthenticationProvider authenticationProvider;
 
   @BeforeEach
   void setup() {
@@ -60,7 +62,7 @@ public class MappingControllerTest extends RestControllerTest {
             .setMappingId(id)
             .setName(dto.name());
 
-    when(mappingServices.createMapping(dto))
+    when(mappingServices.createMappingRule(dto))
         .thenReturn(CompletableFuture.completedFuture(mappingRecord));
 
     // when
@@ -75,7 +77,7 @@ public class MappingControllerTest extends RestControllerTest {
         .isCreated();
 
     // then
-    verify(mappingServices, times(1)).createMapping(dto);
+    verify(mappingServices, times(1)).createMappingRule(dto);
   }
 
   @Test
@@ -243,9 +245,9 @@ public class MappingControllerTest extends RestControllerTest {
   @ParameterizedTest
   @ValueSource(
       strings = {
-        "foo~", "foo!", "foo#", "foo$", "foo%", "foo^", "foo&", "foo*", "foo(", "foo)", "foo=",
-        "foo+", "foo{", "foo[", "foo}", "foo]", "foo|", "foo\\", "foo:", "foo;", "foo\"", "foo'",
-        "foo<", "foo>", "foo,", "foo?", "foo/", "foo ", "foo\t", "foo\n", "foo\r"
+          "foo~", "foo!", "foo#", "foo$", "foo%", "foo^", "foo&", "foo*", "foo(", "foo)", "foo=",
+          "foo+", "foo{", "foo[", "foo}", "foo]", "foo|", "foo\\", "foo:", "foo;", "foo\"", "foo'",
+          "foo<", "foo>", "foo,", "foo?", "foo/", "foo ", "foo\t", "foo\n", "foo\r"
       })
   void shouldRejectMappingCreationWithIllegalCharactersInId(final String id) {
     // given
@@ -304,7 +306,7 @@ public class MappingControllerTest extends RestControllerTest {
 
     final var mappingRecord = new MappingRecord().setMappingId(mappingId);
 
-    when(mappingServices.deleteMapping(mappingId))
+    when(mappingServices.deleteMappingRule(mappingId))
         .thenReturn(CompletableFuture.completedFuture(mappingRecord));
 
     // when
@@ -317,7 +319,7 @@ public class MappingControllerTest extends RestControllerTest {
         .isNoContent();
 
     // then
-    verify(mappingServices, times(1)).deleteMapping(mappingId);
+    verify(mappingServices, times(1)).deleteMappingRule(mappingId);
   }
 
   @ParameterizedTest
@@ -333,7 +335,7 @@ public class MappingControllerTest extends RestControllerTest {
             .setMappingId(id)
             .setName(dto.name());
 
-    when(mappingServices.updateMapping(dto))
+    when(mappingServices.updateMappingRule(dto))
         .thenReturn(CompletableFuture.completedFuture(mappingRecord));
 
     // when
@@ -348,7 +350,7 @@ public class MappingControllerTest extends RestControllerTest {
         .isOk();
 
     // then
-    verify(mappingServices, times(1)).updateMapping(dto);
+    verify(mappingServices, times(1)).updateMappingRule(dto);
   }
 
   @Test

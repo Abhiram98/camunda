@@ -58,7 +58,7 @@ public class MappingServices
         brokerClient, securityContextProvider, mappingSearchClient, authentication);
   }
 
-  public CompletableFuture<MappingRecord> createMapping(final MappingDTO request) {
+  public CompletableFuture<MappingRecord> createMappingRule(final MappingDTO request) {
     return sendBrokerRequest(
         new BrokerMappingCreateRequest()
             .setClaimName(request.claimName())
@@ -67,7 +67,7 @@ public class MappingServices
             .setMappingId(request.mappingId()));
   }
 
-  public CompletableFuture<MappingRecord> updateMapping(final MappingDTO request) {
+  public CompletableFuture<MappingRecord> updateMappingRule(final MappingDTO request) {
     return sendBrokerRequest(
         new BrokerMappingUpdateRequest()
             .setClaimName(request.claimName())
@@ -76,7 +76,7 @@ public class MappingServices
             .setMappingId(request.mappingId()));
   }
 
-  public MappingEntity getMapping(final String mappingId) {
+  public MappingEntity getMappingRule(final String mappingId) {
     return findMapping(mappingId)
         .orElseThrow(
             () ->
@@ -104,7 +104,7 @@ public class MappingServices
         .findFirst();
   }
 
-  public CompletableFuture<MappingRecord> deleteMapping(final String mappingId) {
+  public CompletableFuture<MappingRecord> deleteMappingRule(final String mappingId) {
     return sendBrokerRequest(new BrokerMappingDeleteRequest().setMappingId(mappingId));
   }
 

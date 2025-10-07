@@ -73,7 +73,7 @@ public class MappingServicesTest {
         new MappingDTO("newClaimName", "newClaimValue", "mappingRuleName", "mappingRuleId");
 
     // when
-    services.createMapping(mappingDTO);
+    services.createMappingRule(mappingDTO);
 
     // then
     final BrokerMappingCreateRequest request = stubbedBrokerClient.getSingleBrokerRequest();
@@ -141,7 +141,7 @@ public class MappingServicesTest {
 
     // when / then
     final var exception =
-        assertThrows(CamundaSearchException.class, () -> services.getMapping("mappingId"));
+        assertThrows(CamundaSearchException.class, () -> services.getMappingRule("mappingId"));
     assertThat(exception.getReason()).isEqualTo(CamundaSearchException.Reason.NOT_FOUND);
   }
 
@@ -161,7 +161,7 @@ public class MappingServicesTest {
         .thenReturn(CompletableFuture.completedFuture(new BrokerResponse<>(mappingRecord)));
 
     //  when
-    testMappingServices.deleteMapping("id");
+    testMappingServices.deleteMappingRule("id");
 
     // then
     verify(mockBrokerClient).sendRequest(mappingDeleteRequestArgumentCaptor.capture());
@@ -189,7 +189,7 @@ public class MappingServicesTest {
             "newClaimName", "newClaimValue", "newMappingRuleName", mappingRecord.getMappingId());
 
     //  when
-    testMappingServices.updateMapping(mappingDTO);
+    testMappingServices.updateMappingRule(mappingDTO);
 
     // then
     verify(mockBrokerClient).sendRequest(mappingUpdateRequestArgumentCaptor.capture());
