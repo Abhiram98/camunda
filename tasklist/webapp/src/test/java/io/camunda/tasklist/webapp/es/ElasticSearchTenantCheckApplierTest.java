@@ -68,7 +68,7 @@ public class ElasticSearchTenantCheckApplierTest {
 
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ASSIGNED);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
 
     // when
     instance.apply(searchRequest);
@@ -114,7 +114,7 @@ public class ElasticSearchTenantCheckApplierTest {
 
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ASSIGNED);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
 
     // when
     instance.apply(searchRequest, tenantsProvidedByUser);
@@ -135,7 +135,7 @@ public class ElasticSearchTenantCheckApplierTest {
 
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ASSIGNED);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
 
     // when
     instance.apply(searchRequest, tenantsProvidedByUser);
@@ -151,7 +151,7 @@ public class ElasticSearchTenantCheckApplierTest {
     final SearchRequest searchRequest = new SearchRequest("TaskTest");
     searchRequest.source().query(termsQuery("test", "1"));
     final TenantService.AuthenticatedTenants authenticatedTenants = mock();
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
     when(authenticatedTenants.getTenantIds()).thenReturn(Collections.emptyList());
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_NONE);
@@ -173,7 +173,7 @@ public class ElasticSearchTenantCheckApplierTest {
     when(authenticatedTenants.getTenantIds()).thenReturn(Collections.emptyList());
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ALL);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
     final String expectedQueryResult =
         "{\n"
             + "  \"terms\" : {\n"

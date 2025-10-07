@@ -36,7 +36,7 @@ public class TenantServiceTest {
   @Test
   void getAuthenticatedTenantsWhenMultiTenancyIsOff() {
     RequestContextHolder.setRequestAttributes(null);
-    Assertions.assertThat(instance.getAuthenticatedTenants())
+    Assertions.assertThat(instance.getAuthenticatedTenantAccess())
         .isEqualTo(TenantService.AuthenticatedTenants.allTenants());
   }
 
@@ -50,7 +50,7 @@ public class TenantServiceTest {
     expectedListOfTenants.add("A");
     expectedListOfTenants.add("B");
 
-    final TenantService.AuthenticatedTenants result = instance.getAuthenticatedTenants();
+    final TenantService.AuthenticatedTenants result = instance.getAuthenticatedTenantAccess();
     Assertions.assertThat(result.getTenantIds()).isEqualTo(expectedListOfTenants);
     Assertions.assertThat(result.getTenantAccessType())
         .isEqualTo(TenantService.TenantAccessType.TENANT_ACCESS_ASSIGNED);

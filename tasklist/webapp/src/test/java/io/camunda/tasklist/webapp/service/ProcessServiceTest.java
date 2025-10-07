@@ -58,7 +58,7 @@ public class ProcessServiceTest {
         TenantService.AuthenticatedTenants.assignedTenants(tenantIds);
 
     when(tenantService.isMultiTenancyEnabled()).thenReturn(true);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
 
     assertThatThrownBy(
             () -> instance.startProcessInstance(processDefinitionKey, variableInputDTOList, ""))
