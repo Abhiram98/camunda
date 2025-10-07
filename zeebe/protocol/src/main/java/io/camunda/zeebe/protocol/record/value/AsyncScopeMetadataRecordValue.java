@@ -32,10 +32,10 @@ import org.immutables.value.Value;
  */
 @Value.Immutable
 @ImmutableProtocol(builder = ImmutableAsyncRequestMetadataRecordValue.Builder.class)
-public interface AsyncRequestMetadataRecordValue extends RecordValue {
+public interface AsyncScopeMetadataRecordValue extends RecordValue {
 
   /** The key of the original request command. */
-  long getRequestKey();
+  long getScopeKey();
 
   /** The value type of the original request. */
   ValueType getValueType();
@@ -44,10 +44,10 @@ public interface AsyncRequestMetadataRecordValue extends RecordValue {
   Intent getIntent();
 
   /** The request ID from the client that issued the command. */
-  long getRequestId();
+  long getScopeId();
 
   /** The request stream ID from the client that issued the command. */
-  int getRequestStreamId();
+  int getScopeStreamId();
 
   /** The operation reference associated with the original command, for traceability. */
   long getOperationReference();
