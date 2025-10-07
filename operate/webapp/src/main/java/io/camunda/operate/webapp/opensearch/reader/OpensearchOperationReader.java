@@ -37,7 +37,7 @@ import io.camunda.operate.util.CollectionUtil;
 import io.camunda.operate.webapp.reader.OperationReader;
 import io.camunda.operate.webapp.rest.dto.DtoCreator;
 import io.camunda.operate.webapp.rest.dto.OperationDto;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.webapps.schema.descriptors.template.BatchOperationTemplate;
 import io.camunda.webapps.schema.descriptors.template.OperationTemplate;
 import io.camunda.webapps.schema.entities.operation.BatchOperationEntity;
@@ -68,7 +68,7 @@ public class OpensearchOperationReader extends OpensearchAbstractReader implemen
   @Autowired private OperationTemplate operationTemplate;
   @Autowired private BatchOperationTemplate batchOperationTemplate;
   @Autowired private DateTimeFormatter dateTimeFormatter;
-  @Autowired private UserService userService;
+  @Autowired private CamundaAuthenticationProvider userService;
 
   private Query usernameQuery() {
     return term(OperationTemplate.USERNAME, userService.getCurrentUser().getUsername());

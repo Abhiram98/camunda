@@ -9,7 +9,7 @@ package io.camunda.operate.modules;
 
 import io.camunda.operate.property.OperateProperties;
 import io.camunda.operate.util.apps.modules.ModulesTestApplication;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,5 +31,5 @@ public abstract class ModuleAbstractIT {
 
   @Autowired protected ApplicationContext applicationContext;
 
-  @MockBean protected UserService userService;
+  @MockBean protected CamundaAuthenticationProvider userService;
 }

@@ -12,7 +12,7 @@ import static io.camunda.operate.webapp.rest.AuthenticationRestService.AUTHENTIC
 import io.camunda.operate.webapp.InternalAPIErrorController;
 import io.camunda.operate.webapp.rest.dto.UserDto;
 import io.camunda.operate.webapp.rest.exception.UserNotFoundException;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +28,7 @@ public class AuthenticationRestService extends InternalAPIErrorController {
 
   public static final String TOKEN_ENDPOINT = "/token";
 
-  @Autowired private UserService userService;
+  @Autowired private CamundaAuthenticationProvider userService;
 
   @GetMapping(path = USER_ENDPOINT)
   public UserDto getCurrentAuthentication() {

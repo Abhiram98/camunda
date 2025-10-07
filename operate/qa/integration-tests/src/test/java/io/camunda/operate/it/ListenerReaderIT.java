@@ -21,7 +21,7 @@ import io.camunda.operate.webapp.rest.dto.ListenerRequestDto;
 import io.camunda.operate.webapp.rest.dto.ListenerResponseDto;
 import io.camunda.operate.webapp.rest.dto.UserDto;
 import io.camunda.operate.webapp.rest.dto.listview.SortValuesWrapper;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.webapps.schema.descriptors.template.JobTemplate;
 import io.camunda.webapps.schema.entities.JobEntity;
 import io.camunda.webapps.schema.entities.listener.ListenerEventType;
@@ -40,7 +40,7 @@ public class ListenerReaderIT extends OperateSearchAbstractIT {
 
   @Autowired MockMvcManager mockMvcManager;
   @Autowired JobTemplate jobTemplate;
-  @Autowired private UserService userService;
+  @Autowired private CamundaAuthenticationProvider userService;
   private String jobIndexName;
   private final ObjectMapper objectMapper = new ObjectMapper();
 

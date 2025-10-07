@@ -20,7 +20,7 @@ import io.camunda.operate.util.searchrepository.TestSearchRepository;
 import io.camunda.operate.webapp.reader.FlowNodeInstanceReader;
 import io.camunda.operate.webapp.rest.dto.UserDto;
 import io.camunda.operate.webapp.security.Permission;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.operate.webapp.security.tenant.TenantService;
 import io.camunda.operate.webapp.zeebe.operation.adapter.ClientBasedAdapter;
 import io.camunda.operate.webapp.zeebe.operation.adapter.OperateServicesAdapter;
@@ -64,7 +64,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class OperateZeebeSearchAbstractIT {
 
   // These are mocked so we can bypass authentication issues when connecting to zeebe and search
-  @MockBean protected UserService userService;
+  @MockBean protected CamundaAuthenticationProvider userService;
   @MockBean protected TenantService tenantService;
 
   // Prevents the zeebe client from being constructed. Components that need to connect to zeebe

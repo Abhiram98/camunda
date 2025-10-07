@@ -15,7 +15,7 @@ import org.springframework.security.core.Authentication;
 public class CustomSecurityExpressionRoot extends SecurityExpressionRoot
     implements MethodSecurityExpressionOperations {
 
-  private UserService<? extends Authentication> userService;
+  private CamundaAuthenticationProvider<? extends Authentication> userService;
 
   private Object filterObject;
   private Object returnObject;
@@ -32,7 +32,7 @@ public class CustomSecurityExpressionRoot extends SecurityExpressionRoot
   }
 
   public CustomSecurityExpressionRoot setUserService(
-      final UserService<? extends Authentication> userService) {
+      final CamundaAuthenticationProvider<? extends Authentication> userService) {
     this.userService = userService;
     return this;
   }

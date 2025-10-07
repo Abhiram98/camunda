@@ -18,7 +18,7 @@ import io.camunda.operate.webapp.rest.BatchOperationRestService;
 import io.camunda.operate.webapp.rest.dto.UserDto;
 import io.camunda.operate.webapp.rest.dto.operation.BatchOperationDto;
 import io.camunda.operate.webapp.rest.dto.operation.BatchOperationRequestDto;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.webapps.schema.descriptors.template.BatchOperationTemplate;
 import io.camunda.webapps.schema.descriptors.template.OperationTemplate;
 import io.camunda.webapps.schema.entities.operation.BatchOperationEntity;
@@ -41,7 +41,7 @@ public class BatchOperationRestServiceIT extends OperateSearchAbstractIT {
   @Autowired MockMvcManager mockMvcManager;
   @Autowired BatchOperationTemplate batchOperationTemplate;
   @Autowired OperationTemplate operationTemplate;
-  @Autowired private UserService userService;
+  @Autowired private CamundaAuthenticationProvider userService;
   private String operationIndexName;
   private String batchOperationIndexName;
   private final ObjectMapper objectMapper = new ObjectMapper();

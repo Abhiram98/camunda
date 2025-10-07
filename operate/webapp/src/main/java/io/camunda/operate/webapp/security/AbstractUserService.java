@@ -13,7 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-public abstract class AbstractUserService<T extends Authentication> implements UserService<T> {
+public abstract class AbstractUserService<T extends Authentication> implements
+    CamundaAuthenticationProvider<T> {
 
   public UserDto getCurrentUser() {
     final T authentication = getCurrentAuthentication();
