@@ -24,7 +24,7 @@ public record UserFilter(
     List<Operation<String>> nameOperations,
     List<Operation<String>> emailOperations,
     String tenantId,
-    String groupId,
+    String id,
     String roleId)
     implements FilterBase {
 
