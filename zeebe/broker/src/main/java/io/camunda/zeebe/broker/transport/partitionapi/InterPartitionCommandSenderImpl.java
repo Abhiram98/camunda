@@ -10,7 +10,7 @@ package io.camunda.zeebe.broker.transport.partitionapi;
 import io.atomix.cluster.MemberId;
 import io.atomix.cluster.messaging.ClusterCommunicationService;
 import io.atomix.utils.serializer.serializers.DefaultSerializers;
-import io.camunda.zeebe.backup.processing.state.CheckpointState;
+import io.camunda.zeebe.backup.processing.state.LatestCheckpointState;
 import io.camunda.zeebe.broker.Loggers;
 import io.camunda.zeebe.broker.protocol.InterPartitionMessageEncoder;
 import io.camunda.zeebe.broker.protocol.MessageHeaderEncoder;
@@ -32,7 +32,7 @@ final class InterPartitionCommandSenderImpl implements InterPartitionCommandSend
   private final ClusterCommunicationService communicationService;
 
   private final Int2IntHashMap partitionLeaders = new Int2IntHashMap(-1);
-  private long checkpointId = CheckpointState.NO_CHECKPOINT;
+  private long checkpointId = LatestCheckpointState.NO_CHECKPOINT;
 
   public InterPartitionCommandSenderImpl(final ClusterCommunicationService communicationService) {
     this.communicationService = communicationService;

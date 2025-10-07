@@ -10,8 +10,8 @@ package io.camunda.zeebe.backup.processing;
 import io.camunda.zeebe.backup.api.BackupManager;
 import io.camunda.zeebe.backup.api.CheckpointListener;
 import io.camunda.zeebe.backup.metrics.CheckpointMetrics;
-import io.camunda.zeebe.backup.processing.state.CheckpointState;
-import io.camunda.zeebe.backup.processing.state.DbCheckpointState;
+import io.camunda.zeebe.backup.processing.state.LatestCheckpointState;
+import io.camunda.zeebe.backup.processing.state.DbLatestCheckpointState;
 import io.camunda.zeebe.protocol.impl.record.value.management.CheckpointRecord;
 import io.camunda.zeebe.protocol.record.ValueType;
 import io.camunda.zeebe.protocol.record.intent.management.CheckpointIntent;
@@ -45,7 +45,7 @@ public final class CheckpointRecordsProcessor
   // thread safe collection
   private final Set<CheckpointListener> checkpointListeners = new CopyOnWriteArraySet<>();
   private final CheckpointMetrics metrics;
-  private DbCheckpointState checkpointState;
+  private DbLatestCheckpointState checkpointState;
   private ProcessingScheduleService executor;
 
   public CheckpointRecordsProcessor(
@@ -58,7 +58,7 @@ public final class CheckpointRecordsProcessor
   public void init(final RecordProcessorContext recordProcessorContext) {
     executor = recordProcessorContext.getScheduleService();
     checkpointState =
-        new DbCheckpointState(
+        new DbLatestCheckpointState(
             recordProcessorContext.getZeebeDb(), recordProcessorContext.getTransactionContext());
 
     checkpointCreateProcessor =
@@ -66,10 +66,10 @@ public final class CheckpointRecordsProcessor
     checkpointCreatedEventApplier =
         new CheckpointCreatedEventApplier(checkpointState, checkpointListeners, metrics);
 
-    final long checkpointId = checkpointState.getCheckpointId();
-    if (checkpointId != CheckpointState.NO_CHECKPOINT) {
+    final long checkpointId = checkpointState.getLatestCheckpointId();
+    if (checkpointId != LatestCheckpointState.NO_CHECKPOINT) {
       checkpointListeners.forEach(listener -> listener.onNewCheckpointCreated(checkpointId));
-      metrics.setCheckpointId(checkpointId, checkpointState.getCheckpointPosition());
+      metrics.setCheckpointId(checkpointId, checkpointState.getLatestCheckpointPosition());
     }
 
     recordProcessorContext.addLifecycleListeners(List.of(this));
@@ -137,9 +137,9 @@ public final class CheckpointRecordsProcessor
       executor.runDelayed(
           Duration.ZERO,
           () -> {
-            final var checkpointId = checkpointState.getCheckpointId();
-            if (checkpointId != CheckpointState.NO_CHECKPOINT) {
-              checkpointListener.onNewCheckpointCreated(checkpointState.getCheckpointId());
+            final var checkpointId = checkpointState.getLatestCheckpointId();
+            if (checkpointId != LatestCheckpointState.NO_CHECKPOINT) {
+              checkpointListener.onNewCheckpointCreated(checkpointState.getLatestCheckpointId());
             }
           });
     }
@@ -150,6 +150,6 @@ public final class CheckpointRecordsProcessor
     // After a leader change, the new leader will not continue taking the backup initiated by
     // previous leader. So mark them as failed, so that the users do not wait forever for it to be
     // completed.
-    backupManager.failInProgressBackup(checkpointState.getCheckpointId());
+    backupManager.failInProgressBackup(checkpointState.getLatestCheckpointId());
   }
 }

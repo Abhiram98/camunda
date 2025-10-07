@@ -10,7 +10,7 @@ package io.camunda.zeebe.backup.processing;
 import io.camunda.zeebe.backup.api.BackupManager;
 import io.camunda.zeebe.backup.api.CheckpointListener;
 import io.camunda.zeebe.backup.metrics.CheckpointMetrics;
-import io.camunda.zeebe.backup.processing.state.CheckpointState;
+import io.camunda.zeebe.backup.processing.state.LatestCheckpointState;
 import io.camunda.zeebe.protocol.impl.record.RecordMetadata;
 import io.camunda.zeebe.protocol.impl.record.value.management.CheckpointRecord;
 import io.camunda.zeebe.protocol.record.RecordType;
@@ -23,7 +23,7 @@ import io.camunda.zeebe.stream.api.records.TypedRecord;
 import java.util.Set;
 
 public final class CheckpointCreateProcessor {
-  private final CheckpointState checkpointState;
+  private final LatestCheckpointState checkpointState;
   private final BackupManager backupManager;
 
   private final Set<CheckpointListener> listeners;
@@ -31,7 +31,7 @@ public final class CheckpointCreateProcessor {
   private final CheckpointMetrics metrics;
 
   public CheckpointCreateProcessor(
-      final CheckpointState checkpointState,
+      final LatestCheckpointState checkpointState,
       final BackupManager backupManager,
       final Set<CheckpointListener> listeners,
       final CheckpointMetrics metrics) {
@@ -46,11 +46,11 @@ public final class CheckpointCreateProcessor {
 
     final var checkpointRecord = record.getValue();
     final long checkpointId = checkpointRecord.getCheckpointId();
-    if (checkpointState.getCheckpointId() < checkpointId) {
+    if (checkpointState.getLatestCheckpointId() < checkpointId) {
       // Only take a checkpoint if it is newer
       final var checkpointPosition = record.getPosition();
       backupManager.takeBackup(checkpointId, checkpointPosition);
-      checkpointState.setCheckpointInfo(checkpointId, checkpointPosition);
+      checkpointState.setLatestCheckpointInfo(checkpointId, checkpointPosition);
 
       // Notify listeners immediately
       listeners.forEach(l -> l.onNewCheckpointCreated(checkpointId));
@@ -72,8 +72,8 @@ public final class CheckpointCreateProcessor {
           record,
           CheckpointIntent.IGNORED,
           new CheckpointRecord()
-              .setCheckpointId(checkpointState.getCheckpointId())
-              .setCheckpointPosition(checkpointState.getCheckpointPosition()),
+              .setCheckpointId(checkpointState.getLatestCheckpointId())
+              .setCheckpointPosition(checkpointState.getLatestCheckpointPosition()),
           resultBuilder);
     }
   }

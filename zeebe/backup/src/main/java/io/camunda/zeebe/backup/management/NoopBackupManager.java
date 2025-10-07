@@ -9,7 +9,7 @@ package io.camunda.zeebe.backup.management;
 
 import io.camunda.zeebe.backup.api.BackupManager;
 import io.camunda.zeebe.backup.api.BackupStatus;
-import io.camunda.zeebe.backup.processing.state.CheckpointState;
+import io.camunda.zeebe.backup.processing.state.LatestCheckpointState;
 import io.camunda.zeebe.scheduler.future.ActorFuture;
 import io.camunda.zeebe.scheduler.future.CompletableActorFuture;
 import java.util.Collection;
@@ -60,7 +60,7 @@ public class NoopBackupManager implements BackupManager {
 
   @Override
   public void failInProgressBackup(final long lastCheckpointId) {
-    if (lastCheckpointId == CheckpointState.NO_CHECKPOINT) {
+    if (lastCheckpointId == LatestCheckpointState.NO_CHECKPOINT) {
       return;
     }
     LOG.warn("Attempted to update in progress backup, but cannot do it. {}", errorMessage);
