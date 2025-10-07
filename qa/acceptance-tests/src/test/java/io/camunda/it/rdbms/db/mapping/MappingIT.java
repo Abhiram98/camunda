@@ -19,7 +19,7 @@ import io.camunda.it.rdbms.db.fixtures.MappingFixtures;
 import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtension;
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.filter.MappingFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.MappingQuery;
 import io.camunda.search.sort.MappingSort;
 import org.junit.jupiter.api.Tag;
@@ -87,7 +87,7 @@ public class MappingIT {
                 new MappingQuery(
                     new MappingFilter.Builder().claimName(randomizedMapping.claimName()).build(),
                     MappingSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     // Verify the search result
     assertThat(searchResult).isNotNull();
@@ -115,7 +115,7 @@ public class MappingIT {
                 new MappingQuery(
                     new MappingFilter.Builder().claimValue(randomizedMapping.claimValue()).build(),
                     MappingSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     // Verify the search result
     assertThat(searchResult).isNotNull();
@@ -141,7 +141,7 @@ public class MappingIT {
                 new MappingQuery(
                     new MappingFilter.Builder().claimName(claimName).build(),
                     MappingSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(5))));
+                    QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -171,7 +171,7 @@ public class MappingIT {
                     .name(randomizedMapping.name())
                     .build(),
                 MappingSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);

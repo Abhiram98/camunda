@@ -23,7 +23,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.VariableEntity;
 import io.camunda.search.filter.VariableFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.VariableQuery;
 import io.camunda.search.sort.VariableSort;
 import java.time.OffsetDateTime;
@@ -108,7 +108,7 @@ public class VariableIT {
                         .processInstanceKeys(randomizedVariable.processInstanceKey())
                         .build(),
                     VariableSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -134,7 +134,7 @@ public class VariableIT {
                 new VariableQuery(
                     new VariableFilter.Builder().names(varName).build(),
                     VariableSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(5))));
+                    QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -156,7 +156,7 @@ public class VariableIT {
                 new VariableQuery(
                     new VariableFilter.Builder().names(varName).build(),
                     VariableSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(null).size(null))));
+                    QueryPage.of(b -> b.from(null).size(null))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -184,7 +184,7 @@ public class VariableIT {
                     .tenantIds(randomizedVariable.tenantId())
                     .build(),
                 VariableSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -218,7 +218,7 @@ public class VariableIT {
                 b ->
                     b.filter(f -> f.names(varName))
                         .sort(sort)
-                        .page(p -> p.size(5).searchAfter(firstPage.searchAfterCursor()))));
+                        .page(p -> p.size(5).after(firstPage.searchAfterCursor()))));
 
     assertThat(nextPage.total()).isEqualTo(20);
     assertThat(nextPage.items()).hasSize(5);

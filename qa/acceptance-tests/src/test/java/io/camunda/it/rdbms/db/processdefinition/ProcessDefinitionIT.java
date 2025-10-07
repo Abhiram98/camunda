@@ -18,7 +18,7 @@ import io.camunda.it.rdbms.db.fixtures.ProcessDefinitionFixtures;
 import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtension;
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.filter.ProcessDefinitionFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.ProcessDefinitionQuery;
 import io.camunda.search.sort.ProcessDefinitionSort;
 import java.time.OffsetDateTime;
@@ -74,7 +74,7 @@ public class ProcessDefinitionIT {
                     .processDefinitionIds("test-process-unique")
                     .build(),
                 ProcessDefinitionSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(10))));
+                QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -108,7 +108,7 @@ public class ProcessDefinitionIT {
                     .processDefinitionIds(processDefinitionId)
                     .build(),
                 ProcessDefinitionSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -130,7 +130,7 @@ public class ProcessDefinitionIT {
             new ProcessDefinitionQuery(
                 new ProcessDefinitionFilter.Builder().build(),
                 ProcessDefinitionSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(null).size(null))));
+                QueryPage.of(b -> b.from(null).size(null))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isGreaterThanOrEqualTo(20);
@@ -162,7 +162,7 @@ public class ProcessDefinitionIT {
                     .tenantIds(processDefinition.tenantId())
                     .build(),
                 ProcessDefinitionSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -203,7 +203,7 @@ public class ProcessDefinitionIT {
                 b ->
                     b.filter(f -> f.versionTags("search-after-123456"))
                         .sort(sort)
-                        .page(p -> p.size(5).searchAfter(firstPage.searchAfterCursor()))));
+                        .page(p -> p.size(5).after(firstPage.searchAfterCursor()))));
 
     assertThat(nextPage.total()).isEqualTo(20);
     assertThat(nextPage.items()).hasSize(5);

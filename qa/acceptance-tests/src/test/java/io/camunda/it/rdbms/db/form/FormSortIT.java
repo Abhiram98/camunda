@@ -17,7 +17,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.FormEntity;
 import io.camunda.search.filter.FormFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.FormQuery;
 import io.camunda.search.sort.FormSort;
 import java.util.Comparator;
@@ -43,7 +43,7 @@ public class FormSortIT {
                 b ->
                     b.filter(new FormFilter.Builder().formIds(id).build())
                         .sort(FormSort.of(s -> s.version().asc()))
-                        .page(SearchQueryPage.of(p -> p.from(0).size(10)))));
+                        .page(QueryPage.of(p -> p.from(0).size(10)))));
 
     assertThat(searchResult.items()).isSortedAccordingTo(Comparator.comparing(FormEntity::version));
   }
@@ -62,7 +62,7 @@ public class FormSortIT {
                 b ->
                     b.filter(new FormFilter.Builder().formIds(id).build())
                         .sort(FormSort.of(s -> s.version().desc()))
-                        .page(SearchQueryPage.of(p -> p.from(0).size(10)))));
+                        .page(QueryPage.of(p -> p.from(0).size(10)))));
 
     assertThat(searchResult.items())
         .isSortedAccordingTo(Comparator.comparing(FormEntity::version).reversed());

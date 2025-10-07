@@ -20,7 +20,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.TenantEntity;
 import io.camunda.search.filter.TenantFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.TenantQuery;
 import io.camunda.search.sort.TenantSort;
 import io.camunda.search.sort.TenantSort.Builder;
@@ -106,7 +106,7 @@ public class TenantSortIT {
                 new TenantQuery(
                     TenantFilter.of(aggregatorFilterFunction),
                     TenantSort.of(sortBuilder),
-                    SearchQueryPage.of(b -> b)))
+                    QueryPage.of(b -> b)))
             .items();
 
     assertThat(searchResult).hasSizeGreaterThanOrEqualTo(20);

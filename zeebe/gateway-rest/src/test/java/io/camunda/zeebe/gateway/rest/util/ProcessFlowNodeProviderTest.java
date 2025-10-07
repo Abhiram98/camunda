@@ -16,7 +16,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import io.camunda.search.entities.ProcessDefinitionEntity;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.ProcessDefinitionQuery;
 import io.camunda.search.query.SearchQueryResult;
 import io.camunda.service.ProcessDefinitionServices;
@@ -207,6 +207,6 @@ class ProcessElementProviderTest {
     final var actualQuery = searchRequestCaptor.getValue();
     assertThat(actualQuery.filter().processDefinitionKeys()).hasSize(3);
     assertThat(actualQuery.filter().processDefinitionKeys()).containsOnly(PROC_DEF_KEY, 2L, 3L);
-    assertThat(actualQuery.page()).isEqualTo(new SearchQueryPage.Builder().size(3).build());
+    assertThat(actualQuery.page()).isEqualTo(new QueryPage.Builder().size(3).build());
   }
 }

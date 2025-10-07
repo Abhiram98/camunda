@@ -9,7 +9,7 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.FilterBuilders;
 import io.camunda.search.filter.SequenceFlowFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.NoSort;
 import io.camunda.search.sort.SearchSortOptions;
 import io.camunda.util.ObjectBuilder;
@@ -35,8 +35,8 @@ public record SequenceFlowQuery(SequenceFlowFilter filter)
   }
 
   @Override
-  public SearchQueryPage page() {
-    return SearchQueryPage.DEFAULT;
+  public QueryPage page() {
+    return QueryPage.DEFAULT;
   }
 
   public static final class Builder extends AbstractQueryBuilder<Builder>

@@ -7,35 +7,35 @@
  */
 package io.camunda.search.query;
 
-import io.camunda.search.page.SearchQueryPage;
-import io.camunda.search.page.SearchQueryPageBuilders;
+import io.camunda.search.page.QueryPage;
+import io.camunda.search.page.QueryPageBuilders;
 import io.camunda.util.ObjectBuilder;
 import java.util.Objects;
 import java.util.function.Function;
 
 public interface SearchQueryBase {
 
-  SearchQueryPage page();
+  QueryPage page();
 
   public abstract static class AbstractQueryBuilder<T extends AbstractQueryBuilder<T>> {
 
-    private static final SearchQueryPage DEFAULT_PAGE = SearchQueryPage.of((b) -> b);
+    private static final QueryPage DEFAULT_PAGE = QueryPage.of((b) -> b);
 
-    private SearchQueryPage page;
+    private QueryPage page;
 
     protected abstract T self();
 
-    protected SearchQueryPage page() {
+    protected QueryPage page() {
       return Objects.requireNonNullElse(page, DEFAULT_PAGE);
     }
 
-    public T page(final SearchQueryPage value) {
+    public T page(final QueryPage value) {
       page = value;
       return self();
     }
 
-    public T page(final Function<SearchQueryPage.Builder, ObjectBuilder<SearchQueryPage>> fn) {
-      return page(SearchQueryPageBuilders.page(fn));
+    public T page(final Function<QueryPage.Builder, ObjectBuilder<QueryPage>> fn) {
+      return page(QueryPageBuilders.page(fn));
     }
   }
 }

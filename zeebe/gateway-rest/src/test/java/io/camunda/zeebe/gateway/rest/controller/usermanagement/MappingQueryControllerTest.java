@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 
 import io.camunda.search.entities.MappingEntity;
 import io.camunda.search.exception.CamundaSearchException;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.MappingQuery;
 import io.camunda.search.query.SearchQueryResult;
 import io.camunda.search.sort.MappingSort;
@@ -194,7 +194,7 @@ public class MappingQueryControllerTest extends RestControllerTest {
         .search(
             new MappingQuery.Builder()
                 .sort(MappingSort.of(builder -> builder.claimName().asc()))
-                .page(SearchQueryPage.of(builder -> builder.from(20).size(10)))
+                .page(QueryPage.of(builder -> builder.from(20).size(10)))
                 .build());
   }
 
@@ -233,7 +233,7 @@ public class MappingQueryControllerTest extends RestControllerTest {
         .search(
             new MappingQuery.Builder()
                 .sort(MappingSort.of(builder -> builder.name().asc()))
-                .page(SearchQueryPage.of(builder -> builder.from(20).size(10)))
+                .page(QueryPage.of(builder -> builder.from(20).size(10)))
                 .build());
   }
 }

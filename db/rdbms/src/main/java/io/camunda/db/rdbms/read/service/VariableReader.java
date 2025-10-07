@@ -12,7 +12,7 @@ import io.camunda.db.rdbms.sql.VariableMapper;
 import io.camunda.db.rdbms.sql.columns.VariableSearchColumn;
 import io.camunda.search.entities.VariableEntity;
 import io.camunda.search.filter.VariableFilter.Builder;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.SearchQueryResult;
 import io.camunda.search.query.VariableQuery;
 import io.camunda.search.sort.VariableSort;
@@ -36,7 +36,7 @@ public class VariableReader extends AbstractEntityReader<VariableEntity> {
             new VariableQuery(
                 new Builder().variableKeys(key).build(),
                 VariableSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(1))))
+                QueryPage.of(b -> b.from(0).size(1))))
         .items()
         .getFirst();
   }

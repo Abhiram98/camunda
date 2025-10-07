@@ -27,7 +27,7 @@ import io.camunda.search.filter.Operation;
 import io.camunda.search.filter.UntypedOperation;
 import io.camunda.search.filter.UserTaskFilter;
 import io.camunda.search.filter.VariableValueFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.UserTaskQuery;
 import io.camunda.search.sort.UserTaskSort;
 import java.time.OffsetDateTime;
@@ -168,7 +168,7 @@ public class UserTaskIT {
                         .processInstanceKeys(userTask.processInstanceKey())
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -203,7 +203,7 @@ public class UserTaskIT {
                                     .build()))
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -241,7 +241,7 @@ public class UserTaskIT {
                                     .build()))
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -275,7 +275,7 @@ public class UserTaskIT {
                                 new VariableValueFilter.Builder().name("localVariable").build()))
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -297,7 +297,7 @@ public class UserTaskIT {
                 new UserTaskQuery(
                     new UserTaskFilter.Builder().bpmnProcessIds(processDefinitionId).build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(5))));
+                    QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -319,7 +319,7 @@ public class UserTaskIT {
                 new UserTaskQuery(
                     new UserTaskFilter.Builder().bpmnProcessIds(processDefinitionId).build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(null).size(null))));
+                    QueryPage.of(b -> b.from(null).size(null))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -346,7 +346,7 @@ public class UserTaskIT {
                         .creationDateOperations(Operation.gt(creationDate.minusDays(1)))
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -373,7 +373,7 @@ public class UserTaskIT {
                         .completionDateOperations(Operation.gte(completionDate))
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -400,7 +400,7 @@ public class UserTaskIT {
                         .creationDateOperations(Operation.lte(creationDate))
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -427,7 +427,7 @@ public class UserTaskIT {
                         .completionDateOperations(Operation.lt(completionDate.plusDays(1)))
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResultGte.total()).isEqualTo(1);
     assertThat(searchResultGte.items()).hasSize(1);
@@ -452,7 +452,7 @@ public class UserTaskIT {
                         .dueDateOperations(Operation.gt(dueDate.minusDays(1)))
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -475,7 +475,7 @@ public class UserTaskIT {
                 new UserTaskQuery(
                     new UserTaskFilter.Builder().dueDateOperations(Operation.lte(dueDate)).build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -502,7 +502,7 @@ public class UserTaskIT {
                         .followUpDateOperations(Operation.gt(followUpDate.minusDays(1)))
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -529,7 +529,7 @@ public class UserTaskIT {
                         .followUpDateOperations(Operation.lte(followUpDate))
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -556,7 +556,7 @@ public class UserTaskIT {
                         .completionDateOperations(Operation.eq(completionDate))
                         .build(),
                     UserTaskSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResultGte.total()).isEqualTo(1);
     assertThat(searchResultGte.items()).hasSize(1);
@@ -591,7 +591,7 @@ public class UserTaskIT {
                     .tenantIds(userTask.tenantId())
                     .build(),
                 UserTaskSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -627,7 +627,7 @@ public class UserTaskIT {
                 b ->
                     b.filter(f -> f.tenantIds("tenant-1337"))
                         .sort(sort)
-                        .page(p -> p.size(5).searchAfter(firstPage.searchAfterCursor()))));
+                        .page(p -> p.size(5).after(firstPage.searchAfterCursor()))));
 
     assertThat(nextPage.total()).isEqualTo(20);
     assertThat(nextPage.items()).hasSize(5);

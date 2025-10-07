@@ -9,7 +9,7 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.AuthorizationFilter;
 import io.camunda.search.filter.FilterBuilders;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.AuthorizationSort;
 import io.camunda.search.sort.SearchSortOptions;
 import io.camunda.search.sort.SortOptionBuilders;
@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public record AuthorizationQuery(
-    AuthorizationFilter filter, AuthorizationSort sort, SearchQueryPage page)
+    AuthorizationFilter filter, AuthorizationSort sort, QueryPage page)
     implements TypedSearchQuery<AuthorizationFilter, AuthorizationSort> {
   public static AuthorizationQuery of(
       final Function<Builder, ObjectBuilder<AuthorizationQuery>> fn) {

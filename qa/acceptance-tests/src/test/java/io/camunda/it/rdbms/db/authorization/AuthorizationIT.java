@@ -20,7 +20,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.AuthorizationEntity;
 import io.camunda.search.filter.AuthorizationFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.AuthorizationQuery;
 import io.camunda.search.sort.AuthorizationSort;
 import java.time.OffsetDateTime;
@@ -121,7 +121,7 @@ public class AuthorizationIT {
             new AuthorizationQuery(
                 new AuthorizationFilter.Builder().resourceIds(resourceId).build(),
                 AuthorizationSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(10))));
+                QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -145,7 +145,7 @@ public class AuthorizationIT {
             new AuthorizationQuery(
                 new AuthorizationFilter.Builder().ownerType("TEST").build(),
                 AuthorizationSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -173,7 +173,7 @@ public class AuthorizationIT {
                     .resourceIds(authorization.resourceId())
                     .build(),
                 AuthorizationSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -205,7 +205,7 @@ public class AuthorizationIT {
                 b ->
                     b.filter(f -> f.ownerType("ITEST"))
                         .sort(sort)
-                        .page(p -> p.searchAfter(firstPage.searchAfterCursor()))));
+                        .page(p -> p.after(firstPage.searchAfterCursor()))));
 
     assertThat(nextPage.total()).isEqualTo(20);
     assertThat(nextPage.items()).hasSize(5);

@@ -10,14 +10,14 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.FilterBuilders;
 import io.camunda.search.filter.VariableFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.SortOptionBuilders;
 import io.camunda.search.sort.VariableSort;
 import io.camunda.util.ObjectBuilder;
 import java.util.Objects;
 import java.util.function.Function;
 
-public final record VariableQuery(VariableFilter filter, VariableSort sort, SearchQueryPage page)
+public final record VariableQuery(VariableFilter filter, VariableSort sort, QueryPage page)
     implements TypedSearchQuery<VariableFilter, VariableSort> {
 
   public static VariableQuery of(final Function<Builder, ObjectBuilder<VariableQuery>> fn) {

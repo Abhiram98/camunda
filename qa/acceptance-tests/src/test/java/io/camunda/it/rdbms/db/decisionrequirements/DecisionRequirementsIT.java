@@ -18,7 +18,7 @@ import io.camunda.it.rdbms.db.fixtures.DecisionRequirementsFixtures;
 import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtension;
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.filter.DecisionRequirementsFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.DecisionRequirementsQuery;
 import io.camunda.search.result.DecisionRequirementsQueryResultConfig;
 import io.camunda.search.sort.DecisionRequirementsSort;
@@ -79,7 +79,7 @@ public class DecisionRequirementsIT {
                     .decisionRequirementsIds("test-process-unique")
                     .build(),
                 DecisionRequirementsSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(10)),
+                QueryPage.of(b -> b.from(0).size(10)),
                 DecisionRequirementsQueryResultConfig.of(b -> b.includeXml(true))));
 
     assertThat(searchResult).isNotNull();
@@ -116,7 +116,7 @@ public class DecisionRequirementsIT {
                     .decisionRequirementsIds(decisionRequirementsId)
                     .build(),
                 DecisionRequirementsSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5)),
+                QueryPage.of(b -> b.from(0).size(5)),
                 null));
 
     assertThat(searchResult).isNotNull();
@@ -155,7 +155,7 @@ public class DecisionRequirementsIT {
                     .decisionRequirementsKeys(decisionRequirements.decisionRequirementsKey())
                     .build(),
                 DecisionRequirementsSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5)),
+                QueryPage.of(b -> b.from(0).size(5)),
                 null));
 
     assertThat(searchResult.total()).isEqualTo(1);
@@ -193,7 +193,7 @@ public class DecisionRequirementsIT {
                 b ->
                     b.filter(f -> f.tenantIds("search-after-123456"))
                         .sort(sort)
-                        .page(p -> p.size(5).searchAfter(firstPage.searchAfterCursor()))));
+                        .page(p -> p.size(5).after(firstPage.searchAfterCursor()))));
 
     assertThat(nextPage.total()).isEqualTo(20);
     assertThat(nextPage.items()).hasSize(5);

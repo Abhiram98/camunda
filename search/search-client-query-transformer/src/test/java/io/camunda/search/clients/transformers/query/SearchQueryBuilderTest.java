@@ -10,7 +10,7 @@ package io.camunda.search.clients.transformers.query;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.camunda.search.filter.ProcessInstanceFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.ProcessInstanceQuery;
 import io.camunda.search.result.ProcessInstanceQueryResultConfig;
 import io.camunda.search.sort.ProcessInstanceSort;
@@ -22,7 +22,7 @@ public class SearchQueryBuilderTest {
   public void shouldCreateQuery() {
     // given
     final var searchQueryBuilder = new ProcessInstanceQuery.Builder();
-    final var searchQueryPage = new SearchQueryPage.Builder().size(50).build();
+    final var searchQueryPage = new QueryPage.Builder().size(50).build();
     final var searchQuerySort = ProcessInstanceSort.of(builder -> builder.startDate().asc());
     final var searchQueryResultConfig =
         ProcessInstanceQueryResultConfig.of(builder -> builder.onlyKey(true));

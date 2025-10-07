@@ -23,7 +23,7 @@ import io.camunda.it.rdbms.db.fixtures.GroupMemberFixtures;
 import io.camunda.it.rdbms.db.fixtures.TenantFixtures;
 import io.camunda.it.rdbms.db.util.RdbmsTestConfiguration;
 import io.camunda.search.filter.GroupFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.GroupQuery;
 import io.camunda.search.sort.GroupSort;
 import io.camunda.zeebe.protocol.record.value.EntityType;
@@ -79,7 +79,7 @@ public class GroupSpecificFilterIT {
             new GroupQuery(
                 new GroupFilter.Builder().tenantId(tenant.tenantId()).build(),
                 GroupSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
     assertThat(groups.total()).isEqualTo(1);
   }
 
@@ -98,7 +98,7 @@ public class GroupSpecificFilterIT {
     final var searchResult =
         groupReader.search(
             new GroupQuery(
-                filter, GroupSort.of(b -> b), SearchQueryPage.of(b -> b.from(0).size(5))));
+                filter, GroupSort.of(b -> b), QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);

@@ -9,14 +9,14 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.FilterBuilders;
 import io.camunda.search.filter.RoleFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.RoleSort;
 import io.camunda.search.sort.SortOptionBuilders;
 import io.camunda.util.ObjectBuilder;
 import java.util.Objects;
 import java.util.function.Function;
 
-public record RoleQuery(RoleFilter filter, RoleSort sort, SearchQueryPage page)
+public record RoleQuery(RoleFilter filter, RoleSort sort, QueryPage page)
     implements TypedSearchQuery<RoleFilter, RoleSort> {
   public static RoleQuery of(final Function<RoleQuery.Builder, ObjectBuilder<RoleQuery>> fn) {
     return fn.apply(new RoleQuery.Builder()).build();

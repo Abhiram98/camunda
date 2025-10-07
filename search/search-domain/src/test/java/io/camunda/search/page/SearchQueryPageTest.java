@@ -20,7 +20,7 @@ class SearchQueryPageTest {
   @MethodSource
   void sanitize(
       final Integer from, final Integer size, final Integer targetFrom, final Integer targetSize) {
-    final var page = new SearchQueryPage.Builder().from(from).size(size).build();
+    final var page = new QueryPage.Builder().from(from).size(size).build();
 
     assertThat(page.from()).isEqualTo(targetFrom);
     assertThat(page.size()).isEqualTo(targetSize);

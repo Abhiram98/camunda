@@ -9,14 +9,14 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.FilterBuilders;
 import io.camunda.search.filter.TenantFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.SortOptionBuilders;
 import io.camunda.search.sort.TenantSort;
 import io.camunda.util.ObjectBuilder;
 import java.util.Objects;
 import java.util.function.Function;
 
-public record TenantQuery(TenantFilter filter, TenantSort sort, SearchQueryPage page)
+public record TenantQuery(TenantFilter filter, TenantSort sort, QueryPage page)
     implements TypedSearchQuery<TenantFilter, TenantSort> {
 
   public static TenantQuery of(final Function<TenantQuery.Builder, ObjectBuilder<TenantQuery>> fn) {

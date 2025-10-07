@@ -23,7 +23,7 @@ import io.camunda.search.entities.DecisionInstanceEntity.DecisionDefinitionType;
 import io.camunda.search.entities.DecisionInstanceEntity.DecisionInstanceState;
 import io.camunda.search.filter.DecisionInstanceFilter;
 import io.camunda.search.filter.Operation;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.DecisionInstanceQuery;
 import io.camunda.search.sort.DecisionInstanceSort;
 import java.time.OffsetDateTime;
@@ -108,7 +108,7 @@ public class DecisionInstanceSpecificFilterIT {
             new DecisionInstanceQuery(
                 filter,
                 DecisionInstanceSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5)),
+                QueryPage.of(b -> b.from(0).size(5)),
                 null));
 
     assertThat(searchResult.total()).isEqualTo(1);

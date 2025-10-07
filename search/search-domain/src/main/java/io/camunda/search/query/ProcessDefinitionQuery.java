@@ -9,7 +9,7 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.FilterBuilders;
 import io.camunda.search.filter.ProcessDefinitionFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.ProcessDefinitionSort;
 import io.camunda.search.sort.SortOptionBuilders;
 import io.camunda.util.ObjectBuilder;
@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public record ProcessDefinitionQuery(
-    ProcessDefinitionFilter filter, ProcessDefinitionSort sort, SearchQueryPage page)
+    ProcessDefinitionFilter filter, ProcessDefinitionSort sort, QueryPage page)
     implements TypedSearchQuery<ProcessDefinitionFilter, ProcessDefinitionSort> {
 
   public static ProcessDefinitionQuery of(

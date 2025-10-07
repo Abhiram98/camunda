@@ -16,7 +16,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.BatchOperationEntity;
 import io.camunda.search.filter.BatchOperationFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.BatchOperationQuery;
 import io.camunda.search.sort.BatchOperationSort;
 import java.util.Comparator;
@@ -42,7 +42,7 @@ public class BatchOperationSortIT {
                 b ->
                     b.filter(new BatchOperationFilter.Builder().build())
                         .sort(BatchOperationSort.of(s -> s.batchOperationId().asc()))
-                        .page(SearchQueryPage.of(p -> p.from(0).size(10)))));
+                        .page(QueryPage.of(p -> p.from(0).size(10)))));
 
     assertThat(searchResult.items())
         .isSortedAccordingTo(Comparator.comparing(BatchOperationEntity::batchOperationId));

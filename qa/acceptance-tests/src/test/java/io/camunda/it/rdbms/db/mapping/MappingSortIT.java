@@ -17,7 +17,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.MappingEntity;
 import io.camunda.search.filter.MappingFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.MappingQuery;
 import io.camunda.search.sort.MappingSort;
 import java.util.Comparator;
@@ -46,7 +46,7 @@ public class MappingSortIT {
                 new MappingQuery(
                     new MappingFilter.Builder().claimName(claimName).build(),
                     MappingSort.of(b -> b.claimName().asc()),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.items())
@@ -68,7 +68,7 @@ public class MappingSortIT {
                 new MappingQuery(
                     new MappingFilter.Builder().claimName(claimName).build(),
                     MappingSort.of(b -> b.claimName().desc()),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.items())
@@ -90,7 +90,7 @@ public class MappingSortIT {
                 new MappingQuery(
                     new MappingFilter.Builder().claimName(claimName).build(),
                     MappingSort.of(b -> b.claimName().asc()),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.items())
@@ -113,7 +113,7 @@ public class MappingSortIT {
                 new MappingQuery(
                     new MappingFilter.Builder().claimName(claimName).build(),
                     MappingSort.of(b -> b.claimName().desc()),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.items())
@@ -135,7 +135,7 @@ public class MappingSortIT {
                 new MappingQuery(
                     new MappingFilter.Builder().name(name).build(),
                     MappingSort.of(b -> b.name().desc()),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.items())

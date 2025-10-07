@@ -18,7 +18,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.DecisionRequirementsEntity;
 import io.camunda.search.filter.DecisionRequirementsFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.DecisionRequirementsQuery;
 import io.camunda.search.sort.DecisionRequirementsSort;
 import io.camunda.search.sort.DecisionRequirementsSort.Builder;
@@ -119,7 +119,7 @@ public class DecisionRequirementsSortIT {
                 new DecisionRequirementsQuery(
                     new DecisionRequirementsFilter.Builder().tenantIds(tenantId).build(),
                     DecisionRequirementsSort.of(sortBuilder),
-                    SearchQueryPage.of(b -> b),
+                    QueryPage.of(b -> b),
                     null))
             .items();
 

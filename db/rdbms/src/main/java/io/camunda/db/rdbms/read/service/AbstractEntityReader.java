@@ -15,7 +15,7 @@ import io.camunda.db.rdbms.read.domain.DbQueryPage.KeySetPaginationFieldEntry;
 import io.camunda.db.rdbms.read.domain.DbQueryPage.Operator;
 import io.camunda.db.rdbms.read.domain.DbQuerySorting;
 import io.camunda.db.rdbms.sql.columns.SearchColumn;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.SearchQueryResult;
 import io.camunda.search.sort.SortOption;
 import io.camunda.search.sort.SortOption.FieldSorting;
@@ -70,9 +70,9 @@ abstract class AbstractEntityReader<T> {
     return builder.build();
   }
 
-  public DbQueryPage convertPaging(final DbQuerySorting<T> sort, final SearchQueryPage page) {
+  public DbQueryPage convertPaging(final DbQuerySorting<T> sort, final QueryPage page) {
     List<KeySetPagination> keySetPagination = new ArrayList<>();
-    if (page.searchAfter() != null || page.searchBefore() != null) {
+    if (page.after() != null || page.before() != null) {
       keySetPagination = createKeySetPagination(sort, page);
     }
 
@@ -100,9 +100,9 @@ abstract class AbstractEntityReader<T> {
    * expressions. We do this in Java and not in MyBatis because it is easier to program and to test
    */
   private List<KeySetPagination> createKeySetPagination(
-      final DbQuerySorting<T> sort, final SearchQueryPage page) {
-    final boolean isSearchAfter = page.searchAfter() != null;
-    final var cursorValue = isSearchAfter ? page.searchAfter() : page.searchBefore();
+      final DbQuerySorting<T> sort, final QueryPage page) {
+    final boolean isSearchAfter = page.after() != null;
+    final var cursorValue = isSearchAfter ? page.after() : page.before();
     final Object[] sortValues = Cursor.decode(cursorValue, sort.columns());
     final List<KeySetPagination> keySetPagination = new ArrayList<>();
 

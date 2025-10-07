@@ -9,7 +9,7 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.BatchOperationItemFilter;
 import io.camunda.search.filter.FilterBuilders;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.BatchOperationItemSort;
 import io.camunda.search.sort.SortOptionBuilders;
 import io.camunda.util.ObjectBuilder;
@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public record BatchOperationItemQuery(
-    BatchOperationItemFilter filter, BatchOperationItemSort sort, SearchQueryPage page)
+    BatchOperationItemFilter filter, BatchOperationItemSort sort, QueryPage page)
     implements TypedSearchQuery<BatchOperationItemFilter, BatchOperationItemSort> {
 
   public static BatchOperationItemQuery of(
