@@ -135,7 +135,7 @@ public class TenantRemoveEntityProcessor implements DistributedTypedRecordProces
 
   private boolean isInternalGroupsEnabled(final TypedRecord<TenantRecord> command) {
     return Boolean.getBoolean(
-        (String) command.getAuthorizations().get(Authorization.INTERNAL_GROUPS_ENABLED));
+        (String) command.getAuthorizations().get(Authorization.GROUPS_CLAIM_ENABLED));
   }
 
   private void createEntityNotExistRejectCommand(

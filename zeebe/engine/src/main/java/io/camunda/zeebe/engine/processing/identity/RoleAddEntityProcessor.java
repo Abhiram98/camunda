@@ -146,7 +146,7 @@ public class RoleAddEntityProcessor implements DistributedTypedRecordProcessor<R
 
   private boolean isInternalGroupsEnabled(final TypedRecord<RoleRecord> command) {
     return Boolean.getBoolean(
-        (String) command.getAuthorizations().get(Authorization.INTERNAL_GROUPS_ENABLED));
+        (String) command.getAuthorizations().get(Authorization.GROUPS_CLAIM_ENABLED));
   }
 
   private boolean isEntityAssigned(final RoleRecord record) {
