@@ -13,47 +13,47 @@ import io.camunda.zeebe.msgpack.property.LongProperty;
 import io.camunda.zeebe.protocol.impl.record.UnifiedRecordValue;
 import io.camunda.zeebe.protocol.record.ValueType;
 import io.camunda.zeebe.protocol.record.intent.Intent;
-import io.camunda.zeebe.protocol.record.value.AsyncRequestMetadataRecordValue;
+import io.camunda.zeebe.protocol.record.value.AsyncScopeMetadataRecordValue;
 
-public final class AsyncRequestMetadataRecord extends UnifiedRecordValue
-    implements AsyncRequestMetadataRecordValue {
+public final class AsyncScopeMetadataRecord extends UnifiedRecordValue
+    implements AsyncScopeMetadataRecordValue {
 
-  private final LongProperty requestKeyProperty = new LongProperty("requestKey", -1);
+  private final LongProperty scopeKeyProperty = new LongProperty("requestKey", -1);
   private final EnumProperty<ValueType> valueTypeProperty =
       new EnumProperty<>("valueType", ValueType.class, ValueType.NULL_VAL);
   private final IntegerProperty intentProperty = new IntegerProperty("intent", Intent.NULL_VAL);
-  private final LongProperty requestIdProperty = new LongProperty("requestId", -1);
-  private final IntegerProperty requestStreamIdProperty =
+  private final LongProperty scopeIdProperty = new LongProperty("requestId", -1);
+  private final IntegerProperty scopeStreamIdProperty =
       new IntegerProperty("requestStreamId", -1);
   private final LongProperty operationReferenceProperty =
       new LongProperty("operationReference", -1);
 
-  public AsyncRequestMetadataRecord() {
+  public AsyncScopeMetadataRecord() {
     super(6);
-    declareProperty(requestKeyProperty)
+    declareProperty(scopeKeyProperty)
         .declareProperty(valueTypeProperty)
         .declareProperty(intentProperty)
-        .declareProperty(requestIdProperty)
-        .declareProperty(requestStreamIdProperty)
+        .declareProperty(scopeIdProperty)
+        .declareProperty(scopeStreamIdProperty)
         .declareProperty(operationReferenceProperty);
   }
 
-  public void wrap(final AsyncRequestMetadataRecord record) {
-    requestKeyProperty.setValue(record.getRequestKey());
+  public void wrap(final AsyncScopeMetadataRecord record) {
+    scopeKeyProperty.setValue(record.getScopeKey());
     valueTypeProperty.setValue(record.getValueType());
     intentProperty.setValue(record.getIntent().value());
-    requestIdProperty.setValue(record.getRequestId());
-    requestStreamIdProperty.setValue(record.getRequestStreamId());
+    scopeIdProperty.setValue(record.getScopeId());
+    scopeStreamIdProperty.setValue(record.getScopeStreamId());
     operationReferenceProperty.setValue(record.getOperationReference());
   }
 
   @Override
-  public long getRequestKey() {
-    return requestKeyProperty.getValue();
+  public long getScopeKey() {
+    return scopeKeyProperty.getValue();
   }
 
-  public AsyncRequestMetadataRecord setRequestKey(final long requestKey) {
-    requestKeyProperty.setValue(requestKey);
+  public AsyncScopeMetadataRecord setScopeKey(final long scopeKey) {
+    scopeKeyProperty.setValue(scopeKey);
     return this;
   }
 
@@ -62,7 +62,7 @@ public final class AsyncRequestMetadataRecord extends UnifiedRecordValue
     return valueTypeProperty.getValue();
   }
 
-  public AsyncRequestMetadataRecord setValueType(final ValueType valueType) {
+  public AsyncScopeMetadataRecord setValueType(final ValueType valueType) {
     valueTypeProperty.setValue(valueType);
     return this;
   }
@@ -72,7 +72,7 @@ public final class AsyncRequestMetadataRecord extends UnifiedRecordValue
     return getIntent(intentProperty.getValue());
   }
 
-  public AsyncRequestMetadataRecord setIntent(final Intent intent) {
+  public AsyncScopeMetadataRecord setIntent(final Intent intent) {
     intentProperty.setValue(intent.value());
     return this;
   }
@@ -88,22 +88,22 @@ public final class AsyncRequestMetadataRecord extends UnifiedRecordValue
   }
 
   @Override
-  public long getRequestId() {
-    return requestIdProperty.getValue();
+  public long getScopeId() {
+    return scopeIdProperty.getValue();
   }
 
-  public AsyncRequestMetadataRecord setRequestId(final long requestId) {
-    requestIdProperty.setValue(requestId);
+  public AsyncScopeMetadataRecord setScopeId(final long scopeId) {
+    scopeIdProperty.setValue(scopeId);
     return this;
   }
 
   @Override
-  public int getRequestStreamId() {
-    return requestStreamIdProperty.getValue();
+  public int getScopeStreamId() {
+    return scopeStreamIdProperty.getValue();
   }
 
-  public AsyncRequestMetadataRecord setRequestStreamId(final int requestStreamId) {
-    requestStreamIdProperty.setValue(requestStreamId);
+  public AsyncScopeMetadataRecord setScopeStreamId(final int scopeStreamId) {
+    scopeStreamIdProperty.setValue(scopeStreamId);
     return this;
   }
 
@@ -112,7 +112,7 @@ public final class AsyncRequestMetadataRecord extends UnifiedRecordValue
     return operationReferenceProperty.getValue();
   }
 
-  public AsyncRequestMetadataRecord setOperationReference(final long operationReference) {
+  public AsyncScopeMetadataRecord setOperationReference(final long operationReference) {
     operationReferenceProperty.setValue(operationReference);
     return this;
   }
