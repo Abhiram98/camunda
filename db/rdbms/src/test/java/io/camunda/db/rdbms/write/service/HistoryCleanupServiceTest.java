@@ -68,7 +68,7 @@ class HistoryCleanupServiceTest {
 
     when(config.defaultHistoryTTL()).thenReturn(Duration.ofDays(90));
     when(config.cancelProcessInstanceHistoryTTL()).thenReturn(Duration.ofDays(2));
-    when(config.migrateProcessInstanceHistoryTTL()).thenReturn(Duration.ofDays(3));
+    when(config.batchOperationMigrateProcessInstanceHistoryTTL()).thenReturn(Duration.ofDays(3));
     when(config.modifyProcessInstanceHistoryTTL()).thenReturn(Duration.ofDays(4));
     when(config.resolveIncidentHistoryTTL()).thenReturn(Duration.ofDays(5));
     when(config.minHistoryCleanupInterval()).thenReturn(Duration.ofHours(1));

@@ -62,7 +62,7 @@ public class HistoryCleanupService {
 
     defaultHistoryTTL = config.defaultHistoryTTL();
     cancelProcessInstanceHistoryTTL = config.cancelProcessInstanceHistoryTTL();
-    migrateProcessInstanceHistoryTTL = config.migrateProcessInstanceHistoryTTL();
+    migrateProcessInstanceHistoryTTL = config.batchOperationMigrateProcessInstanceHistoryTTL();
     modifyProcessInstanceHistoryTTL = config.modifyProcessInstanceHistoryTTL();
     resolveIncidentHistoryTTL = config.resolveIncidentHistoryTTL();
     minCleanupInterval = config.minHistoryCleanupInterval();
