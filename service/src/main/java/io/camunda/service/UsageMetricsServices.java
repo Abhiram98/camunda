@@ -39,9 +39,9 @@ public final class UsageMetricsServices
     final long assignees =
         executeSearchRequest(() -> usageMetricsSearchClient.countAssignees(query));
     final long processInstances =
-        executeSearchRequest(() -> usageMetricsSearchClient.countProcessInstances(query));
+        executeSearchRequest(() -> usageMetricsSearchClient.usageMetricProcessInstances(query));
     final long decisionInstances =
-        executeSearchRequest(() -> usageMetricsSearchClient.countDecisionInstances(query));
+        executeSearchRequest(() -> usageMetricsSearchClient.usageMetricDecisionInstances(query));
     return SearchQueryResult.of(
         new UsageMetricsCount(assignees, processInstances, decisionInstances));
   }
