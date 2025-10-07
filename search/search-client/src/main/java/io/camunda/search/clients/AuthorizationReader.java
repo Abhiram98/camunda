@@ -12,9 +12,9 @@ import io.camunda.search.query.AuthorizationQuery;
 import io.camunda.search.query.SearchQueryResult;
 import io.camunda.security.auth.SecurityContext;
 
-public interface AuthorizationSearchClient {
+public interface AuthorizationReader {
 
   SearchQueryResult<AuthorizationEntity> searchAuthorizations(AuthorizationQuery filter);
 
-  AuthorizationSearchClient withSecurityContext(SecurityContext securityContext);
+  AuthorizationReader withSecurityContext(SecurityContext securityContext);
 }

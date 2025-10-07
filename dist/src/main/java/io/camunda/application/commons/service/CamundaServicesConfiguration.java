@@ -9,7 +9,7 @@ package io.camunda.application.commons.service;
 
 import io.camunda.document.store.EnvironmentConfigurationLoader;
 import io.camunda.document.store.SimpleDocumentStoreRegistry;
-import io.camunda.search.clients.AuthorizationSearchClient;
+import io.camunda.search.clients.AuthorizationReader;
 import io.camunda.search.clients.BatchOperationSearchClient;
 import io.camunda.search.clients.DecisionDefinitionSearchClient;
 import io.camunda.search.clients.DecisionInstanceSearchClient;
@@ -257,7 +257,7 @@ public class CamundaServicesConfiguration {
   public AuthorizationServices authorizationServices(
       final BrokerClient brokerClient,
       final SecurityContextProvider securityContextProvider,
-      final AuthorizationSearchClient authorizationSearchClient,
+      final AuthorizationReader authorizationSearchClient,
       final SecurityConfiguration securityConfiguration) {
     return new AuthorizationServices(
         brokerClient,
@@ -329,7 +329,7 @@ public class CamundaServicesConfiguration {
 
   @Bean
   public AuthorizationChecker authorizationChecker(
-      final AuthorizationSearchClient authorizationSearchClient) {
+      final AuthorizationReader authorizationSearchClient) {
     return new AuthorizationChecker(authorizationSearchClient);
   }
 
