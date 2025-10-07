@@ -9,7 +9,7 @@ package io.camunda.zeebe.broker.partitioning.scaling;
 
 import io.camunda.zeebe.broker.client.api.BrokerClient;
 import io.camunda.zeebe.broker.client.api.BrokerErrorException;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.dto.BrokerResponse;
 import io.camunda.zeebe.broker.partitioning.scaling.snapshot.SnapshotRequest.DeleteSnapshotForBootstrapRequest;
 import io.camunda.zeebe.broker.transport.snapshotapi.SnapshotBrokerRequest;
@@ -52,7 +52,7 @@ public class BrokerClientPartitionScalingExecutor implements PartitionScalingCha
           result.complete(null);
         },
         error -> {
-          if (error instanceof final BrokerRejectionException rejection
+          if (error instanceof final ServiceRejectionException rejection
               && rejection.getRejection().type() == RejectionType.ALREADY_EXISTS) {
             LOGGER.debug("Scale up request already succeeded before", rejection);
             result.complete(null);
@@ -89,7 +89,7 @@ public class BrokerClientPartitionScalingExecutor implements PartitionScalingCha
                 new BrokerErrorException(response.getError()));
           } else if (response.isRejection()) {
             return CompletableActorFuture.completedExceptionally(
-                new BrokerRejectionException(response.getRejection()));
+                new ServiceRejectionException(response.getRejection()));
           } else {
             return CompletableActorFuture.completed();
           }
@@ -135,7 +135,7 @@ public class BrokerClientPartitionScalingExecutor implements PartitionScalingCha
           }
         },
         error -> {
-          if (error instanceof final BrokerRejectionException rejection
+          if (error instanceof final ServiceRejectionException rejection
               && rejection.getRejection().type() == RejectionType.INVALID_ARGUMENT) {
             LOGGER.debug("Await redistribution request is invalid", rejection);
             result.complete(null);
@@ -157,7 +157,7 @@ public class BrokerClientPartitionScalingExecutor implements PartitionScalingCha
         request,
         (key, response) -> future.complete(null),
         error -> {
-          if (error instanceof final BrokerRejectionException rejection
+          if (error instanceof final ServiceRejectionException rejection
               && rejection.getRejection().type() == RejectionType.INVALID_ARGUMENT) {
             // complete the future, retrying will not fix the issue and no cluster change operation
             // can occur

@@ -10,7 +10,7 @@ package io.camunda.zeebe.it.gateway;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.camunda.zeebe.broker.client.api.BrokerClient;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.dto.BrokerRejection;
 import io.camunda.zeebe.gateway.impl.broker.request.BrokerCreateProcessInstanceRequest;
 import io.camunda.zeebe.protocol.record.RejectionType;
@@ -51,8 +51,8 @@ final class GatewayIntegrationTest {
     // then
     latch.await();
     final var error = errorResponse.get();
-    assertThat(error).isInstanceOf(BrokerRejectionException.class);
-    final BrokerRejection rejection = ((BrokerRejectionException) error).getRejection();
+    assertThat(error).isInstanceOf(ServiceRejectionException.class);
+    final BrokerRejection rejection = ((ServiceRejectionException) error).getRejection();
     assertThat(rejection.type()).isEqualTo(RejectionType.INVALID_ARGUMENT);
     assertThat(rejection.reason())
         .isEqualTo("Expected at least a bpmnProcessId or a key greater than -1, but none given");

@@ -7,8 +7,6 @@
  */
 package io.camunda.tasklist.webapp.service;
 
-import static io.camunda.tasklist.webapp.util.ErrorHandlingUtils.getErrorMessageFromBrokerException;
-
 import io.camunda.client.impl.command.StreamUtil;
 import io.camunda.security.auth.CamundaAuthentication;
 import io.camunda.security.auth.CamundaAuthenticationProvider;
@@ -26,10 +24,11 @@ import io.camunda.tasklist.webapp.rest.exception.ForbiddenActionException;
 import io.camunda.tasklist.webapp.rest.exception.InvalidRequestException;
 import io.camunda.tasklist.webapp.rest.exception.NotFoundApiException;
 import io.camunda.tasklist.webapp.tenant.TenantService;
+import io.camunda.tasklist.webapp.util.ErrorHandlingUtils;
 import io.camunda.tasklist.zeebe.TasklistServicesAdapter;
 import io.camunda.webapps.schema.entities.usertask.TaskEntity;
 import io.camunda.zeebe.broker.client.api.BrokerErrorException;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.gateway.rest.validator.MultiTenancyValidator;
 import io.camunda.zeebe.protocol.impl.record.value.processinstance.ProcessInstanceCreationRecord;
 import io.camunda.zeebe.protocol.record.ErrorCode;
@@ -252,7 +251,7 @@ public class CamundaServicesBasedAdapter implements TasklistServicesAdapter {
   }
 
   private RuntimeException mapCamundaBrokerException(final CamundaBrokerException exception) {
-    if (exception.getCause() instanceof final BrokerRejectionException brokerRejection) {
+    if (exception.getCause() instanceof final ServiceRejectionException brokerRejection) {
       final var rejection = brokerRejection.getRejection();
       final String message =
           String.format(
@@ -272,6 +271,7 @@ public class CamundaServicesBasedAdapter implements TasklistServicesAdapter {
         return new ForbiddenActionException("Process not found", exception);
       }
     }
-    return new TasklistRuntimeException(getErrorMessageFromBrokerException(exception));
+    return new TasklistRuntimeException(
+        ErrorHandlingUtils.getErrorMessageFromServiceException(exception));
   }
 }

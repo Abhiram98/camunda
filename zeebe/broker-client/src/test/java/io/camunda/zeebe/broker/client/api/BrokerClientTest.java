@@ -290,7 +290,7 @@ public final class BrokerClientTest {
         .failsWithin(Duration.ofSeconds(10))
         .withThrowableThat()
         .withCause(
-            new BrokerRejectionException(
+            new ServiceRejectionException(
                 new BrokerRejection(TestCommand.INTENT, 1, RejectionType.INVALID_ARGUMENT, "foo")));
   }
 
@@ -316,7 +316,7 @@ public final class BrokerClientTest {
         .failsWithin(Duration.ofSeconds(10))
         .withThrowableThat()
         .withCause(
-            new BrokerRejectionException(
+            new ServiceRejectionException(
                 new BrokerRejection(TestCommand.INTENT, 1, RejectionType.INVALID_ARGUMENT, "foo")));
   }
 

@@ -10,16 +10,16 @@ package io.camunda.zeebe.broker.client.api;
 import io.camunda.zeebe.broker.client.api.dto.BrokerRejection;
 
 /** A client command was rejected by the broker. */
-public class BrokerRejectionException extends BrokerClientException {
+public class ServiceRejectionException extends BrokerClientException {
   private static final String ERROR_MESSAGE_FORMAT = "Command (%s) rejected (%s): %s";
 
   private final BrokerRejection rejection;
 
-  public BrokerRejectionException(final BrokerRejection rejection) {
+  public ServiceRejectionException(final BrokerRejection rejection) {
     this(rejection, null);
   }
 
-  public BrokerRejectionException(final BrokerRejection rejection, final Throwable cause) {
+  public ServiceRejectionException(final BrokerRejection rejection, final Throwable cause) {
     super(
         String.format(
             ERROR_MESSAGE_FORMAT,

@@ -9,7 +9,7 @@ package io.camunda.zeebe.gateway.impl.job;
 
 import io.camunda.zeebe.broker.client.api.BrokerClient;
 import io.camunda.zeebe.broker.client.api.BrokerErrorException;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.BrokerTopologyManager;
 import io.camunda.zeebe.broker.client.api.dto.BrokerResponse;
 import io.camunda.zeebe.broker.client.impl.PartitionIdIterator;
@@ -263,7 +263,7 @@ public final class RoundRobinActivateJobsHandler<T> implements ActivateJobsHandl
   }
 
   private boolean isRejection(final Throwable error) {
-    return error != null && BrokerRejectionException.class.isAssignableFrom(error.getClass());
+    return error != null && ServiceRejectionException.class.isAssignableFrom(error.getClass());
   }
 
   private boolean wasResourceExhausted(final Throwable error) {

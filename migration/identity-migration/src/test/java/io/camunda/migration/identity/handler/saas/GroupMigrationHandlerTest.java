@@ -27,7 +27,7 @@ import io.camunda.security.auth.CamundaAuthentication;
 import io.camunda.service.GroupServices;
 import io.camunda.service.GroupServices.GroupDTO;
 import io.camunda.service.GroupServices.GroupMemberDTO;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.dto.BrokerRejection;
 import io.camunda.zeebe.protocol.record.RejectionType;
 import io.camunda.zeebe.protocol.record.intent.GroupIntent;
@@ -101,7 +101,7 @@ public class GroupMigrationHandlerTest {
     when(groupService.createGroup(any()))
         .thenReturn(
             CompletableFuture.failedFuture(
-                new BrokerRejectionException(
+                new ServiceRejectionException(
                     new BrokerRejection(
                         GroupIntent.CREATE,
                         -1,
@@ -238,7 +238,7 @@ public class GroupMigrationHandlerTest {
     when(groupService.createGroup(any(GroupDTO.class)))
         .thenReturn(
             CompletableFuture.failedFuture(
-                new BrokerRejectionException(
+                new ServiceRejectionException(
                     new BrokerRejection(
                         GroupIntent.CREATE,
                         -1,
@@ -273,7 +273,7 @@ public class GroupMigrationHandlerTest {
     when(groupService.assignMember(any(GroupMemberDTO.class)))
         .thenReturn(
             CompletableFuture.failedFuture(
-                new BrokerRejectionException(
+                new ServiceRejectionException(
                     new BrokerRejection(
                         GroupIntent.ADD_ENTITY,
                         -1,
