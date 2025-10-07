@@ -109,15 +109,15 @@ public final class EngineErrorHandlingTest {
                     DeploymentIntent.CREATE,
                     new TypedRecordProcessor<DeploymentRecord>() {
                       @Override
-                      public void processRecord(final TypedRecord<DeploymentRecord> record) {
-                        if (record.getKey() == 0) {
+                      public void processRecord(final TypedRecord<DeploymentRecord> usageMetricRecord) {
+                        if (usageMetricRecord.getKey() == 0) {
                           throw new RuntimeException("expected");
                         }
                         processingContext
                             .getWriters()
                             .state()
                             .appendFollowUpEvent(
-                                record.getKey(), DeploymentIntent.CREATED, record.getValue());
+                                usageMetricRecord.getKey(), DeploymentIntent.CREATED, usageMetricRecord.getValue());
                       }
                     }));
 
@@ -387,7 +387,7 @@ public final class EngineErrorHandlingTest {
     final TypedRecordProcessor<JobRecord> errorProneProcessor =
         new TypedRecordProcessor<>() {
           @Override
-          public void processRecord(final TypedRecord<JobRecord> record) {
+          public void processRecord(final TypedRecord<JobRecord> usageMetricRecord) {
             throw new RuntimeException("expected");
           }
         };
@@ -406,15 +406,15 @@ public final class EngineErrorHandlingTest {
                   JobIntent.THROW_ERROR,
                   new TypedRecordProcessor<JobRecord>() {
                     @Override
-                    public void processRecord(final TypedRecord<JobRecord> record) {
-                      processedInstances.add(record.getValue().getProcessInstanceKey());
+                    public void processRecord(final TypedRecord<JobRecord> usageMetricRecord) {
+                      processedInstances.add(usageMetricRecord.getValue().getProcessInstanceKey());
                       final var processInstanceKey =
-                          (int) record.getValue().getProcessInstanceKey();
+                          (int) usageMetricRecord.getValue().getProcessInstanceKey();
                       processingContext
                           .getWriters()
                           .command()
                           .appendFollowUpCommand(
-                              record.getKey(),
+                              usageMetricRecord.getKey(),
                               ProcessInstanceIntent.COMPLETE_ELEMENT,
                               Records.processInstance(processInstanceKey));
                     }
@@ -500,8 +500,8 @@ public final class EngineErrorHandlingTest {
                   DeploymentIntent.CREATE,
                   new TypedRecordProcessor<DeploymentRecord>() {
                     @Override
-                    public void processRecord(final TypedRecord<DeploymentRecord> record) {
-                      if (record.getKey() == 0) {
+                    public void processRecord(final TypedRecord<DeploymentRecord> usageMetricRecord) {
+                      if (usageMetricRecord.getKey() == 0) {
                         throw new RuntimeException("expected");
                       }
                       processedInstances.add(TimerInstance.NO_ELEMENT_INSTANCE);
@@ -509,7 +509,7 @@ public final class EngineErrorHandlingTest {
                           .getWriters()
                           .state()
                           .appendFollowUpEvent(
-                              record.getKey(),
+                              usageMetricRecord.getKey(),
                               TimerIntent.CREATED,
                               Records.timer(TimerInstance.NO_ELEMENT_INSTANCE));
                     }
@@ -556,7 +556,7 @@ public final class EngineErrorHandlingTest {
     public final AtomicLong processCount = new AtomicLong(0);
 
     @Override
-    public void processRecord(final TypedRecord<ProcessInstanceRecord> record) {
+    public void processRecord(final TypedRecord<ProcessInstanceRecord> usageMetricRecord) {
       processCount.incrementAndGet();
       throw new RuntimeException("expected");
     }
@@ -575,10 +575,10 @@ public final class EngineErrorHandlingTest {
     }
 
     @Override
-    public void processRecord(final TypedRecord<ProcessInstanceRecord> record) {
-      processedInstances.add(record.getValue().getProcessInstanceKey());
+    public void processRecord(final TypedRecord<ProcessInstanceRecord> usageMetricRecord) {
+      processedInstances.add(usageMetricRecord.getValue().getProcessInstanceKey());
       stateWriter.appendFollowUpEvent(
-          record.getKey(), ProcessInstanceIntent.ELEMENT_COMPLETED, record.getValue());
+          usageMetricRecord.getKey(), ProcessInstanceIntent.ELEMENT_COMPLETED, usageMetricRecord.getValue());
     }
   }
 }

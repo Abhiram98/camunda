@@ -78,22 +78,22 @@ public class DeploymentReconstructProcessor implements TypedRecordProcessor<Depl
   }
 
   @Override
-  public void processRecord(final TypedRecord<DeploymentRecord> record) {
+  public void processRecord(final TypedRecord<DeploymentRecord> usageMetricRecord) {
     if (deploymentState.hasStoredAllDeployments()) {
       rejectionWriter.appendRejection(
-          record,
+          usageMetricRecord,
           RejectionType.ALREADY_EXISTS,
           "Deployments are already stored and don't need to be reconstructed");
       return;
     }
-    final var identifier = fromDeploymentRecord(record.getValue());
+    final var identifier = fromDeploymentRecord(usageMetricRecord.getValue());
 
     final var key = keyGenerator.nextKey();
 
     final var resourceOpt =
-        findNextResource(identifier, record.getValue().getReconstructionProgress());
+        findNextResource(identifier, usageMetricRecord.getValue().getReconstructionProgress());
     if (resourceOpt.isEmpty()) {
-      stateWriter.appendFollowUpEvent(key, DeploymentIntent.RECONSTRUCTED_ALL, record.getValue());
+      stateWriter.appendFollowUpEvent(key, DeploymentIntent.RECONSTRUCTED_ALL, usageMetricRecord.getValue());
       return;
     }
     final var resource = resourceOpt.get();

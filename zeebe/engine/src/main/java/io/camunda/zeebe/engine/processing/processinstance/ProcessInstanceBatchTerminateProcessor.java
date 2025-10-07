@@ -42,8 +42,8 @@ public final class ProcessInstanceBatchTerminateProcessor
   }
 
   @Override
-  public void processRecord(final TypedRecord<ProcessInstanceBatchRecord> record) {
-    final var recordValue = record.getValue();
+  public void processRecord(final TypedRecord<ProcessInstanceBatchRecord> usageMetricRecord) {
+    final var recordValue = usageMetricRecord.getValue();
 
     final List<ElementInstance> children = getChildInstances(recordValue, 2);
 
@@ -59,7 +59,7 @@ public final class ProcessInstanceBatchTerminateProcessor
       appendFollowupBatchCommand(children.getLast(), recordValue);
     } else {
       stateWriter.appendFollowUpEvent(
-          record.getKey(), ProcessInstanceBatchIntent.TERMINATED, recordValue);
+          usageMetricRecord.getKey(), ProcessInstanceBatchIntent.TERMINATED, recordValue);
     }
   }
 
