@@ -140,7 +140,7 @@ public final class SearchResponseMapper {
 
   private static SearchResponsePage toSearchResponsePage(
       final SearchQueryPageResponse pageResponse) {
-    return new SearchResponsePageImpl(
+    return new StartResponsePageImpl(
         pageResponse.getTotalItems(),
         pageResponse.getSearchBeforeCursor(),
         pageResponse.getSearchAfterCursor());
