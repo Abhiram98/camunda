@@ -47,6 +47,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class FileBasedSnapshotStoreImpl {
+
   public static final String SNAPSHOTS_DIRECTORY = "snapshots";
   public static final String PENDING_DIRECTORY = "pending";
   static final int VERSION = 1;
@@ -112,7 +113,7 @@ public final class FileBasedSnapshotStoreImpl {
 
   public void start() {
     setLatestSnapshot(loadLatestSnapshot(snapshotsDirectory));
-    purgePendingSnapshotsDirectory();
+    abortPendingSnapshotsDirectory();
   }
 
   public void close() {
@@ -230,9 +231,9 @@ public final class FileBasedSnapshotStoreImpl {
     }
   }
 
-  private void purgePendingSnapshotsDirectory() {
+  private void abortPendingSnapshotsDirectory() {
     try (final var files = Files.list(pendingDirectory)) {
-      files.filter(Files::isDirectory).forEach(this::purgePendingSnapshot);
+      files.filter(Files::isDirectory).forEach(this::abortPendingSnapshot);
     } catch (final IOException e) {
       LOGGER.error(
           "Failed to purge pending snapshots, which may result in unnecessary disk usage and should be monitored",
@@ -275,7 +276,7 @@ public final class FileBasedSnapshotStoreImpl {
                 .orElse(0L));
   }
 
-  public ActorFuture<Void> purgePendingSnapshots() {
+  public ActorFuture<Void> abortPendingSnapshots() {
     final CompletableActorFuture<Void> abortFuture = new CompletableActorFuture<>();
     actor.run(
         () -> {
@@ -444,7 +445,7 @@ public final class FileBasedSnapshotStoreImpl {
     }
   }
 
-  private void purgePendingSnapshots(final SnapshotId cutoffSnapshot) {
+  private void abortPendingSnapshots(final SnapshotId cutoffSnapshot) {
     LOGGER.trace(
         "Search for orphaned snapshots below oldest valid snapshot with index {} in {}",
         cutoffSnapshot.getSnapshotIdAsString(),
@@ -457,7 +458,7 @@ public final class FileBasedSnapshotStoreImpl {
     // If there are orphaned directories if a previous abort failed, delete them explicitly
     try (final var pendingSnapshotsDirectories = Files.newDirectoryStream(pendingDirectory)) {
       for (final var pendingSnapshot : pendingSnapshotsDirectories) {
-        purgePendingSnapshot(cutoffSnapshot, pendingSnapshot);
+        abortPendingSnapshot(cutoffSnapshot, pendingSnapshot);
       }
     } catch (final IOException e) {
       LOGGER.warn(
@@ -467,7 +468,7 @@ public final class FileBasedSnapshotStoreImpl {
     }
   }
 
-  private void purgePendingSnapshot(final SnapshotId cutoffIndex, final Path pendingSnapshot) {
+  private void abortPendingSnapshot(final SnapshotId cutoffIndex, final Path pendingSnapshot) {
     final var optionalMetadata = FileBasedSnapshotId.ofPath(pendingSnapshot);
     if (optionalMetadata.isPresent() && optionalMetadata.get().compareTo(cutoffIndex) < 0) {
       try {
@@ -504,7 +505,7 @@ public final class FileBasedSnapshotStoreImpl {
           currentPersistedSnapshotId,
           snapshotId);
 
-      purgePendingSnapshots(currentPersistedSnapshotId);
+      abortPendingSnapshots(currentPersistedSnapshotId);
       return currentPersistedSnapshot;
     }
 
@@ -593,7 +594,7 @@ public final class FileBasedSnapshotStoreImpl {
           LOGGER.debug("Deleting previous snapshot {}", previousSnapshot.getId());
           previousSnapshot.delete();
         });
-    purgePendingSnapshots(newPersistedSnapshot.getSnapshotId());
+    abortPendingSnapshots(newPersistedSnapshot.getSnapshotId());
   }
 
   private void rollbackPartialSnapshot(final Path destination) {
@@ -608,7 +609,7 @@ public final class FileBasedSnapshotStoreImpl {
     }
   }
 
-  private void purgePendingSnapshot(final Path pendingSnapshot) {
+  private void abortPendingSnapshot(final Path pendingSnapshot) {
     try {
       deleteFolder(pendingSnapshot);
       LOGGER.debug("Deleted not completed (orphaned) snapshot {}", pendingSnapshot);
@@ -732,7 +733,7 @@ public final class FileBasedSnapshotStoreImpl {
    *
    * @param persistedSnapshot to copy from
    * @param copySnapshot function to copy the files from the snapshot into the target folder: the
-   *     arguments are (sourcePath, targetPath)
+   * arguments are (sourcePath, targetPath)
    * @return a future with the persisted snapshot for bootstrap.
    */
   public ActorFuture<PersistedSnapshot> copyForBootstrap(
@@ -753,10 +754,10 @@ public final class FileBasedSnapshotStoreImpl {
                       new SnapshotAlreadyExistsException(
                           String.format(
                               """
-                  Destination folder already exists: %s. Only one bootstrap snapshot can be taken at a time.\
-                  If the previous scaling operation has terminated successfully, please delete the folder manually and try again.\
-                  If the previous operation has not terminated successfully, please wait for it to complete before trying again.\
-                  """,
+                                  Destination folder already exists: %s. Only one bootstrap snapshot can be taken at a time.\
+                                  If the previous scaling operation has terminated successfully, please delete the folder manually and try again.\
+                                  If the previous operation has not terminated successfully, please wait for it to complete before trying again.\
+                                  """,
                               destinationFolder)));
                 } else {
                   FileUtil.ensureDirectoryExists(destinationFolder);
