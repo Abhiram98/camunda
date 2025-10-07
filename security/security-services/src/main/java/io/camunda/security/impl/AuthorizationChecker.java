@@ -9,7 +9,7 @@ package io.camunda.security.impl;
 
 import static io.camunda.security.auth.Authorization.WILDCARD;
 
-import io.camunda.search.clients.AuthorizationSearchClient;
+import io.camunda.search.clients.AuthorizationReader;
 import io.camunda.search.entities.AuthorizationEntity;
 import io.camunda.search.query.AuthorizationQuery;
 import io.camunda.security.auth.CamundaAuthentication;
@@ -31,10 +31,10 @@ import java.util.stream.Collectors;
  */
 public class AuthorizationChecker {
 
-  private final AuthorizationSearchClient authorizationSearchClient;
+  private final AuthorizationReader authorizationReader;
 
-  public AuthorizationChecker(final AuthorizationSearchClient authorizationSearchClient) {
-    this.authorizationSearchClient = authorizationSearchClient;
+  public AuthorizationChecker(final AuthorizationReader authorizationReader) {
+    this.authorizationReader = authorizationReader;
   }
 
   /**
@@ -50,7 +50,7 @@ public class AuthorizationChecker {
     final var resourceType = securityContext.authorization().resourceType();
     final var permissionType = securityContext.authorization().permissionType();
     final var authorizationEntities =
-        authorizationSearchClient
+        authorizationReader
             .withSecurityContext(SecurityContext.withoutAuthentication())
             .searchAuthorizations(
                 AuthorizationQuery.of(
@@ -80,19 +80,19 @@ public class AuthorizationChecker {
     final var ownerIds = collectOwnerTypeToOwnerIds(securityContext.authentication());
     final var resourceType = securityContext.authorization().resourceType();
     final var permissionType = securityContext.authorization().permissionType();
-    return authorizationSearchClient
-            .withSecurityContext(SecurityContext.withoutAuthentication())
-            .searchAuthorizations(
-                AuthorizationQuery.of(
-                    q ->
-                        q.filter(
-                                f ->
-                                    f.ownerTypeToOwnerIds(ownerIds)
-                                        .resourceType(resourceType.name())
-                                        .permissionTypes(permissionType)
-                                        .resourceIds(List.of(WILDCARD, resourceId)))
-                            .page(p -> p.size(1))))
-            .total()
+    return authorizationReader
+        .withSecurityContext(SecurityContext.withoutAuthentication())
+        .searchAuthorizations(
+            AuthorizationQuery.of(
+                q ->
+                    q.filter(
+                            f ->
+                                f.ownerTypeToOwnerIds(ownerIds)
+                                    .resourceType(resourceType.name())
+                                    .permissionTypes(permissionType)
+                                    .resourceIds(List.of(WILDCARD, resourceId)))
+                        .page(p -> p.size(1))))
+        .total()
         > 0;
   }
 
@@ -111,7 +111,7 @@ public class AuthorizationChecker {
       final CamundaAuthentication authentication) {
     final var ownerIds = collectOwnerTypeToOwnerIds(authentication);
     final var authorizationEntities =
-        authorizationSearchClient
+        authorizationReader
             .withSecurityContext(SecurityContext.withoutAuthentication())
             .searchAuthorizations(
                 AuthorizationQuery.of(

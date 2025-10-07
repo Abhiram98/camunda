@@ -7,7 +7,7 @@
  */
 package io.camunda.service;
 
-import io.camunda.search.clients.AuthorizationSearchClient;
+import io.camunda.search.clients.AuthorizationReader;
 import io.camunda.search.entities.AuthorizationEntity;
 import io.camunda.search.query.AuthorizationQuery;
 import io.camunda.search.query.SearchQueryBuilders;
@@ -35,13 +35,13 @@ import java.util.stream.Collectors;
 public class AuthorizationServices
     extends SearchQueryService<AuthorizationServices, AuthorizationQuery, AuthorizationEntity> {
 
-  private final AuthorizationSearchClient authorizationSearchClient;
+  private final AuthorizationReader authorizationSearchClient;
   private final SecurityConfiguration securityConfiguration;
 
   public AuthorizationServices(
       final BrokerClient brokerClient,
       final SecurityContextProvider securityContextProvider,
-      final AuthorizationSearchClient authorizationSearchClient,
+      final AuthorizationReader authorizationSearchClient,
       final CamundaAuthentication authentication,
       final SecurityConfiguration securityConfiguration) {
     super(brokerClient, securityContextProvider, authentication);

@@ -12,7 +12,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import io.camunda.search.clients.AuthorizationSearchClient;
+import io.camunda.search.clients.AuthorizationReader;
 import io.camunda.search.entities.AuthorizationEntity;
 import io.camunda.search.filter.AuthorizationFilter;
 import io.camunda.search.query.SearchQueryBuilders;
@@ -28,13 +28,13 @@ import org.junit.jupiter.api.Test;
 public class AuthorizationServiceTest {
 
   private AuthorizationServices services;
-  private AuthorizationSearchClient client;
+  private AuthorizationReader client;
   private SecurityConfiguration securityConfiguration;
 
   @BeforeEach
   public void before() {
     securityConfiguration = new SecurityConfiguration();
-    client = mock(AuthorizationSearchClient.class);
+    client = mock(AuthorizationReader.class);
     when(client.withSecurityContext(any())).thenReturn(client);
     services =
         new AuthorizationServices(

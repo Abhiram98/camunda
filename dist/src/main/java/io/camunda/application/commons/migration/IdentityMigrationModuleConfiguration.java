@@ -19,7 +19,7 @@ import io.camunda.application.commons.broker.client.BrokerClientConfiguration.Br
 import io.camunda.migration.identity.config.IdentityMigrationProperties;
 import io.camunda.migration.identity.config.cluster.ClusterProperties;
 import io.camunda.migration.identity.config.cluster.MembershipConfig;
-import io.camunda.search.clients.AuthorizationSearchClient;
+import io.camunda.search.clients.AuthorizationReader;
 import io.camunda.search.clients.GroupSearchClient;
 import io.camunda.search.clients.MappingRuleSearchClient;
 import io.camunda.search.clients.RoleSearchClient;
@@ -72,7 +72,7 @@ public class IdentityMigrationModuleConfiguration {
   public AuthorizationServices authorizationServices(
       final BrokerClient brokerClient,
       final SecurityContextProvider securityContextProvider,
-      final AuthorizationSearchClient authorizationSearchClient,
+      final AuthorizationReader authorizationSearchClient,
       final SecurityConfiguration securityConfiguration) {
     return new AuthorizationServices(
         brokerClient,
@@ -129,7 +129,7 @@ public class IdentityMigrationModuleConfiguration {
 
   @Bean
   public AuthorizationChecker authorizationChecker(
-      final AuthorizationSearchClient authorizationSearchClient) {
+      final AuthorizationReader authorizationSearchClient) {
     return new AuthorizationChecker(authorizationSearchClient);
   }
 
