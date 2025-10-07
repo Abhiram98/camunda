@@ -188,14 +188,14 @@ public class RdbmsSearchClient implements SearchClientsProxy {
   }
 
   @Override
-  public SearchQueryResult<GroupEntity> searchGroups(final GroupQuery query) {
+  public SearchQueryResult<GroupEntity> search(final GroupQuery query) {
     LOG.debug("[RDBMS Search Client] Search for groups: {}", query);
 
     return rdbmsService.getGroupReader().search(query);
   }
 
   @Override
-  public SearchQueryResult<GroupMemberEntity> searchGroupMembers(final GroupQuery query) {
+  public SearchQueryResult<GroupMemberEntity> searchMembers(final GroupQuery query) {
     throw new UnsupportedOperationException("Group member search not implemented on RDBMS");
   }
 

@@ -283,12 +283,12 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   public List<ProcessFlowNodeStatisticsEntity> executeProcessDefinitionFlowNodeStatistics(
       final ProcessDefinitionStatisticsFilter filter) {
     return executeWithResourceAccessChecks(
-            access ->
-                getSearchExecutor()
-                    .aggregate(
-                        new ProcessDefinitionFlowNodeStatisticsQuery(filter),
-                        ProcessDefinitionFlowNodeStatisticsAggregationResult.class,
-                        access))
+        access ->
+            getSearchExecutor()
+                .aggregate(
+                    new ProcessDefinitionFlowNodeStatisticsQuery(filter),
+                    ProcessDefinitionFlowNodeStatisticsAggregationResult.class,
+                    access))
         .items();
   }
 
@@ -328,13 +328,13 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   public List<ProcessFlowNodeStatisticsEntity> processInstanceFlowNodeStatistics(
       final long processInstanceKey) {
     return executeWithResourceAccessChecks(
-            access ->
-                getSearchExecutor()
-                    .aggregate(
-                        new ProcessInstanceFlowNodeStatisticsQuery(
-                            new ProcessInstanceStatisticsFilter(processInstanceKey)),
-                        ProcessInstanceFlowNodeStatisticsAggregationResult.class,
-                        access))
+        access ->
+            getSearchExecutor()
+                .aggregate(
+                    new ProcessInstanceFlowNodeStatisticsQuery(
+                        new ProcessInstanceStatisticsFilter(processInstanceKey)),
+                    ProcessInstanceFlowNodeStatisticsAggregationResult.class,
+                    access))
         .items();
   }
 
@@ -437,13 +437,13 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   }
 
   @Override
-  public SearchQueryResult<GroupEntity> searchGroups(final GroupQuery groupQuery) {
-    var query = groupQuery;
-    if (groupQuery.filter().tenantId() != null) {
-      query = expandTenantFilter(groupQuery);
+  public SearchQueryResult<GroupEntity> search(final GroupQuery query) {
+    var query = query;
+    if (query.filter().tenantId() != null) {
+      query = expandTenantFilter(query);
     }
-    if (groupQuery.filter().roleId() != null) {
-      query = expandRoleFilter(groupQuery);
+    if (query.filter().roleId() != null) {
+      query = expandRoleFilter(query);
     }
     final var finalQuery = query;
     return executeWithResourceAccessChecks(
@@ -456,7 +456,7 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
   }
 
   @Override
-  public SearchQueryResult<GroupMemberEntity> searchGroupMembers(final GroupQuery query) {
+  public SearchQueryResult<GroupMemberEntity> searchMembers(final GroupQuery query) {
     return executeWithResourceAccessChecks(
         access ->
             getSearchExecutor()
@@ -544,8 +544,8 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
     if (mappingRuleQuery.filter().tenantId() != null) {
       return expandTenantFilter(mappingRuleQuery);
     }
-    if (mappingRuleQuery.filter().groupId() != null) {
-      return expandGroupFilter(mappingRuleQuery);
+    if (mappingRuleQuery.filter().id() != null) {
+      return expandFilter(mappingRuleQuery);
     }
     if (mappingRuleQuery.filter().roleId() != null) {
       return expandRoleFilter(mappingRuleQuery);
@@ -553,8 +553,8 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
     return mappingRuleQuery;
   }
 
-  private MappingRuleQuery expandGroupFilter(final MappingRuleQuery mappingRuleQuery) {
-    final var mappingIds = getGroupMembers(mappingRuleQuery.filter().groupId(), MAPPING);
+  private MappingRuleQuery expandFilter(final MappingRuleQuery mappingRuleQuery) {
+    final var mappingIds = getMembers(mappingRuleQuery.filter().id(), MAPPING);
     return mappingRuleQuery.toBuilder()
         .filter(mappingRuleQuery.filter().toBuilder().mappingIds(mappingIds).build())
         .build();
@@ -571,8 +571,8 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
     if (userQuery.filter().tenantId() != null) {
       return expandTenantFilter(userQuery);
     }
-    if (userQuery.filter().groupId() != null) {
-      return expandGroupFilter(userQuery);
+    if (userQuery.filter().id() != null) {
+      return expandFilter(userQuery);
     }
     if (userQuery.filter().roleId() != null) {
       return expandRoleFilter(userQuery);
@@ -587,26 +587,26 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
         .build();
   }
 
-  private UserQuery expandGroupFilter(final UserQuery userQuery) {
-    final var usernames = getGroupMembers(userQuery.filter().groupId(), USER);
+  private UserQuery expandFilter(final UserQuery userQuery) {
+    final var usernames = getMembers(userQuery.filter().id(), USER);
 
     return userQuery.toBuilder()
         .filter(userQuery.filter().toBuilder().usernames(usernames).build())
         .build();
   }
 
-  private GroupQuery expandTenantFilter(final GroupQuery groupQuery) {
-    final var groupIds = getTenantMembers(groupQuery.filter().tenantId(), GROUP);
+  private GroupQuery expandTenantFilter(final GroupQuery query) {
+    final var ids = getTenantMembers(query.filter().tenantId(), GROUP);
 
-    return groupQuery.toBuilder()
-        .filter(groupQuery.filter().toBuilder().groupIds(groupIds).build())
+    return query.toBuilder()
+        .filter(query.filter().toBuilder().ids(ids).build())
         .build();
   }
 
-  private RoleQuery expandTenantFilter(final RoleQuery groupQuery) {
-    final var roleIds = getTenantMembers(groupQuery.filter().tenantId(), ROLE);
-    return groupQuery.toBuilder()
-        .filter(groupQuery.filter().toBuilder().roleIds(roleIds).build())
+  private RoleQuery expandTenantFilter(final RoleQuery query) {
+    final var roleIds = getTenantMembers(query.filter().tenantId(), ROLE);
+    return query.toBuilder()
+        .filter(query.filter().toBuilder().roleIds(roleIds).build())
         .build();
   }
 
@@ -625,19 +625,19 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
     return tenantMembers.items().stream().map(TenantMemberEntity::id).collect(Collectors.toSet());
   }
 
-  private Set<String> getGroupMembers(final String groupId, final EntityType entityType) {
-    final SearchQueryResult<GroupMemberEntity> groupMembers =
+  private Set<String> getMembers(final String id, final EntityType entityType) {
+    final SearchQueryResult<GroupMemberEntity> members =
         executeWithResourceAccessChecks(
             access ->
                 getSearchExecutor()
                     .search(
                         GroupQuery.of(
                             b ->
-                                b.filter(f -> f.joinParentId(groupId).memberType(entityType))
+                                b.filter(f -> f.joinParentId(id).memberType(entityType))
                                     .unlimited()),
                         io.camunda.webapps.schema.entities.usermanagement.GroupMemberEntity.class,
                         access));
-    return groupMembers.items().stream().map(GroupMemberEntity::id).collect(Collectors.toSet());
+    return members.items().stream().map(GroupMemberEntity::id).collect(Collectors.toSet());
   }
 
   private UserQuery expandRoleFilter(final UserQuery userQuery) {
@@ -654,10 +654,10 @@ public class DocumentBasedSearchClients implements SearchClientsProxy, Closeable
         .build();
   }
 
-  private GroupQuery expandRoleFilter(final GroupQuery groupQuery) {
-    final var groupIds = getRoleMemberIds(groupQuery.filter().roleId(), GROUP);
-    return groupQuery.toBuilder()
-        .filter(groupQuery.filter().toBuilder().groupIds(groupIds).build())
+  private GroupQuery expandRoleFilter(final GroupQuery query) {
+    final var ids = getRoleMemberIds(query.filter().roleId(), GROUP);
+    return query.toBuilder()
+        .filter(query.filter().toBuilder().ids(ids).build())
         .build();
   }
 

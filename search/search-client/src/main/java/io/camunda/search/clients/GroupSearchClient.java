@@ -15,9 +15,9 @@ import io.camunda.security.auth.SecurityContext;
 
 public interface GroupSearchClient {
 
-  SearchQueryResult<GroupEntity> searchGroups(final GroupQuery query);
+  SearchQueryResult<GroupEntity> search(final GroupQuery query);
 
-  SearchQueryResult<GroupMemberEntity> searchGroupMembers(GroupQuery query);
+  SearchQueryResult<GroupMemberEntity> searchMembers(GroupQuery query);
 
   GroupSearchClient withSecurityContext(SecurityContext securityContext);
 }

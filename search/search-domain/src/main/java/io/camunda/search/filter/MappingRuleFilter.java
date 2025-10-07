@@ -23,7 +23,7 @@ public record MappingRuleFilter(
     List<Claim> claims,
     String tenantId,
     Set<String> mappingIds,
-    String groupId,
+    String id,
     String roleId)
     implements FilterBase {
 

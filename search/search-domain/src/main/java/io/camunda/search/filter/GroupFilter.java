@@ -10,7 +10,6 @@ package io.camunda.search.filter;
 import static io.camunda.util.CollectionUtil.addValuesToList;
 import static io.camunda.util.CollectionUtil.collectValues;
 
-import io.camunda.search.filter.UserFilter.Builder;
 import io.camunda.util.FilterUtil;
 import io.camunda.util.ObjectBuilder;
 import io.camunda.zeebe.protocol.record.value.EntityType;
@@ -73,7 +72,7 @@ public record GroupFilter(
       return this;
     }
 
-    public Builder groupIds(final Set<String> value) {
+    public Builder ids(final Set<String> value) {
       final var vals = FilterUtil.mapDefaultToOperation(new ArrayList<>(value));
       if (vals != null) {
         return groupIdOperations(vals);

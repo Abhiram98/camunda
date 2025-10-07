@@ -81,7 +81,7 @@ public class GroupServiceTest {
   public void shouldEmptyQueryReturnGroups() {
     // given
     final var result = mock(SearchQueryResult.class);
-    when(client.searchGroups(any())).thenReturn(result);
+    when(client.search(any())).thenReturn(result);
 
     final GroupFilter filter = new GroupFilter.Builder().build();
     final var searchQuery = SearchQueryBuilders.groupSearchQuery((b) -> b.filter(filter));
@@ -99,7 +99,7 @@ public class GroupServiceTest {
     final var entity = mock(GroupEntity.class);
     final var result =
         new SearchQueryResult.Builder<GroupEntity>().total(1).items(List.of(entity)).build();
-    when(client.searchGroups(any())).thenReturn(result);
+    when(client.search(any())).thenReturn(result);
   }
 
   @Test
@@ -108,7 +108,7 @@ public class GroupServiceTest {
     final var entity = mock(GroupEntity.class);
     final var result =
         new SearchQueryResult.Builder<GroupEntity>().total(1).items(List.of(entity)).build();
-    when(client.searchGroups(any())).thenReturn(result);
+    when(client.search(any())).thenReturn(result);
 
     // when
     final var searchQueryResult = services.getGroup("groupId");
@@ -207,7 +207,7 @@ public class GroupServiceTest {
     final var entity = mock(GroupEntity.class);
     when(entity.name()).thenReturn(groupName);
     final var result = new SearchQueryResult<>(1, false, List.of(entity), null, null);
-    when(client.searchGroups(any())).thenReturn(result);
+    when(client.search(any())).thenReturn(result);
 
     // when
     final var group = services.getGroupByName(groupName);

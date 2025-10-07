@@ -60,7 +60,7 @@ public class GroupServices extends SearchQueryService<GroupServices, GroupQuery,
                 .withSecurityContext(
                     securityContextProvider.provideSecurityContext(
                         authentication, Authorization.of(a -> a.group().read())))
-                .searchGroups(query));
+                .search(query));
   }
 
   @Override
@@ -135,7 +135,7 @@ public class GroupServices extends SearchQueryService<GroupServices, GroupQuery,
                 .withSecurityContext(
                     securityContextProvider.provideSecurityContext(
                         authentication, Authorization.of(a -> a.group().read())))
-                .searchGroupMembers(query));
+                .searchMembers(query));
   }
 
   public record GroupDTO(String groupId, String name, String description) {}
