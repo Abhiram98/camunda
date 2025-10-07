@@ -768,8 +768,8 @@ public final class OAuthCredentialsProviderTest {
       if (withAssertion) {
         builder =
             builder
-                .sslClientCertPath(OAUTH_SSL_CLIENT_CERT_PATH)
-                .sslClientCertPassword(OAUTH_SSL_CLIENT_CERT_PASSWORD);
+                .clientAssertionKeystorePath(OAUTH_SSL_CLIENT_CERT_PATH)
+                .clientAssertionKeystorePassword(OAUTH_SSL_CLIENT_CERT_PASSWORD);
       }
       if (withClientSecret) {
         builder = builder.clientSecret(SECRET);
