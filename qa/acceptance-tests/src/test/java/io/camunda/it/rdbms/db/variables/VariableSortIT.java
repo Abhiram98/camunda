@@ -17,7 +17,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.VariableEntity;
 import io.camunda.search.filter.VariableFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.VariableQuery;
 import io.camunda.search.sort.VariableSort;
 import io.camunda.search.sort.VariableSort.Builder;
@@ -112,7 +112,7 @@ public class VariableSortIT {
                 new VariableQuery(
                     new VariableFilter.Builder().processInstanceKeys(processInstanceKey).build(),
                     VariableSort.of(b -> b.scopeKey().asc()),
-                    SearchQueryPage.of(b -> b)))
+                    QueryPage.of(b -> b)))
             .items();
 
     assertThat(searchResult).hasSize(20);
@@ -134,7 +134,7 @@ public class VariableSortIT {
                 new VariableQuery(
                     new VariableFilter.Builder().processInstanceKeys(processInstanceKey).build(),
                     VariableSort.of(b -> b.scopeKey().desc()),
-                    SearchQueryPage.of(b -> b)))
+                    QueryPage.of(b -> b)))
             .items();
 
     assertThat(searchResult).hasSize(20);
@@ -158,7 +158,7 @@ public class VariableSortIT {
                 new VariableQuery(
                     new VariableFilter.Builder().scopeKeys(scopeKey).build(),
                     VariableSort.of(sortBuilder),
-                    SearchQueryPage.of(b -> b)))
+                    QueryPage.of(b -> b)))
             .items();
 
     assertThat(searchResult).hasSize(20);

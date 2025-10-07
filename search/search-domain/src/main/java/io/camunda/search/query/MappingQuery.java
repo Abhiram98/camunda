@@ -9,15 +9,14 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.FilterBuilders;
 import io.camunda.search.filter.MappingFilter;
-import io.camunda.search.page.SearchQueryPage;
-import io.camunda.search.query.UserQuery.Builder;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.MappingSort;
 import io.camunda.search.sort.SortOptionBuilders;
 import io.camunda.util.ObjectBuilder;
 import java.util.Objects;
 import java.util.function.Function;
 
-public record MappingQuery(MappingFilter filter, MappingSort sort, SearchQueryPage page)
+public record MappingQuery(MappingFilter filter, MappingSort sort, QueryPage page)
     implements TypedSearchQuery<MappingFilter, MappingSort> {
   public static MappingQuery of(final Function<Builder, ObjectBuilder<MappingQuery>> fn) {
     return fn.apply(new Builder()).build();

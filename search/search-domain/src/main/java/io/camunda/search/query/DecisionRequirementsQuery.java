@@ -9,7 +9,7 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.DecisionRequirementsFilter;
 import io.camunda.search.filter.FilterBuilders;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.result.DecisionRequirementsQueryResultConfig;
 import io.camunda.search.result.QueryResultConfigBuilders;
 import io.camunda.search.sort.DecisionRequirementsSort;
@@ -21,7 +21,7 @@ import java.util.function.Function;
 public record DecisionRequirementsQuery(
     DecisionRequirementsFilter filter,
     DecisionRequirementsSort sort,
-    SearchQueryPage page,
+    QueryPage page,
     DecisionRequirementsQueryResultConfig resultConfig)
     implements TypedSearchQuery<DecisionRequirementsFilter, DecisionRequirementsSort> {
 

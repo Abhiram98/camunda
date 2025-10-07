@@ -26,7 +26,7 @@ import io.camunda.it.rdbms.db.fixtures.RoleFixtures;
 import io.camunda.it.rdbms.db.util.RdbmsTestConfiguration;
 import io.camunda.search.entities.MappingEntity;
 import io.camunda.search.filter.MappingFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.MappingQuery;
 import io.camunda.search.sort.MappingSort;
 import java.util.Arrays;
@@ -81,7 +81,7 @@ public class MappingSpecificFilterIT {
             new MappingQuery(
                 new MappingFilter.Builder().groupId(group.groupId()).build(),
                 MappingSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(mappings.total()).isEqualTo(2);
   }
@@ -110,7 +110,7 @@ public class MappingSpecificFilterIT {
             new MappingQuery(
                 new MappingFilter.Builder().roleId(role.roleId()).build(),
                 MappingSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(mappings.total()).isEqualTo(1);
     assertThat(mappings.items())

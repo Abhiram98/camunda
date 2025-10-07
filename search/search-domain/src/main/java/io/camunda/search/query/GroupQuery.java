@@ -9,14 +9,14 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.FilterBuilders;
 import io.camunda.search.filter.GroupFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.GroupSort;
 import io.camunda.search.sort.SortOptionBuilders;
 import io.camunda.util.ObjectBuilder;
 import java.util.Objects;
 import java.util.function.Function;
 
-public record GroupQuery(GroupFilter filter, GroupSort sort, SearchQueryPage page)
+public record GroupQuery(GroupFilter filter, GroupSort sort, QueryPage page)
     implements TypedSearchQuery<GroupFilter, GroupSort> {
 
   public static GroupQuery of(final Function<GroupQuery.Builder, ObjectBuilder<GroupQuery>> fn) {

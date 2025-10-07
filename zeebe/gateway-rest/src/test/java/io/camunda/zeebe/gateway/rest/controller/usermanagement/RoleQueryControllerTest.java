@@ -17,7 +17,7 @@ import io.camunda.search.entities.MappingEntity;
 import io.camunda.search.entities.RoleEntity;
 import io.camunda.search.entities.RoleMemberEntity;
 import io.camunda.search.exception.CamundaSearchException;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.GroupQuery;
 import io.camunda.search.query.MappingQuery;
 import io.camunda.search.query.RoleQuery;
@@ -210,7 +210,7 @@ public class RoleQueryControllerTest extends RestControllerTest {
         .search(
             new RoleQuery.Builder()
                 .sort(RoleSort.of(builder -> builder.name().asc()))
-                .page(SearchQueryPage.of(builder -> builder.from(20).size(10)))
+                .page(QueryPage.of(builder -> builder.from(20).size(10)))
                 .build());
   }
 

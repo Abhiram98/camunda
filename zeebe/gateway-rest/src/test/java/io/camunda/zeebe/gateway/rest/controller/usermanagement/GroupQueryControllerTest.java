@@ -18,7 +18,7 @@ import io.camunda.search.entities.GroupMemberEntity;
 import io.camunda.search.entities.MappingEntity;
 import io.camunda.search.entities.RoleEntity;
 import io.camunda.search.exception.CamundaSearchException;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.GroupQuery;
 import io.camunda.search.query.MappingQuery;
 import io.camunda.search.query.RoleQuery;
@@ -427,7 +427,7 @@ public class GroupQueryControllerTest extends RestControllerTest {
         .search(
             new GroupQuery.Builder()
                 .sort(GroupSort.of(builder -> builder.name().asc()))
-                .page(SearchQueryPage.of(builder -> builder.from(20).size(2)))
+                .page(QueryPage.of(builder -> builder.from(20).size(2)))
                 .build());
   }
 

@@ -27,7 +27,7 @@ import io.camunda.it.rdbms.db.fixtures.TenantFixtures;
 import io.camunda.it.rdbms.db.fixtures.UserFixtures;
 import io.camunda.it.rdbms.db.util.RdbmsTestConfiguration;
 import io.camunda.search.filter.UserFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.UserQuery;
 import io.camunda.search.sort.UserSort;
 import java.util.Arrays;
@@ -88,7 +88,7 @@ public class UserSpecificFilterIT {
             new UserQuery(
                 new UserFilter.Builder().tenantId(tenant.tenantId()).build(),
                 UserSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(users.total()).isEqualTo(1);
   }
@@ -120,7 +120,7 @@ public class UserSpecificFilterIT {
             new UserQuery(
                 new UserFilter.Builder().groupId(group.groupId()).build(),
                 UserSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(users.total()).isEqualTo(1);
   }
@@ -152,7 +152,7 @@ public class UserSpecificFilterIT {
             new UserQuery(
                 new UserFilter.Builder().roleId(role.roleId()).build(),
                 UserSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(users.total()).isEqualTo(1);
   }
@@ -172,7 +172,7 @@ public class UserSpecificFilterIT {
 
     final var searchResult =
         userReader.search(
-            new UserQuery(filter, UserSort.of(b -> b), SearchQueryPage.of(b -> b.from(0).size(5))));
+            new UserQuery(filter, UserSort.of(b -> b), QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);

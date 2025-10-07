@@ -18,7 +18,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.UserEntity;
 import io.camunda.search.filter.UserFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.UserQuery;
 import io.camunda.search.sort.UserSort;
 import io.camunda.search.sort.UserSort.Builder;
@@ -91,7 +91,7 @@ public class UserSortIT {
                 new UserQuery(
                     new UserFilter.Builder().emails(email).build(),
                     UserSort.of(sortBuilder),
-                    SearchQueryPage.of(b -> b)))
+                    QueryPage.of(b -> b)))
             .items();
 
     assertThat(searchResult).hasSize(20);

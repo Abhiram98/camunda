@@ -9,14 +9,14 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.FilterBuilders;
 import io.camunda.search.filter.UserFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.SortOptionBuilders;
 import io.camunda.search.sort.UserSort;
 import io.camunda.util.ObjectBuilder;
 import java.util.Objects;
 import java.util.function.Function;
 
-public record UserQuery(UserFilter filter, UserSort sort, SearchQueryPage page)
+public record UserQuery(UserFilter filter, UserSort sort, QueryPage page)
     implements TypedSearchQuery<UserFilter, UserSort> {
   public static UserQuery of(final Function<Builder, ObjectBuilder<UserQuery>> fn) {
     return fn.apply(new Builder()).build();

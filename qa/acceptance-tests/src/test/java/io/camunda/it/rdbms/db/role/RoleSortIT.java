@@ -18,7 +18,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.RoleEntity;
 import io.camunda.search.filter.RoleFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.RoleQuery;
 import io.camunda.search.sort.RoleSort;
 import io.camunda.search.sort.RoleSort.Builder;
@@ -67,7 +67,7 @@ public class RoleSortIT {
                 new RoleQuery(
                     new RoleFilter.Builder().name(name).build(),
                     RoleSort.of(sortBuilder),
-                    SearchQueryPage.of(b -> b)))
+                    QueryPage.of(b -> b)))
             .items();
 
     assertThat(searchResult).hasSize(20);

@@ -8,7 +8,7 @@
 package io.camunda.search.query;
 
 import io.camunda.search.filter.FilterBase;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.SortOption;
 import io.camunda.util.ObjectBuilder;
 
@@ -20,5 +20,5 @@ public interface TypedSearchQueryBuilder<
 
   B sort(S value);
 
-  B page(SearchQueryPage value);
+  B page(QueryPage value);
 }

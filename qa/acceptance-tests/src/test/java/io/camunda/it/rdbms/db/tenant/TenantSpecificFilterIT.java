@@ -18,7 +18,7 @@ import io.camunda.db.rdbms.write.RdbmsWriter;
 import io.camunda.it.rdbms.db.fixtures.TenantFixtures;
 import io.camunda.it.rdbms.db.util.RdbmsTestConfiguration;
 import io.camunda.search.filter.TenantFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.TenantQuery;
 import io.camunda.search.sort.TenantSort;
 import java.time.OffsetDateTime;
@@ -65,7 +65,7 @@ public class TenantSpecificFilterIT {
     final var searchResult =
         tenantReader.search(
             new TenantQuery(
-                filter, TenantSort.of(b -> b), SearchQueryPage.of(b -> b.from(0).size(5))));
+                filter, TenantSort.of(b -> b), QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);

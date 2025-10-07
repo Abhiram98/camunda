@@ -41,7 +41,7 @@ import io.camunda.search.filter.UserFilter;
 import io.camunda.search.filter.UserTaskFilter;
 import io.camunda.search.filter.VariableFilter;
 import io.camunda.search.filter.VariableValueFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.AuthorizationQuery;
 import io.camunda.search.query.BatchOperationItemQuery;
 import io.camunda.search.query.BatchOperationQuery;
@@ -1532,7 +1532,7 @@ public final class SearchQueryRequestMapper {
         .buildList();
   }
 
-  private static Either<List<String>, SearchQueryPage> toSearchQueryPage(
+  private static Either<List<String>, QueryPage> toSearchQueryPage(
       final SearchQueryPageRequest requestedPage) {
     if (requestedPage == null) {
       return Either.right(null);
@@ -1549,12 +1549,12 @@ public final class SearchQueryRequestMapper {
     }
 
     return Either.right(
-        SearchQueryPage.of(
+        QueryPage.of(
             (p) ->
                 p.size(requestedPage.getLimit())
                     .from(requestedPage.getFrom())
-                    .searchAfter(searchAfter)
-                    .searchBefore(searchBefore)));
+                    .after(searchAfter)
+                    .before(searchBefore)));
   }
 
   private static <T, B extends SortOption.AbstractBuilder<B> & ObjectBuilder<T>, F>
@@ -1585,7 +1585,7 @@ public final class SearchQueryRequestMapper {
           S extends SortOption>
       Either<ProblemDetail, T> buildSearchQuery(
           final Either<List<String>, S> sorting,
-          final Either<List<String>, SearchQueryPage> page,
+          final Either<List<String>, QueryPage> page,
           final Supplier<B> queryBuilderSupplier) {
     return buildSearchQuery(Either.right(null), sorting, page, queryBuilderSupplier);
   }
@@ -1598,7 +1598,7 @@ public final class SearchQueryRequestMapper {
       Either<ProblemDetail, T> buildSearchQuery(
           final F filter,
           final Either<List<String>, S> sorting,
-          final Either<List<String>, SearchQueryPage> page,
+          final Either<List<String>, QueryPage> page,
           final Supplier<B> queryBuilderSupplier) {
     return buildSearchQuery(Either.right(filter), sorting, page, queryBuilderSupplier);
   }
@@ -1611,7 +1611,7 @@ public final class SearchQueryRequestMapper {
       Either<ProblemDetail, T> buildSearchQuery(
           final Either<List<String>, F> filter,
           final Either<List<String>, S> sorting,
-          final Either<List<String>, SearchQueryPage> page,
+          final Either<List<String>, QueryPage> page,
           final Supplier<B> queryBuilderSupplier) {
     final List<String> validationErrors = new ArrayList<>();
     if (filter.isLeft()) {

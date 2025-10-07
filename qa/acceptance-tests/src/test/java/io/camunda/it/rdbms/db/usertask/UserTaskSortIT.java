@@ -17,7 +17,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.UserTaskEntity;
 import io.camunda.search.filter.UserTaskFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.UserTaskQuery;
 import io.camunda.search.sort.UserTaskSort;
 import io.camunda.search.sort.UserTaskSort.Builder;
@@ -129,7 +129,7 @@ public class UserTaskSortIT {
                 new UserTaskQuery(
                     new UserTaskFilter.Builder().bpmnProcessIds(processDefinitionId).build(),
                     UserTaskSort.of(sortBuilder),
-                    SearchQueryPage.of(b -> b)))
+                    QueryPage.of(b -> b)))
             .items();
 
     assertThat(searchResult).hasSize(20);

@@ -18,7 +18,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.IncidentEntity;
 import io.camunda.search.filter.IncidentFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.IncidentQuery;
 import io.camunda.search.sort.IncidentSort;
 import io.camunda.search.sort.IncidentSort.Builder;
@@ -158,7 +158,7 @@ public class IncidentSortIT {
                 new IncidentQuery(
                     new IncidentFilter.Builder().flowNodeInstanceKeys(key).build(),
                     IncidentSort.of(sortBuilder),
-                    SearchQueryPage.of(b -> b)))
+                    QueryPage.of(b -> b)))
             .items();
 
     assertThat(searchResult).hasSize(20);

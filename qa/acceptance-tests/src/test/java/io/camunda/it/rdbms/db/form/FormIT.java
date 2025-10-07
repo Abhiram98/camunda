@@ -20,7 +20,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.FormEntity;
 import io.camunda.search.filter.FormFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.FormQuery;
 import io.camunda.search.sort.FormSort;
 import org.junit.jupiter.api.Tag;
@@ -71,7 +71,7 @@ public class FormIT {
                 new FormQuery(
                     new FormFilter.Builder().formIds(randomizedForm.formId()).build(),
                     FormSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -93,7 +93,7 @@ public class FormIT {
                 new FormQuery(
                     new FormFilter.Builder().formIds(id).build(),
                     FormSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(5))));
+                    QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -118,7 +118,7 @@ public class FormIT {
                     .formKeys(randomizedForm.formKey())
                     .build(),
                 FormSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);

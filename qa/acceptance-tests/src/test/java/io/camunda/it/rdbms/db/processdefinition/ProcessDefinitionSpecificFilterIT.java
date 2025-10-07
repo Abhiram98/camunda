@@ -18,7 +18,7 @@ import io.camunda.db.rdbms.write.RdbmsWriter;
 import io.camunda.it.rdbms.db.fixtures.ProcessDefinitionFixtures;
 import io.camunda.it.rdbms.db.util.RdbmsTestConfiguration;
 import io.camunda.search.filter.ProcessDefinitionFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.ProcessDefinitionQuery;
 import io.camunda.search.sort.ProcessDefinitionSort;
 import java.util.List;
@@ -71,7 +71,7 @@ public class ProcessDefinitionSpecificFilterIT {
             new ProcessDefinitionQuery(
                 filter,
                 ProcessDefinitionSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);

@@ -18,7 +18,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.DecisionDefinitionEntity;
 import io.camunda.search.filter.DecisionDefinitionFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.DecisionDefinitionQuery;
 import io.camunda.search.sort.DecisionDefinitionSort;
 import io.camunda.search.sort.DecisionDefinitionSort.Builder;
@@ -154,7 +154,7 @@ public class DecisionDefinitionSortIT {
                         .decisionRequirementsKeys(requirementsKey)
                         .build(),
                     DecisionDefinitionSort.of(sortBuilder),
-                    SearchQueryPage.of(b -> b)))
+                    QueryPage.of(b -> b)))
             .items();
 
     assertThat(searchResult).hasSize(20);

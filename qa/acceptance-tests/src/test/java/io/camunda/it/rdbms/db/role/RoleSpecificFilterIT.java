@@ -30,7 +30,7 @@ import io.camunda.it.rdbms.db.fixtures.UserFixtures;
 import io.camunda.it.rdbms.db.util.RdbmsTestConfiguration;
 import io.camunda.search.entities.RoleEntity;
 import io.camunda.search.filter.RoleFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.RoleQuery;
 import io.camunda.search.sort.RoleSort;
 import io.camunda.zeebe.protocol.record.value.EntityType;
@@ -100,7 +100,7 @@ public class RoleSpecificFilterIT {
                     .childMemberType(EntityType.GROUP)
                     .build(),
                 RoleSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(roles.total()).isEqualTo(2);
   }
@@ -130,7 +130,7 @@ public class RoleSpecificFilterIT {
             new RoleQuery(
                 new RoleFilter.Builder().tenantId(tenant.tenantId()).build(),
                 RoleSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(roles.total()).isEqualTo(1);
     assertThat(roles.items()).hasSize(1).extracting(RoleEntity::roleId).containsOnly(roleId1);
@@ -148,7 +148,7 @@ public class RoleSpecificFilterIT {
 
     final var searchResult =
         roleReader.search(
-            new RoleQuery(filter, RoleSort.of(b -> b), SearchQueryPage.of(b -> b.from(0).size(5))));
+            new RoleQuery(filter, RoleSort.of(b -> b), QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);

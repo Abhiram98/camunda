@@ -20,7 +20,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.RoleEntity;
 import io.camunda.search.filter.RoleFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.RoleQuery;
 import io.camunda.search.sort.RoleSort;
 import java.time.OffsetDateTime;
@@ -100,7 +100,7 @@ public class RoleIT {
             new RoleQuery(
                 new RoleFilter.Builder().name(role.name()).build(),
                 RoleSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(10))));
+                QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -126,7 +126,7 @@ public class RoleIT {
             new RoleQuery(
                 new RoleFilter.Builder().name("John Doe").build(),
                 RoleSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -148,7 +148,7 @@ public class RoleIT {
             new RoleQuery(
                 new RoleFilter.Builder().roleId(role.roleId()).name(role.name()).build(),
                 RoleSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -178,7 +178,7 @@ public class RoleIT {
                 b ->
                     b.filter(f -> f.name("Alice Doe"))
                         .sort(sort)
-                        .page(p -> p.size(5).searchAfter(firstPage.searchAfterCursor()))));
+                        .page(p -> p.size(5).after(firstPage.searchAfterCursor()))));
 
     assertThat(nextPage.total()).isEqualTo(20);
     assertThat(nextPage.items()).hasSize(5);

@@ -23,7 +23,7 @@ import io.camunda.search.entities.IncidentEntity.ErrorType;
 import io.camunda.search.entities.IncidentEntity.IncidentState;
 import io.camunda.search.filter.IncidentFilter;
 import io.camunda.search.filter.Operation;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.IncidentQuery;
 import io.camunda.search.sort.IncidentSort;
 import java.time.temporal.ChronoUnit;
@@ -81,7 +81,7 @@ public class IncidentSpecificFilterIT {
     final var searchResult =
         processDefinitionReader.search(
             new IncidentQuery(
-                filter, IncidentSort.of(b -> b), SearchQueryPage.of(b -> b.from(0).size(5))));
+                filter, IncidentSort.of(b -> b), QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);

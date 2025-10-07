@@ -21,7 +21,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.FlowNodeInstanceEntity;
 import io.camunda.search.filter.FlowNodeInstanceFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.FlowNodeInstanceQuery;
 import io.camunda.search.sort.FlowNodeInstanceSort;
 import java.time.OffsetDateTime;
@@ -94,7 +94,7 @@ public class ElementInstanceIT {
                     .processDefinitionIds(elementInstance.processDefinitionId())
                     .build(),
                 FlowNodeInstanceSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(10))));
+                QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -119,7 +119,7 @@ public class ElementInstanceIT {
                     .processDefinitionIds(processDefinitionId)
                     .build(),
                 FlowNodeInstanceSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -144,7 +144,7 @@ public class ElementInstanceIT {
                     .processDefinitionIds(processDefinitionId)
                     .build(),
                 FlowNodeInstanceSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(null).size(null))));
+                QueryPage.of(b -> b.from(null).size(null))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -177,7 +177,7 @@ public class ElementInstanceIT {
                     .incidentKeys(instance.incidentKey())
                     .build(),
                 FlowNodeInstanceSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -246,7 +246,7 @@ public class ElementInstanceIT {
                 b ->
                     b.filter(f -> f.processDefinitionIds(processDefinition.processDefinitionId()))
                         .sort(sort)
-                        .page(p -> p.size(5).searchAfter(firstPage.searchAfterCursor()))));
+                        .page(p -> p.size(5).after(firstPage.searchAfterCursor()))));
 
     assertThat(nextPage.total()).isEqualTo(20);
     assertThat(nextPage.items()).hasSize(5);

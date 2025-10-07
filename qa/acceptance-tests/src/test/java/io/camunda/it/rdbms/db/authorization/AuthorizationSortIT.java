@@ -18,7 +18,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsInvocationContextProviderExtensio
 import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.AuthorizationEntity;
 import io.camunda.search.filter.AuthorizationFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.AuthorizationQuery;
 import io.camunda.search.sort.AuthorizationSort;
 import io.camunda.search.sort.AuthorizationSort.Builder;
@@ -99,7 +99,7 @@ public class AuthorizationSortIT {
                 new AuthorizationQuery(
                     new AuthorizationFilter.Builder().build(),
                     AuthorizationSort.of(sortBuilder),
-                    SearchQueryPage.of(b -> b)))
+                    QueryPage.of(b -> b)))
             .items();
 
     //    assertThat(searchResult).hasSize(20);

@@ -26,7 +26,7 @@ import io.camunda.it.rdbms.db.util.CamundaRdbmsTestApplication;
 import io.camunda.search.entities.TenantEntity;
 import io.camunda.search.filter.TenantFilter;
 import io.camunda.search.filter.UserFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.TenantQuery;
 import io.camunda.search.query.UserQuery;
 import io.camunda.search.sort.TenantSort;
@@ -66,7 +66,7 @@ public class TenantIT {
             new TenantQuery(
                 new TenantFilter.Builder().tenantId(tenant.tenantId()).build(),
                 TenantSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(10))));
+                QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -125,7 +125,7 @@ public class TenantIT {
             new TenantQuery(
                 new TenantFilter.Builder().name(tenantName).build(),
                 TenantSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -150,7 +150,7 @@ public class TenantIT {
                     .name(instance.name())
                     .build(),
                 TenantSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult.total()).isEqualTo(1);
     assertThat(searchResult.items()).hasSize(1);
@@ -182,7 +182,7 @@ public class TenantIT {
                 b ->
                     b.filter(f -> f.name(tenantName))
                         .sort(sort)
-                        .page(p -> p.size(5).searchAfter(firstPage.searchAfterCursor()))));
+                        .page(p -> p.size(5).after(firstPage.searchAfterCursor()))));
 
     assertThat(nextPage.total()).isEqualTo(20);
     assertThat(nextPage.items()).hasSize(5);
@@ -211,7 +211,7 @@ public class TenantIT {
             new UserQuery(
                 new UserFilter.Builder().tenantId(tenant.tenantId()).build(),
                 UserSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
     assertThat(users.total()).isEqualTo(1);
   }
 
@@ -240,7 +240,7 @@ public class TenantIT {
             new UserQuery(
                 new UserFilter.Builder().tenantId(tenant.tenantId()).build(),
                 UserSort.of(b -> b),
-                SearchQueryPage.of(b -> b.from(0).size(5))));
+                QueryPage.of(b -> b.from(0).size(5))));
     assertThat(users.total()).isEqualTo(0);
   }
 

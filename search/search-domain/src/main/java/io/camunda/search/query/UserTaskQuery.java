@@ -10,14 +10,14 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.FilterBuilders;
 import io.camunda.search.filter.UserTaskFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.SortOptionBuilders;
 import io.camunda.search.sort.UserTaskSort;
 import io.camunda.util.ObjectBuilder;
 import java.util.Objects;
 import java.util.function.Function;
 
-public final record UserTaskQuery(UserTaskFilter filter, UserTaskSort sort, SearchQueryPage page)
+public final record UserTaskQuery(UserTaskFilter filter, UserTaskSort sort, QueryPage page)
     implements TypedSearchQuery<UserTaskFilter, UserTaskSort> {
 
   public static UserTaskQuery of(final Function<Builder, ObjectBuilder<UserTaskQuery>> fn) {

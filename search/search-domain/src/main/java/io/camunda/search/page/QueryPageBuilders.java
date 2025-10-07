@@ -10,14 +10,14 @@ package io.camunda.search.page;
 import io.camunda.util.ObjectBuilder;
 import java.util.function.Function;
 
-public final class SearchQueryPageBuilders {
+public final class QueryPageBuilders {
 
-  public static SearchQueryPage.Builder page() {
-    return new SearchQueryPage.Builder();
+  public static QueryPage.Builder page() {
+    return new QueryPage.Builder();
   }
 
-  public static SearchQueryPage page(
-      final Function<SearchQueryPage.Builder, ObjectBuilder<SearchQueryPage>> fn) {
+  public static QueryPage page(
+      final Function<QueryPage.Builder, ObjectBuilder<QueryPage>> fn) {
     return fn.apply(page()).build();
   }
 }

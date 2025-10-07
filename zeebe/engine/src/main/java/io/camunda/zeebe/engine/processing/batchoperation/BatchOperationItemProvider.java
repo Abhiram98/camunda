@@ -13,7 +13,7 @@ import io.camunda.search.entities.ProcessInstanceEntity;
 import io.camunda.search.filter.FilterBase;
 import io.camunda.search.filter.IncidentFilter;
 import io.camunda.search.filter.ProcessInstanceFilter;
-import io.camunda.search.page.SearchQueryPageBuilders;
+import io.camunda.search.page.QueryPageBuilders;
 import io.camunda.search.query.SearchQueryBuilders;
 import io.camunda.search.query.SearchQueryResult;
 import io.camunda.security.auth.Authentication;
@@ -246,7 +246,7 @@ public class BatchOperationItemProvider {
           createSecurityContext(
               authentication, Authorization.of(a -> a.processDefinition().readProcessInstance()));
       final var page =
-          SearchQueryPageBuilders.page().size(queryPageSize).searchAfter(searchAfter).build();
+          QueryPageBuilders.page().size(queryPageSize).after(searchAfter).build();
       final var query =
           SearchQueryBuilders.processInstanceSearchQuery()
               .filter(filter)
@@ -276,7 +276,7 @@ public class BatchOperationItemProvider {
           createSecurityContext(
               authentication, Authorization.of(a -> a.processDefinition().readProcessInstance()));
       final var page =
-          SearchQueryPageBuilders.page().size(queryPageSize).searchAfter(searchAfter).build();
+          QueryPageBuilders.page().size(queryPageSize).after(searchAfter).build();
       final var query = SearchQueryBuilders.incidentSearchQuery().filter(filter).page(page).build();
 
       final var result =

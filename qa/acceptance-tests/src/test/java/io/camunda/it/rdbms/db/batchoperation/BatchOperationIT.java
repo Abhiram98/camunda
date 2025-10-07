@@ -30,7 +30,7 @@ import io.camunda.search.entities.BatchOperationEntity.BatchOperationItemState;
 import io.camunda.search.entities.BatchOperationEntity.BatchOperationState;
 import io.camunda.search.filter.BatchOperationFilter;
 import io.camunda.search.filter.BatchOperationItemFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.query.BatchOperationItemQuery;
 import io.camunda.search.query.BatchOperationQuery;
 import io.camunda.search.query.SearchQueryResult;
@@ -365,7 +365,7 @@ public class BatchOperationIT {
                         .batchOperationIds(batchOperation.batchOperationId())
                         .build(),
                     BatchOperationSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(1);
@@ -390,7 +390,7 @@ public class BatchOperationIT {
                         .operationTypes(batchOperation.operationType())
                         .build(),
                     BatchOperationSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isGreaterThanOrEqualTo(1);
@@ -421,7 +421,7 @@ public class BatchOperationIT {
                         .states(BatchOperationState.ACTIVE.name())
                         .build(),
                     BatchOperationSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.items()).isNotEmpty();
@@ -452,7 +452,7 @@ public class BatchOperationIT {
                         .states(batchOperation.state().name())
                         .build(),
                     BatchOperationSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(10))));
+                    QueryPage.of(b -> b.from(0).size(10))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.items()).isNotEmpty();
@@ -476,7 +476,7 @@ public class BatchOperationIT {
                 new BatchOperationQuery(
                     new BatchOperationFilter.Builder().operationTypes(operationType).build(),
                     BatchOperationSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(5))));
+                    QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(20);
@@ -503,7 +503,7 @@ public class BatchOperationIT {
                         .batchOperationIds(batchOperation.batchOperationId())
                         .build(),
                     BatchOperationItemSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(5))));
+                    QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(10);
@@ -542,7 +542,7 @@ public class BatchOperationIT {
                         .states(BatchOperationState.ACTIVE.name())
                         .build(),
                     BatchOperationItemSort.of(b -> b),
-                    SearchQueryPage.of(b -> b.from(0).size(5))));
+                    QueryPage.of(b -> b.from(0).size(5))));
 
     assertThat(searchResult).isNotNull();
     assertThat(searchResult.total()).isEqualTo(10);
@@ -573,7 +573,7 @@ public class BatchOperationIT {
                     .batchOperationIds(batchOperation.batchOperationId())
                     .build(),
                 BatchOperationSort.of(b -> b),
-                SearchQueryPage.of(b -> b)));
+                QueryPage.of(b -> b)));
   }
 
   private static SearchQueryResult<BatchOperationItemEntity> getBatchOperationItems(
@@ -584,6 +584,6 @@ public class BatchOperationIT {
             new BatchOperationItemQuery(
                 new BatchOperationItemFilter.Builder().batchOperationIds(batchOperationId).build(),
                 BatchOperationItemSort.of(b -> b),
-                SearchQueryPage.of(b -> b)));
+                QueryPage.of(b -> b)));
   }
 }

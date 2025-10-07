@@ -9,7 +9,7 @@ package io.camunda.search.query;
 
 import io.camunda.search.filter.FilterBuilders;
 import io.camunda.search.filter.UsageMetricsFilter;
-import io.camunda.search.page.SearchQueryPage;
+import io.camunda.search.page.QueryPage;
 import io.camunda.search.sort.SortOptionBuilders;
 import io.camunda.search.sort.UsageMetricsSort;
 import io.camunda.util.ObjectBuilder;
@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public record UsageMetricsQuery(
-    UsageMetricsFilter filter, UsageMetricsSort sort, SearchQueryPage page)
+    UsageMetricsFilter filter, UsageMetricsSort sort, QueryPage page)
     implements TypedSearchQuery<UsageMetricsFilter, UsageMetricsSort> {
 
   public static UsageMetricsQuery of(final Function<Builder, ObjectBuilder<UsageMetricsQuery>> fn) {
