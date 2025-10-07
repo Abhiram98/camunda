@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.camunda.operate.webapp.api.v1.entities.ProcessInstance;
 import io.camunda.operate.webapp.rest.dto.operation.CreateBatchOperationRequestDto;
-import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
+import io.camunda.operate.webapp.rest.dto.operation.CreateRequestDto;
 import io.camunda.operate.webapp.rest.dto.operation.ModifyProcessInstanceRequestDto;
 import io.camunda.webapps.schema.entities.operation.OperationType;
 import io.camunda.zeebe.util.Either;
@@ -95,7 +95,7 @@ public class TestRestOperateClient implements AutoCloseable {
   public Either<Exception, HttpResponse<String>> cancelProcessInstance(
       final long processInstanceKey) {
     return createProcessInstanceOperationRequest(
-        processInstanceKey, new CreateOperationRequestDto(OperationType.CANCEL_PROCESS_INSTANCE));
+        processInstanceKey, new CreateRequestDto(OperationType.CANCEL_PROCESS_INSTANCE));
   }
 
   public Either<Exception, HttpResponse<String>> migrateProcessInstance(
@@ -140,7 +140,7 @@ public class TestRestOperateClient implements AutoCloseable {
       final String scopeId,
       final String variableName,
       final String variableValue) {
-    final var operationRequestBody = new CreateOperationRequestDto(OperationType.UPDATE_VARIABLE);
+    final var operationRequestBody = new CreateRequestDto(OperationType.UPDATE_VARIABLE);
     operationRequestBody.setVariableScopeId(scopeId);
     operationRequestBody.setVariableName(variableName);
     operationRequestBody.setVariableValue(variableValue);
@@ -150,11 +150,11 @@ public class TestRestOperateClient implements AutoCloseable {
   public Either<Exception, HttpResponse<String>> resolveIncident(final long processInstanceKey) {
     // Currently, incidents in Operate only require the process instance key to be resolved.
     return createProcessInstanceOperationRequest(
-        processInstanceKey, new CreateOperationRequestDto(OperationType.RESOLVE_INCIDENT));
+        processInstanceKey, new CreateRequestDto(OperationType.RESOLVE_INCIDENT));
   }
 
   private Either<Exception, HttpResponse<String>> createProcessInstanceOperationRequest(
-      final long processInstanceKey, final CreateOperationRequestDto operationRequestDto) {
+      final long processInstanceKey, final CreateRequestDto operationRequestDto) {
     try {
       final var path =
           String.format("%sapi/process-instances/%s/operation", endpoint, processInstanceKey);

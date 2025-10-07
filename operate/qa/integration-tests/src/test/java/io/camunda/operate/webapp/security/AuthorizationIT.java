@@ -22,7 +22,7 @@ import io.camunda.operate.webapp.rest.ProcessInstanceRestService;
 import io.camunda.operate.webapp.rest.dto.UserDto;
 import io.camunda.operate.webapp.rest.dto.listview.ListViewQueryDto;
 import io.camunda.operate.webapp.rest.dto.operation.CreateBatchOperationRequestDto;
-import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
+import io.camunda.operate.webapp.rest.dto.operation.CreateRequestDto;
 import io.camunda.operate.webapp.writer.BatchOperationWriter;
 import io.camunda.webapps.schema.entities.operation.BatchOperationEntity;
 import io.camunda.webapps.schema.entities.operation.OperationType;
@@ -73,7 +73,7 @@ public class AuthorizationIT {
         () ->
             processInstanceRestService.operation(
                 "23",
-                new CreateOperationRequestDto()
+                new CreateRequestDto()
                     .setOperationType(OperationType.DELETE_PROCESS_INSTANCE)));
     verifyNoInteractions(batchOperationWriter);
   }
@@ -103,7 +103,7 @@ public class AuthorizationIT {
     final BatchOperationEntity batchOperationEntity =
         processInstanceRestService.operation(
             "23",
-            new CreateOperationRequestDto()
+            new CreateRequestDto()
                 .setOperationType(OperationType.DELETE_PROCESS_INSTANCE));
 
     assertThat(batchOperationEntity).isNotNull();

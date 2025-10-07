@@ -35,7 +35,7 @@ import io.camunda.operate.webapp.rest.dto.listview.ListViewResponseDto;
 import io.camunda.operate.webapp.rest.dto.listview.ProcessInstanceStateDto;
 import io.camunda.operate.webapp.rest.dto.operation.BatchOperationDto;
 import io.camunda.operate.webapp.rest.dto.operation.BatchOperationRequestDto;
-import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
+import io.camunda.operate.webapp.rest.dto.operation.CreateRequestDto;
 import io.camunda.operate.webapp.rest.dto.operation.OperationTypeDto;
 import io.camunda.operate.webapp.zeebe.operation.*;
 import io.camunda.webapps.schema.descriptors.template.DecisionInstanceTemplate;
@@ -180,7 +180,7 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
     final MvcResult mvcResult =
         postOperationWithOKResponse(
             processInstanceKey,
-            new CreateOperationRequestDto(OperationType.CANCEL_PROCESS_INSTANCE));
+            new CreateRequestDto(OperationType.CANCEL_PROCESS_INSTANCE));
 
     // then
     final BatchOperationDto[] batchOperations =
@@ -226,7 +226,7 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
     // when
     final MvcResult mvcResult =
         postOperationWithOKResponse(
-            processInstanceKey, new CreateOperationRequestDto(OperationType.RESOLVE_INCIDENT));
+            processInstanceKey, new CreateRequestDto(OperationType.RESOLVE_INCIDENT));
 
     // then
     final BatchOperationDto[] batchOperations =
@@ -273,7 +273,7 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
     // when
     final MvcResult mvcResult =
         postOperationWithOKResponse(
-            processInstanceKey, new CreateOperationRequestDto(OperationType.RESOLVE_INCIDENT));
+            processInstanceKey, new CreateRequestDto(OperationType.RESOLVE_INCIDENT));
 
     final BatchOperationEntity batchOperationResponse =
         mockMvcTestRule.fromResponse(mvcResult, new TypeReference<>() {});
@@ -323,7 +323,7 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
     // when
     // we call RESOLVE_INCIDENT operation on instance
     postOperationWithOKResponse(
-        processInstanceKey, new CreateOperationRequestDto(OperationType.RESOLVE_INCIDENT));
+        processInstanceKey, new CreateRequestDto(OperationType.RESOLVE_INCIDENT));
 
     // and execute the operation
     executeOneBatch();
@@ -382,7 +382,7 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
 
     // we call RESOLVE_INCIDENT operation on instance
     postOperationWithOKResponse(
-        processInstanceKey, new CreateOperationRequestDto(OperationType.RESOLVE_INCIDENT));
+        processInstanceKey, new CreateRequestDto(OperationType.RESOLVE_INCIDENT));
 
     // when
     // we execute the operation
@@ -735,9 +735,9 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
 
     // when we call RESOLVE_INCIDENT operation two times on one instance
     postOperationWithOKResponse(
-        processInstanceKey, new CreateOperationRequestDto(OperationType.RESOLVE_INCIDENT)); // #1
+        processInstanceKey, new CreateRequestDto(OperationType.RESOLVE_INCIDENT)); // #1
     postOperationWithOKResponse(
-        processInstanceKey, new CreateOperationRequestDto(OperationType.RESOLVE_INCIDENT)); // #2
+        processInstanceKey, new CreateRequestDto(OperationType.RESOLVE_INCIDENT)); // #2
 
     // and execute the operation
     executeOneBatch();
@@ -784,13 +784,13 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
     // when we call CANCEL_PROCESS_INSTANCE operation three times on one instance
     postOperationWithOKResponse(
         processInstanceKey,
-        new CreateOperationRequestDto(OperationType.CANCEL_PROCESS_INSTANCE)); // #1
+        new CreateRequestDto(OperationType.CANCEL_PROCESS_INSTANCE)); // #1
     postOperationWithOKResponse(
         processInstanceKey,
-        new CreateOperationRequestDto(OperationType.CANCEL_PROCESS_INSTANCE)); // #2
+        new CreateRequestDto(OperationType.CANCEL_PROCESS_INSTANCE)); // #2
     postOperationWithOKResponse(
         processInstanceKey,
-        new CreateOperationRequestDto(OperationType.CANCEL_PROCESS_INSTANCE)); // #3
+        new CreateRequestDto(OperationType.CANCEL_PROCESS_INSTANCE)); // #3
 
     // and execute the operation
     executeOneBatch();
@@ -820,11 +820,11 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
             .setIds(Collections.singletonList(processInstanceKey.toString()));
     postOperationWithOKResponse(
         processInstanceKey,
-        new CreateOperationRequestDto(OperationType.CANCEL_PROCESS_INSTANCE)); // #1
+        new CreateRequestDto(OperationType.CANCEL_PROCESS_INSTANCE)); // #1
     executeOneBatch();
 
     postOperationWithOKResponse(
-        processInstanceKey, new CreateOperationRequestDto(OperationType.RESOLVE_INCIDENT)); // #2
+        processInstanceKey, new CreateRequestDto(OperationType.RESOLVE_INCIDENT)); // #2
     executeOneBatch();
 
     // then
@@ -862,7 +862,7 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
             .setIds(Collections.singletonList(processInstanceKey.toString()));
     postOperationWithOKResponse(
         processInstanceKey,
-        new CreateOperationRequestDto(OperationType.CANCEL_PROCESS_INSTANCE)); // #1
+        new CreateRequestDto(OperationType.CANCEL_PROCESS_INSTANCE)); // #1
     executeOneBatch();
 
     // then
@@ -886,7 +886,7 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
     failTaskWithNoRetriesLeft("taskA", processInstanceKey, "some error");
     // we call RESOLVE_INCIDENT operation on instance
     postOperationWithOKResponse(
-        processInstanceKey, new CreateOperationRequestDto(OperationType.RESOLVE_INCIDENT));
+        processInstanceKey, new CreateRequestDto(OperationType.RESOLVE_INCIDENT));
     // resolve the incident before the operation is executed
     final IncidentEntity incident =
         incidentReader.getAllIncidentsByProcessInstanceKey(processInstanceKey).get(0);
@@ -999,7 +999,7 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
 
     // when we call ADD_VARIABLE operation for the variable that already exists
     final String newVarName = "a";
-    final CreateOperationRequestDto op = new CreateOperationRequestDto(OperationType.ADD_VARIABLE);
+    final CreateRequestDto op = new CreateRequestDto(OperationType.ADD_VARIABLE);
     op.setVariableName(newVarName);
     op.setVariableValue("\"newValue\"");
     op.setVariableScopeId(ConversionUtils.toStringOrNull(processInstanceKey));
@@ -1018,7 +1018,7 @@ public class OperationZeebeIT extends OperateZeebeAbstractIT {
 
     // when we call ADD_VARIABLE operation for the first time
     final String newVarName = "newVar";
-    final CreateOperationRequestDto op = new CreateOperationRequestDto(OperationType.ADD_VARIABLE);
+    final CreateRequestDto op = new CreateRequestDto(OperationType.ADD_VARIABLE);
     op.setVariableName(newVarName);
     op.setVariableValue("\"newValue\"");
     op.setVariableScopeId(ConversionUtils.toStringOrNull(processInstanceKey));

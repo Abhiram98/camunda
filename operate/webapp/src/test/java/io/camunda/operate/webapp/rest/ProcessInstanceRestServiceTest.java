@@ -23,7 +23,7 @@ import io.camunda.operate.webapp.reader.VariableReader;
 import io.camunda.operate.webapp.rest.dto.VariableRequestDto;
 import io.camunda.operate.webapp.rest.dto.listview.ListViewProcessInstanceDto;
 import io.camunda.operate.webapp.rest.dto.metadata.FlowNodeMetadataRequestDto;
-import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
+import io.camunda.operate.webapp.rest.dto.operation.CreateRequestDto;
 import io.camunda.operate.webapp.rest.exception.NotAuthorizedException;
 import io.camunda.operate.webapp.rest.validation.ModifyProcessInstanceRequestValidator;
 import io.camunda.operate.webapp.rest.validation.ProcessInstanceRequestValidator;
@@ -255,7 +255,7 @@ public class ProcessInstanceRestServiceTest {
             () ->
                 underTest.operation(
                     processInstanceId,
-                    new CreateOperationRequestDto()
+                    new CreateRequestDto()
                         .setOperationType(OperationType.DELETE_PROCESS_INSTANCE)));
 
     assertThat(exception.getMessage())
@@ -280,7 +280,7 @@ public class ProcessInstanceRestServiceTest {
             () ->
                 underTest.operation(
                     processInstanceId,
-                    new CreateOperationRequestDto()
+                    new CreateRequestDto()
                         .setOperationType(OperationType.CANCEL_PROCESS_INSTANCE)));
 
     assertThat(exception.getMessage())
@@ -305,7 +305,7 @@ public class ProcessInstanceRestServiceTest {
             () ->
                 underTest.operation(
                     processInstanceId,
-                    new CreateOperationRequestDto().setOperationType(OperationType.ADD_VARIABLE)));
+                    new CreateRequestDto().setOperationType(OperationType.ADD_VARIABLE)));
 
     assertThat(exception.getMessage())
         .contains("No UPDATE_PROCESS_INSTANCE permission for process instance");
