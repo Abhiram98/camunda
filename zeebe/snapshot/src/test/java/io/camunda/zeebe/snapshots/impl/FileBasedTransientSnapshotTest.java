@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 public class FileBasedTransientSnapshotTest {
+
   private static final String SNAPSHOT_DIRECTORY = "snapshots";
   private static final String PENDING_DIRECTORY = "pending";
   private static final Map<String, String> SNAPSHOT_FILE_CONTENTS =
@@ -36,8 +37,10 @@ public class FileBasedTransientSnapshotTest {
           "file1", "file1 contents",
           "file2", "file2 contents");
 
-  @Rule public TemporaryFolder temporaryFolder = new TemporaryFolder();
-  @Rule public ActorSchedulerRule scheduler = new ActorSchedulerRule();
+  @Rule
+  public TemporaryFolder temporaryFolder = new TemporaryFolder();
+  @Rule
+  public ActorSchedulerRule scheduler = new ActorSchedulerRule();
 
   private FileBasedSnapshotStore snapshotStore;
   private Path snapshotsDir;
@@ -129,7 +132,7 @@ public class FileBasedTransientSnapshotTest {
     final var persistedSnapshot = transientSnapshot.persist().join();
 
     // when
-    snapshotStore.purgePendingSnapshots().join();
+    snapshotStore.abortPendingSnapshots().join();
 
     // then
     assertThat(persistedSnapshot.getPath())
@@ -259,7 +262,8 @@ public class FileBasedTransientSnapshotTest {
   @Test
   public void shouldNotPersistNonExistentTransientSnapshot() {
     final var transientSnapshot = snapshotStore.newTransientSnapshot(1L, 0L, 2L, 3L).get();
-    transientSnapshot.take(p -> {});
+    transientSnapshot.take(p -> {
+    });
 
     // when
     final var persisted = transientSnapshot.persist();
