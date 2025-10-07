@@ -18,7 +18,7 @@ public interface BatchOperationUpdateRepository extends AutoCloseable {
    * Returns the list of not finished batch operations. We can use endDate field to distinguish
    * finished from running.
    */
-  CompletionStage<Collection<String>> getNotFinishedBatchOperations();
+  CompletionStage<Collection<String>> getNotBatchOperations();
 
   /**
    * Counts amount of single operations that are finished (COMPLETED or FAILED state) that are
@@ -28,16 +28,13 @@ public interface BatchOperationUpdateRepository extends AutoCloseable {
    *
    * @param batchOperationIds list of batch operation ids
    */
-  CompletionStage<List<OperationsAggData>> getFinishedOperationsCount(
+  CompletionStage<List<OperationsAggData>> getOperationsCount(
       Collection<String> batchOperationIds);
 
   /**
    * Updates the batch operations with the amount of finished operations. Update method additionally
    * includes the script to set endDate field to the current time for those batch operations that
    * have all operations finished (operationsTotalCount <= operationsFinishedCount).
-   *
-   * @param documentUpdates
-   * @return
    */
   CompletionStage<Integer> bulkUpdate(List<DocumentUpdate> documentUpdates);
 
@@ -46,19 +43,21 @@ public interface BatchOperationUpdateRepository extends AutoCloseable {
    *
    * <p>All fields are expected to be non-null.
    */
-  record DocumentUpdate(String id, long finishedOperationsCount) {}
+  record DocumentUpdate(final String id, final long operationsCount) {
+  }
 
-  record OperationsAggData(String batchOperationId, long finishedOperationsCount) {}
+  record OperationsAggData(final String batchOperationId, final long operationsCount) {
+  }
 
   class NoopBatchOperationUpdateRepository implements BatchOperationUpdateRepository {
 
     @Override
-    public CompletionStage<Collection<String>> getNotFinishedBatchOperations() {
+    public CompletionStage<Collection<String>> getNotBatchOperations() {
       return CompletableFuture.completedFuture(List.of());
     }
 
     @Override
-    public CompletionStage<List<OperationsAggData>> getFinishedOperationsCount(
+    public CompletionStage<List<OperationsAggData>> getOperationsCount(
         final Collection<String> batchOperationIds) {
       return CompletableFuture.completedFuture(List.of());
     }
@@ -69,6 +68,7 @@ public interface BatchOperationUpdateRepository extends AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {}
+    public void close() throws Exception {
+    }
   }
 }

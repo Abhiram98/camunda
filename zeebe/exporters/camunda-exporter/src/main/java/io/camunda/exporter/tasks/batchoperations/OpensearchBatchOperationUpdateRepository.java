@@ -59,7 +59,7 @@ public class OpensearchBatchOperationUpdateRepository extends OpensearchReposito
   }
 
   @Override
-  public CompletionStage<Collection<String>> getNotFinishedBatchOperations() {
+  public CompletionStage<Collection<String>> getNotBatchOperations() {
     final var request =
         new SearchRequest.Builder()
             .index(batchOperationIndex)
@@ -68,7 +68,7 @@ public class OpensearchBatchOperationUpdateRepository extends OpensearchReposito
   }
 
   @Override
-  public CompletionStage<List<OperationsAggData>> getFinishedOperationsCount(
+  public CompletionStage<List<OperationsAggData>> getOperationsCount(
       final Collection<String> batchOperationIds) {
     if (batchOperationIds == null || batchOperationIds.isEmpty()) {
       return CompletableFuture.completedFuture(List.of());
@@ -139,7 +139,7 @@ public class OpensearchBatchOperationUpdateRepository extends OpensearchReposito
     final Map<String, Object> params =
         Map.of(
             "operationsFinishedCount",
-            update.finishedOperationsCount(),
+            update.operationsCount(),
             "endDate",
             OffsetDateTime.now());
     return new UpdateOperation.Builder<>()
