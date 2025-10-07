@@ -58,7 +58,7 @@ class AssignGroupToTenantTest {
   @Test
   void shouldAssignGroupToTenant() {
     // when
-    client.newAssignGroupToTenantCommand(TENANT_ID).groupKey(groupKey).send().join();
+    client.newAssignGroupToTenantCommand(TENANT_ID).groupId(groupKey).send().join();
 
     // then
     // TODO remove the String parsing once Groups are migrated to work with ids instead of keys
@@ -81,7 +81,7 @@ class AssignGroupToTenantTest {
             () ->
                 client
                     .newAssignGroupToTenantCommand(nonExistentTenantId)
-                    .groupKey(groupKey)
+                    .groupId(groupKey)
                     .send()
                     .join())
         .isInstanceOf(ProblemException.class)
@@ -101,7 +101,7 @@ class AssignGroupToTenantTest {
             () ->
                 client
                     .newAssignGroupToTenantCommand(TENANT_ID)
-                    .groupKey(nonExistentGroupKey)
+                    .groupId(nonExistentGroupKey)
                     .send()
                     .join())
         .isInstanceOf(ProblemException.class)
@@ -114,11 +114,11 @@ class AssignGroupToTenantTest {
   @Test
   void shouldRejectIfAlreadyAssigned() {
     // given
-    client.newAssignGroupToTenantCommand(TENANT_ID).groupKey(groupKey).send().join();
+    client.newAssignGroupToTenantCommand(TENANT_ID).groupId(groupKey).send().join();
 
     // when / then
     assertThatThrownBy(
-            () -> client.newAssignGroupToTenantCommand(TENANT_ID).groupKey(groupKey).send().join())
+            () -> client.newAssignGroupToTenantCommand(TENANT_ID).groupId(groupKey).send().join())
         .isInstanceOf(ProblemException.class)
         .hasMessageContaining("Failed with code 409: 'Conflict'")
         .hasMessageContaining(
