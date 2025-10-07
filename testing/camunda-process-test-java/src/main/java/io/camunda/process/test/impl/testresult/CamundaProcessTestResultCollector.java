@@ -54,7 +54,7 @@ public class CamundaProcessTestResultCollector {
 
     result.setProcessInstance(processInstance);
     result.setVariables(collectVariables(processInstanceKey));
-    result.setOpenIncidents(collectOpenIncidents(processInstanceKey));
+    result.setActiveIncidents(collectOpenIncidents(processInstanceKey));
     result.setActiveElementInstances(collectActiveElementInstances(processInstanceKey));
 
     return result;
