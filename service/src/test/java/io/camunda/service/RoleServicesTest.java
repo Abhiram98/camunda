@@ -190,7 +190,7 @@ public class RoleServicesTest {
     final var memberId = "memberId";
     final var memberType = EntityType.USER;
     final var roleEntity = mock(RoleEntity.class);
-    when(client.findAllRoles(
+    when(client.searchRoles(
             RoleQuery.of(q -> q.filter(f -> f.memberId(memberId).childMemberType(memberType)))))
         .thenReturn(List.of(roleEntity));
 

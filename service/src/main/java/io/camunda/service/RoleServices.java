@@ -111,7 +111,7 @@ public class RoleServices extends SearchQueryService<RoleServices, RoleQuery, Ro
         .withSecurityContext(
             securityContextProvider.provideSecurityContext(
                 authentication, Authorization.of(a -> a.role().read())))
-        .findAllRoles(query);
+        .searchRoles(query);
   }
 
   @Override

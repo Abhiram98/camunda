@@ -19,7 +19,7 @@ public interface TenantSearchClient {
 
   SearchQueryResult<TenantMemberEntity> searchTenantMembers(TenantQuery filter);
 
-  List<TenantEntity> findAllTenants(TenantQuery query);
+  List<TenantEntity> searchTenants(TenantQuery query);
 
   TenantSearchClient withSecurityContext(SecurityContext securityContext);
 }

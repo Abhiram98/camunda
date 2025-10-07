@@ -58,7 +58,7 @@ public class MappingServices
         .withSecurityContext(
             securityContextProvider.provideSecurityContext(
                 authentication, Authorization.of(a -> a.mapping().read())))
-        .findAllMappings(query);
+        .searchMappings(query);
   }
 
   @Override

@@ -68,7 +68,7 @@ public class TenantServices extends SearchQueryService<TenantServices, TenantQue
         .withSecurityContext(
             securityContextProvider.provideSecurityContext(
                 authentication, Authorization.of(a -> a.tenant().read())))
-        .findAllTenants(query);
+        .searchTenants(query);
   }
 
   @Override

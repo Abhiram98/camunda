@@ -51,7 +51,7 @@ public class AuthorizationChecker {
     final var resourceType = securityContext.authorization().resourceType();
     final var permissionType = securityContext.authorization().permissionType();
     final var authorizationEntities =
-        authorizationSearchClient.findAllAuthorizations(
+        authorizationSearchClient.searchAuthorizations(
             AuthorizationQuery.of(
                 q ->
                     q.filter(
@@ -108,7 +108,7 @@ public class AuthorizationChecker {
       final CamundaAuthentication authentication) {
     final var ownerIds = collectOwnerTypeToOwnerIds(authentication);
     final var authorizationEntities =
-        authorizationSearchClient.findAllAuthorizations(
+        authorizationSearchClient.searchAuthorizations(
             AuthorizationQuery.of(
                 q ->
                     q.filter(

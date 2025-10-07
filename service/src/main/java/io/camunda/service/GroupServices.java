@@ -68,7 +68,7 @@ public class GroupServices extends SearchQueryService<GroupServices, GroupQuery,
         .withSecurityContext(
             securityContextProvider.provideSecurityContext(
                 authentication, Authorization.of(a -> a.group().read())))
-        .findAllGroups(query);
+        .searchGroups(query);
   }
 
   @Override
