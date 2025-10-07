@@ -170,11 +170,11 @@ public class UserTaskHandler implements ExportHandler<TaskEntity, UserTaskRecord
     if (entity.getState() != null) {
       updateFields.put(TaskTemplate.STATE, entity.getState());
     }
-    if (entity.getFlowNodeBpmnId() != null) {
-      updateFields.put(TaskTemplate.FLOW_NODE_BPMN_ID, entity.getFlowNodeBpmnId());
+    if (entity.getBpmnId() != null) {
+      updateFields.put(TaskTemplate.FLOW_NODE_BPMN_ID, entity.getBpmnId());
     }
-    if (entity.getFlowNodeName() != null) {
-      updateFields.put(TaskTemplate.FLOW_NODE_NAME, entity.getFlowNodeName());
+    if (entity.getName() != null) {
+      updateFields.put(TaskTemplate.FLOW_NODE_NAME, entity.getName());
     }
     if (entity.getProcessDefinitionId() != null) {
       updateFields.put(TaskTemplate.PROCESS_DEFINITION_ID, entity.getProcessDefinitionId());
@@ -196,10 +196,10 @@ public class UserTaskHandler implements ExportHandler<TaskEntity, UserTaskRecord
         .setAssignee(getAssigneeOrNull(record))
         .setDueDate(ExporterUtil.toOffsetDateTime(record.getValue().getDueDate()))
         .setFollowUpDate(ExporterUtil.toOffsetDateTime(record.getValue().getFollowUpDate()))
-        .setFlowNodeInstanceId(String.valueOf(record.getValue().getElementInstanceKey()))
+        .setInstanceId(String.valueOf(record.getValue().getElementInstanceKey()))
         .setProcessInstanceId(String.valueOf(record.getValue().getProcessInstanceKey()))
-        .setFlowNodeBpmnId(record.getValue().getElementId())
-        .setFlowNodeName(
+        .setBpmnId(record.getValue().getElementId())
+        .setName(
             ProcessCacheUtil.getFlowNodeName(
                     processCache,
                     record.getValue().getProcessDefinitionKey(),
@@ -306,8 +306,8 @@ public class UserTaskHandler implements ExportHandler<TaskEntity, UserTaskRecord
 
   private void handleMigration(final Record<UserTaskRecordValue> record, final TaskEntity entity) {
     entity
-        .setFlowNodeBpmnId(record.getValue().getElementId())
-        .setFlowNodeName(
+        .setBpmnId(record.getValue().getElementId())
+        .setName(
             ProcessCacheUtil.getFlowNodeName(
                     processCache,
                     record.getValue().getProcessDefinitionKey(),

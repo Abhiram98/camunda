@@ -187,7 +187,7 @@ public class UserTaskHandlerTest {
             .setId(String.valueOf(flowNodeInstanceKey))
             .setProcessInstanceId(String.valueOf(processInstanceKey))
             .setKey(recordKey)
-            .setFlowNodeInstanceId(String.valueOf(flowNodeInstanceKey));
+            .setInstanceId(String.valueOf(flowNodeInstanceKey));
     final BatchRequest mockRequest = mock(BatchRequest.class);
 
     // when
@@ -219,7 +219,7 @@ public class UserTaskHandlerTest {
             .setId(String.valueOf(recordKey))
             .setProcessInstanceId(String.valueOf(processInstanceKey))
             .setKey(recordKey)
-            .setFlowNodeInstanceId(String.valueOf(flowNodeInstanceKey));
+            .setInstanceId(String.valueOf(flowNodeInstanceKey));
     final BatchRequest mockRequest = mock(BatchRequest.class);
 
     // when
@@ -289,8 +289,8 @@ public class UserTaskHandlerTest {
     assertThat(taskEntity.getPartitionId()).isEqualTo(taskRecord.getPartitionId());
     assertThat(taskEntity.getPosition()).isEqualTo(taskRecord.getPosition());
     assertThat(taskEntity.getProcessInstanceId()).isEqualTo(String.valueOf(processInstanceKey));
-    assertThat(taskEntity.getFlowNodeBpmnId()).isEqualTo(taskRecordValue.getElementId());
-    assertThat(taskEntity.getFlowNodeName()).isEqualTo("my-flow-node");
+    assertThat(taskEntity.getBpmnId()).isEqualTo(taskRecordValue.getElementId());
+    assertThat(taskEntity.getName()).isEqualTo("my-flow-node");
     assertThat(taskEntity.getBpmnProcessId()).isEqualTo(taskRecordValue.getBpmnProcessId());
     assertThat(taskEntity.getProcessDefinitionId())
         .isEqualTo(String.valueOf(taskRecordValue.getProcessDefinitionKey()));
@@ -662,13 +662,13 @@ public class UserTaskHandlerTest {
     final Map<String, Object> expectedUpdates = new HashMap<>();
     expectedUpdates.put(TaskTemplate.PROCESS_DEFINITION_ID, taskEntity.getProcessDefinitionId());
     expectedUpdates.put(TaskTemplate.BPMN_PROCESS_ID, taskEntity.getBpmnProcessId());
-    expectedUpdates.put(TaskTemplate.FLOW_NODE_BPMN_ID, taskEntity.getFlowNodeBpmnId());
+    expectedUpdates.put(TaskTemplate.FLOW_NODE_BPMN_ID, taskEntity.getBpmnId());
     expectedUpdates.put(TaskTemplate.STATE, TaskState.CREATED);
 
     // then
     assertThat(taskEntity.getProcessDefinitionId())
         .isEqualTo(String.valueOf(taskRecordValue.getProcessDefinitionKey()));
-    assertThat(taskEntity.getFlowNodeBpmnId()).isEqualTo(taskRecordValue.getElementId());
+    assertThat(taskEntity.getBpmnId()).isEqualTo(taskRecordValue.getElementId());
     assertThat(taskEntity.getBpmnProcessId()).isEqualTo(taskRecordValue.getBpmnProcessId());
     verify(mockRequest, times(1))
         .upsertWithRouting(

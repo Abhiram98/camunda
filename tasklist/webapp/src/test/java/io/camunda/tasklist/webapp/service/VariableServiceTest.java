@@ -92,7 +92,7 @@ class VariableServiceTest {
         new TaskEntity()
             .setId(taskIdAsString)
             .setKey(taskId)
-            .setFlowNodeInstanceId(String.valueOf(flowNodeInstanceId))
+            .setInstanceId(String.valueOf(flowNodeInstanceId))
             .setProcessInstanceId("123")
             .setTenantId("tenant_a");
     when(taskStore.getTask(taskIdAsString)).thenReturn(task);
@@ -185,7 +185,7 @@ class VariableServiceTest {
     final TaskEntity task =
         new TaskEntity()
             .setId(taskId)
-            .setFlowNodeInstanceId(String.valueOf(flowNodeInstanceId))
+            .setInstanceId(String.valueOf(flowNodeInstanceId))
             .setProcessInstanceId("123")
             .setState(TaskState.CREATED);
     when(taskStore.getTask(taskId)).thenReturn(task);
@@ -480,7 +480,7 @@ class VariableServiceTest {
     final TaskEntity task =
         new TaskEntity()
             .setId(taskId)
-            .setFlowNodeInstanceId(String.valueOf(flowNodeInstanceId))
+            .setInstanceId(String.valueOf(flowNodeInstanceId))
             .setProcessInstanceId("123")
             .setTenantId("tenant_b");
     when(taskStore.getTask(taskId)).thenReturn(task);
@@ -524,7 +524,7 @@ class VariableServiceTest {
     final TaskEntity task =
         new TaskEntity()
             .setId(taskId)
-            .setFlowNodeInstanceId(String.valueOf(flowNodeInstanceId))
+            .setInstanceId(String.valueOf(flowNodeInstanceId))
             .setProcessInstanceId("123")
             .setTenantId("tenant_c");
     when(taskStore.getTask(taskId)).thenReturn(task);

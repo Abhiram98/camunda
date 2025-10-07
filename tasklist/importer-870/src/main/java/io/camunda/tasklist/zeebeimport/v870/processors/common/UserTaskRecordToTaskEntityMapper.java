@@ -69,8 +69,8 @@ public class UserTaskRecordToTaskEntityMapper {
             .setId(String.valueOf(record.getKey()))
             .setKey(record.getKey())
             .setPartitionId(record.getPartitionId())
-            .setFlowNodeBpmnId(recordValue.getElementId())
-            .setFlowNodeInstanceId(String.valueOf(recordValue.getElementInstanceKey()))
+            .setBpmnId(recordValue.getElementId())
+            .setInstanceId(String.valueOf(recordValue.getElementInstanceKey()))
             .setProcessInstanceId(String.valueOf(recordValue.getProcessInstanceKey()))
             .setBpmnProcessId(recordValue.getBpmnProcessId())
             .setProcessDefinitionId(processDefinitionId)
@@ -166,7 +166,7 @@ public class UserTaskRecordToTaskEntityMapper {
     }
     switch (intent) {
       case MIGRATED -> {
-        updateFields.put(TaskTemplate.FLOW_NODE_BPMN_ID, entity.getFlowNodeBpmnId());
+        updateFields.put(TaskTemplate.FLOW_NODE_BPMN_ID, entity.getBpmnId());
         updateFields.put(TaskTemplate.BPMN_PROCESS_ID, entity.getBpmnProcessId());
         updateFields.put(TaskTemplate.PROCESS_DEFINITION_ID, entity.getProcessDefinitionId());
       }

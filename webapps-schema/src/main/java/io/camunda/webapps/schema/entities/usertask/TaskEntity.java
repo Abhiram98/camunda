@@ -27,13 +27,13 @@ public class TaskEntity
   private int partitionId;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  private String flowNodeBpmnId;
+  private String bpmnId;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  private String flowNodeName;
+  private String name;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  private String flowNodeInstanceId;
+  private String instanceId;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private OffsetDateTime completionTime;
@@ -150,30 +150,30 @@ public class TaskEntity
     return this;
   }
 
-  public String getFlowNodeBpmnId() {
-    return flowNodeBpmnId;
+  public String getBpmnId() {
+    return bpmnId;
   }
 
-  public TaskEntity setFlowNodeBpmnId(final String flowNodeBpmnId) {
-    this.flowNodeBpmnId = flowNodeBpmnId;
+  public TaskEntity setBpmnId(final String bpmnId) {
+    this.bpmnId = bpmnId;
     return this;
   }
 
-  public String getFlowNodeName() {
-    return flowNodeName;
+  public String getName() {
+    return name;
   }
 
-  public TaskEntity setFlowNodeName(final String flowNodeName) {
-    this.flowNodeName = flowNodeName;
+  public TaskEntity setName(final String name) {
+    this.name = name;
     return this;
   }
 
-  public String getFlowNodeInstanceId() {
-    return flowNodeInstanceId;
+  public String getInstanceId() {
+    return instanceId;
   }
 
-  public TaskEntity setFlowNodeInstanceId(final String flowNodeInstanceId) {
-    this.flowNodeInstanceId = flowNodeInstanceId;
+  public TaskEntity setInstanceId(final String instanceId) {
+    this.instanceId = instanceId;
     return this;
   }
 
