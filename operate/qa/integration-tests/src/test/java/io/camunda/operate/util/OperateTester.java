@@ -41,7 +41,7 @@ import io.camunda.operate.webapp.rest.dto.metadata.FlowNodeMetadataDto;
 import io.camunda.operate.webapp.rest.dto.metadata.FlowNodeMetadataRequestDto;
 import io.camunda.operate.webapp.rest.dto.operation.BatchOperationDto;
 import io.camunda.operate.webapp.rest.dto.operation.CreateBatchOperationRequestDto;
-import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
+import io.camunda.operate.webapp.rest.dto.operation.CreateRequestDto;
 import io.camunda.operate.webapp.rest.dto.operation.ModifyProcessInstanceRequestDto;
 import io.camunda.operate.webapp.security.oauth2.IdentityJwt2AuthenticationTokenConverter;
 import io.camunda.operate.webapp.zeebe.operation.OperationExecutor;
@@ -549,8 +549,8 @@ public class OperateTester {
 
   public OperateTester updateVariableOperation(final String varName, final String varValue)
       throws Exception {
-    final CreateOperationRequestDto op =
-        new CreateOperationRequestDto(OperationType.UPDATE_VARIABLE);
+    final CreateRequestDto op =
+        new CreateRequestDto(OperationType.UPDATE_VARIABLE);
     op.setVariableName(varName);
     op.setVariableValue(varValue);
     op.setVariableScopeId(ConversionUtils.toStringOrNull(processInstanceKey));
@@ -571,7 +571,7 @@ public class OperateTester {
     return this;
   }
 
-  private MvcResult postOperation(final CreateOperationRequestDto operationRequest)
+  private MvcResult postOperation(final CreateRequestDto operationRequest)
       throws Exception {
     final MockHttpServletRequestBuilder postOperationRequest =
         post(format("/api/process-instances/%s/operation", processInstanceKey))
@@ -620,7 +620,7 @@ public class OperateTester {
   }
 
   public OperateTester deleteProcessInstance() throws Exception {
-    postOperation(new CreateOperationRequestDto(OperationType.DELETE_PROCESS_INSTANCE));
+    postOperation(new CreateRequestDto(OperationType.DELETE_PROCESS_INSTANCE));
     searchTestRule.refreshSerchIndexes();
     return this;
   }

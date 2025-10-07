@@ -28,7 +28,7 @@ import io.camunda.operate.webapp.rest.ProcessRestService;
 import io.camunda.operate.webapp.rest.dto.listview.ListViewQueryDto;
 import io.camunda.operate.webapp.rest.dto.operation.BatchOperationDto;
 import io.camunda.operate.webapp.rest.dto.operation.CreateBatchOperationRequestDto;
-import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
+import io.camunda.operate.webapp.rest.dto.operation.CreateRequestDto;
 import io.camunda.operate.webapp.zeebe.operation.OperationExecutor;
 import io.camunda.operate.webapp.zeebe.operation.adapter.ClientBasedAdapter;
 import io.camunda.operate.webapp.zeebe.operation.adapter.OperateServicesAdapter;
@@ -333,8 +333,8 @@ public abstract class OperateZeebeAbstractIT extends OperateAbstractIT {
   protected void postUpdateVariableOperation(
       final Long processInstanceKey, final String newVarName, final String newVarValue)
       throws Exception {
-    final CreateOperationRequestDto op =
-        new CreateOperationRequestDto(OperationType.UPDATE_VARIABLE);
+    final CreateRequestDto op =
+        new CreateRequestDto(OperationType.UPDATE_VARIABLE);
     op.setVariableName(newVarName);
     op.setVariableValue(newVarValue);
     op.setVariableScopeId(ConversionUtils.toStringOrNull(processInstanceKey));
@@ -344,7 +344,7 @@ public abstract class OperateZeebeAbstractIT extends OperateAbstractIT {
   protected String postAddVariableOperation(
       final Long processInstanceKey, final String newVarName, final String newVarValue)
       throws Exception {
-    final CreateOperationRequestDto op = new CreateOperationRequestDto(OperationType.ADD_VARIABLE);
+    final CreateRequestDto op = new CreateRequestDto(OperationType.ADD_VARIABLE);
     op.setVariableName(newVarName);
     op.setVariableValue(newVarValue);
     op.setVariableScopeId(ConversionUtils.toStringOrNull(processInstanceKey));
@@ -361,8 +361,8 @@ public abstract class OperateZeebeAbstractIT extends OperateAbstractIT {
       final String newVarName,
       final String newVarValue)
       throws Exception {
-    final CreateOperationRequestDto op =
-        new CreateOperationRequestDto(OperationType.UPDATE_VARIABLE);
+    final CreateRequestDto op =
+        new CreateRequestDto(OperationType.UPDATE_VARIABLE);
     op.setVariableName(newVarName);
     op.setVariableValue(newVarValue);
     op.setVariableScopeId(ConversionUtils.toStringOrNull(scopeKey));
@@ -375,7 +375,7 @@ public abstract class OperateZeebeAbstractIT extends OperateAbstractIT {
       final String newVarName,
       final String newVarValue)
       throws Exception {
-    final CreateOperationRequestDto op = new CreateOperationRequestDto(OperationType.ADD_VARIABLE);
+    final CreateRequestDto op = new CreateRequestDto(OperationType.ADD_VARIABLE);
     op.setVariableName(newVarName);
     op.setVariableValue(newVarValue);
     op.setVariableScopeId(ConversionUtils.toStringOrNull(scopeKey));
@@ -399,14 +399,14 @@ public abstract class OperateZeebeAbstractIT extends OperateAbstractIT {
   }
 
   protected MvcResult postOperationWithOKResponse(
-      final Long processInstanceKey, final CreateOperationRequestDto operationRequest)
+      final Long processInstanceKey, final CreateRequestDto operationRequest)
       throws Exception {
     return postOperation(processInstanceKey, operationRequest, HttpStatus.SC_OK);
   }
 
   protected MvcResult postOperation(
       final Long processInstanceKey,
-      final CreateOperationRequestDto operationRequest,
+      final CreateRequestDto operationRequest,
       final int expectedStatus)
       throws Exception {
     final MockHttpServletRequestBuilder postOperationRequest =

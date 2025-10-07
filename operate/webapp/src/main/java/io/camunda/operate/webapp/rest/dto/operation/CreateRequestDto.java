@@ -9,7 +9,7 @@ package io.camunda.operate.webapp.rest.dto.operation;
 
 import io.camunda.webapps.schema.entities.operation.OperationType;
 
-public class CreateOperationRequestDto {
+public class CreateRequestDto {
 
   private OperationType operationType;
 
@@ -25,9 +25,9 @@ public class CreateOperationRequestDto {
   private String variableName;
   private String variableValue;
 
-  public CreateOperationRequestDto() {}
+  public CreateRequestDto() {}
 
-  public CreateOperationRequestDto(OperationType operationType) {
+  public CreateRequestDto(OperationType operationType) {
     this.operationType = operationType;
   }
 
@@ -35,7 +35,7 @@ public class CreateOperationRequestDto {
     return operationType;
   }
 
-  public CreateOperationRequestDto setOperationType(OperationType operationType) {
+  public CreateRequestDto setOperationType(OperationType operationType) {
     this.operationType = operationType;
     return this;
   }
@@ -100,7 +100,7 @@ public class CreateOperationRequestDto {
       return false;
     }
 
-    final CreateOperationRequestDto that = (CreateOperationRequestDto) o;
+    final CreateRequestDto that = (CreateRequestDto) o;
 
     if (operationType != that.operationType) {
       return false;

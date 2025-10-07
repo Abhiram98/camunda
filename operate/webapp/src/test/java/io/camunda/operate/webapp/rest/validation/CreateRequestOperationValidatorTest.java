@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.camunda.operate.webapp.reader.OperationReader;
 import io.camunda.operate.webapp.reader.VariableReader;
-import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
+import io.camunda.operate.webapp.rest.dto.operation.CreateRequestDto;
 import io.camunda.operate.webapp.rest.exception.InvalidRequestException;
 import io.camunda.webapps.schema.entities.operation.OperationType;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +37,7 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateWithNullOperationType() {
-    final CreateOperationRequestDto operationRequest = new CreateOperationRequestDto(null);
+    final CreateRequestDto operationRequest = new CreateRequestDto(null);
 
     final InvalidRequestException exception =
         assertThrows(
@@ -48,8 +48,8 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateUpdateVariableWithNullScopeId() {
-    final CreateOperationRequestDto operationRequest =
-        new CreateOperationRequestDto(OperationType.UPDATE_VARIABLE);
+    final CreateRequestDto operationRequest =
+        new CreateRequestDto(OperationType.UPDATE_VARIABLE);
 
     operationRequest.setVariableScopeId(null);
     operationRequest.setVariableName("var");
@@ -65,8 +65,8 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateUpdateVariableWithNullVariableName() {
-    final CreateOperationRequestDto operationRequest =
-        new CreateOperationRequestDto(OperationType.UPDATE_VARIABLE);
+    final CreateRequestDto operationRequest =
+        new CreateRequestDto(OperationType.UPDATE_VARIABLE);
 
     operationRequest.setVariableScopeId("abc");
     operationRequest.setVariableName(null);
@@ -82,8 +82,8 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateUpdateVariableWithEmptyVariableName() {
-    final CreateOperationRequestDto operationRequest =
-        new CreateOperationRequestDto(OperationType.UPDATE_VARIABLE);
+    final CreateRequestDto operationRequest =
+        new CreateRequestDto(OperationType.UPDATE_VARIABLE);
 
     operationRequest.setVariableScopeId("abc");
     operationRequest.setVariableName("");
@@ -99,8 +99,8 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateUpdateVariableWithNullVariableValue() {
-    final CreateOperationRequestDto operationRequest =
-        new CreateOperationRequestDto(OperationType.UPDATE_VARIABLE);
+    final CreateRequestDto operationRequest =
+        new CreateRequestDto(OperationType.UPDATE_VARIABLE);
 
     operationRequest.setVariableScopeId("abc");
     operationRequest.setVariableName("var");
@@ -116,8 +116,8 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateUpdateVariable() {
-    final CreateOperationRequestDto operationRequest =
-        new CreateOperationRequestDto(OperationType.UPDATE_VARIABLE);
+    final CreateRequestDto operationRequest =
+        new CreateRequestDto(OperationType.UPDATE_VARIABLE);
 
     operationRequest.setVariableScopeId("abc");
     operationRequest.setVariableName("var");
@@ -128,8 +128,8 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateAddVariableWithNullScopeId() {
-    final CreateOperationRequestDto operationRequest =
-        new CreateOperationRequestDto(OperationType.ADD_VARIABLE);
+    final CreateRequestDto operationRequest =
+        new CreateRequestDto(OperationType.ADD_VARIABLE);
 
     operationRequest.setVariableScopeId(null);
     operationRequest.setVariableName("var");
@@ -145,8 +145,8 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateAddVariableWithNullVariableName() {
-    final CreateOperationRequestDto operationRequest =
-        new CreateOperationRequestDto(OperationType.ADD_VARIABLE);
+    final CreateRequestDto operationRequest =
+        new CreateRequestDto(OperationType.ADD_VARIABLE);
 
     operationRequest.setVariableScopeId("abc");
     operationRequest.setVariableName(null);
@@ -162,8 +162,8 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateAddVariableWithEmptyVariableName() {
-    final CreateOperationRequestDto operationRequest =
-        new CreateOperationRequestDto(OperationType.ADD_VARIABLE);
+    final CreateRequestDto operationRequest =
+        new CreateRequestDto(OperationType.ADD_VARIABLE);
 
     operationRequest.setVariableScopeId("abc");
     operationRequest.setVariableName("");
@@ -179,8 +179,8 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateAddVariableWithNullVariableValue() {
-    final CreateOperationRequestDto operationRequest =
-        new CreateOperationRequestDto(OperationType.ADD_VARIABLE);
+    final CreateRequestDto operationRequest =
+        new CreateRequestDto(OperationType.ADD_VARIABLE);
 
     operationRequest.setVariableScopeId("abc");
     operationRequest.setVariableName("var");
@@ -196,8 +196,8 @@ public class CreateRequestOperationValidatorTest {
 
   @Test
   public void testValidateAddVariable() {
-    final CreateOperationRequestDto operationRequest =
-        new CreateOperationRequestDto(OperationType.ADD_VARIABLE);
+    final CreateRequestDto operationRequest =
+        new CreateRequestDto(OperationType.ADD_VARIABLE);
 
     operationRequest.setVariableScopeId("abc");
     operationRequest.setVariableName("var");

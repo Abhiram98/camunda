@@ -13,7 +13,7 @@ import io.camunda.operate.webapp.rest.dto.VariableRequestDto;
 import io.camunda.operate.webapp.rest.dto.listview.ListViewQueryDto;
 import io.camunda.operate.webapp.rest.dto.metadata.FlowNodeMetadataRequestDto;
 import io.camunda.operate.webapp.rest.dto.operation.CreateBatchOperationRequestDto;
-import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
+import io.camunda.operate.webapp.rest.dto.operation.CreateRequestDto;
 import io.camunda.operate.webapp.rest.exception.InvalidRequestException;
 import io.camunda.webapps.schema.entities.listener.ListenerType;
 import jakarta.validation.constraints.NotNull;
@@ -92,7 +92,7 @@ public class ProcessInstanceRequestValidator {
   }
 
   public void validateCreateOperationRequest(
-      final CreateOperationRequestDto operationRequest, final String processInstanceId) {
+      final CreateRequestDto operationRequest, final String processInstanceId) {
     createRequestOperationValidator.validate(operationRequest, processInstanceId);
   }
 }

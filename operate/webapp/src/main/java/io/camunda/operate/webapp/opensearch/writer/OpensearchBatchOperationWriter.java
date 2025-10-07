@@ -32,7 +32,7 @@ import io.camunda.operate.webapp.opensearch.OpenSearchQueryHelper;
 import io.camunda.operate.webapp.reader.IncidentReader;
 import io.camunda.operate.webapp.reader.OperationReader;
 import io.camunda.operate.webapp.rest.dto.operation.CreateBatchOperationRequestDto;
-import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
+import io.camunda.operate.webapp.rest.dto.operation.CreateRequestDto;
 import io.camunda.operate.webapp.rest.dto.operation.ModifyProcessInstanceRequestDto;
 import io.camunda.operate.webapp.rest.exception.InvalidRequestException;
 import io.camunda.operate.webapp.rest.exception.NotFoundException;
@@ -196,7 +196,7 @@ public class OpensearchBatchOperationWriter
    */
   @Override
   public BatchOperationEntity scheduleSingleOperation(
-      final long processInstanceKey, final CreateOperationRequestDto operationRequest) {
+      final long processInstanceKey, final CreateRequestDto operationRequest) {
     LOGGER.debug(
         "Creating operation: processInstanceKey [{}], operation type [{}]",
         processInstanceKey,

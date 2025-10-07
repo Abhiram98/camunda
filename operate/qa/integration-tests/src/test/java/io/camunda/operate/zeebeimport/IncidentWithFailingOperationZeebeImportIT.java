@@ -22,7 +22,7 @@ import io.camunda.operate.util.TestApplication;
 import io.camunda.operate.util.ZeebeTestUtil;
 import io.camunda.operate.webapp.rest.dto.incidents.IncidentDto;
 import io.camunda.operate.webapp.rest.dto.incidents.IncidentResponseDto;
-import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
+import io.camunda.operate.webapp.rest.dto.operation.CreateRequestDto;
 import io.camunda.operate.webapp.zeebe.operation.ResolveIncidentHandler;
 import io.camunda.webapps.schema.entities.incident.ErrorType;
 import io.camunda.webapps.schema.entities.operation.OperationType;
@@ -95,7 +95,7 @@ public class IncidentWithFailingOperationZeebeImportIT extends OperateZeebeAbstr
     searchTestRule.processAllRecordsAndWait(incidentsAreActiveCheck, processInstanceKey, 4);
 
     postOperationWithOKResponse(
-        processInstanceKey, new CreateOperationRequestDto(OperationType.RESOLVE_INCIDENT));
+        processInstanceKey, new CreateRequestDto(OperationType.RESOLVE_INCIDENT));
     executeOneBatch();
 
     // this test will fail import for incidents

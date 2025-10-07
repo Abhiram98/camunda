@@ -30,7 +30,7 @@ import io.camunda.operate.webapp.rest.dto.listview.ListViewResponseDto;
 import io.camunda.operate.webapp.rest.dto.metadata.FlowNodeMetadataDto;
 import io.camunda.operate.webapp.rest.dto.metadata.FlowNodeMetadataRequestDto;
 import io.camunda.operate.webapp.rest.dto.operation.CreateBatchOperationRequestDto;
-import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
+import io.camunda.operate.webapp.rest.dto.operation.CreateRequestDto;
 import io.camunda.operate.webapp.rest.dto.operation.ModifyProcessInstanceRequestDto;
 import io.camunda.operate.webapp.rest.exception.InvalidRequestException;
 import io.camunda.operate.webapp.rest.exception.NotAuthorizedException;
@@ -125,7 +125,7 @@ public class ProcessInstanceRestService extends InternalAPIErrorController {
   @PreAuthorize("hasPermission('write')")
   public BatchOperationEntity operation(
       @PathVariable @ValidLongId final String id,
-      @RequestBody final CreateOperationRequestDto operationRequest) {
+      @RequestBody final CreateRequestDto operationRequest) {
     processInstanceRequestValidator.validateCreateOperationRequest(operationRequest, id);
     if (operationRequest.getOperationType() == OperationType.DELETE_PROCESS_INSTANCE) {
       checkIdentityPermission(Long.valueOf(id), PermissionType.DELETE_PROCESS_INSTANCE);
