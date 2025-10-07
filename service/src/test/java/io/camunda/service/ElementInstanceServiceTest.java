@@ -14,7 +14,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import io.camunda.search.clients.FlowNodeInstanceSearchClient;
+import io.camunda.search.clients.ElementInstanceSearchClient;
 import io.camunda.search.entities.FlowNodeInstanceEntity;
 import io.camunda.search.exception.ResourceAccessDeniedException;
 import io.camunda.search.query.FlowNodeInstanceQuery;
@@ -39,12 +39,12 @@ import org.junit.jupiter.api.function.Executable;
 public final class ElementInstanceServiceTest {
 
   private ElementInstanceServices services;
-  private FlowNodeInstanceSearchClient client;
+  private ElementInstanceSearchClient client;
   private ProcessCache processCache;
 
   @BeforeEach
   public void before() {
-    client = mock(FlowNodeInstanceSearchClient.class);
+    client = mock(ElementInstanceSearchClient.class);
     processCache = mock(ProcessCache.class);
     services =
         new ElementInstanceServices(
@@ -65,7 +65,7 @@ public final class ElementInstanceServiceTest {
     public void shouldReturnElementInstance() {
       // given
       final var entity = Instancio.create(FlowNodeInstanceEntity.class);
-      when(client.searchFlowNodeInstances(any())).thenReturn(SearchQueryResult.of(entity));
+      when(client.searchElementInstances(any())).thenReturn(SearchQueryResult.of(entity));
 
       // when
       final var searchQueryResult =
@@ -81,7 +81,7 @@ public final class ElementInstanceServiceTest {
           Instancio.of(FlowNodeInstanceEntity.class)
               .set(field(FlowNodeInstanceEntity::flowNodeName), null)
               .create();
-      when(client.searchFlowNodeInstances(any())).thenReturn(SearchQueryResult.of(entity));
+      when(client.searchElementInstances(any())).thenReturn(SearchQueryResult.of(entity));
       when(processCache.getCacheItems(Set.of(entity.processDefinitionKey())))
           .thenReturn(
               ProcessCacheResult.of(
@@ -99,7 +99,7 @@ public final class ElementInstanceServiceTest {
               .set(field(FlowNodeInstanceEntity::flowNodeName), null)
               .create();
 
-      when(client.searchFlowNodeInstances(any())).thenReturn(SearchQueryResult.of(entity));
+      when(client.searchElementInstances(any())).thenReturn(SearchQueryResult.of(entity));
 
       final var searchQueryResult = services.search(FlowNodeInstanceQuery.of(q -> q));
 

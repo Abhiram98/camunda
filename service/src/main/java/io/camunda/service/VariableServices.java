@@ -11,7 +11,6 @@ import static io.camunda.search.query.SearchQueryBuilders.variableSearchQuery;
 import static io.camunda.security.auth.Authorization.withAuthorization;
 import static io.camunda.service.authorization.Authorizations.VARIABLE_READ_AUTHORIZATION;
 
-import io.camunda.search.clients.VariableSearchClient;
 import io.camunda.search.entities.VariableEntity;
 import io.camunda.search.query.SearchQueryResult;
 import io.camunda.search.query.VariableQuery;
@@ -26,12 +25,12 @@ import java.util.function.Function;
 public final class VariableServices
     extends SearchQueryService<VariableServices, VariableQuery, VariableEntity> {
 
-  private final VariableSearchClient variableSearchClient;
+  private final io.camunda.search.clients.VariableServices variableSearchClient;
 
   public VariableServices(
       final BrokerClient brokerClient,
       final SecurityContextProvider securityContextProvider,
-      final VariableSearchClient variableSearchClient,
+      final io.camunda.search.clients.VariableServices variableSearchClient,
       final CamundaAuthentication authentication) {
     super(brokerClient, securityContextProvider, authentication);
     this.variableSearchClient = variableSearchClient;

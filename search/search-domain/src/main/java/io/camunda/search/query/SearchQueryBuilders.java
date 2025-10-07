@@ -100,7 +100,7 @@ public final class SearchQueryBuilders {
     return new FlowNodeInstanceQuery.Builder();
   }
 
-  public static FlowNodeInstanceQuery flownodeInstanceSearchQuery(
+  public static FlowNodeInstanceQuery elementInstanceSearchQuery(
       final Function<FlowNodeInstanceQuery.Builder, ObjectBuilder<FlowNodeInstanceQuery>> fn) {
     return fn.apply(flownodeInstanceSearchQuery()).build();
   }

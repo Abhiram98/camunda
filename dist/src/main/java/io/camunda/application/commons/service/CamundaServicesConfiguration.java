@@ -14,7 +14,7 @@ import io.camunda.search.clients.BatchOperationSearchClient;
 import io.camunda.search.clients.DecisionDefinitionSearchClient;
 import io.camunda.search.clients.DecisionInstanceSearchClient;
 import io.camunda.search.clients.DecisionRequirementSearchClient;
-import io.camunda.search.clients.FlowNodeInstanceSearchClient;
+import io.camunda.search.clients.ElementInstanceSearchClient;
 import io.camunda.search.clients.FormSearchClient;
 import io.camunda.search.clients.GroupSearchClient;
 import io.camunda.search.clients.IncidentSearchClient;
@@ -29,7 +29,7 @@ import io.camunda.search.clients.TenantSearchClient;
 import io.camunda.search.clients.UsageMetricsSearchClient;
 import io.camunda.search.clients.UserSearchClient;
 import io.camunda.search.clients.UserTaskSearchClient;
-import io.camunda.search.clients.VariableSearchClient;
+import io.camunda.search.clients.VariableServices;
 import io.camunda.search.clients.reader.AuthorizationReader;
 import io.camunda.security.configuration.SecurityConfiguration;
 import io.camunda.security.impl.AuthorizationChecker;
@@ -58,7 +58,6 @@ import io.camunda.service.TenantServices;
 import io.camunda.service.UsageMetricsServices;
 import io.camunda.service.UserServices;
 import io.camunda.service.UserTaskServices;
-import io.camunda.service.VariableServices;
 import io.camunda.service.cache.ProcessCache;
 import io.camunda.service.security.SecurityContextProvider;
 import io.camunda.zeebe.broker.client.api.BrokerClient;
@@ -157,7 +156,7 @@ public class CamundaServicesConfiguration {
   public ElementInstanceServices elementInstanceServices(
       final BrokerClient brokerClient,
       final SecurityContextProvider securityContextProvider,
-      final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient,
+      final ElementInstanceSearchClient flowNodeInstanceSearchClient,
       final ProcessCache processCache) {
     return new ElementInstanceServices(
         brokerClient, securityContextProvider, flowNodeInstanceSearchClient, processCache, null);
@@ -217,8 +216,8 @@ public class CamundaServicesConfiguration {
       final SecurityContextProvider securityContextProvider,
       final UserTaskSearchClient userTaskSearchClient,
       final FormServices formServices,
-      final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient,
-      final VariableSearchClient variableSearchClient,
+      final ElementInstanceSearchClient flowNodeInstanceSearchClient,
+      final VariableServices variableSearchClient,
       final ProcessCache processCache) {
     return new UserTaskServices(
         brokerClient,
@@ -232,11 +231,11 @@ public class CamundaServicesConfiguration {
   }
 
   @Bean
-  public VariableServices variableServices(
+  public io.camunda.service.VariableServices variableServices(
       final BrokerClient brokerClient,
       final SecurityContextProvider securityContextProvider,
-      final VariableSearchClient variableSearchClient) {
-    return new VariableServices(brokerClient, securityContextProvider, variableSearchClient, null);
+      final VariableServices variableSearchClient) {
+    return new io.camunda.service.VariableServices(brokerClient, securityContextProvider, variableSearchClient, null);
   }
 
   @Bean

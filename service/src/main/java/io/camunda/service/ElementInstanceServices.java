@@ -10,7 +10,7 @@ package io.camunda.service;
 import static io.camunda.security.auth.Authorization.withAuthorization;
 import static io.camunda.service.authorization.Authorizations.ELEMENT_INSTANCE_READ_AUTHORIZATION;
 
-import io.camunda.search.clients.FlowNodeInstanceSearchClient;
+import io.camunda.search.clients.ElementInstanceSearchClient;
 import io.camunda.search.entities.FlowNodeInstanceEntity;
 import io.camunda.search.query.FlowNodeInstanceQuery;
 import io.camunda.search.query.SearchQueryResult;
@@ -31,13 +31,13 @@ public final class ElementInstanceServices
     extends SearchQueryService<
         ElementInstanceServices, FlowNodeInstanceQuery, FlowNodeInstanceEntity> {
 
-  private final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient;
+  private final ElementInstanceSearchClient flowNodeInstanceSearchClient;
   private final ProcessCache processCache;
 
   public ElementInstanceServices(
       final BrokerClient brokerClient,
       final SecurityContextProvider securityContextProvider,
-      final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient,
+      final ElementInstanceSearchClient flowNodeInstanceSearchClient,
       final ProcessCache processCache,
       final CamundaAuthentication authentication) {
     super(brokerClient, securityContextProvider, authentication);
@@ -87,7 +87,7 @@ public final class ElementInstanceServices
             () ->
                 flowNodeInstanceSearchClient
                     .withSecurityContext(securityContext)
-                    .searchFlowNodeInstances(query));
+                    .searchElementInstances(query));
 
     return toCacheEnrichedResult(result);
   }

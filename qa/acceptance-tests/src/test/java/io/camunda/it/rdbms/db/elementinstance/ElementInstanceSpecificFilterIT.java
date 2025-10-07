@@ -90,7 +90,7 @@ public class ElementInstanceSpecificFilterIT {
 
   static List<FlowNodeInstanceFilter> shouldFindElementInstanceWithSpecificFilterParameters() {
     return List.of(
-        FlowNodeInstanceFilter.of(b -> b.flowNodeInstanceKeys(42L)),
+        FlowNodeInstanceFilter.of(b -> b.elementInstanceKeys(42L)),
         FlowNodeInstanceFilter.of(b -> b.flowNodeIds("unique-element-42")),
         FlowNodeInstanceFilter.of(b -> b.processInstanceKeys(123L)),
         FlowNodeInstanceFilter.of(b -> b.processDefinitionKeys(124L)),

@@ -236,7 +236,7 @@ public class ElementInstanceQueryControllerTest extends RestControllerTest {
             new FlowNodeInstanceQuery.Builder()
                 .filter(
                     new FlowNodeInstanceFilter.Builder()
-                        .flowNodeInstanceKeys(2251799813685996L)
+                        .elementInstanceKeys(2251799813685996L)
                         .processInstanceKeys(2251799813685989L)
                         .processDefinitionKeys(3L)
                         .processDefinitionIds("complexProcess")

@@ -7,16 +7,16 @@
  */
 package io.camunda.search.clients;
 
-import io.camunda.search.entities.FlowNodeInstanceEntity;
-import io.camunda.search.query.FlowNodeInstanceQuery;
+import io.camunda.search.entities.VariableEntity;
 import io.camunda.search.query.SearchQueryResult;
+import io.camunda.search.query.VariableQuery;
 import io.camunda.security.auth.SecurityContext;
 
-public interface FlowNodeInstanceSearchClient {
+public interface VariableServices {
 
-  FlowNodeInstanceEntity getFlowNodeInstance(final long key);
+  VariableEntity getVariable(final long key);
 
-  SearchQueryResult<FlowNodeInstanceEntity> searchFlowNodeInstances(FlowNodeInstanceQuery filter);
+  SearchQueryResult<VariableEntity> searchVariables(VariableQuery filter);
 
-  FlowNodeInstanceSearchClient withSecurityContext(SecurityContext securityContext);
+  VariableServices withSecurityContext(SecurityContext securityContext);
 }
