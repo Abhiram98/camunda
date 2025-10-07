@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.tuple;
 import io.camunda.client.CamundaClient;
 import io.camunda.client.api.response.Process;
 import io.camunda.client.api.search.enums.AdHocSubprocessActivityResultType;
-import io.camunda.client.api.search.response.AdHocSubprocessActivityResponse.AdHocSubprocessActivity;
+import io.camunda.client.api.search.response.AdHocSubProcessActivityResponse.AdHocSubprocessActivity;
 import io.camunda.qa.util.multidb.MultiDbTest;
 import org.junit.jupiter.api.Test;
 

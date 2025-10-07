@@ -18,8 +18,8 @@ package io.camunda.client.adhocsubprocess;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
-import io.camunda.client.api.search.response.AdHocSubprocessActivityResponse;
-import io.camunda.client.api.search.response.AdHocSubprocessActivityResponse.AdHocSubprocessActivity;
+import io.camunda.client.api.search.response.AdHocSubProcessActivityResponse;
+import io.camunda.client.api.search.response.AdHocSubProcessActivityResponse.AdHocSubprocessActivity;
 import io.camunda.client.protocol.rest.AdHocSubprocessActivityResult;
 import io.camunda.client.protocol.rest.AdHocSubprocessActivityResult.TypeEnum;
 import io.camunda.client.protocol.rest.AdHocSubprocessActivitySearchQuery;
@@ -67,7 +67,7 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
     gatewayService.onAdHocSubprocessActivitySearch(searchQueryResult);
 
     // when
-    final AdHocSubprocessActivityResponse response =
+    final AdHocSubProcessActivityResponse response =
         client
             .newAdHocSubprocessActivitySearchRequest(PROCESS_DEFINITION_KEY, AD_HOC_SUBPROCESS_ID)
             .send()
@@ -133,7 +133,7 @@ public class AdHocSubprocessActivitySearchTest extends ClientRestTest {
     gatewayService.onAdHocSubprocessActivitySearch(responseJson);
 
     // when
-    final AdHocSubprocessActivityResponse response =
+    final AdHocSubProcessActivityResponse response =
         client
             .newAdHocSubprocessActivitySearchRequest(PROCESS_DEFINITION_KEY, AD_HOC_SUBPROCESS_ID)
             .send()
