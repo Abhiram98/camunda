@@ -18,7 +18,7 @@ import io.camunda.operate.webapp.reader.IncidentReader;
 import io.camunda.operate.webapp.rest.dto.operation.CreateBatchOperationRequestDto;
 import io.camunda.operate.webapp.rest.dto.operation.ModifyProcessInstanceRequestDto;
 import io.camunda.operate.webapp.rest.exception.NotFoundException;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.webapps.schema.descriptors.template.ListViewTemplate;
 import io.camunda.webapps.schema.descriptors.template.OperationTemplate;
 import io.camunda.webapps.schema.entities.operation.OperationEntity;
@@ -46,7 +46,7 @@ public class PersistOperationHelper {
   private final OperationTemplate operationTemplate;
   private final ObjectMapper objectMapper;
   private final ListViewTemplate listViewTemplate;
-  private final UserService userService;
+  private final CamundaAuthenticationProvider userService;
 
   public PersistOperationHelper(
       final OperationStore operationStore,
@@ -54,7 +54,7 @@ public class PersistOperationHelper {
       final OperationTemplate operationTemplate,
       final ListViewTemplate listViewTemplate,
       final IncidentReader incidentReader,
-      final UserService userService,
+      final CamundaAuthenticationProvider userService,
       @Qualifier("operateObjectMapper") final ObjectMapper objectMapper) {
     this.operationStore = operationStore;
     this.incidentReader = incidentReader;

@@ -19,7 +19,7 @@ import io.camunda.operate.conditions.OpensearchCondition;
 import io.camunda.operate.store.opensearch.client.sync.RichOpenSearchClient;
 import io.camunda.operate.webapp.reader.BatchOperationReader;
 import io.camunda.operate.webapp.rest.dto.operation.BatchOperationRequestDto;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.webapps.schema.descriptors.template.BatchOperationTemplate;
 import io.camunda.webapps.schema.entities.operation.BatchOperationEntity;
 import java.util.Arrays;
@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class OpensearchBatchOperationReader implements BatchOperationReader {
   @Autowired private BatchOperationTemplate batchOperationTemplate;
-  @Autowired private UserService<?> userService;
+  @Autowired private CamundaAuthenticationProvider<?> userService;
 
   @Autowired
   @Qualifier("operateObjectMapper")

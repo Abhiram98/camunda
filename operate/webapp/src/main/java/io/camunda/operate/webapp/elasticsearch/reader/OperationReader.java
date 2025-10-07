@@ -36,7 +36,7 @@ import io.camunda.operate.util.CollectionUtil;
 import io.camunda.operate.util.ElasticsearchUtil;
 import io.camunda.operate.webapp.rest.dto.DtoCreator;
 import io.camunda.operate.webapp.rest.dto.OperationDto;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.webapps.schema.descriptors.template.BatchOperationTemplate;
 import io.camunda.webapps.schema.descriptors.template.OperationTemplate;
 import io.camunda.webapps.schema.entities.operation.BatchOperationEntity;
@@ -78,19 +78,20 @@ public class OperationReader extends AbstractReader
   private static final String SCHEDULED_OPERATION = SCHEDULED.toString();
   private static final String LOCKED_OPERATION = LOCKED.toString();
 
-  @Autowired private OperationTemplate operationTemplate;
+  @Autowired
+  private OperationTemplate operationTemplate;
 
-  @Autowired private BatchOperationTemplate batchOperationTemplate;
+  @Autowired
+  private BatchOperationTemplate batchOperationTemplate;
 
-  @Autowired private DateTimeFormatter dateTimeFormatter;
+  @Autowired
+  private DateTimeFormatter dateTimeFormatter;
 
-  @Autowired private UserService userService;
+  @Autowired
+  private CamundaAuthenticationProvider camundaAuthenticationProvider;
 
   /**
    * Request process instances, that have scheduled operations or locked but with expired locks.
-   *
-   * @param batchSize
-   * @return
    */
   @Override
   public List<OperationEntity> acquireOperations(final int batchSize) {
@@ -289,7 +290,7 @@ public class OperationReader extends AbstractReader
   // this query will be extended
   @Override
   public List<BatchOperationEntity> getBatchOperations(final int pageSize) {
-    final String username = userService.getCurrentUser().getUsername();
+    final String username = camundaAuthenticationProvider.getCurrentUser().getUsername();
     final TermQueryBuilder isOfCurrentUser = termQuery(BatchOperationTemplate.USERNAME, username);
     final SearchRequest searchRequest =
         ElasticsearchUtil.createSearchRequest(batchOperationTemplate, ALL)
@@ -390,6 +391,7 @@ public class OperationReader extends AbstractReader
   }
 
   private QueryBuilder createUsernameQuery() {
-    return termQuery(OperationTemplate.USERNAME, userService.getCurrentUser().getUsername());
+    return termQuery(OperationTemplate.USERNAME,
+        camundaAuthenticationProvider.getCurrentUser().getUsername());
   }
 }

@@ -17,7 +17,7 @@ import io.camunda.operate.conditions.ElasticsearchCondition;
 import io.camunda.operate.exceptions.OperateRuntimeException;
 import io.camunda.operate.util.ElasticsearchUtil;
 import io.camunda.operate.webapp.rest.dto.operation.BatchOperationRequestDto;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.webapps.schema.descriptors.template.BatchOperationTemplate;
 import io.camunda.webapps.schema.entities.operation.BatchOperationEntity;
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class BatchOperationReader implements io.camunda.operate.webapp.reader.Ba
 
   @Autowired private BatchOperationTemplate batchOperationTemplate;
 
-  @Autowired private UserService userService;
+  @Autowired private CamundaAuthenticationProvider userService;
 
   @Autowired private RestHighLevelClient esClient;
 

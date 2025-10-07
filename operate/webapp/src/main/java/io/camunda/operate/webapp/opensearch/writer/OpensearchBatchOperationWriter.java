@@ -36,7 +36,7 @@ import io.camunda.operate.webapp.rest.dto.operation.CreateOperationRequestDto;
 import io.camunda.operate.webapp.rest.dto.operation.ModifyProcessInstanceRequestDto;
 import io.camunda.operate.webapp.rest.exception.InvalidRequestException;
 import io.camunda.operate.webapp.rest.exception.NotFoundException;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.operate.webapp.security.permission.PermissionsService;
 import io.camunda.operate.webapp.writer.PersistOperationHelper;
 import io.camunda.operate.webapp.writer.ProcessInstanceSource;
@@ -97,7 +97,7 @@ public class OpensearchBatchOperationWriter
 
   @Autowired private BatchOperationTemplate batchOperationTemplate;
 
-  @Autowired private UserService userService;
+  @Autowired private CamundaAuthenticationProvider userService;
 
   @Autowired private ProcessInstanceReader processInstanceReader;
 

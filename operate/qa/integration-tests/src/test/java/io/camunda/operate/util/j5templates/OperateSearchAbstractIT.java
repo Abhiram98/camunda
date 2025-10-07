@@ -19,7 +19,7 @@ import io.camunda.operate.util.TestApplication;
 import io.camunda.operate.util.searchrepository.TestSearchRepository;
 import io.camunda.operate.webapp.rest.dto.UserDto;
 import io.camunda.operate.webapp.security.Permission;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.operate.webapp.security.tenant.TenantService;
 import java.util.List;
 import org.junit.jupiter.api.AfterAll;
@@ -57,7 +57,7 @@ import org.springframework.test.web.servlet.MvcResult;
 public class OperateSearchAbstractIT {
   public static final String DEFAULT_USER = "testuser";
   // These are mocked so we can bypass authentication issues when connecting to search
-  @MockBean protected UserService userService;
+  @MockBean protected CamundaAuthenticationProvider userService;
   @MockBean protected TenantService tenantService;
   @Autowired protected ProcessCache processCache;
   @Autowired protected TestSearchRepository testSearchRepository;

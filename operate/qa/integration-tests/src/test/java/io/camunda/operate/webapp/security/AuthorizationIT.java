@@ -54,7 +54,7 @@ public class AuthorizationIT {
   protected static final String USER = "calculon";
   @MockBean private ProcessInstanceReader processInstanceReader;
   @MockBean private PermissionsService permissionsService;
-  @MockBean private UserService<? extends Authentication> userService;
+  @MockBean private CamundaAuthenticationProvider<? extends Authentication> userService;
   @MockBean private BatchOperationWriter batchOperationWriter;
   @Autowired private ProcessInstanceRestService processInstanceRestService;
 

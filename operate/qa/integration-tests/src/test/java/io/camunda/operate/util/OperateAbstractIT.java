@@ -20,7 +20,7 @@ import io.camunda.operate.qa.util.DependencyInjectionTestExecutionListener;
 import io.camunda.operate.webapp.rest.dto.UserDto;
 import io.camunda.operate.webapp.rest.exception.NotAuthorizedException;
 import io.camunda.operate.webapp.security.Permission;
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.operate.webapp.security.tenant.TenantService;
 import io.camunda.operate.zeebe.PartitionHolder;
 import java.time.OffsetDateTime;
@@ -67,7 +67,7 @@ public abstract class OperateAbstractIT {
 
   protected OffsetDateTime testStartTime;
 
-  @MockBean protected UserService userService;
+  @MockBean protected CamundaAuthenticationProvider userService;
 
   @MockBean protected TenantService tenantService;
 

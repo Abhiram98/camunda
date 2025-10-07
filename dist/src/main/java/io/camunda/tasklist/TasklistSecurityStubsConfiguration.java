@@ -7,7 +7,7 @@
  */
 package io.camunda.tasklist;
 
-import io.camunda.operate.webapp.security.UserService;
+import io.camunda.operate.webapp.security.CamundaAuthenticationProvider;
 import io.camunda.tasklist.webapp.dto.UserDTO;
 import io.camunda.tasklist.webapp.security.AssigneeMigrator;
 import io.camunda.tasklist.webapp.security.AssigneeMigratorNoImpl;
@@ -39,7 +39,7 @@ import org.springframework.security.core.Authentication;
 public class TasklistSecurityStubsConfiguration {
   /** UserReader that gets user details using Operate's UserService */
   @Bean
-  public UserReader stubUserReader(final UserService userService) {
+  public UserReader stubUserReader(final CamundaAuthenticationProvider userService) {
     return new UserReader() {
 
       @Override
