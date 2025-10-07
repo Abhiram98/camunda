@@ -7,7 +7,6 @@
  */
 package io.camunda.service;
 
-import static io.camunda.search.query.SearchQueryBuilders.flownodeInstanceSearchQuery;
 import static io.camunda.search.query.SearchQueryBuilders.variableSearchQuery;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.instancio.Select.field;
@@ -19,14 +18,15 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import io.camunda.search.clients.FlowNodeInstanceSearchClient;
+import io.camunda.search.clients.ElementInstanceSearchClient;
 import io.camunda.search.clients.UserTaskSearchClient;
-import io.camunda.search.clients.VariableSearchClient;
+import io.camunda.search.clients.VariableServices;
 import io.camunda.search.entities.FlowNodeInstanceEntity;
 import io.camunda.search.entities.FormEntity;
 import io.camunda.search.entities.UserTaskEntity;
 import io.camunda.search.entities.VariableEntity;
 import io.camunda.search.exception.ResourceAccessDeniedException;
+import io.camunda.search.query.SearchQueryBuilders;
 import io.camunda.search.query.SearchQueryResult;
 import io.camunda.search.query.UserTaskQuery;
 import io.camunda.security.auth.Authorization;
@@ -52,8 +52,8 @@ public class UserTaskServiceTest {
   private UserTaskServices services;
   private UserTaskSearchClient client;
   private FormServices formServices;
-  private FlowNodeInstanceSearchClient flowNodeInstanceSearchClient;
-  private VariableSearchClient variableSearchClient;
+  private ElementInstanceSearchClient flowNodeInstanceSearchClient;
+  private VariableServices variableSearchClient;
   private ProcessCache processCache;
   private SecurityContextProvider securityContextProvider;
   private CamundaAuthentication authentication;
@@ -62,8 +62,8 @@ public class UserTaskServiceTest {
   public void before() {
     client = mock(UserTaskSearchClient.class);
     formServices = mock(FormServices.class);
-    flowNodeInstanceSearchClient = mock(FlowNodeInstanceSearchClient.class);
-    variableSearchClient = mock(VariableSearchClient.class);
+    flowNodeInstanceSearchClient = mock(ElementInstanceSearchClient.class);
+    variableSearchClient = mock(VariableServices.class);
     processCache = mock(ProcessCache.class);
     securityContextProvider = mock(SecurityContextProvider.class);
     authentication = mock(CamundaAuthentication.class);
@@ -113,7 +113,7 @@ public class UserTaskServiceTest {
       assertThat(assertThrows(ServiceException.class, executable).getStatus())
           .isEqualTo(Status.FORBIDDEN);
       verify(client).getUserTask(any(Long.class));
-      verify(flowNodeInstanceSearchClient, never()).searchFlowNodeInstances(any());
+      verify(flowNodeInstanceSearchClient, never()).searchElementInstances(any());
       verify(variableSearchClient, never()).searchVariables(any());
     }
 
@@ -129,12 +129,12 @@ public class UserTaskServiceTest {
       final var variable = Instancio.create(VariableEntity.class);
 
       when(client.getUserTask(any(Long.class))).thenReturn(entity);
-      when(flowNodeInstanceSearchClient.searchFlowNodeInstances(
-              flownodeInstanceSearchQuery(
+      when(flowNodeInstanceSearchClient.searchElementInstances(
+              SearchQueryBuilders.elementInstanceSearchQuery(
                   q ->
                       q.filter(
                               f ->
-                                  f.flowNodeInstanceKeys(
+                                  f.elementInstanceKeys(
                                       flowNodeInstanceEntity.flowNodeInstanceKey()))
                           .singleResult())))
           .thenReturn(SearchQueryResult.of(flowNodeInstanceEntity));

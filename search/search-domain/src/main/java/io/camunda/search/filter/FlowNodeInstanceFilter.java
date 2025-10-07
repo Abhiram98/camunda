@@ -64,7 +64,7 @@ public record FlowNodeInstanceFilter(
       return this;
     }
 
-    public FlowNodeInstanceFilter.Builder flowNodeInstanceKeys(final Long... values) {
+    public FlowNodeInstanceFilter.Builder elementInstanceKeys(final Long... values) {
       return flowNodeInstanceKeys(collectValuesAsList(values));
     }
 

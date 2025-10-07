@@ -54,7 +54,7 @@ public class FlowNodeInstanceSortTest extends AbstractSortTransformerTest {
       final Function<FlowNodeInstanceSort.Builder, ObjectBuilder<FlowNodeInstanceSort>> fn) {
     // when
     final var sort =
-        transformRequest(SearchQueryBuilders.flownodeInstanceSearchQuery(q -> q.sort(fn)));
+        transformRequest(SearchQueryBuilders.elementInstanceSearchQuery(q -> q.sort(fn)));
 
     // then
     assertThat(sort).hasSize(2);

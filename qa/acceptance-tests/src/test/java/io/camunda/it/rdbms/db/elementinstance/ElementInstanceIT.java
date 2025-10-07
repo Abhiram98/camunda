@@ -165,7 +165,7 @@ public class ElementInstanceIT {
         reader.search(
             new FlowNodeInstanceQuery(
                 new FlowNodeInstanceFilter.Builder()
-                    .flowNodeInstanceKeys(instance.flowNodeInstanceKey())
+                    .elementInstanceKeys(instance.flowNodeInstanceKey())
                     .processInstanceKeys(instance.processInstanceKey())
                     .processDefinitionIds(instance.processDefinitionId())
                     .processDefinitionKeys(instance.processDefinitionKey())

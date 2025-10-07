@@ -28,7 +28,7 @@ public class FlowNodeInstanceDocumentReader extends DocumentBasedReader
     return getSearchExecutor()
         .getByQuery(
             FlowNodeInstanceQuery.of(
-                b -> b.filter(f -> f.flowNodeInstanceKeys(key)).singleResult()),
+                b -> b.filter(f -> f.elementInstanceKeys(key)).singleResult()),
             io.camunda.webapps.schema.entities.flownode.FlowNodeInstanceEntity.class);
   }
 

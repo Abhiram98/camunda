@@ -7,18 +7,18 @@
  */
 package io.camunda.service;
 
-import static io.camunda.search.query.SearchQueryBuilders.flownodeInstanceSearchQuery;
 import static io.camunda.search.query.SearchQueryBuilders.userTaskSearchQuery;
 import static io.camunda.search.query.SearchQueryBuilders.variableSearchQuery;
 import static io.camunda.security.auth.Authorization.withAuthorization;
 import static io.camunda.service.authorization.Authorizations.USER_TASK_READ_AUTHORIZATION;
 
-import io.camunda.search.clients.FlowNodeInstanceSearchClient;
+import io.camunda.search.clients.ElementInstanceSearchClient;
 import io.camunda.search.clients.UserTaskSearchClient;
-import io.camunda.search.clients.VariableSearchClient;
+import io.camunda.search.clients.VariableServices;
 import io.camunda.search.entities.FormEntity;
 import io.camunda.search.entities.UserTaskEntity;
 import io.camunda.search.entities.VariableEntity;
+import io.camunda.search.query.SearchQueryBuilders;
 import io.camunda.search.query.SearchQueryResult;
 import io.camunda.search.query.UserTaskQuery;
 import io.camunda.search.query.UserTaskQuery.Builder;
@@ -50,8 +50,8 @@ public final class UserTaskServices
 
   private final UserTaskSearchClient userTaskSearchClient;
   private final FormServices formServices;
-  private final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient;
-  private final VariableSearchClient variableSearchClient;
+  private final ElementInstanceSearchClient elementInstanceServices;
+  private final VariableServices variableServices;
   private final ProcessCache processCache;
 
   public UserTaskServices(
@@ -59,15 +59,15 @@ public final class UserTaskServices
       final SecurityContextProvider securityContextProvider,
       final UserTaskSearchClient userTaskSearchClient,
       final FormServices formServices,
-      final FlowNodeInstanceSearchClient flowNodeInstanceSearchClient,
-      final VariableSearchClient variableSearchClient,
+      final ElementInstanceSearchClient elementInstanceServices,
+      final VariableServices variableServices,
       final ProcessCache processCache,
       final CamundaAuthentication authentication) {
     super(brokerClient, securityContextProvider, authentication);
     this.userTaskSearchClient = userTaskSearchClient;
     this.formServices = formServices;
-    this.flowNodeInstanceSearchClient = flowNodeInstanceSearchClient;
-    this.variableSearchClient = variableSearchClient;
+    this.elementInstanceServices = elementInstanceServices;
+    this.variableServices = variableServices;
     this.processCache = processCache;
   }
 
@@ -78,8 +78,8 @@ public final class UserTaskServices
         securityContextProvider,
         userTaskSearchClient,
         formServices,
-        flowNodeInstanceSearchClient,
-        variableSearchClient,
+        elementInstanceServices,
+        variableServices,
         processCache,
         authentication);
   }
@@ -198,7 +198,7 @@ public final class UserTaskServices
     final var userTask = getByKey(userTaskKey);
 
     // Retrieve the tree path for the flow node instance associated to the user task
-    final String treePath = fetchFlowNodeTreePath(userTask.elementInstanceKey());
+    final String treePath = fetchElementInstanceTreePath(userTask.elementInstanceKey());
 
     // Convert the tree path to a list of scope keys
     final List<Long> treePathList =
@@ -217,22 +217,22 @@ public final class UserTaskServices
     // Execute the search
     return executeSearchRequest(
         () ->
-            variableSearchClient
+            variableServices
                 .withSecurityContext(securityContextProvider.provideSecurityContext(authentication))
                 .searchVariables(variableQueryWithTreePathFilter));
   }
 
-  private String fetchFlowNodeTreePath(final long flowNodeInstanceKey) {
+  private String fetchElementInstanceTreePath(final long elementInstanceKey) {
     return executeSearchRequest(
-            () ->
-                flowNodeInstanceSearchClient
-                    .withSecurityContext(
-                        securityContextProvider.provideSecurityContext(authentication))
-                    .searchFlowNodeInstances(
-                        flownodeInstanceSearchQuery(
-                            q ->
-                                q.filter(f -> f.flowNodeInstanceKeys(flowNodeInstanceKey))
-                                    .singleResult())))
+        () ->
+            elementInstanceServices
+                .withSecurityContext(
+                    securityContextProvider.provideSecurityContext(authentication))
+                .searchElementInstances(
+                    SearchQueryBuilders.elementInstanceSearchQuery(
+                        q ->
+                            q.filter(f -> f.elementInstanceKeys(elementInstanceKey))
+                                .singleResult())))
         .items()
         .getFirst()
         .treePath();

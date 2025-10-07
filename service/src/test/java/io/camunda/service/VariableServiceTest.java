@@ -13,7 +13,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import io.camunda.search.clients.VariableSearchClient;
 import io.camunda.search.entities.VariableEntity;
 import io.camunda.search.exception.ResourceAccessDeniedException;
 import io.camunda.search.filter.VariableFilter;
@@ -33,19 +32,19 @@ import org.junit.jupiter.api.function.Executable;
 
 public class VariableServiceTest {
 
-  private VariableServices services;
-  private VariableSearchClient client;
+  private io.camunda.service.VariableServices services;
+  private io.camunda.search.clients.VariableServices client;
   private SecurityContextProvider securityContextProvider;
   private CamundaAuthentication authentication;
 
   @BeforeEach
   public void before() {
-    client = mock(VariableSearchClient.class);
+    client = mock(io.camunda.search.clients.VariableServices.class);
     when(client.withSecurityContext(any())).thenReturn(client);
     securityContextProvider = mock(SecurityContextProvider.class);
     authentication = mock(CamundaAuthentication.class);
     services =
-        new VariableServices(
+        new io.camunda.service.VariableServices(
             mock(BrokerClient.class), securityContextProvider, client, authentication);
   }
 
