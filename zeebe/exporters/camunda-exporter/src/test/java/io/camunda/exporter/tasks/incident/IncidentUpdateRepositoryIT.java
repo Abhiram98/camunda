@@ -671,7 +671,7 @@ abstract class IncidentUpdateRepositoryIT {
       batchRequest.executeWithRefresh();
 
       // when
-      final var wasDeleted = repository.wasProcessInstanceDeleted(1L);
+      final var wasDeleted = repository.wereProcessInstancesDeleted(1L);
 
       // then
       assertThat(wasDeleted).succeedsWithin(REQUEST_TIMEOUT).isEqualTo(false);
@@ -691,7 +691,7 @@ abstract class IncidentUpdateRepositoryIT {
       batchRequest.executeWithRefresh();
 
       // when
-      final var wasDeleted = repository.wasProcessInstanceDeleted(1L);
+      final var wasDeleted = repository.wereProcessInstancesDeleted(1L);
 
       // then
       assertThat(wasDeleted).succeedsWithin(REQUEST_TIMEOUT).isEqualTo(false);
@@ -716,7 +716,7 @@ abstract class IncidentUpdateRepositoryIT {
       batchRequest.executeWithRefresh();
 
       // when
-      final var wasDeleted = repository.wasProcessInstanceDeleted(1L);
+      final var wasDeleted = repository.wereProcessInstancesDeleted(1L);
 
       // then
       assertThat(wasDeleted).succeedsWithin(REQUEST_TIMEOUT).isEqualTo(false);
@@ -740,7 +740,7 @@ abstract class IncidentUpdateRepositoryIT {
       batchRequest.executeWithRefresh();
 
       // when
-      final var wasDeleted = repository.wasProcessInstanceDeleted(1L);
+      final var wasDeleted = repository.wereProcessInstancesDeleted(1L);
 
       // then
       assertThat(wasDeleted).succeedsWithin(REQUEST_TIMEOUT).isEqualTo(true);

@@ -153,8 +153,8 @@ public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRe
   }
 
   @Override
-  public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey) {
-    final var query = createProcessInstanceDeletedQuery(processInstanceKey);
+  public CompletionStage<Boolean> wereProcessInstancesDeleted(final long processInstancesKey) {
+    final var query = createProcessInstancesDeletedQuery(processInstancesKey);
     final var request =
         new CountRequest.Builder()
             .index(operationAlias)
@@ -224,10 +224,10 @@ public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRe
         request, IncidentEntity.class, h -> new ActiveIncident(h.id(), h.source().getTreePath()));
   }
 
-  private Query createProcessInstanceDeletedQuery(final long processInstanceKey) {
+  private Query createProcessInstancesDeletedQuery(final long processInstancesKey) {
     final var piKeyQ =
         QueryBuilders.term(
-            t -> t.field(OperationTemplate.PROCESS_INSTANCE_KEY).value(processInstanceKey));
+            t -> t.field(OperationTemplate.PROCESS_INSTANCE_KEY).value(processInstancesKey));
     final var typeQ =
         QueryBuilders.term(
             t ->

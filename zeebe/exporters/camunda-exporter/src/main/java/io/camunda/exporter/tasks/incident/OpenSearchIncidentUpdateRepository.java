@@ -165,8 +165,8 @@ public final class OpenSearchIncidentUpdateRepository extends OpensearchReposito
   }
 
   @Override
-  public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey) {
-    final var query = createProcessInstanceDeletedQuery(processInstanceKey);
+  public CompletionStage<Boolean> wereProcessInstancesDeleted(final long processInstancesKey) {
+    final var query = createProcessInstanceDeletedQuery(processInstancesKey);
     final var request =
         new CountRequest.Builder()
             .index(operationAlias)
