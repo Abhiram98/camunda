@@ -45,8 +45,8 @@ public final class UsageMetricsServiceTest {
   @Test
   public void shouldReturnUsageMetricsCount() {
     // given
-    when(client.countProcessInstances(any())).thenReturn(5L);
-    when(client.countDecisionInstances(any())).thenReturn(23L);
+    when(client.usageMetricProcessInstances(any())).thenReturn(5L);
+    when(client.usageMetricDecisionInstances(any())).thenReturn(23L);
     when(client.countAssignees(any())).thenReturn(42L);
 
     final var startTime =

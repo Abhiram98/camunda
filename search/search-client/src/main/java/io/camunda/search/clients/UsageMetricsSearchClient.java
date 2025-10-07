@@ -14,9 +14,9 @@ public interface UsageMetricsSearchClient {
 
   UsageMetricsSearchClient withSecurityContext(SecurityContext securityContext);
 
-  Long countAssignees(UsageMetricsQuery query);
+  Long usageMetricStatistics(UsageMetricsQuery query);
 
-  Long countProcessInstances(UsageMetricsQuery query);
+  Long usageMetricProcessInstances(UsageMetricsQuery query);
 
-  Long countDecisionInstances(UsageMetricsQuery query);
+  Long usageMetricDecisionInstances(UsageMetricsQuery query);
 }

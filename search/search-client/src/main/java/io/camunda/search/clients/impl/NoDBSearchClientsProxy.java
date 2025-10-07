@@ -206,17 +206,17 @@ public class NoDBSearchClientsProxy implements SearchClientsProxy {
   }
 
   @Override
-  public Long countAssignees(final UsageMetricsQuery query) {
+  public Long usageMetricStatistics(final UsageMetricsQuery query) {
     throw new NoSecondaryStorageException();
   }
 
   @Override
-  public Long countProcessInstances(final UsageMetricsQuery query) {
+  public Long usageMetricProcessInstances(final UsageMetricsQuery query) {
     throw new NoSecondaryStorageException();
   }
 
   @Override
-  public Long countDecisionInstances(final UsageMetricsQuery query) {
+  public Long usageMetricDecisionInstances(final UsageMetricsQuery query) {
     throw new NoSecondaryStorageException();
   }
 

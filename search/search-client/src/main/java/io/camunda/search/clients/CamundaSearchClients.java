@@ -241,17 +241,17 @@ public class CamundaSearchClients implements SearchClientsProxy {
   }
 
   @Override
-  public Long countAssignees(final UsageMetricsQuery query) {
+  public Long usageMetricStatistics(final UsageMetricsQuery query) {
     return distinctCountUsageMetricsFor("task_completed_by_assignee", query);
   }
 
   @Override
-  public Long countProcessInstances(final UsageMetricsQuery query) {
+  public Long usageMetricProcessInstances(final UsageMetricsQuery query) {
     return distinctCountUsageMetricsFor("EVENT_PROCESS_INSTANCE_STARTED", query);
   }
 
   @Override
-  public Long countDecisionInstances(final UsageMetricsQuery query) {
+  public Long usageMetricDecisionInstances(final UsageMetricsQuery query) {
     return distinctCountUsageMetricsFor("EVENT_DECISION_INSTANCE_EVALUATED", query);
   }
 
