@@ -7,9 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
 
-import io.camunda.search.filter.UserFilter.Builder;
 import io.camunda.util.ObjectBuilder;
 import java.util.List;
 import java.util.Set;
@@ -72,7 +71,7 @@ public record MappingFilter(
     }
 
     public Builder claimNames(final List<String> values) {
-      claimNames = addValuesToList(claimNames, values);
+      claimNames = addOperationsToList(claimNames, values);
       return this;
     }
 

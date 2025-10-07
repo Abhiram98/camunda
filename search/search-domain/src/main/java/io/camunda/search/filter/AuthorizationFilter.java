@@ -7,7 +7,7 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
 import static io.camunda.util.CollectionUtil.collectValuesAsList;
 
 import io.camunda.util.ObjectBuilder;
@@ -36,7 +36,7 @@ public record AuthorizationFilter(
     }
 
     public Builder ownerIds(final List<String> value) {
-      ownerIds = addValuesToList(ownerIds, value);
+      ownerIds = addOperationsToList(ownerIds, value);
       return this;
     }
 
@@ -64,7 +64,7 @@ public record AuthorizationFilter(
     }
 
     public Builder permissionTypes(final List<PermissionType> value) {
-      permissionTypes = addValuesToList(permissionTypes, value);
+      permissionTypes = addOperationsToList(permissionTypes, value);
       return this;
     }
 

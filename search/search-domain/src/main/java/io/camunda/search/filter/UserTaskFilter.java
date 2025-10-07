@@ -7,8 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 import static io.camunda.util.CollectionUtil.collectValuesAsList;
 
 import io.camunda.util.FilterUtil;
@@ -67,7 +67,7 @@ public record UserTaskFilter(
     }
 
     public Builder userTaskKeys(final List<Long> values) {
-      userTaskKeys = addValuesToList(userTaskKeys, values);
+      userTaskKeys = addOperationsToList(userTaskKeys, values);
       return this;
     }
 
@@ -76,7 +76,7 @@ public record UserTaskFilter(
     }
 
     public Builder elementIds(final List<String> values) {
-      elementIds = addValuesToList(elementIds, values);
+      elementIds = addOperationsToList(elementIds, values);
       return this;
     }
 
@@ -85,12 +85,12 @@ public record UserTaskFilter(
     }
 
     public Builder bpmnProcessIds(final List<String> values) {
-      bpmnProcessIds = addValuesToList(bpmnProcessIds, values);
+      bpmnProcessIds = addOperationsToList(bpmnProcessIds, values);
       return this;
     }
 
     public Builder assigneeOperations(final List<Operation<String>> operations) {
-      assigneeOperations = addValuesToList(assigneeOperations, operations);
+      assigneeOperations = addOperationsToList(assigneeOperations, operations);
       return this;
     }
 
@@ -101,11 +101,11 @@ public record UserTaskFilter(
     @SafeVarargs
     public final Builder assigneeOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return assigneeOperations(collectValues(operation, operations));
+      return assigneeOperations(collectOperations(operation, operations));
     }
 
     public Builder priorityOperations(final List<Operation<Integer>> operations) {
-      priorityOperations = addValuesToList(priorityOperations, operations);
+      priorityOperations = addOperationsToList(priorityOperations, operations);
       return this;
     }
 
@@ -116,7 +116,7 @@ public record UserTaskFilter(
     @SafeVarargs
     public final Builder priorityOperations(
         final Operation<Integer> operation, final Operation<Integer>... operations) {
-      return priorityOperations(collectValues(operation, operations));
+      return priorityOperations(collectOperations(operation, operations));
     }
 
     public Builder states(final String... values) {
@@ -124,7 +124,7 @@ public record UserTaskFilter(
     }
 
     public Builder states(final List<String> values) {
-      states = addValuesToList(states, values);
+      states = addOperationsToList(states, values);
       return this;
     }
 
@@ -133,7 +133,7 @@ public record UserTaskFilter(
     }
 
     public Builder processInstanceKeys(final List<Long> values) {
-      processInstanceKeys = addValuesToList(processInstanceKeys, values);
+      processInstanceKeys = addOperationsToList(processInstanceKeys, values);
       return this;
     }
 
@@ -142,12 +142,12 @@ public record UserTaskFilter(
     }
 
     public Builder processDefinitionKeys(final List<Long> values) {
-      processDefinitionKeys = addValuesToList(processDefinitionKeys, values);
+      processDefinitionKeys = addOperationsToList(processDefinitionKeys, values);
       return this;
     }
 
     public Builder candidateUserOperations(final List<Operation<String>> operations) {
-      candidateUserOperations = addValuesToList(candidateUserOperations, operations);
+      candidateUserOperations = addOperationsToList(candidateUserOperations, operations);
       return this;
     }
 
@@ -158,11 +158,11 @@ public record UserTaskFilter(
     @SafeVarargs
     public final Builder candidateUserOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return candidateUserOperations(collectValues(operation, operations));
+      return candidateUserOperations(collectOperations(operation, operations));
     }
 
     public Builder candidateGroupOperations(final List<Operation<String>> operations) {
-      candidateGroupOperations = addValuesToList(candidateGroupOperations, operations);
+      candidateGroupOperations = addOperationsToList(candidateGroupOperations, operations);
       return this;
     }
 
@@ -173,7 +173,7 @@ public record UserTaskFilter(
     @SafeVarargs
     public final Builder candidateGroupOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return candidateGroupOperations(collectValues(operation, operations));
+      return candidateGroupOperations(collectOperations(operation, operations));
     }
 
     public Builder tenantIds(final String... values) {
@@ -181,17 +181,17 @@ public record UserTaskFilter(
     }
 
     public Builder tenantIds(final List<String> values) {
-      tenantIds = addValuesToList(tenantIds, values);
+      tenantIds = addOperationsToList(tenantIds, values);
       return this;
     }
 
     public Builder processInstanceVariables(final List<VariableValueFilter> values) {
-      processInstanceVariableFilters = addValuesToList(processInstanceVariableFilters, values);
+      processInstanceVariableFilters = addOperationsToList(processInstanceVariableFilters, values);
       return this;
     }
 
     public Builder localVariables(final List<VariableValueFilter> values) {
-      localVariableFilters = addValuesToList(localVariableFilters, values);
+      localVariableFilters = addOperationsToList(localVariableFilters, values);
       return this;
     }
 
@@ -200,52 +200,52 @@ public record UserTaskFilter(
     }
 
     public Builder elementInstanceKeys(final List<Long> values) {
-      elementInstanceKeys = addValuesToList(elementInstanceKeys, values);
+      elementInstanceKeys = addOperationsToList(elementInstanceKeys, values);
       return this;
     }
 
     public Builder creationDateOperations(final List<Operation<OffsetDateTime>> operations) {
-      creationDateOperations = addValuesToList(creationDateOperations, operations);
+      creationDateOperations = addOperationsToList(creationDateOperations, operations);
       return this;
     }
 
     @SafeVarargs
     public final Builder creationDateOperations(
         final Operation<OffsetDateTime> operation, final Operation<OffsetDateTime>... operations) {
-      return creationDateOperations(collectValues(operation, operations));
+      return creationDateOperations(collectOperations(operation, operations));
     }
 
     public Builder completionDateOperations(final List<Operation<OffsetDateTime>> operations) {
-      completionDateOperations = addValuesToList(completionDateOperations, operations);
+      completionDateOperations = addOperationsToList(completionDateOperations, operations);
       return this;
     }
 
     @SafeVarargs
     public final Builder completionDateOperations(
         final Operation<OffsetDateTime> operation, final Operation<OffsetDateTime>... operations) {
-      return completionDateOperations(collectValues(operation, operations));
+      return completionDateOperations(collectOperations(operation, operations));
     }
 
     public Builder followUpDateOperations(final List<Operation<OffsetDateTime>> operations) {
-      followUpDateOperations = addValuesToList(followUpDateOperations, operations);
+      followUpDateOperations = addOperationsToList(followUpDateOperations, operations);
       return this;
     }
 
     @SafeVarargs
     public final Builder followUpDateOperations(
         final Operation<OffsetDateTime> operation, final Operation<OffsetDateTime>... operations) {
-      return followUpDateOperations(collectValues(operation, operations));
+      return followUpDateOperations(collectOperations(operation, operations));
     }
 
     public Builder dueDateOperations(final List<Operation<OffsetDateTime>> operations) {
-      dueDateOperations = addValuesToList(dueDateOperations, operations);
+      dueDateOperations = addOperationsToList(dueDateOperations, operations);
       return this;
     }
 
     @SafeVarargs
     public final Builder dueDateOperations(
         final Operation<OffsetDateTime> operation, final Operation<OffsetDateTime>... operations) {
-      return dueDateOperations(collectValues(operation, operations));
+      return dueDateOperations(collectOperations(operation, operations));
     }
 
     public Builder type(final String value) {

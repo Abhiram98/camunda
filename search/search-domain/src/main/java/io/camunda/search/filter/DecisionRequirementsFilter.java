@@ -7,7 +7,7 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
 import static io.camunda.util.CollectionUtil.collectValuesAsList;
 
 import io.camunda.util.ObjectBuilder;
@@ -34,7 +34,7 @@ public record DecisionRequirementsFilter(
     private List<String> resourceNames;
 
     public Builder decisionRequirementsKeys(final List<Long> values) {
-      decisionRequirementsKeys = addValuesToList(decisionRequirementsKeys, values);
+      decisionRequirementsKeys = addOperationsToList(decisionRequirementsKeys, values);
       return this;
     }
 
@@ -43,7 +43,7 @@ public record DecisionRequirementsFilter(
     }
 
     public Builder names(final List<String> values) {
-      names = addValuesToList(names, values);
+      names = addOperationsToList(names, values);
       return this;
     }
 
@@ -52,7 +52,7 @@ public record DecisionRequirementsFilter(
     }
 
     public Builder versions(final List<Integer> values) {
-      versions = addValuesToList(versions, values);
+      versions = addOperationsToList(versions, values);
       return this;
     }
 
@@ -61,7 +61,7 @@ public record DecisionRequirementsFilter(
     }
 
     public Builder decisionRequirementsIds(final List<String> values) {
-      decisionRequirementsIds = addValuesToList(decisionRequirementsIds, values);
+      decisionRequirementsIds = addOperationsToList(decisionRequirementsIds, values);
       return this;
     }
 
@@ -70,7 +70,7 @@ public record DecisionRequirementsFilter(
     }
 
     public Builder tenantIds(final List<String> values) {
-      tenantIds = addValuesToList(tenantIds, values);
+      tenantIds = addOperationsToList(tenantIds, values);
       return this;
     }
 
@@ -79,7 +79,7 @@ public record DecisionRequirementsFilter(
     }
 
     public Builder resourceNames(final List<String> values) {
-      resourceNames = addValuesToList(resourceNames, values);
+      resourceNames = addOperationsToList(resourceNames, values);
       return this;
     }
 

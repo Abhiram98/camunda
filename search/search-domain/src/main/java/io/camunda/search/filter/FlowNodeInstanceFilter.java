@@ -7,8 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 import static io.camunda.util.CollectionUtil.collectValuesAsList;
 
 import io.camunda.search.entities.FlowNodeInstanceEntity.FlowNodeType;
@@ -53,7 +53,7 @@ public record FlowNodeInstanceFilter(
     private List<String> tenantIds;
 
     public FlowNodeInstanceFilter.Builder flowNodeInstanceKeys(final List<Long> values) {
-      flowNodeInstanceKeys = addValuesToList(flowNodeInstanceKeys, values);
+      flowNodeInstanceKeys = addOperationsToList(flowNodeInstanceKeys, values);
       return this;
     }
 
@@ -62,7 +62,7 @@ public record FlowNodeInstanceFilter(
     }
 
     public FlowNodeInstanceFilter.Builder processInstanceKeys(final List<Long> values) {
-      processInstanceKeys = addValuesToList(processInstanceKeys, values);
+      processInstanceKeys = addOperationsToList(processInstanceKeys, values);
       return this;
     }
 
@@ -71,7 +71,7 @@ public record FlowNodeInstanceFilter(
     }
 
     public FlowNodeInstanceFilter.Builder processDefinitionKeys(final List<Long> values) {
-      processDefinitionKeys = addValuesToList(processDefinitionKeys, values);
+      processDefinitionKeys = addOperationsToList(processDefinitionKeys, values);
       return this;
     }
 
@@ -80,7 +80,7 @@ public record FlowNodeInstanceFilter(
     }
 
     public FlowNodeInstanceFilter.Builder processDefinitionIds(final List<String> values) {
-      processDefinitionIds = addValuesToList(processDefinitionIds, values);
+      processDefinitionIds = addOperationsToList(processDefinitionIds, values);
       return this;
     }
 
@@ -90,7 +90,7 @@ public record FlowNodeInstanceFilter(
 
     public FlowNodeInstanceFilter.Builder stateOperations(
         final List<Operation<String>> operations) {
-      stateOperations = addValuesToList(stateOperations, operations);
+      stateOperations = addOperationsToList(stateOperations, operations);
       return this;
     }
 
@@ -101,11 +101,11 @@ public record FlowNodeInstanceFilter(
     @SafeVarargs
     public final FlowNodeInstanceFilter.Builder stateOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return stateOperations(collectValues(operation, operations));
+      return stateOperations(collectOperations(operation, operations));
     }
 
     public FlowNodeInstanceFilter.Builder types(final List<FlowNodeType> values) {
-      types = addValuesToList(types, values);
+      types = addOperationsToList(types, values);
       return this;
     }
 
@@ -114,7 +114,7 @@ public record FlowNodeInstanceFilter(
     }
 
     public FlowNodeInstanceFilter.Builder flowNodeIds(final List<String> values) {
-      flowNodeIds = addValuesToList(flowNodeIds, values);
+      flowNodeIds = addOperationsToList(flowNodeIds, values);
       return this;
     }
 
@@ -123,7 +123,7 @@ public record FlowNodeInstanceFilter(
     }
 
     public FlowNodeInstanceFilter.Builder treePaths(final List<String> values) {
-      treePaths = addValuesToList(treePaths, values);
+      treePaths = addOperationsToList(treePaths, values);
       return this;
     }
 
@@ -137,7 +137,7 @@ public record FlowNodeInstanceFilter(
     }
 
     public FlowNodeInstanceFilter.Builder incidentKeys(final List<Long> values) {
-      incidentKeys = addValuesToList(incidentKeys, values);
+      incidentKeys = addOperationsToList(incidentKeys, values);
       return this;
     }
 
@@ -146,7 +146,7 @@ public record FlowNodeInstanceFilter(
     }
 
     public FlowNodeInstanceFilter.Builder tenantIds(final List<String> values) {
-      tenantIds = addValuesToList(tenantIds, values);
+      tenantIds = addOperationsToList(tenantIds, values);
       return this;
     }
 

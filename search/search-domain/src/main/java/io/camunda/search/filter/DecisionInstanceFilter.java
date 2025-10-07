@@ -7,8 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 import static io.camunda.util.CollectionUtil.collectValuesAsList;
 
 import io.camunda.search.entities.DecisionInstanceEntity.DecisionDefinitionType;
@@ -59,7 +59,7 @@ public record DecisionInstanceFilter(
     private List<String> tenantIds;
 
     public Builder decisionInstanceKeys(final List<Long> values) {
-      decisionInstanceKeys = addValuesToList(decisionInstanceKeys, values);
+      decisionInstanceKeys = addOperationsToList(decisionInstanceKeys, values);
       return this;
     }
 
@@ -68,7 +68,7 @@ public record DecisionInstanceFilter(
     }
 
     public Builder decisionInstanceIds(final List<String> values) {
-      decisionInstanceIds = addValuesToList(decisionInstanceIds, values);
+      decisionInstanceIds = addOperationsToList(decisionInstanceIds, values);
       return this;
     }
 
@@ -77,7 +77,7 @@ public record DecisionInstanceFilter(
     }
 
     public Builder states(final List<DecisionInstanceState> values) {
-      states = addValuesToList(states, values);
+      states = addOperationsToList(states, values);
       return this;
     }
 
@@ -86,18 +86,18 @@ public record DecisionInstanceFilter(
     }
 
     public Builder evaluationDateOperations(final List<Operation<OffsetDateTime>> operations) {
-      evaluationDateOperations = addValuesToList(evaluationDateOperations, operations);
+      evaluationDateOperations = addOperationsToList(evaluationDateOperations, operations);
       return this;
     }
 
     @SafeVarargs
     public final Builder evaluationDateOperations(
         final Operation<OffsetDateTime> operation, final Operation<OffsetDateTime>... operations) {
-      return evaluationDateOperations(collectValues(operation, operations));
+      return evaluationDateOperations(collectOperations(operation, operations));
     }
 
     public Builder evaluationFailures(final List<String> values) {
-      evaluationFailures = addValuesToList(evaluationFailures, values);
+      evaluationFailures = addOperationsToList(evaluationFailures, values);
       return this;
     }
 
@@ -106,7 +106,7 @@ public record DecisionInstanceFilter(
     }
 
     public Builder processDefinitionKeys(final List<Long> values) {
-      processDefinitionKeys = addValuesToList(processDefinitionKeys, values);
+      processDefinitionKeys = addOperationsToList(processDefinitionKeys, values);
       return this;
     }
 
@@ -115,7 +115,7 @@ public record DecisionInstanceFilter(
     }
 
     public Builder processInstanceKeys(final List<Long> values) {
-      processInstanceKeys = addValuesToList(processInstanceKeys, values);
+      processInstanceKeys = addOperationsToList(processInstanceKeys, values);
       return this;
     }
 
@@ -125,7 +125,7 @@ public record DecisionInstanceFilter(
 
     public Builder decisionDefinitionKeyOperations(final List<Operation<Long>> operations) {
       decisionDefinitionKeyOperations =
-          addValuesToList(decisionDefinitionKeyOperations, operations);
+          addOperationsToList(decisionDefinitionKeyOperations, operations);
       return this;
     }
 
@@ -136,11 +136,11 @@ public record DecisionInstanceFilter(
     @SafeVarargs
     public final Builder decisionDefinitionKeyOperations(
         final Operation<Long> operation, final Operation<Long>... operations) {
-      return decisionDefinitionKeyOperations(collectValues(operation, operations));
+      return decisionDefinitionKeyOperations(collectOperations(operation, operations));
     }
 
     public Builder decisionDefinitionIds(final List<String> values) {
-      decisionDefinitionIds = addValuesToList(decisionDefinitionIds, values);
+      decisionDefinitionIds = addOperationsToList(decisionDefinitionIds, values);
       return this;
     }
 
@@ -149,7 +149,7 @@ public record DecisionInstanceFilter(
     }
 
     public Builder decisionDefinitionNames(final List<String> values) {
-      decisionDefinitionNames = addValuesToList(decisionDefinitionNames, values);
+      decisionDefinitionNames = addOperationsToList(decisionDefinitionNames, values);
       return this;
     }
 
@@ -158,7 +158,7 @@ public record DecisionInstanceFilter(
     }
 
     public Builder decisionDefinitionVersions(final List<Integer> values) {
-      decisionDefinitionVersions = addValuesToList(decisionDefinitionVersions, values);
+      decisionDefinitionVersions = addOperationsToList(decisionDefinitionVersions, values);
       return this;
     }
 
@@ -167,7 +167,7 @@ public record DecisionInstanceFilter(
     }
 
     public Builder decisionTypes(final List<DecisionDefinitionType> values) {
-      decisionTypes = addValuesToList(decisionTypes, values);
+      decisionTypes = addOperationsToList(decisionTypes, values);
       return this;
     }
 
@@ -176,7 +176,7 @@ public record DecisionInstanceFilter(
     }
 
     public Builder tenantIds(final List<String> values) {
-      tenantIds = addValuesToList(tenantIds, values);
+      tenantIds = addOperationsToList(tenantIds, values);
       return this;
     }
 

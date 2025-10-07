@@ -7,7 +7,7 @@
  */
 package io.camunda.search.clients.aggregator;
 
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.collectOperations;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public interface SearchAggregator {
     }
 
     public T aggregations(final SearchAggregator value, final SearchAggregator... values) {
-      return aggregations(collectValues(value, values));
+      return aggregations(collectOperations(value, values));
     }
   }
 }

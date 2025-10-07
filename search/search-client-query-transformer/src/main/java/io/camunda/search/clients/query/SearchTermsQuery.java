@@ -7,7 +7,7 @@
  */
 package io.camunda.search.clients.query;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
 
 import io.camunda.search.clients.types.TypedValue;
 import io.camunda.util.ObjectBuilder;
@@ -44,7 +44,7 @@ public record SearchTermsQuery(String field, List<TypedValue> values) implements
     }
 
     public Builder terms(final List<TypedValue> values) {
-      terms = addValuesToList(terms, values);
+      terms = addOperationsToList(terms, values);
       return this;
     }
 

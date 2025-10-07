@@ -7,8 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 
 import io.camunda.util.ObjectBuilder;
 import java.util.Collections;
@@ -36,65 +36,65 @@ public record ProcessDefinitionFilter(
     private List<String> versionTags;
 
     public Builder processDefinitionKeys(final List<Long> values) {
-      processDefinitionKeys = addValuesToList(processDefinitionKeys, values);
+      processDefinitionKeys = addOperationsToList(processDefinitionKeys, values);
       return this;
     }
 
     public Builder processDefinitionKeys(final Long value, final Long... values) {
-      return processDefinitionKeys(collectValues(value, values));
+      return processDefinitionKeys(collectOperations(value, values));
     }
 
     public Builder names(final List<String> values) {
-      names = addValuesToList(names, values);
+      names = addOperationsToList(names, values);
       return this;
     }
 
     public Builder names(final String value, final String... values) {
-      return names(collectValues(value, values));
+      return names(collectOperations(value, values));
     }
 
     public Builder processDefinitionIds(final List<String> values) {
-      processDefinitionIds = addValuesToList(processDefinitionIds, values);
+      processDefinitionIds = addOperationsToList(processDefinitionIds, values);
       return this;
     }
 
     public Builder processDefinitionIds(final String value, final String... values) {
-      return processDefinitionIds(collectValues(value, values));
+      return processDefinitionIds(collectOperations(value, values));
     }
 
     public Builder resourceNames(final List<String> values) {
-      resourceNames = addValuesToList(resourceNames, values);
+      resourceNames = addOperationsToList(resourceNames, values);
       return this;
     }
 
     public Builder resourceNames(final String value, final String... values) {
-      return resourceNames(collectValues(value, values));
+      return resourceNames(collectOperations(value, values));
     }
 
     public Builder versions(final List<Integer> values) {
-      versions = addValuesToList(versions, values);
+      versions = addOperationsToList(versions, values);
       return this;
     }
 
     public Builder versions(final Integer value, final Integer... values) {
-      return versions(collectValues(value, values));
+      return versions(collectOperations(value, values));
     }
 
     public Builder versionTags(final List<String> values) {
-      versionTags = addValuesToList(versionTags, values);
+      versionTags = addOperationsToList(versionTags, values);
       return this;
     }
 
     public Builder versionTags(final String value, final String... values) {
-      return versionTags(collectValues(value, values));
+      return versionTags(collectOperations(value, values));
     }
 
     public Builder tenantIds(final String value, final String... values) {
-      return tenantIds(collectValues(value, values));
+      return tenantIds(collectOperations(value, values));
     }
 
     public Builder tenantIds(final List<String> values) {
-      tenantIds = addValuesToList(tenantIds, values);
+      tenantIds = addOperationsToList(tenantIds, values);
       return this;
     }
 

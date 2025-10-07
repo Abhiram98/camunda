@@ -7,8 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 
 import io.camunda.util.FilterUtil;
 import io.camunda.util.ObjectBuilder;
@@ -53,7 +53,7 @@ public record UserFilter(
     }
 
     public Builder usernameOperations(final List<Operation<String>> operations) {
-      usernameOperations = addValuesToList(usernameOperations, operations);
+      usernameOperations = addOperationsToList(usernameOperations, operations);
       return this;
     }
 
@@ -68,11 +68,11 @@ public record UserFilter(
     @SafeVarargs
     public final Builder usernameOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return usernameOperations(collectValues(operation, operations));
+      return usernameOperations(collectOperations(operation, operations));
     }
 
     public Builder nameOperations(final List<Operation<String>> operations) {
-      nameOperations = addValuesToList(nameOperations, operations);
+      nameOperations = addOperationsToList(nameOperations, operations);
       return this;
     }
 
@@ -87,11 +87,11 @@ public record UserFilter(
     @SafeVarargs
     public final Builder nameOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return nameOperations(collectValues(operation, operations));
+      return nameOperations(collectOperations(operation, operations));
     }
 
     public Builder emailOperations(final List<Operation<String>> operations) {
-      emailOperations = addValuesToList(emailOperations, operations);
+      emailOperations = addOperationsToList(emailOperations, operations);
       return this;
     }
 
@@ -106,7 +106,7 @@ public record UserFilter(
     @SafeVarargs
     public final Builder emailOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return emailOperations(collectValues(operation, operations));
+      return emailOperations(collectOperations(operation, operations));
     }
 
     public Builder tenantId(final String value) {

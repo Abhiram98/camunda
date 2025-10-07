@@ -7,8 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 
 import io.camunda.util.ObjectBuilder;
 import java.time.OffsetDateTime;
@@ -23,12 +23,12 @@ public record UsageMetricsFilter(
     private OffsetDateTime endTime;
 
     public Builder events(final List<String> events) {
-      this.events = addValuesToList(this.events, events);
+      this.events = addOperationsToList(this.events, events);
       return this;
     }
 
     public Builder events(final String event, final String... events) {
-      events(collectValues(event, events));
+      events(collectOperations(event, events));
       return this;
     }
 

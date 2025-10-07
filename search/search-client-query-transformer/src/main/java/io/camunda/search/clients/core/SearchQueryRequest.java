@@ -8,8 +8,8 @@
 package io.camunda.search.clients.core;
 
 import static io.camunda.search.clients.core.RequestBuilders.searchRequest;
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 
 import io.camunda.search.clients.aggregator.SearchAggregator;
 import io.camunda.search.clients.query.SearchQuery;
@@ -62,12 +62,12 @@ public record SearchQueryRequest(
     private SearchSourceConfig source;
 
     public Builder index(final List<String> values) {
-      index = addValuesToList(index, values);
+      index = addOperationsToList(index, values);
       return this;
     }
 
     public Builder index(final String value, final String... values) {
-      return index(collectValues(value, values));
+      return index(collectOperations(value, values));
     }
 
     public Builder query(final SearchQuery value) {
@@ -80,12 +80,12 @@ public record SearchQueryRequest(
     }
 
     public Builder sort(final List<SearchSortOptions> values) {
-      sort = addValuesToList(sort, values);
+      sort = addOperationsToList(sort, values);
       return this;
     }
 
     public Builder sort(final SearchSortOptions value, final SearchSortOptions... values) {
-      return sort(collectValues(value, values));
+      return sort(collectOperations(value, values));
     }
 
     public Builder sort(
@@ -114,12 +114,12 @@ public record SearchQueryRequest(
     }
 
     public Builder aggregations(final List<SearchAggregator> values) {
-      aggregations = addValuesToList(aggregations, values);
+      aggregations = addOperationsToList(aggregations, values);
       return this;
     }
 
     public Builder aggregations(final SearchAggregator value, final SearchAggregator... values) {
-      return aggregations(collectValues(value, values));
+      return aggregations(collectOperations(value, values));
     }
 
     public Builder source(

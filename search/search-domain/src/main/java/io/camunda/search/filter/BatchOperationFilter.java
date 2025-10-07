@@ -7,8 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 
 import io.camunda.util.ObjectBuilder;
 import java.util.Collections;
@@ -25,30 +25,30 @@ public record BatchOperationFilter(
     private List<String> operationTypes;
     private List<String> state;
 
-    public Builder batchOperationIds(final String value, final String... values) {
-      return batchOperationIds(collectValues(value, values));
+    public Builder batchOperationIds(final String value, final String... operations) {
+      return batchOperationIds(collectOperations(value, operations));
     }
 
-    public Builder batchOperationIds(final List<String> values) {
-      batchOperationIds = addValuesToList(batchOperationIds, values);
+    public Builder batchOperationIds(final List<String> operations) {
+      batchOperationIds = addOperationsToList(batchOperationIds, operations);
       return this;
     }
 
-    public Builder operationTypes(final String value, final String... values) {
-      return operationTypes(collectValues(value, values));
+    public Builder operationTypes(final String value, final String... operations) {
+      return operationTypes(collectOperations(value, operations));
     }
 
-    public Builder operationTypes(final List<String> values) {
-      operationTypes = addValuesToList(operationTypes, values);
+    public Builder operationTypes(final List<String> operations) {
+      operationTypes = addOperationsToList(operationTypes, operations);
       return this;
     }
 
-    public Builder state(final String value, final String... values) {
-      return state(collectValues(value, values));
+    public Builder state(final String value, final String... operations) {
+      return state(collectOperations(value, operations));
     }
 
-    public Builder state(final List<String> values) {
-      state = addValuesToList(state, values);
+    public Builder state(final List<String> operations) {
+      state = addOperationsToList(state, operations);
       return this;
     }
 

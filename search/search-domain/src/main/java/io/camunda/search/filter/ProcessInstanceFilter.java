@@ -7,8 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 
 import io.camunda.util.FilterUtil;
 import io.camunda.util.ObjectBuilder;
@@ -91,7 +91,7 @@ public record ProcessInstanceFilter(
     private List<ProcessInstanceFilter> orFilters;
 
     public Builder processInstanceKeyOperations(final List<Operation<Long>> operations) {
-      processInstanceKeyOperations = addValuesToList(processInstanceKeyOperations, operations);
+      processInstanceKeyOperations = addOperationsToList(processInstanceKeyOperations, operations);
       return this;
     }
 
@@ -107,11 +107,11 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder processInstanceKeyOperations(
         final Operation<Long> operation, final Operation<Long>... operations) {
-      return processInstanceKeyOperations(collectValues(operation, operations));
+      return processInstanceKeyOperations(collectOperations(operation, operations));
     }
 
     public Builder processDefinitionIdOperations(final List<Operation<String>> operations) {
-      processDefinitionIdOperations = addValuesToList(processDefinitionIdOperations, operations);
+      processDefinitionIdOperations = addOperationsToList(processDefinitionIdOperations, operations);
       return this;
     }
 
@@ -122,12 +122,12 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder processDefinitionIdOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return processDefinitionIdOperations(collectValues(operation, operations));
+      return processDefinitionIdOperations(collectOperations(operation, operations));
     }
 
     public Builder processDefinitionNameOperations(final List<Operation<String>> operations) {
       processDefinitionNameOperations =
-          addValuesToList(processDefinitionNameOperations, operations);
+          addOperationsToList(processDefinitionNameOperations, operations);
       return this;
     }
 
@@ -138,12 +138,12 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder processDefinitionNameOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return processDefinitionNameOperations(collectValues(operation, operations));
+      return processDefinitionNameOperations(collectOperations(operation, operations));
     }
 
     public Builder processDefinitionVersionOperations(final List<Operation<Integer>> operations) {
       processDefinitionVersionOperations =
-          addValuesToList(processDefinitionVersionOperations, operations);
+          addOperationsToList(processDefinitionVersionOperations, operations);
       return this;
     }
 
@@ -154,12 +154,12 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder processDefinitionVersionOperations(
         final Operation<Integer> operation, final Operation<Integer>... operations) {
-      return processDefinitionVersionOperations(collectValues(operation, operations));
+      return processDefinitionVersionOperations(collectOperations(operation, operations));
     }
 
     public Builder processDefinitionVersionTagOperations(final List<Operation<String>> values) {
       processDefinitionVersionTagOperations =
-          addValuesToList(processDefinitionVersionTagOperations, values);
+          addOperationsToList(processDefinitionVersionTagOperations, values);
       return this;
     }
 
@@ -170,11 +170,11 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder processDefinitionVersionTagOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return processDefinitionVersionTagOperations(collectValues(operation, operations));
+      return processDefinitionVersionTagOperations(collectOperations(operation, operations));
     }
 
     public Builder processDefinitionKeyOperations(final List<Operation<Long>> operations) {
-      processDefinitionKeyOperations = addValuesToList(processDefinitionKeyOperations, operations);
+      processDefinitionKeyOperations = addOperationsToList(processDefinitionKeyOperations, operations);
       return this;
     }
 
@@ -186,12 +186,12 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder processDefinitionKeyOperations(
         final Operation<Long> operation, final Operation<Long>... operations) {
-      return processDefinitionKeyOperations(collectValues(operation, operations));
+      return processDefinitionKeyOperations(collectOperations(operation, operations));
     }
 
     public Builder parentProcessInstanceKeyOperations(final List<Operation<Long>> operations) {
       parentProcessInstanceKeyOperations =
-          addValuesToList(parentProcessInstanceKeyOperations, operations);
+          addOperationsToList(parentProcessInstanceKeyOperations, operations);
       return this;
     }
 
@@ -202,12 +202,12 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder parentProcessInstanceKeyOperations(
         final Operation<Long> operation, final Operation<Long>... operations) {
-      return parentProcessInstanceKeyOperations(collectValues(operation, operations));
+      return parentProcessInstanceKeyOperations(collectOperations(operation, operations));
     }
 
     public Builder parentFlowNodeInstanceKeyOperations(final List<Operation<Long>> operations) {
       parentFlowNodeInstanceKeyOperations =
-          addValuesToList(parentFlowNodeInstanceKeyOperations, operations);
+          addOperationsToList(parentFlowNodeInstanceKeyOperations, operations);
       return this;
     }
 
@@ -218,33 +218,33 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder parentFlowNodeInstanceKeyOperations(
         final Operation<Long> operation, final Operation<Long>... operations) {
-      return parentFlowNodeInstanceKeyOperations(collectValues(operation, operations));
+      return parentFlowNodeInstanceKeyOperations(collectOperations(operation, operations));
     }
 
     public Builder startDateOperations(final List<Operation<OffsetDateTime>> operations) {
-      startDateOperations = addValuesToList(startDateOperations, operations);
+      startDateOperations = addOperationsToList(startDateOperations, operations);
       return this;
     }
 
     @SafeVarargs
     public final Builder startDateOperations(
         final Operation<OffsetDateTime> operation, final Operation<OffsetDateTime>... operations) {
-      return startDateOperations(collectValues(operation, operations));
+      return startDateOperations(collectOperations(operation, operations));
     }
 
     public Builder endDateOperations(final List<Operation<OffsetDateTime>> operations) {
-      endDateOperations = addValuesToList(endDateOperations, operations);
+      endDateOperations = addOperationsToList(endDateOperations, operations);
       return this;
     }
 
     @SafeVarargs
     public final Builder endDateOperations(
         final Operation<OffsetDateTime> operation, final Operation<OffsetDateTime>... operations) {
-      return endDateOperations(collectValues(operation, operations));
+      return endDateOperations(collectOperations(operation, operations));
     }
 
     public Builder stateOperations(final List<Operation<String>> operations) {
-      stateOperations = addValuesToList(stateOperations, operations);
+      stateOperations = addOperationsToList(stateOperations, operations);
       return this;
     }
 
@@ -255,7 +255,7 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder stateOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return stateOperations(collectValues(operation, operations));
+      return stateOperations(collectOperations(operation, operations));
     }
 
     public Builder hasIncident(final Boolean value) {
@@ -264,7 +264,7 @@ public record ProcessInstanceFilter(
     }
 
     public Builder tenantIdOperations(final List<Operation<String>> operations) {
-      tenantIdOperations = addValuesToList(tenantIdOperations, operations);
+      tenantIdOperations = addOperationsToList(tenantIdOperations, operations);
       return this;
     }
 
@@ -275,16 +275,16 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder tenantIdOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return tenantIdOperations(collectValues(operation, operations));
+      return tenantIdOperations(collectOperations(operation, operations));
     }
 
     public Builder variables(final List<VariableValueFilter> values) {
-      variableFilters = addValuesToList(variableFilters, values);
+      variableFilters = addOperationsToList(variableFilters, values);
       return this;
     }
 
     public Builder batchOperationIdOperations(final List<Operation<String>> operations) {
-      batchOperationIdOperations = addValuesToList(batchOperationIdOperations, operations);
+      batchOperationIdOperations = addOperationsToList(batchOperationIdOperations, operations);
       return this;
     }
 
@@ -295,7 +295,7 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder batchOperationIdOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return batchOperationIdOperations(collectValues(operation, operations));
+      return batchOperationIdOperations(collectOperations(operation, operations));
     }
 
     public Builder errorMessages(final String value, final String... values) {
@@ -305,11 +305,11 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder errorMessageOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return errorMessageOperations(collectValues(operation, operations));
+      return errorMessageOperations(collectOperations(operation, operations));
     }
 
     public Builder errorMessageOperations(final List<Operation<String>> operations) {
-      errorMessageOperations = addValuesToList(errorMessageOperations, operations);
+      errorMessageOperations = addOperationsToList(errorMessageOperations, operations);
       return this;
     }
 
@@ -321,11 +321,11 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder flowNodeIdOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return flowNodeIdOperations(collectValues(operation, operations));
+      return flowNodeIdOperations(collectOperations(operation, operations));
     }
 
     public Builder flowNodeIdOperations(final List<Operation<String>> values) {
-      flowNodeIdOperations = addValuesToList(flowNodeIdOperations, values);
+      flowNodeIdOperations = addOperationsToList(flowNodeIdOperations, values);
       return this;
     }
 
@@ -340,7 +340,7 @@ public record ProcessInstanceFilter(
 
     public Builder flowNodeInstanceStateOperations(final List<Operation<String>> operations) {
       flowNodeInstanceStateOperations =
-          addValuesToList(flowNodeInstanceStateOperations, operations);
+          addOperationsToList(flowNodeInstanceStateOperations, operations);
       return this;
     }
 
@@ -351,15 +351,15 @@ public record ProcessInstanceFilter(
     @SafeVarargs
     public final Builder flowNodeInstanceStateOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return flowNodeInstanceStateOperations(collectValues(operation, operations));
+      return flowNodeInstanceStateOperations(collectOperations(operation, operations));
     }
 
     public Builder incidentErrorHashCodes(final Integer value, final Integer... values) {
-      return incidentErrorHashCodes(collectValues(value, values));
+      return incidentErrorHashCodes(collectOperations(value, values));
     }
 
     public Builder incidentErrorHashCodes(final List<Integer> values) {
-      incidentErrorHashCodes = addValuesToList(incidentErrorHashCodes, values);
+      incidentErrorHashCodes = addOperationsToList(incidentErrorHashCodes, values);
       return this;
     }
 

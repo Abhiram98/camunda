@@ -7,8 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 
 import io.camunda.search.entities.IncidentEntity.ErrorType;
 import io.camunda.search.entities.IncidentEntity.IncidentState;
@@ -50,65 +50,65 @@ public record IncidentFilter(
     private List<String> tenantIds;
 
     public Builder incidentKeys(final Long value, final Long... values) {
-      return incidentKeys(collectValues(value, values));
+      return incidentKeys(collectOperations(value, values));
     }
 
     public Builder incidentKeys(final List<Long> values) {
-      incidentKeys = addValuesToList(incidentKeys, values);
+      incidentKeys = addOperationsToList(incidentKeys, values);
       return this;
     }
 
     public Builder processDefinitionKeys(final Long value, final Long... values) {
-      return processDefinitionKeys(collectValues(value, values));
+      return processDefinitionKeys(collectOperations(value, values));
     }
 
     public Builder processDefinitionKeys(final List<Long> values) {
-      processDefinitionKeys = addValuesToList(processDefinitionKeys, values);
+      processDefinitionKeys = addOperationsToList(processDefinitionKeys, values);
       return this;
     }
 
     public Builder processDefinitionIds(final String value, final String... values) {
-      return processDefinitionIds(collectValues(value, values));
+      return processDefinitionIds(collectOperations(value, values));
     }
 
     public Builder processDefinitionIds(final List<String> values) {
-      processDefinitionIds = addValuesToList(processDefinitionIds, values);
+      processDefinitionIds = addOperationsToList(processDefinitionIds, values);
       return this;
     }
 
     public Builder processInstanceKeys(final Long value, final Long... values) {
-      return processInstanceKeys(collectValues(value, values));
+      return processInstanceKeys(collectOperations(value, values));
     }
 
     public Builder processInstanceKeys(final List<Long> values) {
-      processInstanceKeys = addValuesToList(processInstanceKeys, values);
+      processInstanceKeys = addOperationsToList(processInstanceKeys, values);
       return this;
     }
 
     public Builder errorTypes(final ErrorType value, final ErrorType... values) {
-      return errorTypes(collectValues(value, values));
+      return errorTypes(collectOperations(value, values));
     }
 
     public Builder errorTypes(final List<ErrorType> values) {
-      errorTypes = addValuesToList(errorTypes, values);
+      errorTypes = addOperationsToList(errorTypes, values);
       return this;
     }
 
     public Builder errorMessages(final String value, final String... values) {
-      return errorMessages(collectValues(value, values));
+      return errorMessages(collectOperations(value, values));
     }
 
     public Builder errorMessages(final List<String> values) {
-      errorMessages = addValuesToList(errorMessages, values);
+      errorMessages = addOperationsToList(errorMessages, values);
       return this;
     }
 
     public Builder errorMessageHashes(final Integer value, final Integer... values) {
-      return errorMessageHashes(collectValues(value, values));
+      return errorMessageHashes(collectOperations(value, values));
     }
 
     public Builder errorMessageHashes(final List<Integer> values) {
-      errorMessageHashes = addValuesToList(errorMessageHashes, values);
+      errorMessageHashes = addOperationsToList(errorMessageHashes, values);
       return this;
     }
 
@@ -118,47 +118,47 @@ public record IncidentFilter(
     }
 
     public Builder flowNodeIds(final String value, final String... values) {
-      return flowNodeIds(collectValues(value, values));
+      return flowNodeIds(collectOperations(value, values));
     }
 
     public Builder flowNodeIds(final List<String> values) {
-      flowNodeIds = addValuesToList(flowNodeIds, values);
+      flowNodeIds = addOperationsToList(flowNodeIds, values);
       return this;
     }
 
     public Builder flowNodeInstanceKeys(final Long value, final Long... values) {
-      return flowNodeInstanceKeys(collectValues(value, values));
+      return flowNodeInstanceKeys(collectOperations(value, values));
     }
 
     public Builder flowNodeInstanceKeys(final List<Long> values) {
-      flowNodeInstanceKeys = addValuesToList(flowNodeInstanceKeys, values);
+      flowNodeInstanceKeys = addOperationsToList(flowNodeInstanceKeys, values);
       return this;
     }
 
     public Builder states(final IncidentState value, final IncidentState... values) {
-      return states(collectValues(value, values));
+      return states(collectOperations(value, values));
     }
 
     public Builder states(final List<IncidentState> values) {
-      states = addValuesToList(states, values);
+      states = addOperationsToList(states, values);
       return this;
     }
 
     public Builder jobKeys(final Long value, final Long... values) {
-      return jobKeys(collectValues(value, values));
+      return jobKeys(collectOperations(value, values));
     }
 
     public Builder jobKeys(final List<Long> values) {
-      jobKeys = addValuesToList(jobKeys, values);
+      jobKeys = addOperationsToList(jobKeys, values);
       return this;
     }
 
     public Builder tenantIds(final String value, final String... values) {
-      return tenantIds(collectValues(value, values));
+      return tenantIds(collectOperations(value, values));
     }
 
     public Builder tenantIds(final List<String> values) {
-      tenantIds = addValuesToList(tenantIds, values);
+      tenantIds = addOperationsToList(tenantIds, values);
       return this;
     }
 

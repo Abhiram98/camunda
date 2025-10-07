@@ -23,6 +23,6 @@ public final class FilterUtil {
 
   @SafeVarargs
   public static <T> Operation<T> mapDefaultToOperation(final T value, final T... values) {
-    return mapDefaultToOperation(CollectionUtil.collectValues(value, values));
+    return mapDefaultToOperation(CollectionUtil.collectOperations(value, values));
   }
 }
