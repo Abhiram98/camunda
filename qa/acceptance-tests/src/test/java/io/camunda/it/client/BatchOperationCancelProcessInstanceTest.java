@@ -45,7 +45,7 @@ public class BatchOperationCancelProcessInstanceTest {
   private static CamundaClient camundaClient;
 
   @BeforeAll
-  public static void beforeAll() {
+  public static void beforeEach() {
     Objects.requireNonNull(camundaClient);
     final List<String> processes =
         List.of(
@@ -80,7 +80,7 @@ public class BatchOperationCancelProcessInstanceTest {
   }
 
   @AfterAll
-  static void afterAll() {
+  static void afterEach() {
     DEPLOYED_PROCESSES.clear();
     ACTIVE_PROCESS_INSTANCES.clear();
   }
