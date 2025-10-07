@@ -19,7 +19,7 @@ public record SearchIdsQuery(List<String> values) implements SearchQueryOption {
     private List<String> ids = new ArrayList<>();
 
     public Builder values(final List<String> values) {
-      ids = CollectionUtil.addValuesToList(ids, values);
+      ids = CollectionUtil.addOperationsToList(ids, values);
       return this;
     }
 

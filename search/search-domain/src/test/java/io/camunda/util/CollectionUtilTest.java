@@ -43,7 +43,7 @@ public class CollectionUtilTest {
     // given
 
     // when
-    final var result = CollectionUtil.addValuesToList(list, values);
+    final var result = CollectionUtil.addOperationsToList(list, values);
 
     // then
     assertThat(result).isEqualTo(expected);

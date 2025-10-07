@@ -7,7 +7,7 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
 import static io.camunda.util.CollectionUtil.collectValuesAsList;
 
 import io.camunda.util.ObjectBuilder;
@@ -36,7 +36,7 @@ public record DecisionDefinitionFilter(
     private List<String> tenantIds;
 
     public Builder decisionDefinitionKeys(final List<Long> values) {
-      decisionDefinitionKeys = addValuesToList(decisionDefinitionKeys, values);
+      decisionDefinitionKeys = addOperationsToList(decisionDefinitionKeys, values);
       return this;
     }
 
@@ -45,7 +45,7 @@ public record DecisionDefinitionFilter(
     }
 
     public Builder decisionDefinitionIds(final List<String> values) {
-      decisionDefinitionIds = addValuesToList(decisionDefinitionIds, values);
+      decisionDefinitionIds = addOperationsToList(decisionDefinitionIds, values);
       return this;
     }
 
@@ -54,7 +54,7 @@ public record DecisionDefinitionFilter(
     }
 
     public Builder names(final List<String> values) {
-      names = addValuesToList(names, values);
+      names = addOperationsToList(names, values);
       return this;
     }
 
@@ -63,7 +63,7 @@ public record DecisionDefinitionFilter(
     }
 
     public Builder versions(final List<Integer> values) {
-      versions = addValuesToList(versions, values);
+      versions = addOperationsToList(versions, values);
       return this;
     }
 
@@ -72,7 +72,7 @@ public record DecisionDefinitionFilter(
     }
 
     public Builder decisionRequirementsIds(final List<String> values) {
-      decisionRequirementsIds = addValuesToList(decisionRequirementsIds, values);
+      decisionRequirementsIds = addOperationsToList(decisionRequirementsIds, values);
       return this;
     }
 
@@ -81,7 +81,7 @@ public record DecisionDefinitionFilter(
     }
 
     public Builder decisionRequirementsKeys(final List<Long> values) {
-      decisionRequirementsKeys = addValuesToList(decisionRequirementsKeys, values);
+      decisionRequirementsKeys = addOperationsToList(decisionRequirementsKeys, values);
       return this;
     }
 
@@ -90,7 +90,7 @@ public record DecisionDefinitionFilter(
     }
 
     public Builder tenantIds(final List<String> values) {
-      tenantIds = addValuesToList(tenantIds, values);
+      tenantIds = addOperationsToList(tenantIds, values);
       return this;
     }
 

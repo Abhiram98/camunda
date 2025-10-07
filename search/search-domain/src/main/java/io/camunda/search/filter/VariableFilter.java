@@ -7,8 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 
 import io.camunda.util.FilterUtil;
 import io.camunda.util.ObjectBuilder;
@@ -36,7 +36,7 @@ public record VariableFilter(
     private Boolean isTruncated;
 
     public Builder nameOperations(final List<Operation<String>> operations) {
-      nameOperations = addValuesToList(nameOperations, operations);
+      nameOperations = addOperationsToList(nameOperations, operations);
       return this;
     }
 
@@ -51,19 +51,19 @@ public record VariableFilter(
     @SafeVarargs
     public final Builder nameOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return nameOperations(collectValues(operation, operations));
+      return nameOperations(collectOperations(operation, operations));
     }
 
     public Builder valueOperations(final List<Operation<String>> operations) {
       final List<Operation<String>> ops =
           Objects.requireNonNullElse(operations, Collections.emptyList());
       valueOperations =
-          addValuesToList(valueOperations, ops.stream().map(UntypedOperation::of).toList());
+          addOperationsToList(valueOperations, ops.stream().map(UntypedOperation::of).toList());
       return this;
     }
 
     private Builder valueUntypedOperations(final List<UntypedOperation> operations) {
-      valueOperations = addValuesToList(valueOperations, operations);
+      valueOperations = addOperationsToList(valueOperations, operations);
       return this;
     }
 
@@ -78,11 +78,11 @@ public record VariableFilter(
     @SafeVarargs
     public final Builder valueOperations(
         final Operation<String> operation, final Operation<String>... operations) {
-      return valueOperations(collectValues(operation, operations));
+      return valueOperations(collectOperations(operation, operations));
     }
 
     public Builder scopeKeyOperations(final List<Operation<Long>> operations) {
-      scopeKeyOperations = addValuesToList(scopeKeyOperations, operations);
+      scopeKeyOperations = addOperationsToList(scopeKeyOperations, operations);
       return this;
     }
 
@@ -97,18 +97,18 @@ public record VariableFilter(
     @SafeVarargs
     public final Builder scopeKeyOperations(
         final Operation<Long> operation, final Operation<Long>... operations) {
-      return scopeKeyOperations(collectValues(operation, operations));
+      return scopeKeyOperations(collectOperations(operation, operations));
     }
 
     public Builder processInstanceKeyOperations(final List<Operation<Long>> operations) {
-      processInstanceKeyOperations = addValuesToList(processInstanceKeyOperations, operations);
+      processInstanceKeyOperations = addOperationsToList(processInstanceKeyOperations, operations);
       return this;
     }
 
     @SafeVarargs
     public final Builder processInstanceKeyOperations(
         final Operation<Long> operation, final Operation<Long>... operations) {
-      return processInstanceKeyOperations(collectValues(operation, operations));
+      return processInstanceKeyOperations(collectOperations(operation, operations));
     }
 
     public Builder processInstanceKeys(final Long value, final Long... values) {
@@ -116,7 +116,7 @@ public record VariableFilter(
     }
 
     public Builder variableKeyOperations(final List<Operation<Long>> operations) {
-      variableKeyOperations = addValuesToList(variableKeyOperations, operations);
+      variableKeyOperations = addOperationsToList(variableKeyOperations, operations);
       return this;
     }
 
@@ -127,15 +127,15 @@ public record VariableFilter(
     @SafeVarargs
     public final Builder variableKeyOperations(
         final Operation<Long> operation, final Operation<Long>... operations) {
-      return variableKeyOperations(collectValues(operation, operations));
+      return variableKeyOperations(collectOperations(operation, operations));
     }
 
     public Builder tenantIds(final String value, final String... values) {
-      return tenantIds(collectValues(value, values));
+      return tenantIds(collectOperations(value, values));
     }
 
     public Builder tenantIds(final List<String> values) {
-      tenantIds = addValuesToList(tenantIds, values);
+      tenantIds = addOperationsToList(tenantIds, values);
       return this;
     }
 

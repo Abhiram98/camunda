@@ -7,7 +7,7 @@
  */
 package io.camunda.search.clients.query;
 
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.collectOperations;
 import static io.camunda.util.CollectionUtil.withoutNull;
 
 import io.camunda.search.clients.query.SearchHasParentQuery.Builder;
@@ -74,7 +74,7 @@ public final class SearchQueryBuilders {
   }
 
   public static SearchQuery and(final SearchQuery query, final SearchQuery... queries) {
-    return and(collectValues(query, queries));
+    return and(collectOperations(query, queries));
   }
 
   public static SearchQuery and(final List<SearchQuery> queries) {
@@ -82,7 +82,7 @@ public final class SearchQueryBuilders {
   }
 
   public static SearchQuery not(final SearchQuery query, final SearchQuery... queries) {
-    return not(collectValues(query, queries));
+    return not(collectOperations(query, queries));
   }
 
   public static SearchQuery not(final List<SearchQuery> queries) {
@@ -94,7 +94,7 @@ public final class SearchQueryBuilders {
   }
 
   public static SearchQuery or(final SearchQuery query, final SearchQuery... queries) {
-    return or(collectValues(query, queries));
+    return or(collectOperations(query, queries));
   }
 
   public static SearchQuery or(final List<SearchQuery> queries) {

@@ -7,8 +7,8 @@
  */
 package io.camunda.search.filter;
 
-import static io.camunda.util.CollectionUtil.addValuesToList;
-import static io.camunda.util.CollectionUtil.collectValues;
+import static io.camunda.util.CollectionUtil.addOperationsToList;
+import static io.camunda.util.CollectionUtil.collectOperations;
 
 import io.camunda.util.ObjectBuilder;
 import java.util.Collections;
@@ -23,20 +23,20 @@ public record FormFilter(List<Long> formKeys, List<String> formIds) implements F
     private List<String> formIds;
 
     public Builder formKeys(final Long value, final Long... values) {
-      return formKeys(collectValues(value, values));
+      return formKeys(collectOperations(value, values));
     }
 
     public Builder formKeys(final List<Long> values) {
-      formKeys = addValuesToList(formKeys, values);
+      formKeys = addOperationsToList(formKeys, values);
       return this;
     }
 
     public Builder formIds(final String value, final String... values) {
-      return formIds(collectValues(value, values));
+      return formIds(collectOperations(value, values));
     }
 
     public Builder formIds(final List<String> values) {
-      formIds = addValuesToList(formIds, values);
+      formIds = addOperationsToList(formIds, values);
       return this;
     }
 

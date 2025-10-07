@@ -51,7 +51,7 @@ public final class CollectionUtil {
    * @return the given list (when not empty) otherwise a new list containing the values
    * @param <T> the list value type
    */
-  public static <T> List<T> addValuesToList(final List<T> list, final List<T> values) {
+  public static <T> List<T> addOperationsToList(final List<T> list, final List<T> values) {
     final List<T> result = Objects.requireNonNullElse(list, new ArrayList<>());
     result.addAll(Objects.requireNonNullElse(values, new ArrayList<>()));
     return result;
@@ -72,7 +72,7 @@ public final class CollectionUtil {
     return Arrays.stream(values).toList();
   }
 
-  public static <T> List<T> collectValues(final T value, final T... values) {
+  public static <T> List<T> collectOperations(final T value, final T... values) {
     final List<T> collectedValues = new ArrayList<>();
     collectedValues.add(value);
     if (values != null && values.length > 0) {
