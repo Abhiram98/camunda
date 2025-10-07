@@ -20,7 +20,7 @@ public interface GroupSearchClient {
 
   SearchQueryResult<GroupMemberEntity> searchGroupMembers(GroupQuery query);
 
-  List<GroupEntity> findAllGroups(final GroupQuery query);
+  List<GroupEntity> searchGroups(final GroupQuery query);
 
   GroupSearchClient withSecurityContext(SecurityContext securityContext);
 }

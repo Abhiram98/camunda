@@ -20,7 +20,7 @@ public interface RoleSearchClient {
 
   SearchQueryResult<RoleMemberEntity> searchRoleMembers(RoleQuery filter);
 
-  List<RoleEntity> findAllRoles(RoleQuery filter);
+  List<RoleEntity> searchRoles(RoleQuery filter);
 
   RoleSearchClient withSecurityContext(SecurityContext securityContext);
 }

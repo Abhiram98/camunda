@@ -94,8 +94,7 @@ public class RdbmsSearchClient implements SearchClientsProxy {
     return rdbmsService.getAuthorizationReader().search(query);
   }
 
-  @Override
-  public List<AuthorizationEntity> findAllAuthorizations(final AuthorizationQuery query) {
+  public List<AuthorizationEntity> searchAuthorizations(final AuthorizationQuery query) {
     LOG.debug("[RDBMS Search Client] Search for all authorizations: {}", query);
 
     // search without size boundary to find all items
@@ -111,7 +110,7 @@ public class RdbmsSearchClient implements SearchClientsProxy {
   }
 
   @Override
-  public List<SequenceFlowEntity> findAllSequenceFlows(final SequenceFlowQuery query) {
+  public List<SequenceFlowEntity> searchSequenceFlows(final SequenceFlowQuery query) {
     LOG.debug("[RDBMS Search Client] Search for sequence flow: {}", query);
     return rdbmsService.getSequenceFlowReader().search(query);
   }
@@ -146,8 +145,7 @@ public class RdbmsSearchClient implements SearchClientsProxy {
     return rdbmsService.getMappingReader().search(filter);
   }
 
-  @Override
-  public List<MappingEntity> findAllMappings(final MappingQuery query) {
+  public List<MappingEntity> searchMappings(final MappingQuery query) {
     LOG.debug("[RDBMS Search Client] Search for all mappings: {}", query);
 
     // search without size boundary to find all items
@@ -223,8 +221,7 @@ public class RdbmsSearchClient implements SearchClientsProxy {
     throw new UnsupportedOperationException("Group member search not implemented on RDBMS");
   }
 
-  @Override
-  public List<GroupEntity> findAllGroups(final GroupQuery query) {
+  public List<GroupEntity> searchGroups(final GroupQuery query) {
     LOG.debug("[RDBMS Search Client] Search for all groups: {}", query);
 
     // search without size boundary to find all items
@@ -266,8 +263,7 @@ public class RdbmsSearchClient implements SearchClientsProxy {
     throw new UnsupportedOperationException("Role member search not implemented on RDBMS");
   }
 
-  @Override
-  public List<RoleEntity> findAllRoles(final RoleQuery filter) {
+  public List<RoleEntity> searchRoles(final RoleQuery filter) {
     return List.of();
   }
 
@@ -283,8 +279,7 @@ public class RdbmsSearchClient implements SearchClientsProxy {
     throw new UnsupportedOperationException("Tenant member search not implemented on RDBMS");
   }
 
-  @Override
-  public List<TenantEntity> findAllTenants(final TenantQuery query) {
+  public List<TenantEntity> searchTenants(final TenantQuery query) {
     LOG.debug("[RDBMS Search Client] Search for all tenants: {}", query);
 
     // search without size boundary to find all items

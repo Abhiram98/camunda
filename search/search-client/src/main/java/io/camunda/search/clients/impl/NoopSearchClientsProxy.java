@@ -68,8 +68,7 @@ public class NoopSearchClientsProxy implements SearchClientsProxy {
     return SearchQueryResult.empty();
   }
 
-  @Override
-  public List<AuthorizationEntity> findAllAuthorizations(final AuthorizationQuery filter) {
+  public List<AuthorizationEntity> searchAuthorizations(final AuthorizationQuery filter) {
     return List.of();
   }
 
@@ -124,8 +123,7 @@ public class NoopSearchClientsProxy implements SearchClientsProxy {
     return SearchQueryResult.empty();
   }
 
-  @Override
-  public List<GroupEntity> findAllGroups(final GroupQuery query) {
+  public List<GroupEntity> searchGroups(final GroupQuery query) {
     return List.of();
   }
 
@@ -139,8 +137,7 @@ public class NoopSearchClientsProxy implements SearchClientsProxy {
     return SearchQueryResult.empty();
   }
 
-  @Override
-  public List<MappingEntity> findAllMappings(final MappingQuery query) {
+  public List<MappingEntity> searchMappings(final MappingQuery query) {
     return List.of();
   }
 
@@ -178,8 +175,7 @@ public class NoopSearchClientsProxy implements SearchClientsProxy {
     return SearchQueryResult.empty();
   }
 
-  @Override
-  public List<RoleEntity> findAllRoles(final RoleQuery filter) {
+  public List<RoleEntity> searchRoles(final RoleQuery filter) {
     return List.of();
   }
 
@@ -193,8 +189,7 @@ public class NoopSearchClientsProxy implements SearchClientsProxy {
     return SearchQueryResult.empty();
   }
 
-  @Override
-  public List<TenantEntity> findAllTenants(final TenantQuery query) {
+  public List<TenantEntity> searchTenants(final TenantQuery query) {
     return List.of();
   }
 
@@ -214,7 +209,7 @@ public class NoopSearchClientsProxy implements SearchClientsProxy {
   }
 
   @Override
-  public List<SequenceFlowEntity> findAllSequenceFlows(final SequenceFlowQuery filter) {
+  public List<SequenceFlowEntity> searchSequenceFlows(final SequenceFlowQuery filter) {
     return List.of();
   }
 
