@@ -84,10 +84,10 @@ public interface IncidentUpdateRepository extends AutoCloseable {
    * Returns whether the process instance was explicitly deleted, meaning a user executed an
    * operation to explicitly delete it from the historic data.
    *
-   * @param processInstanceKey the key of the process instance
+   * @param processInstancesKey the key of the process instance
    * @return true if it was deleted, false otherwise
    */
-  CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey);
+  CompletionStage<Boolean> wereProcessInstancesDeleted(final long processInstancesKey);
 
   /**
    * Executes the given bulk update against the underlying document store, waiting until the
@@ -204,7 +204,7 @@ public interface IncidentUpdateRepository extends AutoCloseable {
     }
 
     @Override
-    public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey) {
+    public CompletionStage<Boolean> wereProcessInstancesDeleted(final long processInstancesKey) {
       return CompletableFuture.completedFuture(false);
     }
 
