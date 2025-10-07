@@ -104,7 +104,7 @@ public final class ProcessDefinitionQueryTransformerTest extends AbstractTransfo
   @ParameterizedTest
   @ValueSource(booleans = {true, false})
   public void shouldQueryByHasFormKey(final boolean hasFormKey) {
-    final var filter = FilterBuilders.processDefinition(f -> f.hasFormKey(hasFormKey));
+    final var filter = FilterBuilders.processDefinition(f -> f.hasStartForm(hasFormKey));
 
     // when
     final var searchRequest = transformQuery(filter);
