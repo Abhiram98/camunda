@@ -152,7 +152,7 @@ abstract class BatchOperationUpdateRepositoryIT {
       final var repository = createRepository();
 
       // when
-      final var documents = repository.getNotFinishedBatchOperations();
+      final var documents = repository.getNotBatchOperations();
 
       // then
       assertThat(documents)
@@ -170,7 +170,7 @@ abstract class BatchOperationUpdateRepositoryIT {
       final var expected = createBatchOperationEntity("3", null);
 
       // when
-      final var documents = repository.getNotFinishedBatchOperations();
+      final var documents = repository.getNotBatchOperations();
 
       // then
       assertThat(documents)

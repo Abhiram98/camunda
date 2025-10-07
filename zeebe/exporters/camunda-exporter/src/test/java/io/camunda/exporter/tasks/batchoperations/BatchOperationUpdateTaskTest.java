@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BatchOperationUpdateTaskTest {
+
   private static final Logger LOGGER = LoggerFactory.getLogger(BatchOperationUpdateTaskTest.class);
   private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(5);
   private final TestRepository repository = Mockito.spy(new TestRepository());
@@ -76,17 +77,18 @@ public class BatchOperationUpdateTaskTest {
   }
 
   private static final class TestRepository implements BatchOperationUpdateRepository {
+
     List<String> batchOperationIds = new ArrayList<>();
     List<OperationsAggData> finishedOperationsCount = new ArrayList<>();
     private List<DocumentUpdate> documentUpdates = new ArrayList<>();
 
     @Override
-    public CompletionStage<Collection<String>> getNotFinishedBatchOperations() {
+    public CompletionStage<Collection<String>> getNotBatchOperations() {
       return CompletableFuture.completedFuture(batchOperationIds);
     }
 
     @Override
-    public CompletionStage<List<OperationsAggData>> getFinishedOperationsCount(
+    public CompletionStage<List<OperationsAggData>> getOperationsCount(
         final Collection<String> batchOperationIds) {
       return CompletableFuture.completedFuture(finishedOperationsCount);
     }
@@ -98,6 +100,7 @@ public class BatchOperationUpdateTaskTest {
     }
 
     @Override
-    public void close() throws Exception {}
+    public void close() throws Exception {
+    }
   }
 }

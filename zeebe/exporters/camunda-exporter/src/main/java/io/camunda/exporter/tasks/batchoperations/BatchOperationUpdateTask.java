@@ -38,7 +38,7 @@ public class BatchOperationUpdateTask implements BackgroundTask {
   @Override
   public CompletionStage<Integer> execute() {
     return batchOperationUpdateRepository
-        .getNotFinishedBatchOperations()
+        .getNotBatchOperations()
         .thenComposeAsync(this::updateBatchOperations, executor);
   }
 
@@ -54,7 +54,7 @@ public class BatchOperationUpdateTask implements BackgroundTask {
     }
 
     return batchOperationUpdateRepository
-        .getFinishedOperationsCount(batchOperationIds)
+        .getOperationsCount(batchOperationIds)
         .thenApplyAsync(this::collectDocumentUpdates, executor)
         .thenComposeAsync(batchOperationUpdateRepository::bulkUpdate, executor)
         .thenApplyAsync(
@@ -65,7 +65,7 @@ public class BatchOperationUpdateTask implements BackgroundTask {
   private List<DocumentUpdate> collectDocumentUpdates(
       final List<OperationsAggData> finishedSingleOperationsCount) {
     return finishedSingleOperationsCount.stream()
-        .map(d -> new DocumentUpdate(d.batchOperationId(), d.finishedOperationsCount()))
+        .map(d -> new DocumentUpdate(d.batchOperationId(), d.operationsCount()))
         .toList();
   }
 }
