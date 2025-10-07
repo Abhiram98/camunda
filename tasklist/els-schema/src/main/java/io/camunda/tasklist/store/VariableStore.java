@@ -155,7 +155,7 @@ public interface VariableStore {
         final TaskEntity taskEntity, final Set<String> fieldNames) {
       return new GetVariablesRequest()
           .setTaskId(String.valueOf(taskEntity.getKey()))
-          .setFlowNodeInstanceId(taskEntity.getFlowNodeInstanceId())
+          .setFlowNodeInstanceId(taskEntity.getInstanceId())
           .setState(taskEntity.getState())
           .setProcessInstanceId(taskEntity.getProcessInstanceId())
           .setFieldNames(fieldNames);
@@ -164,7 +164,7 @@ public interface VariableStore {
     public static GetVariablesRequest createFrom(final TaskEntity taskEntity) {
       return new GetVariablesRequest()
           .setTaskId(String.valueOf(taskEntity.getKey()))
-          .setFlowNodeInstanceId(taskEntity.getFlowNodeInstanceId())
+          .setFlowNodeInstanceId(taskEntity.getInstanceId())
           .setState(taskEntity.getState())
           .setProcessInstanceId(taskEntity.getProcessInstanceId());
     }
