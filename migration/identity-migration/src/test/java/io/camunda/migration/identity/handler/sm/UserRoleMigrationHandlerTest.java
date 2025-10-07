@@ -20,7 +20,7 @@ import io.camunda.migration.identity.dto.Role;
 import io.camunda.security.auth.CamundaAuthentication;
 import io.camunda.service.RoleServices;
 import io.camunda.service.RoleServices.RoleMemberRequest;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.dto.BrokerRejection;
 import io.camunda.zeebe.protocol.record.RejectionType;
 import io.camunda.zeebe.protocol.record.intent.RoleIntent;
@@ -109,7 +109,7 @@ public class UserRoleMigrationHandlerTest {
     when(roleServices.addMember(any()))
         .thenReturn(
             CompletableFuture.failedFuture(
-                new BrokerRejectionException(
+                new ServiceRejectionException(
                     new BrokerRejection(
                         RoleIntent.ADD_ENTITY,
                         -1,

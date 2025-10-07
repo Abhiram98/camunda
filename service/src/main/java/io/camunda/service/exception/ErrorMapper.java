@@ -20,7 +20,7 @@ import io.camunda.document.api.DocumentError.StoreDoesNotExist;
 import io.camunda.search.exception.CamundaSearchException;
 import io.camunda.security.auth.Authorization;
 import io.camunda.zeebe.broker.client.api.BrokerErrorException;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.NoTopologyAvailableException;
 import io.camunda.zeebe.broker.client.api.PartitionInactiveException;
 import io.camunda.zeebe.broker.client.api.PartitionNotFoundException;
@@ -111,7 +111,7 @@ public class ErrorMapper {
             mapBrokerErrorToServiceError(rootError, brokerError.getError(), logger);
         builder.mergeFrom(serviceError);
       }
-      case final BrokerRejectionException rejection -> {
+      case final ServiceRejectionException rejection -> {
         final ServiceError serviceError = mapRejectionToServiceError(rejection.getRejection());
         builder.mergeFrom(serviceError);
         logger.trace("Expected to handle request, but the broker rejected it", rootError);

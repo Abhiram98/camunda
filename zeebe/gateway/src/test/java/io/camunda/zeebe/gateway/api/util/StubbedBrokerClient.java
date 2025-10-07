@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.camunda.zeebe.broker.client.api.BrokerClient;
 import io.camunda.zeebe.broker.client.api.BrokerErrorException;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.BrokerResponseConsumer;
 import io.camunda.zeebe.broker.client.api.BrokerResponseException;
 import io.camunda.zeebe.broker.client.api.BrokerTopologyManager;
@@ -99,7 +99,7 @@ public final class StubbedBrokerClient implements BrokerClient {
         if (response.isResponse()) {
           responseConsumer.accept(response.getKey(), response.getResponse());
         } else if (response.isRejection()) {
-          throwableConsumer.accept(new BrokerRejectionException(response.getRejection()));
+          throwableConsumer.accept(new ServiceRejectionException(response.getRejection()));
         } else if (response.isError()) {
           throwableConsumer.accept(new BrokerErrorException(response.getError()));
         } else {

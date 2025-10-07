@@ -11,7 +11,7 @@ import io.camunda.zeebe.broker.client.api.BrokerClientMetricsDoc.AdditionalError
 import io.camunda.zeebe.broker.client.api.BrokerClientRequestMetrics;
 import io.camunda.zeebe.broker.client.api.BrokerClusterState;
 import io.camunda.zeebe.broker.client.api.BrokerErrorException;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.BrokerResponseException;
 import io.camunda.zeebe.broker.client.api.BrokerTopologyManager;
 import io.camunda.zeebe.broker.client.api.IllegalBrokerResponseException;
@@ -196,7 +196,7 @@ final class BrokerRequestManager extends Actor {
         responseFuture.complete(response);
         return RequestResult.processed();
       } else if (response.isRejection()) {
-        responseFuture.completeExceptionally(new BrokerRejectionException(response.getRejection()));
+        responseFuture.completeExceptionally(new ServiceRejectionException(response.getRejection()));
         return RequestResult.processed();
       } else if (response.isError()) {
         responseFuture.completeExceptionally(new BrokerErrorException(response.getError()));

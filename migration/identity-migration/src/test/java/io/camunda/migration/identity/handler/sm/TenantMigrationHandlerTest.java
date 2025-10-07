@@ -24,7 +24,7 @@ import io.camunda.security.auth.CamundaAuthentication;
 import io.camunda.service.TenantServices;
 import io.camunda.service.TenantServices.TenantDTO;
 import io.camunda.service.TenantServices.TenantMemberRequest;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.dto.BrokerRejection;
 import io.camunda.zeebe.protocol.record.RejectionType;
 import io.camunda.zeebe.protocol.record.intent.GroupIntent;
@@ -162,7 +162,7 @@ public class TenantMigrationHandlerTest {
     when(tenantServices.createTenant(any(TenantDTO.class)))
         .thenReturn(
             CompletableFuture.failedFuture(
-                new BrokerRejectionException(
+                new ServiceRejectionException(
                     new BrokerRejection(
                         GroupIntent.CREATE,
                         -1,
@@ -171,7 +171,7 @@ public class TenantMigrationHandlerTest {
     when(tenantServices.addMember(any(TenantMemberRequest.class)))
         .thenReturn(
             CompletableFuture.failedFuture(
-                new BrokerRejectionException(
+                new ServiceRejectionException(
                     new BrokerRejection(
                         GroupIntent.ADD_ENTITY,
                         -1,

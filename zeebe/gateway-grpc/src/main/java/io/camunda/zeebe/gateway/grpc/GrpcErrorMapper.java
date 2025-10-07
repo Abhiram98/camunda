@@ -14,7 +14,7 @@ import com.google.rpc.Status;
 import com.google.rpc.Status.Builder;
 import io.atomix.cluster.messaging.MessagingException;
 import io.camunda.zeebe.broker.client.api.BrokerErrorException;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.NoTopologyAvailableException;
 import io.camunda.zeebe.broker.client.api.PartitionInactiveException;
 import io.camunda.zeebe.broker.client.api.PartitionNotFoundException;
@@ -60,7 +60,7 @@ public final class GrpcErrorMapper {
         final Status status = mapBrokerErrorToStatus(rootError, brokerError.getError(), logger);
         builder.mergeFrom(status);
       }
-      case final BrokerRejectionException rejection -> {
+      case final ServiceRejectionException rejection -> {
         final Status status = mapRejectionToStatus(rejection.getRejection());
         builder.mergeFrom(status);
         logger.trace("Expected to handle gRPC request, but the broker rejected it", rootError);

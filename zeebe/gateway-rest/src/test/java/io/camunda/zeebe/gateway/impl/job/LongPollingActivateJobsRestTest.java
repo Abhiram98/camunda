@@ -21,7 +21,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import io.camunda.service.JobServices.ActivateJobsRequest;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.dto.BrokerError;
 import io.camunda.zeebe.broker.client.api.dto.BrokerErrorResponse;
 import io.camunda.zeebe.broker.client.api.dto.BrokerRejection;
@@ -721,7 +721,7 @@ public class LongPollingActivateJobsRestTest {
     // then
     final ArgumentCaptor<Throwable> throwableCaptor = ArgumentCaptor.forClass(Throwable.class);
     verify(request.getResponseObserver(), times(1)).onError(throwableCaptor.capture());
-    assertThat(throwableCaptor.getValue()).isInstanceOf(BrokerRejectionException.class);
+    assertThat(throwableCaptor.getValue()).isInstanceOf(ServiceRejectionException.class);
 
     assertThat(request.hasScheduledTimer()).isFalse();
   }

@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH under
  * one or more contributor license agreements. See the NOTICE file distributed
  * with this work for additional information regarding copyright ownership.
@@ -10,7 +10,7 @@ package io.camunda.tasklist.webapp.util;
 import io.camunda.client.api.command.ClientException;
 import io.camunda.client.api.command.ProblemException;
 import io.camunda.service.exception.CamundaBrokerException;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.protocol.record.RejectionType;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeoutException;
@@ -27,12 +27,12 @@ public abstract class ErrorHandlingUtils {
   public static final String TIMEOUT_ERROR_MESSAGE =
       "The request timed out while processing the task.";
 
-  public static String getErrorMessageFromBrokerException(final CamundaBrokerException exception) {
-    if (exception.getCause() instanceof final BrokerRejectionException brokerRejectionException
-        && brokerRejectionException.getRejection().type().equals(RejectionType.INVALID_STATE)) {
+  public static String getErrorMessageFromServiceException(final CamundaBrokerException exception) {
+    if (exception.getCause() instanceof final ServiceRejectionException serviceRejectionException
+        && serviceRejectionException.getRejection().type().equals(RejectionType.INVALID_STATE)) {
       return createErrorMessage(
-          brokerRejectionException.getRejection().type().name(),
-          brokerRejectionException.getRejection().reason());
+          serviceRejectionException.getRejection().type().name(),
+          serviceRejectionException.getRejection().reason());
     } else if (exception.getCause() instanceof TimeoutException) {
       return createErrorMessage(TASK_PROCESSING_TIMEOUT, TIMEOUT_ERROR_MESSAGE);
     }
@@ -54,10 +54,10 @@ public abstract class ErrorHandlingUtils {
   public static String createErrorMessage(final String title, final String detail) {
     return String.format(
         """
-      { "title": "%s",
-        "detail": "%s"
-      }
-      """,
+            { "title": "%s",
+              "detail": "%s"
+            }
+            """,
         title, detail);
   }
 }

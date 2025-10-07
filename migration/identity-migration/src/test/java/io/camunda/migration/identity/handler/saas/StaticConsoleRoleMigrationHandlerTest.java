@@ -22,7 +22,7 @@ import io.camunda.security.auth.CamundaAuthentication;
 import io.camunda.service.RoleServices;
 import io.camunda.service.RoleServices.CreateRoleRequest;
 import io.camunda.service.RoleServices.RoleMemberRequest;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.dto.BrokerRejection;
 import io.camunda.zeebe.protocol.impl.record.value.authorization.RoleRecord;
 import io.camunda.zeebe.protocol.record.RejectionType;
@@ -81,7 +81,7 @@ public class StaticConsoleRoleMigrationHandlerTest {
     doReturn(CompletableFuture.completedFuture(null))
         .doReturn(
             CompletableFuture.failedFuture(
-                new BrokerRejectionException(
+                new ServiceRejectionException(
                     new BrokerRejection(
                         GroupIntent.CREATE,
                         -1,

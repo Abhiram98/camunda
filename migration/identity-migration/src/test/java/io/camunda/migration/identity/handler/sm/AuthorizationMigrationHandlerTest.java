@@ -20,7 +20,7 @@ import io.camunda.migration.identity.dto.Authorization;
 import io.camunda.security.auth.CamundaAuthentication;
 import io.camunda.service.AuthorizationServices;
 import io.camunda.service.AuthorizationServices.CreateAuthorizationRequest;
-import io.camunda.zeebe.broker.client.api.BrokerRejectionException;
+import io.camunda.zeebe.broker.client.api.ServiceRejectionException;
 import io.camunda.zeebe.broker.client.api.dto.BrokerRejection;
 import io.camunda.zeebe.protocol.impl.record.value.authorization.AuthorizationRecord;
 import io.camunda.zeebe.protocol.record.RejectionType;
@@ -161,7 +161,7 @@ final class AuthorizationMigrationHandlerTest {
     when(authorizationServices.createAuthorization(any(CreateAuthorizationRequest.class)))
         .thenReturn(
             CompletableFuture.failedFuture(
-                new BrokerRejectionException(
+                new ServiceRejectionException(
                     new BrokerRejection(
                         GroupIntent.CREATE,
                         -1,
