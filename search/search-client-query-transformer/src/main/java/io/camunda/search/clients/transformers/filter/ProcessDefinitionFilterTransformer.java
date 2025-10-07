@@ -17,7 +17,6 @@ import static io.camunda.search.clients.query.SearchQueryBuilders.term;
 import static io.camunda.webapps.schema.descriptors.IndexDescriptor.TENANT_ID;
 import static io.camunda.webapps.schema.descriptors.index.ProcessIndex.BPMN_PROCESS_ID;
 import static io.camunda.webapps.schema.descriptors.index.ProcessIndex.FORM_ID;
-import static io.camunda.webapps.schema.descriptors.index.ProcessIndex.FORM_KEY;
 import static io.camunda.webapps.schema.descriptors.index.ProcessIndex.KEY;
 import static io.camunda.webapps.schema.descriptors.index.ProcessIndex.NAME;
 import static io.camunda.webapps.schema.descriptors.index.ProcessIndex.RESOURCE_NAME;
@@ -25,7 +24,6 @@ import static io.camunda.webapps.schema.descriptors.index.ProcessIndex.VERSION;
 import static io.camunda.webapps.schema.descriptors.index.ProcessIndex.VERSION_TAG;
 import static java.util.Optional.ofNullable;
 
-import io.camunda.search.clients.query.SearchBoolQuery;
 import io.camunda.search.clients.query.SearchQuery;
 import io.camunda.search.clients.query.SearchQueryBuilders;
 import io.camunda.search.filter.Operation;
@@ -53,7 +51,7 @@ public class ProcessDefinitionFilterTransformer
     ofNullable(intTerms(VERSION, filter.versions())).ifPresent(queries::add);
     ofNullable(stringTerms(VERSION_TAG, filter.versionTags())).ifPresent(queries::add);
     ofNullable(stringTerms(TENANT_ID, filter.tenantIds())).ifPresent(queries::add);
-    ofNullable(getFormKeyQuery(filter.hasFormKey())).ifPresent(queries::add);
+    ofNullable(getFormKeyQuery(filter.hasStartForm())).ifPresent(queries::add);
     return and(queries);
   }
 
