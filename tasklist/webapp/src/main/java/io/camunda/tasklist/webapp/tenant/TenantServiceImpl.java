@@ -39,26 +39,26 @@ public class TenantServiceImpl implements TenantService {
   }
 
   @Override
-  public AuthenticatedTenants getAuthenticatedTenants() {
+  public TenantAccess getAuthenticatedTenants() {
     if (!isMultiTenancyEnabled() || RequestContextHolder.getRequestAttributes() == null) {
       // If the query comes from the source without request context OR
       // Multitenancy is not enabled, return all tenants
-      return AuthenticatedTenants.allTenants();
+      return TenantAccess.allTenants();
     }
 
     final List<String> tenants = tenantsIds();
 
     if (CollectionUtils.isNotEmpty(tenants)) {
-      return AuthenticatedTenants.assignedTenants(tenants);
+      return TenantAccess.assignedTenants(tenants);
     } else {
-      return AuthenticatedTenants.noTenantsAssigned();
+      return TenantAccess.noTenantsAssigned();
     }
   }
 
   @Override
   public boolean isTenantValid(final String tenantId) {
     if (isMultiTenancyEnabled()) {
-      return getAuthenticatedTenants().contains(tenantId);
+      return getTenantAccess().contains(tenantId);
     } else {
       return true;
     }

@@ -30,6 +30,7 @@ import io.camunda.tasklist.webapp.rest.exception.NotFoundApiException;
 import io.camunda.tasklist.webapp.security.TasklistURIs;
 import io.camunda.tasklist.webapp.service.ProcessService;
 import io.camunda.tasklist.webapp.tenant.TenantService;
+import io.camunda.tasklist.webapp.tenant.TenantService.TenantAccess;
 import io.camunda.webapps.schema.entities.ProcessEntity;
 import io.camunda.webapps.schema.entities.form.FormEntity;
 import java.nio.charset.StandardCharsets;
@@ -423,11 +424,11 @@ public class ProcessExternalControllerTest {
     final List<String> tenantIds = new ArrayList<String>();
     tenantIds.add("TenantB");
     tenantIds.add("TenantC");
-    final TenantService.AuthenticatedTenants authenticatedTenants =
-        TenantService.AuthenticatedTenants.assignedTenants(tenantIds);
+    final TenantAccess authenticatedTenants =
+        TenantAccess.assignedTenants(tenantIds);
 
     when(tenantService.isMultiTenancyEnabled()).thenReturn(true);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getTenantAccess()).thenReturn(authenticatedTenants);
 
     Assertions.assertThatThrownBy(() -> instance.startProcess(bpmnProcessId, tenantId, null))
         .isInstanceOf(InvalidRequestException.class);

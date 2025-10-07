@@ -17,13 +17,13 @@ public interface TenantService {
 
   List<String> tenantsIds();
 
-  AuthenticatedTenants getAuthenticatedTenants();
+  TenantAccess getTenantAccess();
 
   boolean isTenantValid(final String tenantId);
 
   boolean isMultiTenancyEnabled();
 
-  record AuthenticatedTenants(TenantAccessType tenantAccessType, List<String> ids) {
+  record TenantAccess(TenantAccessType tenantAccessType, List<String> ids) {
 
     public TenantAccessType getTenantAccessType() {
       return tenantAccessType;
@@ -37,16 +37,16 @@ public interface TenantService {
       return ids.contains(tenantId);
     }
 
-    public static AuthenticatedTenants allTenants() {
-      return new AuthenticatedTenants(TenantAccessType.TENANT_ACCESS_ALL, emptyList());
+    public static TenantAccess allTenants() {
+      return new TenantAccess(TenantAccessType.TENANT_ACCESS_ALL, emptyList());
     }
 
-    public static AuthenticatedTenants noTenantsAssigned() {
-      return new AuthenticatedTenants(TenantAccessType.TENANT_ACCESS_NONE, emptyList());
+    public static TenantAccess noTenantsAssigned() {
+      return new TenantAccess(TenantAccessType.TENANT_ACCESS_NONE, emptyList());
     }
 
-    public static AuthenticatedTenants assignedTenants(final List<String> tenants) {
-      return new AuthenticatedTenants(TenantAccessType.TENANT_ACCESS_ASSIGNED, tenants);
+    public static TenantAccess assignedTenants(final List<String> tenants) {
+      return new TenantAccess(TenantAccessType.TENANT_ACCESS_ASSIGNED, tenants);
     }
   }
 

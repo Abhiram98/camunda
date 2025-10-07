@@ -23,6 +23,7 @@ import io.camunda.tasklist.webapp.rest.exception.ForbiddenActionException;
 import io.camunda.tasklist.webapp.rest.exception.InvalidRequestException;
 import io.camunda.tasklist.webapp.rest.exception.NotFoundApiException;
 import io.camunda.tasklist.webapp.tenant.TenantService;
+import io.camunda.tasklist.webapp.tenant.TenantService.TenantAccess;
 import io.camunda.tasklist.zeebe.TasklistServicesAdapter;
 import io.camunda.zeebe.protocol.impl.record.value.processinstance.ProcessInstanceCreationRecord;
 import java.util.ArrayList;
@@ -54,11 +55,11 @@ public class ProcessServiceTest {
     final List<String> tenantIds = new ArrayList<String>();
     tenantIds.add("TenantB");
     tenantIds.add("TenantC");
-    final TenantService.AuthenticatedTenants authenticatedTenants =
-        TenantService.AuthenticatedTenants.assignedTenants(tenantIds);
+    final TenantAccess authenticatedTenants =
+        TenantAccess.assignedTenants(tenantIds);
 
     when(tenantService.isMultiTenancyEnabled()).thenReturn(true);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getTenantAccess()).thenReturn(authenticatedTenants);
 
     assertThatThrownBy(
             () -> instance.startProcessInstance(processDefinitionKey, variableInputDTOList, ""))

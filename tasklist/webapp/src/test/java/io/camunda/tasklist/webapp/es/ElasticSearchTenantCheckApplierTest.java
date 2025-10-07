@@ -15,6 +15,7 @@ import static org.mockito.Mockito.when;
 import io.camunda.tasklist.util.ElasticsearchUtil;
 import io.camunda.tasklist.webapp.es.tenant.ElasticsearchTenantCheckApplier;
 import io.camunda.tasklist.webapp.tenant.TenantService;
+import io.camunda.tasklist.webapp.tenant.TenantService.TenantAccess;
 import java.util.Collections;
 import java.util.List;
 import org.elasticsearch.action.search.SearchRequest;
@@ -36,7 +37,7 @@ public class ElasticSearchTenantCheckApplierTest {
     // given
     final SearchRequest searchRequest = new SearchRequest("TaskTest");
     searchRequest.source().query(termsQuery("test", "1"));
-    final TenantService.AuthenticatedTenants authenticatedTenants = mock();
+    final TenantAccess authenticatedTenants = mock();
     final List<String> authorizedTenant = List.of("TenantA", "TenantB");
     when(authenticatedTenants.getTenantIds()).thenReturn(authorizedTenant);
     final String queryResult =
@@ -68,7 +69,7 @@ public class ElasticSearchTenantCheckApplierTest {
 
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ASSIGNED);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getTenantAccess()).thenReturn(authenticatedTenants);
 
     // when
     instance.apply(searchRequest);
@@ -82,7 +83,7 @@ public class ElasticSearchTenantCheckApplierTest {
     // given
     final SearchRequest searchRequest = new SearchRequest("TaskTest");
     searchRequest.source().query(termsQuery("test", "1"));
-    final TenantService.AuthenticatedTenants authenticatedTenants = mock();
+    final TenantAccess authenticatedTenants = mock();
     final List<String> tenantsProvidedByUser = List.of("TenantA", "TenantC");
     final List<String> authorizedTenant = List.of("TenantA", "TenantB");
     when(authenticatedTenants.getTenantIds()).thenReturn(authorizedTenant);
@@ -114,7 +115,7 @@ public class ElasticSearchTenantCheckApplierTest {
 
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ASSIGNED);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getTenantAccess()).thenReturn(authenticatedTenants);
 
     // when
     instance.apply(searchRequest, tenantsProvidedByUser);
@@ -128,14 +129,14 @@ public class ElasticSearchTenantCheckApplierTest {
     // given
     final SearchRequest searchRequest = new SearchRequest("TaskTest");
     searchRequest.source().query(termsQuery("test", "1"));
-    final TenantService.AuthenticatedTenants authenticatedTenants = mock();
+    final TenantAccess authenticatedTenants = mock();
     final List<String> tenantsProvidedByUser = List.of("UnknownTenant");
     final List<String> authorizedTenant = List.of("TenantA", "TenantB");
     when(authenticatedTenants.getTenantIds()).thenReturn(authorizedTenant);
 
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ASSIGNED);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getTenantAccess()).thenReturn(authenticatedTenants);
 
     // when
     instance.apply(searchRequest, tenantsProvidedByUser);
@@ -150,8 +151,8 @@ public class ElasticSearchTenantCheckApplierTest {
     // given
     final SearchRequest searchRequest = new SearchRequest("TaskTest");
     searchRequest.source().query(termsQuery("test", "1"));
-    final TenantService.AuthenticatedTenants authenticatedTenants = mock();
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    final TenantAccess authenticatedTenants = mock();
+    when(tenantService.getTenantAccess()).thenReturn(authenticatedTenants);
     when(authenticatedTenants.getTenantIds()).thenReturn(Collections.emptyList());
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_NONE);
@@ -169,11 +170,11 @@ public class ElasticSearchTenantCheckApplierTest {
     // given
     final SearchRequest searchRequest = new SearchRequest("TaskTest");
     searchRequest.source().query(termsQuery("test", "1"));
-    final TenantService.AuthenticatedTenants authenticatedTenants = mock();
+    final TenantAccess authenticatedTenants = mock();
     when(authenticatedTenants.getTenantIds()).thenReturn(Collections.emptyList());
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ALL);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getTenantAccess()).thenReturn(authenticatedTenants);
     final String expectedQueryResult =
         "{\n"
             + "  \"terms\" : {\n"
