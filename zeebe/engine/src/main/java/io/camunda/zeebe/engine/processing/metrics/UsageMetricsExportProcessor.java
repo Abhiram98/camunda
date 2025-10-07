@@ -46,13 +46,13 @@ public class UsageMetricsExportProcessor implements TypedRecordProcessor<UsageMe
     this.keyGenerator = keyGenerator;
   }
 
-  private List<UsageMetricRecord> divideRecord(final UsageMetricRecord record) {
-    final var size = record.getValues().size();
+  private List<UsageMetricRecord> divideRecord(final UsageMetricRecord usageMetricRecord) {
+    final var size = usageMetricRecord.getValues().size();
     final int halfCapacity = (int) Math.ceil(size / 2.0f);
     final var values1 = new HashMap<String, Long>(halfCapacity);
     final var values2 = new HashMap<String, Long>(halfCapacity);
 
-    record
+    usageMetricRecord
         .getValues()
         .forEach(
             (tenantId, value) -> {
@@ -63,37 +63,37 @@ public class UsageMetricsExportProcessor implements TypedRecordProcessor<UsageMe
               }
             });
 
-    final var record1 =
-        UsageMetricRecord.copyWithoutValues(record)
+    final var usageMetricRecord1 =
+        UsageMetricRecord.copyWithoutValues(usageMetricRecord)
             .setValues(new UnsafeBuffer(MsgPackConverter.convertToMsgPack(values1)));
-    final var record2 =
-        UsageMetricRecord.copyWithoutValues(record)
+    final var usageMetricRecord2 =
+        UsageMetricRecord.copyWithoutValues(usageMetricRecord)
             .setValues(new UnsafeBuffer(MsgPackConverter.convertToMsgPack(values2)));
 
-    final var result = new ArrayList<>(checkRecordLength(record1));
-    result.addAll(checkRecordLength(record2));
+    final var result = new ArrayList<>(checkRecordLength(usageMetricRecord1));
+    result.addAll(checkRecordLength(usageMetricRecord2));
     return result;
   }
 
-  private List<UsageMetricRecord> checkRecordLength(final UsageMetricRecord record) {
-    if (!stateWriter.canWriteEventOfLength(record.getLength())) {
-      return divideRecord(record);
+  private List<UsageMetricRecord> checkRecordLength(final UsageMetricRecord usageMetricRecord) {
+    if (!stateWriter.canWriteEventOfLength(usageMetricRecord.getLength())) {
+      return divideRecord(usageMetricRecord);
     }
-    return List.of(record);
+    return List.of(usageMetricRecord);
   }
 
   @Override
-  public void processRecord(final TypedRecord<UsageMetricRecord> record) {
+  public void processRecord(final TypedRecord<UsageMetricRecord> usageMetricRecord) {
 
-    final UsageMetricRecord eventRecord =
+    final UsageMetricRecord eventUsageMetricRecord =
         new UsageMetricRecord()
             .setIntervalType(IntervalType.ACTIVE)
             .setEventType(EventType.NONE)
-            .setResetTime(record.getTimestamp());
+            .setResetTime(usageMetricRecord.getTimestamp());
 
     final var bucket = usageMetricState.getActiveBucket();
     if (bucket == null) {
-      appendFollowUpEvent(eventRecord);
+      appendFollowUpEvent(eventUsageMetricRecord);
       return;
     }
 
@@ -102,29 +102,33 @@ public class UsageMetricsExportProcessor implements TypedRecordProcessor<UsageMe
 
     if (!isRPIMapEmpty || !isEDIMapEmpty) {
       processMetricType(
-          bucket, eventRecord, EventType.RPI, isRPIMapEmpty, bucket.getTenantRPIMapValue());
+          bucket, eventUsageMetricRecord, EventType.RPI, isRPIMapEmpty, bucket.getTenantRPIMapValue());
       processMetricType(
-          bucket, eventRecord, EventType.EDI, isEDIMapEmpty, bucket.getTenantEDIMapValue());
+          bucket, eventUsageMetricRecord, EventType.EDI, isEDIMapEmpty, bucket.getTenantEDIMapValue());
     } else {
-      appendFollowUpEvent(eventRecord);
+      appendFollowUpEvent(eventUsageMetricRecord);
     }
   }
 
-  /** Processes a specific metric type and appends the resulting records. */
+  /**
+   * Processes a specific metric type and appends the resulting records.
+   */
   private void processMetricType(
       final PersistedUsageMetrics bucket,
-      final UsageMetricRecord baseRecord,
+      final UsageMetricRecord baseUsageMetricRecord,
       final EventType eventType,
       final boolean valuesMapIsEmpty,
       final DirectBuffer valuesBuffer) {
     if (!valuesMapIsEmpty) {
-      final UsageMetricRecord clonedRecord = initializeEventRecord(baseRecord);
-      enhanceEventRecord(clonedRecord, bucket, eventType, valuesBuffer);
-      checkRecordLength(clonedRecord).forEach(this::appendFollowUpEvent);
+      final UsageMetricRecord clonedUsageMetricRecord = initializeEventRecord(baseUsageMetricRecord);
+      enhanceEventRecord(clonedUsageMetricRecord, bucket, eventType, valuesBuffer);
+      checkRecordLength(clonedUsageMetricRecord).forEach(this::appendFollowUpEvent);
     }
   }
 
-  /** Creates a UsageMetricRecord with original properties. */
+  /**
+   * Creates a UsageMetricRecord with original properties.
+   */
   private UsageMetricRecord initializeEventRecord(final UsageMetricRecord original) {
     return new UsageMetricRecord()
         .setIntervalType(original.getIntervalType())
@@ -132,7 +136,9 @@ public class UsageMetricsExportProcessor implements TypedRecordProcessor<UsageMe
         .setResetTime(original.getResetTime());
   }
 
-  /** Composes the event record with additional information. */
+  /**
+   * Composes the event record with additional information.
+   */
   private void enhanceEventRecord(
       final UsageMetricRecord usageMetricRecord,
       final PersistedUsageMetrics bucket,
@@ -145,12 +151,12 @@ public class UsageMetricsExportProcessor implements TypedRecordProcessor<UsageMe
         .setValues(valuesBuffer);
   }
 
-  private void appendFollowUpEvent(final UsageMetricRecord eventRecord) {
+  private void appendFollowUpEvent(final UsageMetricRecord eventUsageMetricRecord) {
     LOG.debug(
         "Creating usage metric EXPORTED event for {} {}",
-        eventRecord.getStartTime(),
-        eventRecord.getEventType());
+        eventUsageMetricRecord.getStartTime(),
+        eventUsageMetricRecord.getEventType());
     stateWriter.appendFollowUpEvent(
-        keyGenerator.nextKey(), UsageMetricIntent.EXPORTED, eventRecord);
+        keyGenerator.nextKey(), UsageMetricIntent.EXPORTED, eventUsageMetricRecord);
   }
 }
