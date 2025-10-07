@@ -17,17 +17,17 @@ package io.camunda.client.impl.search.response;
 
 import io.camunda.client.api.search.response.SearchResponsePage;
 
-public class SearchResponsePageImpl implements SearchResponsePage {
+public class StartResponsePageImpl implements SearchResponsePage {
 
   private final long totalItems;
-  private final String searchBeforeCursor;
-  private final String searchAfterCursor;
+  private final String startCursor;
+  private final String startAfterCursor;
 
-  public SearchResponsePageImpl(
-      final long totalItems, final String searchBeforeCursor, final String searchAfterCursor) {
+  public StartResponsePageImpl(
+      final long totalItems, final String startCursor, final String startAfterCursor) {
     this.totalItems = totalItems;
-    this.searchBeforeCursor = searchBeforeCursor;
-    this.searchAfterCursor = searchAfterCursor;
+    this.startCursor = startCursor;
+    this.startAfterCursor = startAfterCursor;
   }
 
   @Override
@@ -36,12 +36,12 @@ public class SearchResponsePageImpl implements SearchResponsePage {
   }
 
   @Override
-  public String searchBeforeCursor() {
-    return searchBeforeCursor;
+  public String startCursor() {
+    return startCursor;
   }
 
   @Override
-  public String searchAfterCursor() {
-    return searchAfterCursor;
+  public String startAfterCursor() {
+    return startAfterCursor;
   }
 }
