@@ -11,7 +11,7 @@ import io.camunda.zeebe.backup.api.BackupStatus;
 import io.camunda.zeebe.backup.api.BackupStatusCode;
 import io.camunda.zeebe.backup.api.BackupStore;
 import io.camunda.zeebe.backup.common.BackupIdentifierWildcardImpl;
-import io.camunda.zeebe.backup.processing.state.CheckpointState;
+import io.camunda.zeebe.backup.processing.state.LatestCheckpointState;
 import io.camunda.zeebe.logstreams.log.LogAppendEntry;
 import io.camunda.zeebe.logstreams.log.LogStreamWriter;
 import io.camunda.zeebe.logstreams.log.LogStreamWriter.WriteFailure;
@@ -221,7 +221,7 @@ final class BackupServiceImpl {
 
   void failInProgressBackups(
       final int partitionId, final long lastCheckpointId, final ConcurrencyControl executor) {
-    if (lastCheckpointId != CheckpointState.NO_CHECKPOINT) {
+    if (lastCheckpointId != LatestCheckpointState.NO_CHECKPOINT) {
       executor.run(
           () ->
               backupStore

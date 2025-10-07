@@ -8,7 +8,7 @@
 package io.camunda.zeebe.broker.transport.partitionapi;
 
 import io.atomix.cluster.MemberId;
-import io.camunda.zeebe.backup.processing.state.CheckpointState;
+import io.camunda.zeebe.backup.processing.state.LatestCheckpointState;
 import io.camunda.zeebe.broker.Loggers;
 import io.camunda.zeebe.broker.protocol.InterPartitionMessageDecoder;
 import io.camunda.zeebe.broker.protocol.MessageHeaderDecoder;
@@ -35,7 +35,7 @@ final class InterPartitionCommandReceiverImpl {
   private final Decoder decoder = new Decoder();
   private final LogStreamWriter logStreamWriter;
   private boolean diskSpaceAvailable = true;
-  private long checkpointId = CheckpointState.NO_CHECKPOINT;
+  private long checkpointId = LatestCheckpointState.NO_CHECKPOINT;
 
   InterPartitionCommandReceiverImpl(final LogStreamWriter logStreamWriter) {
     this.logStreamWriter = logStreamWriter;
