@@ -17,7 +17,7 @@ public interface TenantService {
 
   List<String> tenantsIds();
 
-  AuthenticatedTenants getAuthenticatedTenants();
+  AuthenticatedTenants getAuthenticatedTenantAccess();
 
   boolean isTenantValid(final String tenantId);
 

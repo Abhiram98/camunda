@@ -46,7 +46,7 @@ public class OpenSearchTenantCheckApplierTest {
 
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ASSIGNED);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
 
     // when
     instance.apply(searchRequest);
@@ -78,7 +78,7 @@ public class OpenSearchTenantCheckApplierTest {
 
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ASSIGNED);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
 
     // when
     instance.apply(searchRequest, tenantsProvidedByUser);
@@ -108,7 +108,7 @@ public class OpenSearchTenantCheckApplierTest {
 
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ASSIGNED);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
 
     // when
     instance.apply(searchRequest, tenantsProvidedByUser);
@@ -137,7 +137,7 @@ public class OpenSearchTenantCheckApplierTest {
     when(authenticatedTenants.getTenantIds()).thenReturn(Collections.emptyList());
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_ALL);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
 
     // when
     instance.apply(searchRequest);
@@ -162,7 +162,7 @@ public class OpenSearchTenantCheckApplierTest {
 
     when(authenticatedTenants.getTenantAccessType())
         .thenReturn(TenantService.TenantAccessType.TENANT_ACCESS_NONE);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
 
     // when
     instance.apply(searchRequest);

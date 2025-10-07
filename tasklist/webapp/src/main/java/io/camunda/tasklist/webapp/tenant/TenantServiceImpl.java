@@ -58,7 +58,7 @@ public class TenantServiceImpl implements TenantService {
   @Override
   public boolean isTenantValid(final String tenantId) {
     if (isMultiTenancyEnabled()) {
-      return getAuthenticatedTenants().contains(tenantId);
+      return getAuthenticatedTenantAccess().contains(tenantId);
     } else {
       return true;
     }

@@ -427,7 +427,7 @@ public class ProcessExternalControllerTest {
         TenantService.AuthenticatedTenants.assignedTenants(tenantIds);
 
     when(tenantService.isMultiTenancyEnabled()).thenReturn(true);
-    when(tenantService.getAuthenticatedTenants()).thenReturn(authenticatedTenants);
+    when(tenantService.getAuthenticatedTenantAccess()).thenReturn(authenticatedTenants);
 
     Assertions.assertThatThrownBy(() -> instance.startProcess(bpmnProcessId, tenantId, null))
         .isInstanceOf(InvalidRequestException.class);

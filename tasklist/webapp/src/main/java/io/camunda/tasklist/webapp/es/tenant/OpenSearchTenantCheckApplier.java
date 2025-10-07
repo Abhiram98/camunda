@@ -34,7 +34,7 @@ public class OpenSearchTenantCheckApplier implements TenantCheckApplier<SearchRe
 
   @Override
   public void apply(final SearchRequest.Builder searchRequest) {
-    final var tenants = tenantService.getAuthenticatedTenants();
+    final var tenants = tenantService.getAuthenticatedTenantAccess();
     final var tenantCheckQueryType = tenants.getTenantAccessType();
     final var searchByTenantIds = tenants.getTenantIds();
 
@@ -43,7 +43,7 @@ public class OpenSearchTenantCheckApplier implements TenantCheckApplier<SearchRe
 
   @Override
   public void apply(final SearchRequest.Builder searchRequest, final Collection<String> tenantIds) {
-    final var tenants = tenantService.getAuthenticatedTenants();
+    final var tenants = tenantService.getAuthenticatedTenantAccess();
     final var tenantCheckQueryType = tenants.getTenantAccessType();
     final var authorizedTenantIds = Set.copyOf(tenants.getTenantIds());
     final var searchByTenantIds =
