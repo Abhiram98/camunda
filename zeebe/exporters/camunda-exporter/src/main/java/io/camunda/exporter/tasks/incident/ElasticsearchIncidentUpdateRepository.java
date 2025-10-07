@@ -45,6 +45,7 @@ import org.slf4j.Logger;
 
 public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRepository
     implements IncidentUpdateRepository {
+
   private static final int RETRY_COUNT = 3;
   private static final List<FieldValue> DELETED_OPERATION_STATES =
       List.of(
@@ -153,8 +154,8 @@ public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRe
   }
 
   @Override
-  public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKey) {
-    final var query = createProcessInstanceDeletedQuery(processInstanceKey);
+  public CompletionStage<Boolean> wasProcessInstanceDeleted(final long processInstanceKeys) {
+    final var query = createProcessInstanceDeletedQuery(processInstanceKeys);
     final var request =
         new CountRequest.Builder()
             .index(operationAlias)
@@ -224,10 +225,10 @@ public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRe
         request, IncidentEntity.class, h -> new ActiveIncident(h.id(), h.source().getTreePath()));
   }
 
-  private Query createProcessInstanceDeletedQuery(final long processInstanceKey) {
-    final var piKeyQ =
+  private Query createProcessInstanceDeletedQuery(final long processInstanceKeys) {
+    final var piKeysQ =
         QueryBuilders.term(
-            t -> t.field(OperationTemplate.PROCESS_INSTANCE_KEY).value(processInstanceKey));
+            t -> t.field(OperationTemplate.PROCESS_INSTANCE_KEY).value(processInstanceKeys));
     final var typeQ =
         QueryBuilders.term(
             t ->
@@ -237,7 +238,7 @@ public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRe
         QueryBuilders.terms(
             t -> t.field(OperationTemplate.STATE).terms(f -> f.value(DELETED_OPERATION_STATES)));
 
-    return QueryBuilders.bool(b -> b.must(piKeyQ, typeQ, stateQ));
+    return QueryBuilders.bool(b -> b.must(piKeysQ, typeQ, stateQ));
   }
 
   private BulkOperation createUpdateOperation(final DocumentUpdate update) {
@@ -324,11 +325,13 @@ public final class ElasticsearchIncidentUpdateRepository extends ElasticsearchRe
     for (final var hit : hits) {
       final var entity = hit.source();
       final var newState = IncidentState.createFrom(entity.intent());
-      incidents.put(entity.key(), newState);
+      incidents.put(entity.keys(), newState);
     }
 
     return new PendingIncidentUpdateBatch(highestPosition, incidents);
   }
 
-  private record PendingIncidentUpdate(long key, long position, String intent) {}
+  private record PendingIncidentUpdate(long keys, long position, String intent) {
+
+  }
 }
