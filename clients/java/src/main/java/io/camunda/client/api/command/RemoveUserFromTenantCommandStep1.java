@@ -15,9 +15,11 @@
  */
 package io.camunda.client.api.command;
 
-import io.camunda.client.api.response.RemoveUserFromTenantResponse;
+import io.camunda.client.api.response.UnassignUserFromTenantResponse;
 
-/** Command to remove a user from a tenant. */
+/**
+ * Command to remove a user from a tenant.
+ */
 public interface RemoveUserFromTenantCommandStep1 {
 
   /**
@@ -28,14 +30,14 @@ public interface RemoveUserFromTenantCommandStep1 {
   RemoveUserFromTenantCommandStep2 username(String username);
 
   interface RemoveUserFromTenantCommandStep2
-      extends FinalCommandStep<RemoveUserFromTenantResponse> {
+      extends FinalCommandStep<UnassignUserFromTenantResponse> {
 
     /**
      * Sets the tenant ID.
      *
      * @param tenantId the tenantId of the tenant
      * @return the builder for this command. Call {@link #send()} to complete the command and send
-     *     it to the broker.
+     * it to the broker.
      */
     RemoveUserFromTenantCommandStep2 tenantId(String tenantId);
   }
