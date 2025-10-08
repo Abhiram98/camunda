@@ -15,7 +15,7 @@
  */
 package io.camunda.client.api.command;
 
-import io.camunda.client.api.response.AddMappingToGroupResponse;
+import io.camunda.client.api.response.AssignMappingToGroupResponse;
 
 public interface AddMappingToGroupStep1 {
 
@@ -27,7 +27,7 @@ public interface AddMappingToGroupStep1 {
    */
   AddMappingToGroupStep2 mappingId(String mappingId);
 
-  interface AddMappingToGroupStep2 extends FinalCommandStep<AddMappingToGroupResponse> {
+  interface AddMappingToGroupStep2 extends FinalCommandStep<AssignMappingToGroupResponse> {
 
     /**
      * Sets the group ID.
