@@ -121,8 +121,8 @@ public record ProcessDefinitionFilter(
       return this;
     }
 
-    public Builder hasStartForm(final Boolean hasFormKey) {
-      hasStartForm = hasFormKey;
+    public Builder hasStartForm(final Boolean hasStartForm) {
+      this.hasStartForm = hasStartForm;
       return this;
     }
 
