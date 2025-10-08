@@ -89,7 +89,7 @@ public class RdbmsExporterWrapper implements Exporter {
         rdbmsService.createWriter(
             new RdbmsWriterConfig.Builder()
                 .partitionId(partitionId)
-                .maxQueueSize(maxQueueSize)
+                .queueSize(maxQueueSize)
                 .historyCleanupBatchSize(readCleanupBatchSize(context))
                 .defaultHistoryTTL(readHistoryTTL(context))
                 .minHistoryCleanupInterval(readMinHistoryCleanupInterval(context))
