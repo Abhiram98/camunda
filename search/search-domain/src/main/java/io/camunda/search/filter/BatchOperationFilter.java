@@ -29,8 +29,8 @@ public record BatchOperationFilter(
       return batchOperationIds(collectValues(value, values));
     }
 
-    public Builder batchOperationIds(final List<String> values) {
-      batchOperationIds = addValuesToList(batchOperationIds, values);
+    public Builder batchOperationIds(final List<String> operations) {
+      batchOperationIds = addValuesToList(batchOperationIds, operations);
       return this;
     }
 
