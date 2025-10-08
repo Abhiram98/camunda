@@ -39,7 +39,7 @@ public final class AdHocSubProcessInstructionRecord extends UnifiedRecordValue
       new BooleanProperty(IS_CANCEL_REMAINING_INSTANCES, false);
   private final StringProperty tenantId =
       new StringProperty(TENANT_ID, TenantOwned.DEFAULT_TENANT_IDENTIFIER);
-  private final BooleanProperty completionConditionFulFilledProp =
+  private final BooleanProperty completionConditionFulfilledProp =
       new BooleanProperty(COMPLETION_CONDITION_FUL_FILLED, false);
 
   public AdHocSubProcessInstructionRecord() {
@@ -48,7 +48,7 @@ public final class AdHocSubProcessInstructionRecord extends UnifiedRecordValue
         .declareProperty(activateElements)
         .declareProperty(cancelRemainingInstances)
         .declareProperty(tenantId)
-        .declareProperty(completionConditionFulFilledProp);
+        .declareProperty(completionConditionFulfilledProp);
   }
 
   @Override
@@ -74,13 +74,12 @@ public final class AdHocSubProcessInstructionRecord extends UnifiedRecordValue
     return cancelRemainingInstances.getValue();
   }
 
-  @Override
-  public boolean isCompletionConditionFulFilled() {
-    return completionConditionFulFilledProp.getValue();
+  public boolean isCompletionConditionFulfilled() {
+    return completionConditionFulfilledProp.getValue();
   }
 
-  public AdHocSubProcessInstructionRecord setCompletionConditionFulFilled(final boolean fulfilled) {
-    completionConditionFulFilledProp.setValue(fulfilled);
+  public AdHocSubProcessInstructionRecord setCompletionConditionFulfilled(final boolean fulfilled) {
+    completionConditionFulfilledProp.setValue(fulfilled);
     return this;
   }
 
