@@ -74,8 +74,7 @@ public final class AdHocSubProcessInstructionRecord extends UnifiedRecordValue
     return cancelRemainingInstances.getValue();
   }
 
-  @Override
-  public boolean isCompletionConditionFulFilled() {
+  public boolean isCompletionConditionFulfilled() {
     return completionConditionFulFilledProp.getValue();
   }
 

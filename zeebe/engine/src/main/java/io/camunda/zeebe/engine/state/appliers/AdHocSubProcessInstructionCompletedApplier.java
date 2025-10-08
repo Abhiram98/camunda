@@ -28,6 +28,6 @@ public class AdHocSubProcessInstructionCompletedApplier
     elementInstanceState.updateInstance(
         value.getAdHocSubProcessInstanceKey(),
         instance ->
-            instance.setCompletionConditionFulfilled(value.isCompletionConditionFulFilled()));
+            instance.setCompletionConditionFulfilled(value.isCompletionConditionFulfilled()));
   }
 }
