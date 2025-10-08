@@ -19,8 +19,8 @@ import io.camunda.client.CamundaClient;
 import io.camunda.process.test.impl.assertions.CamundaDataSource;
 import io.camunda.process.test.impl.client.CamundaManagementClient;
 import io.camunda.process.test.impl.extension.CamundaProcessTestContextImpl;
-import io.camunda.process.test.impl.runtime.CamundaContainerRuntime;
-import io.camunda.process.test.impl.runtime.CamundaContainerRuntimeBuilder;
+import io.camunda.process.test.impl.runtime.CamundaProcessTestRuntime;
+import io.camunda.process.test.impl.runtime.CamundaProcessTestRuntimeBuilder;
 import io.camunda.process.test.impl.testresult.CamundaProcessTestResultCollector;
 import io.camunda.process.test.impl.testresult.CamundaProcessTestResultPrinter;
 import io.camunda.process.test.impl.testresult.ProcessTestResult;
@@ -83,17 +83,17 @@ public class CamundaProcessTestExtension
 
   private final List<AutoCloseable> createdClients = new ArrayList<>();
 
-  private final CamundaContainerRuntimeBuilder containerRuntimeBuilder;
+  private final CamundaProcessTestRuntimeBuilder containerRuntimeBuilder;
   private final CamundaProcessTestResultPrinter processTestResultPrinter;
 
-  private CamundaContainerRuntime containerRuntime;
+  private CamundaProcessTestRuntime containerRuntime;
   private CamundaProcessTestResultCollector processTestResultCollector;
 
   private CamundaManagementClient camundaManagementClient;
   private CamundaProcessTestContext camundaProcessTestContext;
 
   CamundaProcessTestExtension(
-      final CamundaContainerRuntimeBuilder containerRuntimeBuilder,
+      final CamundaProcessTestRuntimeBuilder containerRuntimeBuilder,
       final Consumer<String> testResultPrintStream) {
     this.containerRuntimeBuilder = containerRuntimeBuilder;
     processTestResultPrinter = new CamundaProcessTestResultPrinter(testResultPrintStream);
@@ -115,7 +115,7 @@ public class CamundaProcessTestExtension
    * </pre>
    */
   public CamundaProcessTestExtension() {
-    this(CamundaContainerRuntime.newBuilder(), System.err::println);
+    this(CamundaProcessTestRuntime.newBuilder(), System.err::println);
   }
 
   @Override
