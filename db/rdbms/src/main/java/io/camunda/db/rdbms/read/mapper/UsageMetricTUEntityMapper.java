@@ -27,7 +27,7 @@ public class UsageMetricTUEntityMapper {
     for (final UsageMetricTUTenantStatisticsDbModel dbModel : dbModels) {
       final long tenantAtu = Optional.ofNullable(dbModel.tu()).orElse(0L);
       totalAtu += tenantAtu;
-      tenants.put(dbModel.tenantId(), new Builder().atu(tenantAtu).build());
+      tenants.put(dbModel.tenantId(), new Builder().tu(tenantAtu).build());
     }
 
     return new UsageMetricTUStatisticsEntity(totalAtu, tenants);
