@@ -50,7 +50,7 @@ public class AdHocSubProcessInstructionCompletedApplierTest {
         adHocSubProcessInstanceKey,
         new AdHocSubProcessInstructionRecord()
             .setAdHocSubProcessInstanceKey(adHocSubProcessInstanceKey)
-            .setCompletionConditionFulFilled(completionConditionFulfilled));
+            .setCompletionConditionFulfilled(completionConditionFulfilled));
 
     // Then
     final var instance = elementInstanceState.getInstance(adHocSubProcessInstanceKey);

@@ -79,7 +79,7 @@ public final class AdHocSubProcessInstructionRecord extends UnifiedRecordValue
     return completionConditionFulFilledProp.getValue();
   }
 
-  public AdHocSubProcessInstructionRecord setCompletionConditionFulFilled(final boolean fulfilled) {
+  public AdHocSubProcessInstructionRecord setCompletionConditionFulfilled(final boolean fulfilled) {
     completionConditionFulFilledProp.setValue(fulfilled);
     return this;
   }
